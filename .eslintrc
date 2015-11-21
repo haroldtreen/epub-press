@@ -1,0 +1,3 @@
+{
+    "extends": "./node_modules/mobify-code-style/javascript/.eslintrc"
+}
