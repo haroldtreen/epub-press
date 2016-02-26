@@ -6,15 +6,27 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "async": "^1.5.2",
     "body-parser": "~1.13.2",
     "cookie-parser": "~1.3.5",
     "debug": "~2.2.0",
     "express": "~4.13.1",
+    "htmltidy2": "^0.1.4",
     "jade": "~1.11.0",
     "morgan": "~1.6.1",
-    "serve-favicon": "~2.3.0"
+    "node-readability": "^2.1.5",
+    "nodepub": "haroldtreen/nodepub",
+    "readability-js": "^1.0.6",
+    "request": "^2.69.0",
+    "request-promise": "^2.0.1",
+    "serve-favicon": "~2.3.0",
+    "unfluff": "^1.0.0"
   },
   "devDependencies": {
+    "babel-eslint": "^5.0.0",
+    "eslint": "^2.2.0",
+    "eslint-config-airbnb": "^6.0.2",
+    "eslint-plugin-react": "^4.1.0",
     "mobify-code-style": "^2.3.3"
   }
 }
