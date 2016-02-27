@@ -1,0 +1,33 @@
+# Epub Press
+
+EpubPress is a service for creating custom ebooks.
+
+Pivotal Tracker Project: https://www.pivotaltracker.com/n/projects/1545039
+
+### API
+
+| Endpoint                | Description                      |
+|-------------------------|----------------------------------|
+|`GET /api/books/`        | View your list of created books. |
+|`GET /api/books/:bookId` | Get a given book.                |
+|`POST /api/books`        | Create a new book.               |
+
+### Books
+
+```
+{
+    userId: 123,
+    title: "Example Book"
+    urls: [ newsSite.com/article, differentSite.com/otherArticle ]
+    likes: 10
+}
+```
+
+### Future Ideas:
+* [ ] Users
+* [ ] Book sharing
+* [ ] Monetization
+* [ ] Likes
+* [ ] Frontend
+* [ ] .mobi Support
+* [ ] Send to Ereader
