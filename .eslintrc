@@ -2,5 +2,8 @@
     "extends": "airbnb",
     "rules": {
         "indent": [2, 4]
+    },
+    "env": {
+        "mocha": true
     }
 }
