@@ -76,4 +76,32 @@ describe('Book Services', () => {
             }).catch(done);
         });
     });
+
+    describe('Conversion methods', () => {
+        it('can convert a books HTML to XHTL', (done) => {
+            const stub = Sinon.stub(BookServices, 'convertSectionContent');
+            stub.resolves({});
+
+            BookServices.convertSectionsContent(book).then(() => {
+                assert.equal(stub.callCount, book.getSections().length);
+
+                stub.restore();
+                done();
+            }).catch((err) => {
+                stub.restore();
+                done(err);
+            });
+        });
+
+        it('can convert a section HTML to XHTML', (done) => {
+            const content = '<p>Hello<br>World</p>';
+            const mockSection = { content };
+            BookServices.convertSectionContent(mockSection).then((xhtmlSection) => {
+                assert.include(xhtmlSection, '<br />');
+                assert.notInclude(xhtmlSection, '<br>');
+
+                done();
+            }).catch(done);
+        });
+    });
 });
