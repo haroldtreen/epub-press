@@ -1,5 +1,7 @@
 'use strict';
 const assert = require('chai').assert;
+const Sinon = require('sinon');
+
 const Book = require('../lib/book');
 
 const bookMetadata = {
@@ -20,6 +22,28 @@ describe('Book', () => {
     it('has metadata', () => {
         assert.equal(book.getTitle(), bookMetadata.title, 'Title not passed to book');
         assert.deepEqual(book.getUrls(), bookMetadata.urls, 'Urls not passed to book');
+    });
+
+    it('can be saved as epub', (done) => {
+        const sectionStub = Sinon.stub(book._ebook, 'addSection');
+        const writeStub = Sinon.stub(book._ebook, 'writeEPUB', (onError, path, file, onSuccess) => {
+            onSuccess();
+        });
+
+        book.getSections().forEach((section) => {
+            const updatedSection = section;
+            updatedSection.title = 'Title';
+            updatedSection.xhtml = '<div></div>';
+        });
+
+        book.writeEpub().then(() => {
+            assert.equal(sectionStub.callCount, book.getSections().length);
+            assert.equal(writeStub.callCount, 1);
+
+            sectionStub.restore();
+            writeStub.restore();
+            done();
+        }).catch(done);
     });
 
     describe('Book Sections', () => {
