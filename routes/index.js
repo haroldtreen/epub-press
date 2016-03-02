@@ -37,7 +37,7 @@ router.post('/api/books', (req, res) => {
 
 router.get('/api/books/download', (req, res) => {
     if (req.query.id) {
-        res.download(`ebooks/${req.query.id}.epub`);
+        res.download(`/home/ubuntu/www/epub-press/ebooks/${req.query.id}.epub`);
     }
 });
 
