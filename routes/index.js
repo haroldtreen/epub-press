@@ -1,3 +1,5 @@
+'use strict';
+
 const BookServices = require('../lib/book-services');
 const Book = require('../lib/book');
 const express = require('express');
