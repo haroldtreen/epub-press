@@ -21,7 +21,8 @@ router.post('/api/books', (req, res) => {
             return BookServices.extractSectionsContent(updatedBook);
         }).then((updatedBook) => {
             console.log('Converting Contents');
-            return BookServices.convertSectionsContent(updatedBook);
+            const filteredBook = BookServices.filterSectionsContent(updatedBook);
+            return BookServices.convertSectionsContent(filteredBook);
         }).then((updatedBook) => {
             console.log('Writting Ebook');
             return updatedBook.writeEpub();

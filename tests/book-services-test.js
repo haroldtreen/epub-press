@@ -5,6 +5,7 @@ const BookServices = require('../lib/book-services');
 const Book = require('../lib/book');
 const Sinon = require('sinon');
 const nock = require('nock');
+const fs = require('fs');
 
 require('sinon-as-promised');
 
@@ -77,6 +78,25 @@ describe('Book Services', () => {
         });
     });
 
+    describe('Filter methods', () => {
+        it('can filter script tags', () => {
+            const content = fs.readFileSync('./tests/fixtures/scripts.html').toString();
+            const filteredSection = BookServices.filterContent({ content });
+            assert.notMatch(filteredSection.content, /<script>/);
+            assert.notMatch(filteredSection.content, /<\/script>/);
+        });
+
+        it('can bubble up article contents', () => {
+            const content = fs.readFileSync('./tests/fixtures/article.html').toString();
+            const filteredSection = BookServices.filterContent({ content });
+            assert.notMatch(filteredSection.content, /<article>/);
+            assert.notMatch(filteredSection.content, /<\/article>/);
+            assert.match(filteredSection.content, /<div>/);
+            assert.match(filteredSection.content, /<p>/);
+            assert.match(filteredSection.content, /First/);
+        });
+    });
+
     describe('Conversion methods', () => {
         it('can convert a books HTML to XHTL', (done) => {
             const stub = Sinon.stub(BookServices, 'convertSectionContent');
@@ -97,8 +117,8 @@ describe('Book Services', () => {
             const content = '<p>Hello<br>World</p>';
             const mockSection = { content };
             BookServices.convertSectionContent(mockSection).then((xhtmlSection) => {
-                assert.include(xhtmlSection, '<br />');
-                assert.notInclude(xhtmlSection, '<br>');
+                assert.include(xhtmlSection.xhtml, '<br />');
+                assert.notInclude(xhtmlSection.xhtml, '<br>');
 
                 done();
             }).catch(done);
