@@ -81,14 +81,14 @@ describe('Book Services', () => {
     describe('Filter methods', () => {
         it('can filter script tags', () => {
             const content = fs.readFileSync('./tests/fixtures/scripts.html').toString();
-            const filteredSection = BookServices.filterContent({ content });
+            const filteredSection = BookServices.filterSectionContent({ content });
             assert.notMatch(filteredSection.content, /<script>/);
             assert.notMatch(filteredSection.content, /<\/script>/);
         });
 
         it('can bubble up article contents', () => {
             const content = fs.readFileSync('./tests/fixtures/article.html').toString();
-            const filteredSection = BookServices.filterContent({ content });
+            const filteredSection = BookServices.filterSectionContent({ content });
             assert.notMatch(filteredSection.content, /<article>/);
             assert.notMatch(filteredSection.content, /<\/article>/);
             assert.match(filteredSection.content, /<div>/);

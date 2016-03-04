@@ -2,6 +2,7 @@
 
 const BookServices = require('../lib/book-services');
 const Book = require('../lib/book');
+const Config = require('../lib/config');
 const express = require('express');
 const router = express.Router();
 
@@ -38,7 +39,7 @@ router.post('/api/books', (req, res) => {
 
 router.get('/api/books/download', (req, res) => {
     if (req.query.id) {
-        res.download(`/home/ubuntu/www/epub-press/ebooks/${req.query.id}.epub`);
+        res.download(`${Config.DEFAULT_EBOOK_FOLDER}/${req.query.id}.epub`);
     }
 });
 
