@@ -2,7 +2,7 @@
 
 const BookServices = require('../lib/book-services');
 const Book = require('../lib/book');
-const Config = require('../lib/config');
+const fs = require('fs');
 const express = require('express');
 const router = express.Router();
 
@@ -28,9 +28,11 @@ router.post('/api/books', (req, res) => {
             console.log('Writting Ebook');
             return updatedBook.writeEpub();
         }).then((writtenBook) => {
+            console.log('Creating .mobi');
+            return BookServices.convertToMobi(writtenBook)
+        }).then((writtenBook) => {
             console.log('Responding');
-            res.setHeader('Content-Type', 'application/json');
-            res.send(JSON.stringify({ id: writtenBook.getFilename() }, null, 3));
+            res.json({ id: writtenBook.getMetadata().id });
         }).catch(console.log);
     } else {
         res.end();
@@ -38,8 +40,13 @@ router.post('/api/books', (req, res) => {
 });
 
 router.get('/api/books/download', (req, res) => {
+    console.log(req.query);
     if (req.query.id) {
-        res.download(`${Config.DEFAULT_EBOOK_FOLDER}/${req.query.id}.epub`);
+        const book = new Book({ id: req.query.id });
+        const path = req.query.filetype === 'mobi' ? book.getMobiPath() : book.getEpubPath();
+        res.download(path);
+    } else {
+        res.status(400).send('ID Must be provided');
     }
 });
 
