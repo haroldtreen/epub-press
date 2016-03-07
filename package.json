@@ -18,6 +18,7 @@
     "jade": "~1.11.0",
     "morgan": "~1.6.1",
     "node-readability": "^2.1.5",
+    "nodemailer": "^2.3.0",
     "nodepub": "haroldtreen/nodepub",
     "pg-promise": "^3.2.6",
     "readability-js": "^1.0.6",

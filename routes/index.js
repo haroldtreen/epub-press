@@ -2,6 +2,8 @@
 
 const BookServices = require('../lib/book-services');
 const Book = require('../lib/book');
+const Mailer = require('../lib/mailer');
+
 const fs = require('fs');
 const express = require('express');
 const router = express.Router();
@@ -43,8 +45,21 @@ router.get('/api/books/download', (req, res) => {
     console.log(req.query);
     if (req.query.id) {
         const book = new Book({ id: req.query.id });
-        const path = req.query.filetype === 'mobi' ? book.getMobiPath() : book.getEpubPath();
-        res.download(path);
+
+        if (req.query.email) {
+            const mailerMethod = req.query.filetype === 'mobi' ? Mailer.sendMobi : Mailer.sendEpub;
+
+            mailerMethod(req.query.email, book).then(() => {
+                res.status(200).send('Email Sent');
+            }).catch((error) => {
+                console.log('Mail error:');
+                console.log(error);
+                res.status(500).send('Email could not be sent');
+            });
+        } else {
+            const path = req.query.filetype === 'mobi' ? book.getMobiPath() : book.getEpubPath();
+            res.download(path);
+        }
     } else {
         res.status(400).send('ID Must be provided');
     }
