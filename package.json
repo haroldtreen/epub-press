@@ -14,7 +14,7 @@
     "express": "~4.13.1",
     "gulp": "^3.9.1",
     "harmonize": "^1.4.4",
-    "htmltidy2": "haroldtreen/htmltidy2",
+    "htmltidy2": "^0.1.4",
     "jade": "~1.11.0",
     "morgan": "~1.6.1",
     "node-readability": "^2.1.5",
