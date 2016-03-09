@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('chai').assert;
-const fs = require('fs');
+const fs = require('fs-extra');
 const nock = require('nock');
 
 const Config = require('../lib/config');
@@ -56,11 +56,7 @@ describe('HTML Processor', () => {
         });
 
         afterEach(() => {
-            fs.readdir(outputFolder, (err, files) => {
-                (files || []).forEach((filename) => {
-                    fs.unlink(filename, () => {});
-                });
-            });
+            fs.emptyDir(outputFolder, () => {});
         });
 
         it('downloads images', (done) => {
