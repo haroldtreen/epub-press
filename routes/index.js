@@ -23,15 +23,18 @@ router.post('/api/books', (req, res) => {
             console.log('Extracting Content');
             return BookServices.extractSectionsContent(updatedBook);
         }).then((updatedBook) => {
-            console.log('Converting Contents');
+            console.log('Downloading Images');
             const filteredBook = BookServices.filterSectionsContent(updatedBook);
-            return BookServices.convertSectionsContent(filteredBook);
+            return BookServices.localizeSectionsImages(filteredBook);
+        }).then((updatedBook) => {
+            console.log('Converting contents');
+            return BookServices.convertSectionsContent(updatedBook);
         }).then((updatedBook) => {
             console.log('Writting Ebook');
             return updatedBook.writeEpub();
         }).then((writtenBook) => {
             console.log('Creating .mobi');
-            return BookServices.convertToMobi(writtenBook)
+            return BookServices.convertToMobi(writtenBook);
         }).then((writtenBook) => {
             console.log('Responding');
             res.json({ id: writtenBook.getMetadata().id });

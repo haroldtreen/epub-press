@@ -8,7 +8,7 @@ const Config = require('../lib/config');
 
 const HtmlProcessor = require('../lib/html-processor.js');
 const fixturesPath = './tests/fixtures';
-const outputFolder = `${Config.ROOT}/tmp/test-book/images/section-0`;
+const outputFolder = Config.IMAGES_TMP;
 
 describe('HTML Processor', () => {
     let mockSection;
@@ -44,15 +44,14 @@ describe('HTML Processor', () => {
         beforeEach(() => {
             scope = nock('http://test.fake');
 
-            [
-                '/image?size=30', '/picture.png', '/article/image.png',
-            ].forEach((path) => {
+            ['/image?size=30', '/picture.png', '/article/image.png'].forEach((path) => {
                 scope.get(path).replyWithFile(
                     200,
                     `${fixturesPath}/placeholder.png`,
                     { 'Content-type': 'image/png' }
                 );
             });
+            fs.emptyDir(outputFolder, () => {});
         });
 
         afterEach(() => {
@@ -60,53 +59,35 @@ describe('HTML Processor', () => {
         });
 
         it('downloads images', (done) => {
-            const expectedOutput = fs.readFileSync(`${fixturesPath}/images-output.html`).toString();
-            HtmlProcessor.extractImages(mockSection).then((output) => {
-                assert.deepEqual(
-                    output.replace(/\s{2,}|\n/g, ''),
-                    expectedOutput.replace(/\s{2,}|\n/g, '')
-                );
+            HtmlProcessor.extractImages(mockSection.url, mockSection.html).then((output) => {
+                assert.lengthOf(output.html.match(/\.\.\/images\/.*\.png/g), 4);
                 scope.isDone();
                 done();
             }).catch(done);
         });
 
         it('saves images in the specified folder', (done) => {
-            HtmlProcessor.extractImages(mockSection).then(() => {
+            HtmlProcessor.extractImages(mockSection.url, mockSection.html).then(() => {
                 fs.readdir(outputFolder, (err, files) => {
                     assert.lengthOf((files || []), 3);
                     done();
                 });
             }).catch(done);
         });
-    });
 
-    describe('helpers', () => {
-        it('can convert urls', () => {
-            const root = 'http://test.fake/hello';
-            const tests = ['http://a.c/b.jpg', '../img.png', './img.jpg'];
-            const expected = [
-                'http://a.c/b.jpg',
-                'http://test.fake/img.png',
-                'http://test.fake/hello/img.jpg',
-            ];
+        describe('helpers', () => {
+            it('can convert urls', () => {
+                const root = 'http://test.fake/hello';
+                const tests = ['http://a.c/b.jpg', '../img.png', './img.jpg'];
+                const expected = [
+                    'http://a.c/b.jpg',
+                    'http://test.fake/img.png',
+                    'http://test.fake/hello/img.jpg',
+                ];
 
-            tests.forEach((test, idx) => {
-                assert.equal(HtmlProcessor.absolutifyUrl(root, test), expected[idx]);
-            });
-        });
-
-        it('can map remote files to local files', () => {
-            const tests = ['http://a.b/c.png', 'http://a.b/c2.png', 'http://a.b/d/e/c3.png'];
-            const expected = [
-                `${outputFolder}/c.png`,
-                `${outputFolder}/c2.png`,
-                `${outputFolder}/d/e/c3.png`,
-            ];
-
-            tests.forEach((remote, index) => {
-                const local = HtmlProcessor.localForRemote(mockSection, remote);
-                assert.equal(local, expected[index]);
+                tests.forEach((test, idx) => {
+                    assert.equal(HtmlProcessor.absolutifyUrl(root, test), expected[idx]);
+                });
             });
         });
     });

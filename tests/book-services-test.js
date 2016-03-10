@@ -5,12 +5,15 @@ const BookServices = require('../lib/book-services');
 const Book = require('../lib/book');
 const Sinon = require('sinon');
 const nock = require('nock');
+const fs = require('fs');
 
 require('sinon-as-promised');
 
 const urls = ['http://www.a.com', 'http://www.b.com'];
 const html = '<title>HTML</title><p>Hello World</p>';
 let book;
+
+const fixturesPath = `./tests/fixtures`;
 
 describe('Book Services', () => {
     beforeEach(() => {
@@ -43,6 +46,30 @@ describe('Book Services', () => {
             BookServices.updateSectionHtml(section).then((updatedSection) => {
                 assert.equal(updatedSection.html, section.html);
 
+                done();
+            }).catch(done);
+        });
+
+        it('will extract images', (done) => {
+            const scope = nock('http://test.fake');
+
+            ['/image?size=30', '/picture.png', '/article/image.png'].forEach((path) => {
+                scope.get(path).replyWithFile(
+                    200,
+                    `${fixturesPath}/placeholder.png`,
+                    { 'Content-type': 'image/png' }
+                );
+            });
+            const section = {
+                content: fs.readFileSync(`${fixturesPath}/images.html`).toString(),
+                url: 'http://test.fake/article',
+            };
+
+            BookServices.localizeSectionImages(section).then((updatedSection) => {
+                assert.lengthOf(updatedSection.content.match(/\.\.\/images\/.*\.png/g), 4);
+                updatedSection.images.forEach((image) => {
+                    assert.match(image, /\/images\/.*\.png/);
+                });
                 done();
             }).catch(done);
         });
