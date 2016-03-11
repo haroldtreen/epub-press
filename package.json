@@ -38,6 +38,7 @@
     "gulp-karma": "0.0.5",
     "gulp-mocha": "^2.2.0",
     "karma": "^0.13.21",
+    "loadtest": "^1.3.2",
     "mobify-code-style": "^2.3.3",
     "mocha": "^2.4.5",
     "nock": "^7.2.2",
