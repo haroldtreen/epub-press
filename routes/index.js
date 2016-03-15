@@ -10,7 +10,7 @@ const router = express.Router();
 
 /* GET home page. */
 router.get('/', (req, res) => {
-    res.render('index', { title: 'Express' });
+    res.render('index', { title: 'Epub Press' });
 });
 
 router.post('/api/books', (req, res) => {
