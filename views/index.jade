@@ -1,8 +1,15 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  p Forgive us as we work on getting a pretty webpage up.
-  p In the meantime, download the Chrome Extension and start making awesome ebooks! 
-  a(href='https://github.com/haroldtreen/epub-press-chrome') Chrome Extension
+    div(id='container')
+        div(id='content')
+            img(id='logo', src="images/logo-full.png")
+            br
+            h1= title
+            p Welcome to #{title}
+            p Forgive us as we work on getting a pretty webpage up.
+            p In the meantime, download the Chrome Extension and start making awesome ebooks!
+            
+            div(id='links')
+                a(href='https://github.com/haroldtreen/epub-press-chrome/releases/download/0.1.0/epub-press-0.1.0.crx', download) Chrome Extension
+                a(href='https://github.com/haroldtreen/epub-press-chrome/blob/master/README.md') Getting Started Guide

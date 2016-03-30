@@ -6,3 +6,30 @@ body {
 a {
   color: #00B7FF;
 }
+
+#container {
+    display: flex;
+    align-content: center;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
+}
+
+#content {
+
+    max-width: 75%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#links {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-grow: 1;
+}
+
+#logo {
+    align-self: center;
+}
