@@ -4,13 +4,19 @@ const BookServices = require('../lib/book-services');
 const Book = require('../lib/book');
 const Mailer = require('../lib/mailer');
 
+const DocumentationLoader = require('../lib/documentation-loader');
+
 const fs = require('fs');
 const express = require('express');
 const router = express.Router();
 
 /* GET home page. */
 router.get('/', (req, res) => {
-    res.render('index', { title: 'Epub Press' });
+    const docsLoader = new DocumentationLoader();
+
+    docsLoader.readDocs().then((docs) => {
+        res.render('index', { title: 'EpubPress (Beta)', docs });
+    });
 });
 
 router.post('/api/books', (req, res) => {
