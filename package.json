@@ -3,9 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon --harmony ./bin/www",
-    "start-prod": "pm2 start bin/www --node-args='--harmony'",
-    "log": "pm2 logs www --out --timestamp true --lines 200"
+    "start": "nodemon --harmony ./bin/www"
   },
   "dependencies": {
     "async": "^1.5.2",
