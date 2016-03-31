@@ -1,5 +1,5 @@
 # About
-EpubPress is a Chrome extension for turning your favorite web content into ebooks.
+EpubPress is a [Chrome extension](https://github.com/haroldtreen/epub-press-chrome) for turning your favorite web content into ebooks.
 
 ![diagram](/docs/images/diagram.jpg)
 
