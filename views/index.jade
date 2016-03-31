@@ -2,14 +2,12 @@ extends layout
 
 block content
     div(id='container')
+        img(id='logo', src="images/logo-full.png")
+        h1(id='title')= title
+        nav(id='nav-bar')
+            - each doc in docs
+                a(href='##{doc.id}') #{doc.title}
         div(id='content')
-            img(id='logo', src="images/logo-full.png")
-            br
-            h1= title
-            p Welcome to #{title}
-            p Forgive us as we work on getting a pretty webpage up.
-            p In the meantime, download the Chrome Extension and start making awesome ebooks!
-            
-            div(id='links')
-                a(href='https://github.com/haroldtreen/epub-press-chrome/releases/download/0.1.0/epub-press-0.1.0.crx', download) Chrome Extension
-                a(href='https://github.com/haroldtreen/epub-press-chrome/blob/master/README.md') Getting Started Guide
+            - each doc in docs
+                div(id='#{doc.id}')
+                != doc.html
