@@ -1,12 +1,10 @@
 'use strict';
 
 const BookServices = require('../lib/book-services');
-const Book = require('../lib/book');
 const Mailer = require('../lib/mailer');
-
+const Book = require('../lib/book');
 const DocumentationLoader = require('../lib/documentation-loader');
 
-const fs = require('fs');
 const express = require('express');
 const router = express.Router();
 
@@ -44,7 +42,9 @@ router.post('/api/books', (req, res) => {
         }).then((writtenBook) => {
             console.log('Responding');
             res.json({ id: writtenBook.getMetadata().id });
+            book = null;
         }).catch(console.log);
+
     } else {
         res.end();
     }
