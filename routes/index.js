@@ -42,9 +42,7 @@ router.post('/api/books', (req, res) => {
         }).then((writtenBook) => {
             console.log('Responding');
             res.json({ id: writtenBook.getMetadata().id });
-            book = null;
         }).catch(console.log);
-
     } else {
         res.end();
     }
