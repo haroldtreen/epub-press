@@ -8,6 +8,13 @@ block content
             - each doc in docs
                 a(href='##{doc.id}') #{doc.title}
         div(id='content')
+            h4(align="center") 
+                | * There are reports that Chrome is requiring the extension be installed through the Chrome Store.
+                
+                | Releasing is now top priority and the extension should be available in the next few days.
+                br
+                br
+                | Thanks for your patience!
             - each doc in docs
                 div(id='#{doc.id}')
                 != doc.html
