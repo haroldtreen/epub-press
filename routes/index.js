@@ -5,6 +5,7 @@ const Mailer = require('../lib/mailer');
 const Book = require('../lib/book');
 const DocumentationLoader = require('../lib/documentation-loader');
 
+const newrelic = require('newrelic');
 const express = require('express');
 const router = express.Router();
 
@@ -20,6 +21,7 @@ router.get('/', (req, res) => {
 router.post('/api/books', (req, res) => {
     console.log(req.body);
     if (req.body.urls) {
+        newrelic.recordCustomEvent('createBook', { urls: req.body.urls.join(', ') });
         const book = new Book({ urls: req.body.urls });
 
         console.log('Downloading HTML');
