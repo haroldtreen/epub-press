@@ -21,7 +21,7 @@ router.get('/', (req, res) => {
 router.post('/api/books', (req, res) => {
     console.log(req.body);
     if (req.body.urls) {
-        newrelic.recordCustomEvent('createBook', { urls: req.body.urls.join(', ') });
+        newrelic.addCustomParameter('urls', req.body.urls.join(', '));
         const book = new Book({ urls: req.body.urls });
 
         console.log('Downloading HTML');
