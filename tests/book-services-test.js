@@ -10,7 +10,7 @@ const fs = require('fs');
 require('sinon-as-promised');
 
 const urls = ['http://www.a.com', 'http://www.b.com'];
-const html = '<title>HTML</title><p>Hello World</p>';
+const html = '<html><title>HTML</title><body><p>This is great.</p><p>Hello World you</p></body></html>';
 let book;
 
 const fixturesPath = `./tests/fixtures`;
@@ -53,7 +53,9 @@ describe('Book Services', () => {
         it('will extract images', (done) => {
             const scope = nock('http://test.fake');
 
-            ['/image?size=30', '/picture.png', '/article/image.png'].forEach((path) => {
+            [
+                '/image?size=30', '/picture.png', '/article/image.png', '/image.png',
+            ].forEach((path) => {
                 scope.get(path).replyWithFile(
                     200,
                     `${fixturesPath}/placeholder.png`,

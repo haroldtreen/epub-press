@@ -44,7 +44,9 @@ describe('HTML Processor', () => {
         beforeEach(() => {
             scope = nock('http://test.fake');
 
-            ['/image?size=30', '/picture.png', '/article/image.png'].forEach((path) => {
+            [
+                '/image?size=30', '/picture.png', '/article/image.png', '/image.png',
+            ].forEach((path) => {
                 scope.get(path).replyWithFile(
                     200,
                     `${fixturesPath}/placeholder.png`,
@@ -77,12 +79,13 @@ describe('HTML Processor', () => {
 
         describe('helpers', () => {
             it('can convert urls', () => {
-                const root = 'http://test.fake/hello';
-                const tests = ['http://a.c/b.jpg', '../img.png', './img.jpg'];
+                const root = 'http://test.fake/hello/stuff.html';
+                const tests = ['http://a.c/b.jpg', '../img.png', './img.jpg', 'assets/img.jpg'];
                 const expected = [
                     'http://a.c/b.jpg',
                     'http://test.fake/img.png',
                     'http://test.fake/hello/img.jpg',
+                    'http://test.fake/hello/assets/img.jpg',
                 ];
 
                 tests.forEach((test, idx) => {
