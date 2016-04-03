@@ -1,7 +1,8 @@
 # How To Use
 
-1. Open all the sites for your book in separate tabs.  
+1. Open all the sites for your book in separate tabs.
   ![tabs](./docs/images/tabs.jpg)
+1. Arrange them in the order they should appear in the book.
 1. Click the EpubPress icon.  
   ![icon](./docs/images/epub-press-icon.jpg)
 1. Select the articles to include in your book.
