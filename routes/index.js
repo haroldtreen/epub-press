@@ -18,6 +18,14 @@ router.get('/', (req, res) => {
     });
 });
 
+router.get('/api/version', (req, resp) => {
+    resp.json({
+        version: require('../package.json').version,
+        minCompatible: '0.0.0',
+        message: 'Your Version of EpubPress is outdated!',
+    });
+});
+
 router.post('/api/books', (req, res) => {
     console.log(req.body);
     if (req.body.urls) {
