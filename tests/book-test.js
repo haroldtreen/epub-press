@@ -46,6 +46,11 @@ describe('Book', () => {
         }).catch(done);
     });
 
+    it('uses the current date in the title', () => {
+        const untitledBook = new Book();
+        assert.include(untitledBook.getTitle(), Date().slice(0, 9));
+    });
+
     describe('Book Sections', () => {
         it('can add sections', () => {
             book.addSection({ title: 'Section 1', content });
