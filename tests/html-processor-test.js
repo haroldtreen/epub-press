@@ -80,12 +80,13 @@ describe('HTML Processor', () => {
         describe('helpers', () => {
             it('can convert urls', () => {
                 const root = 'http://test.fake/hello/stuff.html';
-                const tests = ['http://a.c/b.jpg', '../img.png', './img.jpg', 'assets/img.jpg'];
+                const tests = ['http://a.c/b.jpg', '../img.png', './img.jpg', 'assets/img.jpg', '//cdn.com/path/image.png'];
                 const expected = [
                     'http://a.c/b.jpg',
                     'http://test.fake/img.png',
                     'http://test.fake/hello/img.jpg',
                     'http://test.fake/hello/assets/img.jpg',
+                    'http://cdn.com/path/image.png',
                 ];
 
                 tests.forEach((test, idx) => {
