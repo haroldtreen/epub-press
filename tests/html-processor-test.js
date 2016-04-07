@@ -80,13 +80,26 @@ describe('HTML Processor', () => {
         describe('helpers', () => {
             it('can convert urls', () => {
                 const root = 'http://test.fake/hello/stuff.html';
-                const tests = ['http://a.c/b.jpg', '../img.png', './img.jpg', 'assets/img.jpg', '//cdn.com/path/image.png'];
+                const tests = ['http://a.c/b.jpg', '../img.png', './img.jpg', 'assets/img.jpg', '//cdn.com/path/image.png', 'image.png'];
                 const expected = [
                     'http://a.c/b.jpg',
                     'http://test.fake/img.png',
                     'http://test.fake/hello/img.jpg',
                     'http://test.fake/hello/assets/img.jpg',
                     'http://cdn.com/path/image.png',
+                    'http://test.fake/hello/image.png',
+                ];
+
+                tests.forEach((test, idx) => {
+                    assert.equal(HtmlProcessor.absolutifyUrl(root, test), expected[idx]);
+                });
+            });
+
+            it('can resolve urls with a path', () => {
+                const root = 'http://test.fake/hello/';
+                const tests = ['image.png'];
+                const expected = [
+                    'http://test.fake/hello/image.png',
                 ];
 
                 tests.forEach((test, idx) => {
