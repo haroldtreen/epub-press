@@ -1,6 +1,4 @@
 # Feedback
-EpubPress is currently in **BETA**. All **0.X.X** are not guaranteed to work indefinitely.
-
 Feedback is very much appreciated! The more feedback received, the better it will get.
 
 Please report any bugs/issues/problems to [support@epub.press](mailto:support@epub.press).  
