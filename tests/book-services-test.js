@@ -13,7 +13,7 @@ const urls = ['http://www.a.com', 'http://www.b.com'];
 const html = '<html><title>HTML</title><body><p>This is great.</p><p>Hello World you</p></body></html>';
 let book;
 
-const fixturesPath = `./tests/fixtures`;
+const fixturesPath = './tests/fixtures';
 
 describe('Book Services', () => {
     beforeEach(() => {
