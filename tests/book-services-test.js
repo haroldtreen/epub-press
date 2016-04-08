@@ -17,9 +17,7 @@ const fixturesPath = './tests/fixtures';
 
 describe('Book Services', () => {
     beforeEach(() => {
-        book = new Book({
-            urls,
-        });
+        book = new Book({}, [{ url: urls[0] }, { url: urls[1] }]);
     });
 
     describe('html methods', () => {

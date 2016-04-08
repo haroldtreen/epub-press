@@ -26,12 +26,36 @@ router.get('/api/version', (req, resp) => {
     });
 });
 
-router.post('/api/books', (req, res) => {
-    console.log(req.body);
-    if (req.body.urls) {
-        newrelic.addCustomParameter('urls', req.body.urls.join(', '));
-        const book = new Book({ urls: req.body.urls });
+function bookFromBody(body) {
+    let book;
+    if (body.urls || body.sections) {
+        const sections = [];
+        if (body.urls) {
+            body.urls.forEach((url) => {
+                sections.push({
+                    url,
+                    html: null,
+                });
+            });
+        } else if (body.sections) {
+            body.sections.forEach((section) => {
+                sections.push({
+                    url: section.url,
+                    html: section.html,
+                });
+            });
+        }
+        book = new Book({}, sections);
+        console.log(book.getUrls());
+    } else {
+        book = null;
+    }
+    return book;
+}
 
+router.post('/api/books', (req, res) => {
+    const book = bookFromBody(req.body);
+    if (book) {
         console.log('Downloading HTML');
         BookServices.updateSectionsHtml(book).then((updatedBook) => {
             console.log('Extracting Content');

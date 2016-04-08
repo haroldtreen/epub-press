@@ -21,7 +21,6 @@ describe('Book', () => {
 
     it('has metadata', () => {
         assert.equal(book.getTitle(), bookMetadata.title, 'Title not passed to book');
-        assert.deepEqual(book.getUrls(), bookMetadata.urls, 'Urls not passed to book');
     });
 
     it('can be saved as epub', (done) => {
@@ -68,6 +67,17 @@ describe('Book', () => {
 
             assert.isFalse(Book.isValidSection({ title }), 'Content must be present');
             assert.isFalse(Book.isValidSection({ content }), 'Title must be present');
+        });
+
+        it('can be constructed with sections', () => {
+            const section = { url: 'http://google.com', html: '<html></html>' };
+            const sectionBook = new Book(bookMetadata, [section]);
+
+            const sections = sectionBook.getSections();
+
+            assert.lengthOf(sections, 1);
+            assert.equal(sections[0].url, 'http://google.com');
+            assert.equal(sections[0].html, '<html></html>');
         });
     });
 });
