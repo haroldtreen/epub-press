@@ -3,8 +3,10 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel="stylesheet" media="screen and (max-device-width: 480px)" href="/stylesheets/mobile.css" type="text/css")
     link(href='https://fonts.googleapis.com/css?family=Quicksand:400,700' rel='stylesheet' type='text/css')
     link(rel="icon", type="image/png", href="images/favicon.png")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
   body
     block content
     
