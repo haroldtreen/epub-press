@@ -78,7 +78,7 @@ router.post('/api/books', (req, res) => {
             res.json({ id: writtenBook.getMetadata().id });
         }).catch(console.log);
     } else {
-        res.end();
+        res.status(400).send('No sections provided.');
     }
 });
 
