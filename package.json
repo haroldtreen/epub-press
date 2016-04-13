@@ -24,8 +24,6 @@
     "nodemailer": "^2.3.0",
     "nodepub": "haroldtreen/nodepub",
     "pg-promise": "^3.2.6",
-    "readability-js": "^1.0.6",
-    "request": "^2.69.0",
     "request-promise": "^2.0.1",
     "serve-favicon": "~2.3.0",
     "shortid": "^2.2.4",
