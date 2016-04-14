@@ -5,7 +5,6 @@ const Mailer = require('../lib/mailer');
 const Book = require('../lib/book');
 const DocumentationLoader = require('../lib/documentation-loader');
 
-const newrelic = require('newrelic');
 const express = require('express');
 const router = express.Router();
 
