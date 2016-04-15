@@ -74,6 +74,7 @@ router.post('/api/books', (req, res) => {
             return BookServices.convertToMobi(writtenBook);
         }).then((writtenBook) => {
             console.log('Responding');
+            writtenBook.commit();
             res.json({ id: writtenBook.getMetadata().id });
         }).catch(console.log);
     } else {
