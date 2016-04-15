@@ -51,23 +51,23 @@ var urls = [
     'http://www.cbc.ca/news/canada/north/trudeau-obama-washington-visit-arctic-promises-1.3486076?cmp=rss'
 ];
 
-function(params, options, client, callback) {
-    request = client(options, callback);
-
-    if (message)
-    {
-      options.headers['Content-Length'] = message.length;
-      options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
-      request.write(message);
-    }
-
-    request.end();
-}
+// function(params, options, client, callback) {
+//     request = client(options, callback);
+//
+//     if (message)
+//     {
+//       options.headers['Content-Length'] = message.length;
+//       options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+//       request.write(message);
+//     }
+//
+//     request.end();
+// }
 
 
 const options = {
     statusCallback,
-    requestGenerator,
+    // requestGenerator,
     method: 'post',
     concurrency: 6,
     body: {
@@ -84,7 +84,7 @@ const options = {
             'https://www.thestar.com/news/world/2016/03/11/ben-carson-backs-donald-trump-buries-the-hatchet-with-former-rival.html',
         ],
     },
-    url: 'http://epub.press/api/books',
+    url: 'http://104.154.19.246/api/books',
     contentType: 'application/json',
     maxRequests: 300,
 };
@@ -96,4 +96,5 @@ loadtest.loadTest(options, function(error, result)
         return console.error('Got an error: %s', error);
     }
     console.log('Tests run successfully');
+	console.log(result);
 });
