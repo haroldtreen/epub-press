@@ -5,7 +5,6 @@ const Mailer = require('../lib/mailer');
 const Book = require('../lib/book');
 const DocumentationLoader = require('../lib/documentation-loader');
 
-const newrelic = require('newrelic');
 const express = require('express');
 const router = express.Router();
 
@@ -75,6 +74,7 @@ router.post('/api/books', (req, res) => {
             return BookServices.convertToMobi(writtenBook);
         }).then((writtenBook) => {
             console.log('Responding');
+            writtenBook.commit();
             res.json({ id: writtenBook.getMetadata().id });
         }).catch(console.log);
     } else {

@@ -8,3 +8,9 @@ gulp.task('default', () => {
         // gulp-mocha needs filepaths so you can't have any plugins before it
         .pipe(mocha({ reporter: 'spec', harmony: true }));
 });
+
+gulp.task('test-db', () => {
+	process.env.NODE_ENV = 'test';
+    return gulp.src('./tests/models/*-test.js', { read: false })
+			.pipe(mocha({ reporter: 'spec', harmony: true }));
+});
