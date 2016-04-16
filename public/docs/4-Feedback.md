@@ -21,8 +21,9 @@ Some possible causes:
 Should be fixed in the latest version.
 
 ## Backlog Features
+- Custom titles/descriptions/metadata.
+- Track and share your generated ebooks.
+- Shared book info pages.
+- Firefox and Safari extensions.
 - Integration with [OneTab](https://chrome.google.com/webstore/detail/onetab/chphlpgkkbolifaimnlloiipkdnihall?hl=en)
-- Ability to share generated ebooks.
-- Ability to view created book metadata.
-- Custom titles/descriptions.
 - *< insert your idea here >*
