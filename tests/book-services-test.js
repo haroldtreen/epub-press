@@ -10,7 +10,7 @@ const fs = require('fs');
 require('sinon-as-promised');
 
 const urls = ['http://www.a.com', 'http://www.b.com'];
-const html = '<html><title>HTML</title><body><p>This is great.</p><p>Hello World you</p></body></html>';
+const html = fs.readFileSync(`${__dirname}/fixtures/article.html`).toString();
 let book;
 
 const fixturesPath = './tests/fixtures';
@@ -93,12 +93,22 @@ describe('Book Services', () => {
         });
 
         it('can extract html content', (done) => {
-            const section = { html };
+            const section = { html, url: 'http://test.com' };
 
             BookServices.extractSectionContent(section).then((extractedSection) => {
-                assert.equal(extractedSection.title, 'HTML');
+                assert.equal(extractedSection.title, 'Article');
                 assert.include(extractedSection.content, `<h1>${extractedSection.title}</h1>`);
 
+                done();
+            }).catch(done);
+        });
+
+        it('can gracefully handle no content found', (done) => {
+            const section = { html: '<html></html>', url: 'http://test.com' };
+
+            BookServices.extractSectionContent(section).then((extractedSection) => {
+                assert.match(extractedSection.content, /support@epub\.press/);
+                assert.match(extractedSection.content, /<h1>/);
                 done();
             }).catch(done);
         });
