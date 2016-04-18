@@ -21,21 +21,46 @@ describe('HTML Processor', () => {
     });
 
     describe('Filter methods', () => {
-        it('can filter script tags', () => {
-            const content = fs.readFileSync(`${fixturesPath}/scripts.html`).toString();
-            const filteredContent = HtmlProcessor.cleanTags(content);
-            assert.notMatch(filteredContent, /<script>/);
-            assert.notMatch(filteredContent, /<\/script>/);
+        it('can remove elements from an HTML string', () => {
+            let html = fs.readFileSync(`${__dirname}/fixtures/scripts.html`).toString();
+
+            ['script', 'p', 'div'].forEach((tag) => {
+                assert.match(html, new RegExp(`<${tag}>`));
+                html = HtmlProcessor.removeElement(tag, html);
+                assert.notMatch(html, new RegExp(`<${tag}>`));
+            });
         });
 
-        it('can bubble up article contents', () => {
-            const content = fs.readFileSync(`${fixturesPath}/article.html`).toString();
-            const filteredContent = HtmlProcessor.cleanTags(content);
-            assert.notMatch(filteredContent, /<article>/);
-            assert.notMatch(filteredContent, /<\/article>/);
-            assert.match(filteredContent, /<div>/);
-            assert.match(filteredContent, /<p>/);
-            assert.match(filteredContent, /First/);
+        it('can bubble up tag content', () => {
+            let html = fs.readFileSync(`${__dirname}/fixtures/article.html`).toString();
+
+            assert.match(html, /article/);
+            const articleContents = html.match(/<article>((.|\s)*)<\/article>/m)[1];
+            html = HtmlProcessor.replaceWithChildren('article', html);
+            assert.include(html, articleContents);
+            assert.notMatch(html, /<article>/);
+        });
+
+        it('can maximize element size', () => {
+            let html = fs.readFileSync(`${__dirname}/fixtures/images.html`).toString();
+
+            assert.notMatch(html, /100%/);
+            html = HtmlProcessor.maximizeSize('img', html);
+            assert.match(html, /100%/);
+        });
+
+        it('can remmove non ebook friendly attributes', () => {
+            let html = fs.readFileSync(`${__dirname}/fixtures/invalid-attributes.html`).toString();
+
+            ['srcset', 'property', 'style', 'itemprop'].forEach((attr) =>
+                assert.match(html, new RegExp(attr))
+            );
+
+            html = HtmlProcessor.removeInvalidAttributes('div', html);
+
+            ['srcset', 'property', 'style', 'itemprop'].forEach((attr) =>
+                assert.notMatch(html, new RegExp(attr))
+            );
         });
     });
 

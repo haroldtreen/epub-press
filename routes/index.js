@@ -61,8 +61,7 @@ router.post('/api/books', (req, res) => {
             return BookServices.extractSectionsContent(updatedBook);
         }).then((updatedBook) => {
             console.log('Downloading Images');
-            const filteredBook = BookServices.filterSectionsContent(updatedBook);
-            return BookServices.localizeSectionsImages(filteredBook);
+            return BookServices.localizeSectionsImages(updatedBook);
         }).then((updatedBook) => {
             console.log('Converting contents');
             return BookServices.convertSectionsContent(updatedBook);
