@@ -62,6 +62,27 @@ describe('HTML Processor', () => {
                 assert.notMatch(html, new RegExp(attr))
             );
         });
+
+        it('can remove divs with certain classes and ids', () => {
+            let html = fs.readFileSync(`${__dirname}/fixtures/popups.html`).toString();
+
+            html = HtmlProcessor.filterDivs('popup', html);
+            assert.notMatch(html, /popup/);
+            assert.match(html, /banner/);
+            assert.match(html, /advertisement/);
+
+            html = HtmlProcessor.filterDivs(['banner', 'advertisement'], html);
+            assert.notMatch(html, /banner/);
+            assert.notMatch(html, /advertisement/);
+        });
+
+        it('can replace divs with children', () => {
+            let html = fs.readFileSync(`${__dirname}/fixtures/wrappers.html`).toString();
+
+            html = HtmlProcessor.replaceDivsWithChildren(['wrapper'], html);
+            assert.notMatch(html, /wrapper/);
+            assert.match(html, /content/);
+        });
     });
 
     describe('Image Extraction', () => {

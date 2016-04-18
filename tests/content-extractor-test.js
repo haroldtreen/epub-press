@@ -18,7 +18,7 @@ describe('Content Extractor', () => {
                 );
                 done();
             }).catch(done);
-        });
+        }).timeout(2500);
     });
 
     describe('preprocess', () => {
