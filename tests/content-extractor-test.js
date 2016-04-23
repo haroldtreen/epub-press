@@ -19,6 +19,16 @@ describe('Content Extractor', () => {
                 done();
             }).catch(done);
         }).timeout(2500);
+
+		it('can extract a blogspot article', (done) => {
+			ContentExtractor.extract(
+				fs.readFileSync(`${__dirname}/fixtures/articles/blogspot.html`).toString()
+			).then((article) => {
+				assert.include(article.content, 'End the life of the hardware (brick it)');
+				assert.include(article.content, 'Anytime you work on a software project,');
+				done();
+			}).catch(done);
+		}).timeout(2500);
     });
 
     describe('preprocess', () => {
