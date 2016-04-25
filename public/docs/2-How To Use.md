@@ -1,6 +1,6 @@
 # How To Use
 
-1. Open all the sites for your book in separate tabs.
+1. Open all of your favorite sites in separate tabs.
   ![tabs](./docs/images/tabs.jpg)
 1. Arrange them in the order they should appear in the book.
 1. Click the EpubPress icon.  
@@ -9,7 +9,7 @@
   ![list](./docs/images/list.jpg)
 1. Click **Download**
 
-Your selected articles will be stitched together and downloaded as an ebook!
+Your selected articles will be published together and downloaded as an ebook!
 
 ## Settings
 
@@ -21,8 +21,7 @@ Describes the type of eReader file to create.
 - **.mobi**: Kindle compatible type.
 
 ### Email
-By entering an email, your ebook will be emailed instead of downloaded.
-This is useful for eReaders that support delivering ebooks by email.
+If your eReader delivers books by email, you can enter your email address through the settings menu.
 
 Books will be delivered by **epubpress@gmail.com**.
 
