@@ -1,0 +1,1165 @@
+<html lang="en-us" class="global desktop"><head><script async="" defer="true" src="https://static.olark.com/jsclient/jquery.js"></script><script async="" defer="true" src="https://api.olark.com/2.0/sites/1356-750-10-5709/visits?_callback=_olark_callback_ca04b2c2_e325_4a85_b2de_5d790d011083&amp;_method=POST&amp;_data=%7B%22conversation_id%22%3A%22isSZh9CFJbERfPDR9851DcAEJU4QLE0A%22%2C%22cache%22%3A%220.21194247415167244%22%7D"></script><script async="" src="//connect.facebook.net/en_US/fbds.js"></script><script type="text/javascript" async="" src="//munchkin.marketo.net/151/munchkin.js"></script><script type="text/javascript" async="" src="https://www.google-analytics.com/plugins/ua/linkid.js"></script><script type="text/javascript" async="" src="//www.googleadservices.com/pagead/conversion_async.js"></script><script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script async="" src="//www.googletagmanager.com/gtm.js?id=GTM-58RLH5"></script><meta name="viewport" content="user-scalable=no,width=device-width,initial-scale=1"><style type="text/css">html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}table{border-collapse:collapse;border-spacing:0}body{-webkit-text-size-adjust:none}</style><style type="text/css">*,*:before,*:after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}</style><meta name="viewport" content="initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Cluster Health</title><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"><link rel="home" href="index.html" title="Elasticsearch Reference [2.3]"><link rel="up" href="_exploring_your_cluster.html" title="Exploring Your Cluster"><link rel="prev" href="_exploring_your_cluster.html" title="Exploring Your Cluster"><link rel="next" href="_list_all_indices.html" title="List All Indices"><meta name="DC.type" content="Docs/Elasticsearch/Reference/2.3">
+
+ 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+ 	<!-- RTP tag -->
+	<script async="" type="text/javascript" src="//sjrtp2-cdn.marketo.com/rtp-api/v1/rtp.js?aid=elasticco"></script><script type="text/javascript" async="">
+	(function(c,h,a,f,i,e){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+	 c[a].a=i;c[a].e=e;var g=h.createElement("script");g.async=true;g.type="text/javascript";
+	 g.src=f+'?aid='+i;var b=h.getElementsByTagName("script")[0];b.parentNode.insertBefore(g,b);
+	 })(window,document,"rtp","//sjrtp2-cdn.marketo.com/rtp-api/v1/rtp.js","elasticco");
+
+	rtp('send','view');
+	rtp('get', 'campaign',true);
+	</script>
+	<!-- End of RTP tag -->
+
+
+ 	<link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192">
+<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#ffffff">
+<meta name="apple-mobile-web-app-title" content="Elastic">
+<meta name="application-name" content="Elastic">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/mstile-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+<!-- DC tags section -->
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<link rel="schema.DCTERMS" href="http://purl.org/dc/terms/">
+
+
+<!-- end DC tags -->
+
+	<meta name="description" content="">
+
+	<link rel="canonical" href="">
+
+	<meta property="og:image" content="https://www.elastic.co/static/img/elastic-logo-200.png">
+
+
+
+
+
+
+	<link type="text/css" rel="stylesheet" href="https://static-www.elastic.co/static/css/skel.css?q=142">
+	<link type="text/css" rel="stylesheet" href="https://static-www.elastic.co/static/css/style.css?q=142">
+	<style type="text/css">.row{border-bottom:solid 1px transparent}.row>*{float:left}.row:after,.row:before{content:"";display:block;clear:both;height:0}.row.uniform>*>:first-child{margin-top:0}.row.uniform>*>:last-child{margin-bottom:0}.\31 2u,.\31 2u\24{width:100%;clear:none;margin-left:0}.\31 1u,.\31 1u\24{width:91.6666666667%;clear:none;margin-left:0}.\31 0u,.\31 0u\24{width:83.3333333333%;clear:none;margin-left:0}.\39 u,.\39 u\24{width:75%;clear:none;margin-left:0}.\38 u,.\38 u\24{width:66.6666666667%;clear:none;margin-left:0}.\37 u,.\37 u\24{width:58.3333333333%;clear:none;margin-left:0}.\36 u,.\36 u\24{width:50%;clear:none;margin-left:0}.\35 u,.\35 u\24{width:41.6666666667%;clear:none;margin-left:0}.\34 u,.\34 u\24{width:33.3333333333%;clear:none;margin-left:0}.\33 u,.\33 u\24{width:25%;clear:none;margin-left:0}.\32 u,.\32 u\24{width:16.6666666667%;clear:none;margin-left:0}.\31 u,.\31 u\24{width:8.3333333333%;clear:none;margin-left:0}.\31 2u\24+*,.\31 1u\24+*,.\31 0u\24+*,.\39 u\24+*,.\38 u\24+*,.\37 u\24+*,.\36 u\24+*,.\35 u\24+*,.\34 u\24+*,.\33 u\24+*,.\32 u\24+*,.\31 u\24+*{clear:left;}.\-11u{margin-left:91.6666666667%}.\-10u{margin-left:83.3333333333%}.\-9u{margin-left:75%}.\-8u{margin-left:66.6666666667%}.\-7u{margin-left:58.3333333333%}.\-6u{margin-left:50%}.\-5u{margin-left:41.6666666667%}.\-4u{margin-left:33.3333333333%}.\-3u{margin-left:25%}.\-2u{margin-left:16.6666666667%}.\-1u{margin-left:8.3333333333%}</style><style type="text/css">.container{margin-left:auto;margin-right:auto;width:95%}.container.\31 25\25{width:100%;max-width:118.75%;min-width:95%}.container.\37 5\25{width:71.25%}.container.\35 0\25{width:47.5%}.container.\32 5\25{width:23.75%}</style><style type="text/css">.row>*{padding:40px 0 0 40px}.row{margin:-40px 0 -1px -40px}.row.uniform>*{padding:40px 0 0 40px}.row.uniform{margin:-40px 0 -1px -40px}.row.\32 00\25>*{padding:80px 0 0 80px}.row.\32 00\25{margin:-80px 0 -1px -80px}.row.uniform.\32 00\25>*{padding:80px 0 0 80px}.row.uniform.\32 00\25{margin:-80px 0 -1px -80px}.row.\31 50\25>*{padding:60px 0 0 60px}.row.\31 50\25{margin:-60px 0 -1px -60px}.row.uniform.\31 50\25>*{padding:60px 0 0 60px}.row.uniform.\31 50\25{margin:-60px 0 -1px -60px}.row.\35 0\25>*{padding:20px 0 0 20px}.row.\35 0\25{margin:-20px 0 -1px -20px}.row.uniform.\35 0\25>*{padding:20px 0 0 20px}.row.uniform.\35 0\25{margin:-20px 0 -1px -20px}.row.\32 5\25>*{padding:10px 0 0 10px}.row.\32 5\25{margin:-10px 0 -1px -10px}.row.uniform.\32 5\25>*{padding:10px 0 0 10px}.row.uniform.\32 5\25{margin:-10px 0 -1px -10px}.row.\30 \25>*{padding:0}.row.\30 \25{margin:0 0 -1px 0}</style><style type="text/css">.\31 2u\28 global\29,.\31 2u\24\28 global\29{width:100%;clear:none;margin-left:0}.\31 1u\28 global\29,.\31 1u\24\28 global\29{width:91.6666666667%;clear:none;margin-left:0}.\31 0u\28 global\29,.\31 0u\24\28 global\29{width:83.3333333333%;clear:none;margin-left:0}.\39 u\28 global\29,.\39 u\24\28 global\29{width:75%;clear:none;margin-left:0}.\38 u\28 global\29,.\38 u\24\28 global\29{width:66.6666666667%;clear:none;margin-left:0}.\37 u\28 global\29,.\37 u\24\28 global\29{width:58.3333333333%;clear:none;margin-left:0}.\36 u\28 global\29,.\36 u\24\28 global\29{width:50%;clear:none;margin-left:0}.\35 u\28 global\29,.\35 u\24\28 global\29{width:41.6666666667%;clear:none;margin-left:0}.\34 u\28 global\29,.\34 u\24\28 global\29{width:33.3333333333%;clear:none;margin-left:0}.\33 u\28 global\29,.\33 u\24\28 global\29{width:25%;clear:none;margin-left:0}.\32 u\28 global\29,.\32 u\24\28 global\29{width:16.6666666667%;clear:none;margin-left:0}.\31 u\28 global\29,.\31 u\24\28 global\29{width:8.3333333333%;clear:none;margin-left:0}.\31 2u\24\28 global\29+*,.\31 1u\24\28 global\29+*,.\31 0u\24\28 global\29+*,.\39 u\24\28 global\29+*,.\38 u\24\28 global\29+*,.\37 u\24\28 global\29+*,.\36 u\24\28 global\29+*,.\35 u\24\28 global\29+*,.\34 u\24\28 global\29+*,.\33 u\24\28 global\29+*,.\32 u\24\28 global\29+*,.\31 u\24\28 global\29+*{clear:left;}.\-11u\28 global\29{margin-left:91.6666666667%}.\-10u\28 global\29{margin-left:83.3333333333%}.\-9u\28 global\29{margin-left:75%}.\-8u\28 global\29{margin-left:66.6666666667%}.\-7u\28 global\29{margin-left:58.3333333333%}.\-6u\28 global\29{margin-left:50%}.\-5u\28 global\29{margin-left:41.6666666667%}.\-4u\28 global\29{margin-left:33.3333333333%}.\-3u\28 global\29{margin-left:25%}.\-2u\28 global\29{margin-left:16.6666666667%}.\-1u\28 global\29{margin-left:8.3333333333%}.\31 2u\28 desktop\29,.\31 2u\24\28 desktop\29{width:100%;clear:none;margin-left:0}.\31 1u\28 desktop\29,.\31 1u\24\28 desktop\29{width:91.6666666667%;clear:none;margin-left:0}.\31 0u\28 desktop\29,.\31 0u\24\28 desktop\29{width:83.3333333333%;clear:none;margin-left:0}.\39 u\28 desktop\29,.\39 u\24\28 desktop\29{width:75%;clear:none;margin-left:0}.\38 u\28 desktop\29,.\38 u\24\28 desktop\29{width:66.6666666667%;clear:none;margin-left:0}.\37 u\28 desktop\29,.\37 u\24\28 desktop\29{width:58.3333333333%;clear:none;margin-left:0}.\36 u\28 desktop\29,.\36 u\24\28 desktop\29{width:50%;clear:none;margin-left:0}.\35 u\28 desktop\29,.\35 u\24\28 desktop\29{width:41.6666666667%;clear:none;margin-left:0}.\34 u\28 desktop\29,.\34 u\24\28 desktop\29{width:33.3333333333%;clear:none;margin-left:0}.\33 u\28 desktop\29,.\33 u\24\28 desktop\29{width:25%;clear:none;margin-left:0}.\32 u\28 desktop\29,.\32 u\24\28 desktop\29{width:16.6666666667%;clear:none;margin-left:0}.\31 u\28 desktop\29,.\31 u\24\28 desktop\29{width:8.3333333333%;clear:none;margin-left:0}.\31 2u\24\28 desktop\29+*,.\31 1u\24\28 desktop\29+*,.\31 0u\24\28 desktop\29+*,.\39 u\24\28 desktop\29+*,.\38 u\24\28 desktop\29+*,.\37 u\24\28 desktop\29+*,.\36 u\24\28 desktop\29+*,.\35 u\24\28 desktop\29+*,.\34 u\24\28 desktop\29+*,.\33 u\24\28 desktop\29+*,.\32 u\24\28 desktop\29+*,.\31 u\24\28 desktop\29+*{clear:left;}.\-11u\28 desktop\29{margin-left:91.6666666667%}.\-10u\28 desktop\29{margin-left:83.3333333333%}.\-9u\28 desktop\29{margin-left:75%}.\-8u\28 desktop\29{margin-left:66.6666666667%}.\-7u\28 desktop\29{margin-left:58.3333333333%}.\-6u\28 desktop\29{margin-left:50%}.\-5u\28 desktop\29{margin-left:41.6666666667%}.\-4u\28 desktop\29{margin-left:33.3333333333%}.\-3u\28 desktop\29{margin-left:25%}.\-2u\28 desktop\29{margin-left:16.6666666667%}.\-1u\28 desktop\29{margin-left:8.3333333333%}</style><style type="text/css">.not-global,.not-desktop{display:none!important}.only-ipad1024,.only-medium,.only-small,.only-xsmall{display:none!important}</style><script src="https://static-www.elastic.co/static/js/skel.min.js?q=142"></script><style type="text/css"></style>
+
+		<script type="text/javascript">form_name = "" ; cdn_url="https://static-www.elastic.co";cdn_slug = "142"</script>
+
+	<script src="https://static-www.elastic.co/static/js/init.js?q=142"></script>
+	<script src="https://static-www.elastic.co/static/js/jquery.min.js?q=142"></script>
+	<script src="https://static-www.elastic.co/static/js/jquery.cookie.js?q=142"></script>
+	<!--<script type="text/javascript">
+	    (function() {
+	        var path = '//easy.myfonts.net/v2/js?sid=10336(font-family=Avenir+35+Light)&sid=10338(font-family=Avenir+55+Roman)&sid=10340(font-family=Avenir+85+Heavy)&sid=10344(font-family=Avenir+65+Medium)&key=nAD6PCOPrX',
+	            protocol = ('https:' == document.location.protocol ? 'https:' : 'http:'),
+	            trial = document.createElement('script');
+	        trial.type = 'text/javascript';
+	        trial.async = true;
+	        trial.src = protocol + path;
+	        var head = document.getElementsByTagName("head")[0];
+	        head.appendChild(trial);
+	    })();
+	</script>-->
+
+	<link type="text/css" rel="stylesheet" href="/static/css/prettify.css">
+	<script type="text/javascript" src="/static/js/prettify.js"></script>
+
+
+
+<link rel="stylesheet" type="text/css" href="styles.css">
+
+<style type="text/css" id="rtpInzoneIdsStyle">#rtpcontainer,#banner,#rtpcontainer,#rtpcontainer { visibility: visible; }</style><link type="text/css" href="https://rtp-static.marketo.com/rtp/libs/jquery-ui-insightera-custom-1.8.css" rel="stylesheet"><link rel="stylesheet" type="text/css" href="https://google-code-prettify.googlecode.com/svn/loader/prettify.css"><script type="text/javascript" async="" src="//munchkin.marketo.net/munchkin.js"></script><link id="mktoForms2BaseStyle" rel="stylesheet" type="text/css" href="https://app-lon02.marketo.com/js/forms2/css/forms2.css"><link id="mktoForms2ThemeStyle" rel="stylesheet" type="text/css" href="https://app-lon02.marketo.com/js/forms2/css/forms2-theme-plain.css"><script src="https://static.olark.com/jsclient-bucket1/application2.js?v=1460051891937" async="" defer="" data-cfasync="false"></script><style type="text/css">.olark-key,#hbl_code,#olark-data{display: none !important;}</style><link id="habla_style_div" type="text/css" rel="stylesheet" href="https://static.olark.com/css/3/9/3971c742ac2346c431f086113e61d518.css?https"><style type="text/css">#olk-b-10509 .cancel-button-olk-3310,#olk-b-10509 .referral-button-olk-3310{font-family:"Helvetica Neue",HelveticaNeue,Helvetica,Arial,sans-serif !important;font-size:14px !important;font-weight:bold !important;border-radius:3px !important;border:1px solid #d65129;-webkit-font-smoothing:antialiased;width:80% !important;padding:10px 15px !important;margin-bottom:10px !important;transition:.03s;}#olk-b-10509 .cancel-button-olk-3310:hover,#olk-b-10509 .referral-button-olk-3310:hover{border:1px solid #c14925}#olk-b-10509 .cancel-button-olk-3310:focus,#olk-b-10509 .referral-button-olk-3310:focus{outline:0}#olk-b-10509{width:100% !important;display:inline-block !important}#olk-b-10509 .wrapper-olk-3310{background:#fff;border-left:1px solid #ededed;border-right:1px solid #ededed;text-align:center;width:100%;position:absolute;top:34px;right:0;bottom:0;left:0;padding:10px;box-sizing:border-box;overflow-y:auto}#olk-b-10509 .description-olk-3310{font-size:14px;font-family:"Helvetica Neue",HelveticaNeue,Helvetica,Arial,sans-serif;line-height:1.4em;margin:0 0 15px}#olk-b-10509 .cancel-button-olk-3310{background:#d65129;color:#fff;}#olk-b-10509 .cancel-button-olk-3310:hover{background:#c14925}#olk-b-10509 .referral-button-olk-3310{background:#fff;color:#d65129;}#olk-b-10509 .referral-button-olk-3310:hover{color:#c14925}#olk-b-10509 .brand-olk-3310{color:#a6aeb0 !important;font-family:"Helvetica Neue",HelveticaNeue,Helvetica,Arial,sans-serif !important;padding:0 !important;font-size:11px !important;margin:0 0 5px 10px !important;display:inline-block !important;transition:.03s;}#olk-b-10509 .brand-olk-3310:hover{color:#d65129 !important}</style><style type="text/css">@media print {#habla_beta_container_do_not_rely_on_div_classes_or_names {display: none !important}}</style></head>
+<body><div id="olark" style="display: none;"><olark><iframe frameborder="0" id="olark-loader"></iframe></olark></div>
+	<!-- Google Tag Manager -->
+	<script>dataLayer = [];</script><noscript>&lt;iframe src="//www.googletagmanager.com/ns.html?id=GTM-58RLH5"
+													  height="0" width="0" style="display:none;visibility:hidden"&gt;&lt;/iframe&gt;</noscript>
+	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+			j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+			'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+	})(window,document,'script','dataLayer','GTM-58RLH5');</script>
+	<!-- End Google Tag Manager -->
+	<!-- begin olark code -->
+	<script data-cfasync="false" type="text/javascript">/*<![CDATA[*/window.olark||(function(c){var f=window,d=document,l=f.location.protocol=="https:"?"https:":"http:",z=c.name,r="load";var nt=function(){
+	f[z]=function(){
+	(a.s=a.s||[]).push(arguments)};var a=f[z]._={
+	},q=c.methods.length;while(q--){(function(n){f[z][n]=function(){
+	f[z]("call",n,arguments)}})(c.methods[q])}a.l=c.loader;a.i=nt;a.p={
+	0:+new Date};a.P=function(u){
+	a.p[u]=new Date-a.p[0]};function s(){
+	a.P(r);f[z](r)}f.addEventListener?f.addEventListener(r,s,false):f.attachEvent("on"+r,s);var ld=function(){function p(hd){
+	hd="head";return["<",hd,"></",hd,"><",i,' onl' + 'oad="var d=',g,";d.getElementsByTagName('head')[0].",j,"(d.",h,"('script')).",k,"='",l,"//",a.l,"'",'"',"></",i,">"].join("")}var i="body",m=d[i];if(!m){
+	return setTimeout(ld,100)}a.P(1);var j="appendChild",h="createElement",k="src",n=d[h]("div"),v=n[j](d[h](z)),b=d[h]("iframe"),g="document",e="domain",o;n.style.display="none";m.insertBefore(n,m.firstChild).id=z;b.frameBorder="0";b.id=z+"-loader";if(/MSIE[ ]+6/.test(navigator.userAgent)){
+	b.src="javascript:false"}b.allowTransparency="true";v[j](b);try{
+	b.contentWindow[g].open()}catch(w){
+	c[e]=d[e];o="javascript:var d="+g+".open();d.domain='"+d.domain+"';";b[k]=o+"void(0);"}try{
+	var t=b.contentWindow[g];t.write(p());t.close()}catch(x){
+	b[k]=o+'d.write("'+p().replace(/"/g,String.fromCharCode(92)+'"')+'");d.close();'}a.P(2)};ld()};nt()})({
+	loader: "static.olark.com/jsclient/loader0.js",name:"olark",methods:["configure","extend","declare","identify"]});
+	/* custom configuration goes here (www.olark.com/documentation) */
+	olark.identify('1356-750-10-5709');/*]]>*/</script><noscript>&lt;a href="https://www.olark.com/site/1356-750-10-5709/contact" title="Contact us" target="_blank"&gt;Questions? Feedback?&lt;/a&gt; powered by &lt;a href="http://www.olark.com?welcome" title="Olark live chat software"&gt;Olark live chat software&lt;/a&gt;</noscript>
+	<!-- end olark code -->
+
+
+	<div class="header-cont">
+		<div id="header-wrapper">
+
+
+
+	<script src="/static/js/jquery.tokeninput.js?change=123"></script>
+	<link rel="stylesheet" type="text/css" href="/static/css/token-input.css">
+
+<div class="shortcuts-wrapper">
+	<div class="container">
+		<!-- Shortcuts -->
+		<nav id="shortcuts">
+			<ul class="links">
+
+
+
+
+
+
+
+
+
+
+
+					<li class="shortcut-1">
+
+
+
+						<a href="/downloads" id="header_downloads">
+							<span class="txt">downloads</span>
+						</a>
+
+					</li>
+
+
+
+
+
+
+
+
+
+
+
+					<li class="shortcut-2">
+
+
+
+						<a href="/guide" id="header_guide">
+							<span class="txt">docs</span>
+						</a>
+
+					</li>
+
+
+
+
+
+
+
+
+
+
+
+					<li class="shortcut-3">
+
+
+
+						<a href="/subscriptions" id="header_subscriptions">
+							<span class="txt">support</span>
+						</a>
+
+					</li>
+
+
+
+
+
+
+
+
+
+
+
+					<li class="shortcut-4">
+
+
+
+						<a href="https://discuss.elastic.co" id="header_forums" target="_blank">
+							<span class="txt">forums</span>
+						</a>
+
+					</li>
+
+
+
+
+
+
+
+
+
+
+
+
+					<li class="shortcut-5">
+
+
+
+						<a href="/contact?storm=global-header-en" id="header_contact">
+							<span class="txt">contact</span>
+						</a>
+
+					</li>
+
+			</ul>
+		</nav>
+		<div class="languages-wrapper">
+			<div class="global-language">
+				<ul class="language">
+
+						<li><a href="#">EN</a></li>
+
+				</ul>
+				<ul class="all-languages">
+
+
+
+
+						<li><a href="/">English</a></li>
+
+
+
+
+						<li><a href="/fr/">French</a></li>
+
+
+
+
+						<li><a href="/de/">German</a></li>
+
+
+
+
+						<li><a href="/jp/">Japanese</a></li>
+
+
+
+
+						<li><a href="/kr/">Korean</a></li>
+
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="container w100">
+	<div class="row 0%">
+		<div class="12u">
+
+
+<section class="first-container desktop-main-nav">
+	<div class="row 0%">
+		<div class="11u 6u(small) 6u(xsmall)">
+			<div id="elastic">
+				<h1>
+					<a href="/">
+						<div id="elastic-logo">
+						<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0" viewBox="-155 383.3 687.5 235.7" xml:space="preserve" enable-background="new -155 383.3 687.5 235.7"><path fill="#FFFFFF" d="M81.6 506.8c0-19.8-12.3-37.2-30.8-43.9 0.8-4.2 1.2-8.4 1.2-12.7 0-36.9-30-66.9-66.8-66.9 -21.6 0-41.6 10.3-54.2 27.7 -6.2-4.8-13.8-7.4-21.7-7.4 -19.6 0-35.5 15.9-35.5 35.5 0 4.3 0.8 8.5 2.2 12.4 -18.4 6.6-31 24.3-31 44 0 19.9 12.4 37.3 30.9 44 -0.8 4.1-1.2 8.4-1.2 12.7 0 36.8 29.9 66.7 66.7 66.7 21.6 0 41.6-10.4 54.1-27.8 6.2 4.9 13.8 7.6 21.7 7.6 19.6 0 35.5-15.9 35.5-35.5 0-4.3-0.8-8.5-2.2-12.4C68.9 544.2 81.6 526.5 81.6 506.8"></path><path fill="#FED10A" d="M-62 484.8l51.8 23.6L42 462.6c0.8-3.8 1.1-7.5 1.1-11.5 0-32.2-26.2-58.4-58.4-58.4 -19.3 0-37.2 9.5-48.1 25.4l-8.7 45.1L-62 484.8z"></path><path fill="#24BBB1" d="M-115.6 539.6c-0.8 3.8-1.1 7.7-1.1 11.7 0 32.3 26.3 58.5 58.6 58.5 19.4 0 37.5-9.6 48.4-25.6l8.6-44.9 -11.5-22 -52-23.7L-115.6 539.6z"></path><path fill="#EF5098" d="M-115.9 450l35.5 8.4 7.8-40.3c-4.8-3.7-10.8-5.7-17-5.7 -15.4 0-28 12.5-28 28C-117.6 443.7-117 447-115.9 450"></path><path fill="#17A8E0" d="M-119 458.5c-15.8 5.2-26.9 20.4-26.9 37.1 0 16.3 10.1 30.8 25.2 36.6l49.8-45 -9.1-19.5L-119 458.5z"></path><path fill="#93C83E" d="M-0.7 584.2c4.9 3.7 10.8 5.8 16.9 5.8 15.4 0 28-12.5 28-28 0-3.4-0.6-6.7-1.7-9.7L7.1 544 -0.7 584.2z"></path><path fill="#0779A1" d="M6.5 534.7l39 9.1c15.9-5.2 26.9-20.4 26.9-37.2 0-16.2-10.1-30.8-25.2-36.5l-51 44.7L6.5 534.7z"></path><path d="M175.8 548.8l4.7-0.5 0.3 9.6c-12.4 1.7-23 2.6-31.8 2.6 -11.7 0-20-3.4-24.9-10.2s-7.3-17.4-7.3-31.7c0-28.6 11.4-42.9 34.1-42.9 11 0 19.2 3.1 24.6 9.2s8.1 15.8 8.1 28.9l-0.7 9.3h-53.8c0 9 1.6 15.7 4.9 20 3.3 4.3 8.9 6.5 17 6.5C159.2 549.8 167.4 549.5 175.8 548.8zM171.4 513.5c0-10-1.6-17.1-4.8-21.2 -3.2-4.1-8.4-6.2-15.6-6.2s-12.7 2.2-16.3 6.5c-3.6 4.3-5.5 11.3-5.6 20.9H171.4z"></path><path d="M200.6 559V442h12.2v117H200.6z"></path><path d="M289.9 502.1v40.1c0 4.1 10.1 4.9 10.1 4.9l-0.6 10.8c-8.6 0-15.7 0.7-20-3.4 -9.8 4.3-19.5 6.1-29.3 6.1 -7.5 0-13.2-2.1-17.1-6.4 -3.9-4.2-5.9-10.3-5.9-18.3 0-7.9 2-13.8 6-17.5 4-3.7 10.3-6.1 18.9-6.9l25.6-2.4v-7c0-5.5-1.2-9.5-3.6-11.9 -2.4-2.4-5.7-3.6-9.8-3.6h-32.1v-10.8h31.3c9.2 0 15.9 2.1 20.1 6.4C287.8 486.4 289.9 493.1 289.9 502.1zM239.7 535.3c0 10 4.1 15 12.4 15 7.4 0 14.7-1.2 21.8-3.7l3.7-1.3v-26.9l-24.1 2.3c-4.9 0.4-8.4 1.8-10.6 4.2C240.7 527.3 239.7 530.8 239.7 535.3z"></path><path d="M337.6 486.7c-11.8 0-17.8 4.1-17.8 12.4 0 3.8 1.4 6.5 4.1 8.1s8.9 3.2 18.6 4.9c9.7 1.7 16.5 4 20.5 7.1 4 3 6 8.7 6 17.1 0 8.4-2.7 14.5-8.1 18.4 -5.4 3.9-13.2 5.9-23.6 5.9 -6.7 0-29.2-2.5-29.2-2.5l0.7-10.6c12.9 1.2 22.3 2.2 28.6 2.2 6.3 0 11.1-1 14.4-3s5-5.4 5-10.1 -1.4-7.9-4.2-9.6c-2.8-1.7-9-3.3-18.6-4.8s-16.4-3.7-20.4-6.7c-4-2.9-6-8.4-6-16.3 0-7.9 2.8-13.8 8.4-17.6 5.6-3.8 12.6-5.7 20.9-5.7 6.6 0 29.6 1.7 29.6 1.7v10.7C354.4 487.6 344.5 486.7 337.6 486.7z"></path><path d="M428 488.1h-25.9v39c0 9.3 0.7 15.5 2 18.4 1.4 2.9 4.6 4.4 9.7 4.4l14.5-1 0.8 10.1c-7.3 1.2-12.8 1.8-16.6 1.8 -8.5 0-14.3-2.1-17.6-6.2s-4.9-12-4.9-23.6v-42.9h-11.6v-10.6H390v-25h12.1v24.9H428V488.1z"></path><path d="M445 459v-14.1h12.2v14.2L445 459 445 459zM445 559v-81.5h12.2V559H445z"></path><path d="M510.2 475.8c3.6 0 9.7 0.7 18.3 2l3.9 0.5 -0.5 9.9c-8.7-1-15.1-1.5-19.2-1.5 -9.2 0-15.5 2.2-18.8 6.6s-5 12.6-5 24.5c0 11.9 1.5 20.2 4.6 24.9 3.1 4.7 9.5 7 19.3 7l19.2-1.5 0.5 10.1c-10.1 1.5-17.7 2.3-22.7 2.3 -12.7 0-21.5-3.3-26.3-9.8s-7.3-17.5-7.3-33 2.6-26.4 7.8-32.6C489.3 479 498 475.8 510.2 475.8z"></path></svg>
+						</div>
+					</a>
+				</h1>
+			</div>
+			<nav id="nav">
+				<ul>
+
+					<li>
+
+
+
+						<a href="/products" id="nav_products">Products</a>
+
+						<ul class="dropdown">
+
+								<li>
+
+
+
+										<a href="/products/elasticsearch" id="nav_elasticsearch">elasticsearch</a>
+
+								</li>
+
+								<li>
+
+
+
+										<a href="/cloud" id="nav_elasticsearch_as_a_service">elasticsearch as a service</a>
+
+								</li>
+
+								<li>
+
+
+
+										<a href="/products/logstash" id="nav_logstash">logstash</a>
+
+								</li>
+
+								<li>
+
+
+
+										<a href="/products/kibana" id="nav_kibana">kibana</a>
+
+								</li>
+
+								<li>
+
+
+
+										<a href="/products/beats" id="nav_beats">beats</a>
+
+								</li>
+
+								<li>
+
+
+
+										<a href="/products/watcher" id="nav_watcher">watcher</a>
+
+								</li>
+
+								<li>
+
+
+
+										<a href="/products/shield" id="nav_shield">shield</a>
+
+								</li>
+
+								<li>
+
+
+
+										<a href="/products/marvel" id="nav_marvel">marvel</a>
+
+								</li>
+
+								<li>
+
+
+
+										<a href="/products/graph" id="nav_graph">graph</a>
+
+								</li>
+
+								<li>
+
+
+
+										<a href="/products/hadoop" id="nav_hadoop">hadoop</a>
+
+								</li>
+
+								<li>
+
+
+
+										<a href="/downloads" id="nav_downloads">downloads</a>
+
+								</li>
+
+						</ul>
+					</li>
+
+					<li>
+
+
+
+						<a href="/cloud" id="nav_cloud">Cloud</a>
+
+						<ul class="dropdown">
+
+						</ul>
+					</li>
+
+					<li>
+
+
+
+						<a href="/subscriptions" id="nav_subscriptions">Subscriptions</a>
+
+						<ul class="dropdown">
+
+						</ul>
+					</li>
+
+					<li>
+
+
+
+						<a href="/learn" id="nav_learn">Learn</a>
+
+						<ul class="dropdown">
+
+								<li>
+
+
+
+										<a href="/guide" id="nav_guide">docs</a>
+
+								</li>
+
+								<li>
+
+
+
+										<a href="/videos" id="nav_videos">videos</a>
+
+								</li>
+
+								<li>
+
+
+
+										<a href="/training" id="nav_training">training</a>
+
+								</li>
+
+								<li>
+
+
+
+										<a href="/services" id="nav_services">services</a>
+
+								</li>
+
+								<li>
+
+
+
+										<a href="/blog" id="nav_learn_blog">blog</a>
+
+								</li>
+
+								<li>
+
+
+
+										<a href="/elasticon" id="nav_learn_elasticon">elastic{ON}</a>
+
+								</li>
+
+						</ul>
+					</li>
+
+					<li>
+
+
+
+						<a href="/community" id="nav_community">Community</a>
+
+						<ul class="dropdown">
+
+								<li>
+
+
+
+										<a href="/community/meetups" id="nav_meetups">meetups</a>
+
+								</li>
+
+								<li>
+
+
+
+										<a href="https://discuss.elastic.co" id="nav_forums" target="_blank">forums</a>
+
+								</li>
+
+								<li>
+
+
+
+										<a href="/community/codeofconduct" id="nav_codeofconduct">code of conduct</a>
+
+								</li>
+
+						</ul>
+					</li>
+
+					<li>
+
+
+
+						<a href="/use-cases" id="nav_usecases">Use Cases</a>
+
+						<ul class="dropdown">
+
+						</ul>
+					</li>
+
+					<li>
+
+
+
+						<a href="/blog" id="nav_blog" class="safari-apple">Blog</a>
+
+						<ul class="dropdown">
+
+								<li>
+
+
+
+										<a href="/blog/category/news" id="blog_news">News</a>
+
+								</li>
+
+								<li>
+
+
+
+										<a href="/blog/category/engineering" id="blog_engineering">Engineering</a>
+
+								</li>
+
+								<li>
+
+
+
+										<a href="/blog/category/user-stories" id="blog_user-stories">User Stories</a>
+
+								</li>
+
+								<li>
+
+
+
+										<a href="/blog/category/releases" id="blog_releases">Releases</a>
+
+								</li>
+
+								<li>
+
+
+
+										<a href="/blog/archive" id="blog_archive">Archive</a>
+
+								</li>
+
+						</ul>
+					</li>
+
+					<li>
+
+
+
+						<a href="/about" id="nav_about">About</a>
+
+						<ul class="dropdown">
+
+								<li>
+
+
+
+										<a href="/about/leadership" id="nav_leadership">leadership</a>
+
+								</li>
+
+								<li>
+
+
+
+										<a href="/about/board" id="nav_board">board of directors</a>
+
+								</li>
+
+								<li>
+
+
+
+										<a href="/about/careers" id="nav_careers">careers</a>
+
+								</li>
+
+								<li>
+
+
+
+										<a href="/about/partners" id="nav_partners">partners</a>
+
+								</li>
+
+								<li>
+
+
+
+										<a href="/about/press" id="nav_press">press</a>
+
+								</li>
+
+						</ul>
+					</li>
+
+				</ul>
+			</nav>
+		</div>
+		<div class="1u 6u(small) 6u(xsmall)">
+			<div id="searchbar">
+				<a href="#" class="button icon"></a>
+			</div>
+		</div>
+	</div>
+</section>
+<div class="mobile-menu-wrapper">
+	<div class="row 0%">
+		<div class="8u 6u(small) 6u(xsmall)">
+			<div id="elastic">
+				<h1>
+					<a href="/">
+						<div id="elastic-logo">
+						<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0" viewBox="-155 383.3 687.5 235.7" xml:space="preserve" enable-background="new -155 383.3 687.5 235.7"><path fill="#FFFFFF" d="M81.6 506.8c0-19.8-12.3-37.2-30.8-43.9 0.8-4.2 1.2-8.4 1.2-12.7 0-36.9-30-66.9-66.8-66.9 -21.6 0-41.6 10.3-54.2 27.7 -6.2-4.8-13.8-7.4-21.7-7.4 -19.6 0-35.5 15.9-35.5 35.5 0 4.3 0.8 8.5 2.2 12.4 -18.4 6.6-31 24.3-31 44 0 19.9 12.4 37.3 30.9 44 -0.8 4.1-1.2 8.4-1.2 12.7 0 36.8 29.9 66.7 66.7 66.7 21.6 0 41.6-10.4 54.1-27.8 6.2 4.9 13.8 7.6 21.7 7.6 19.6 0 35.5-15.9 35.5-35.5 0-4.3-0.8-8.5-2.2-12.4C68.9 544.2 81.6 526.5 81.6 506.8"></path><path fill="#FED10A" d="M-62 484.8l51.8 23.6L42 462.6c0.8-3.8 1.1-7.5 1.1-11.5 0-32.2-26.2-58.4-58.4-58.4 -19.3 0-37.2 9.5-48.1 25.4l-8.7 45.1L-62 484.8z"></path><path fill="#24BBB1" d="M-115.6 539.6c-0.8 3.8-1.1 7.7-1.1 11.7 0 32.3 26.3 58.5 58.6 58.5 19.4 0 37.5-9.6 48.4-25.6l8.6-44.9 -11.5-22 -52-23.7L-115.6 539.6z"></path><path fill="#EF5098" d="M-115.9 450l35.5 8.4 7.8-40.3c-4.8-3.7-10.8-5.7-17-5.7 -15.4 0-28 12.5-28 28C-117.6 443.7-117 447-115.9 450"></path><path fill="#17A8E0" d="M-119 458.5c-15.8 5.2-26.9 20.4-26.9 37.1 0 16.3 10.1 30.8 25.2 36.6l49.8-45 -9.1-19.5L-119 458.5z"></path><path fill="#93C83E" d="M-0.7 584.2c4.9 3.7 10.8 5.8 16.9 5.8 15.4 0 28-12.5 28-28 0-3.4-0.6-6.7-1.7-9.7L7.1 544 -0.7 584.2z"></path><path fill="#0779A1" d="M6.5 534.7l39 9.1c15.9-5.2 26.9-20.4 26.9-37.2 0-16.2-10.1-30.8-25.2-36.5l-51 44.7L6.5 534.7z"></path><path d="M175.8 548.8l4.7-0.5 0.3 9.6c-12.4 1.7-23 2.6-31.8 2.6 -11.7 0-20-3.4-24.9-10.2s-7.3-17.4-7.3-31.7c0-28.6 11.4-42.9 34.1-42.9 11 0 19.2 3.1 24.6 9.2s8.1 15.8 8.1 28.9l-0.7 9.3h-53.8c0 9 1.6 15.7 4.9 20 3.3 4.3 8.9 6.5 17 6.5C159.2 549.8 167.4 549.5 175.8 548.8zM171.4 513.5c0-10-1.6-17.1-4.8-21.2 -3.2-4.1-8.4-6.2-15.6-6.2s-12.7 2.2-16.3 6.5c-3.6 4.3-5.5 11.3-5.6 20.9H171.4z"></path><path d="M200.6 559V442h12.2v117H200.6z"></path><path d="M289.9 502.1v40.1c0 4.1 10.1 4.9 10.1 4.9l-0.6 10.8c-8.6 0-15.7 0.7-20-3.4 -9.8 4.3-19.5 6.1-29.3 6.1 -7.5 0-13.2-2.1-17.1-6.4 -3.9-4.2-5.9-10.3-5.9-18.3 0-7.9 2-13.8 6-17.5 4-3.7 10.3-6.1 18.9-6.9l25.6-2.4v-7c0-5.5-1.2-9.5-3.6-11.9 -2.4-2.4-5.7-3.6-9.8-3.6h-32.1v-10.8h31.3c9.2 0 15.9 2.1 20.1 6.4C287.8 486.4 289.9 493.1 289.9 502.1zM239.7 535.3c0 10 4.1 15 12.4 15 7.4 0 14.7-1.2 21.8-3.7l3.7-1.3v-26.9l-24.1 2.3c-4.9 0.4-8.4 1.8-10.6 4.2C240.7 527.3 239.7 530.8 239.7 535.3z"></path><path d="M337.6 486.7c-11.8 0-17.8 4.1-17.8 12.4 0 3.8 1.4 6.5 4.1 8.1s8.9 3.2 18.6 4.9c9.7 1.7 16.5 4 20.5 7.1 4 3 6 8.7 6 17.1 0 8.4-2.7 14.5-8.1 18.4 -5.4 3.9-13.2 5.9-23.6 5.9 -6.7 0-29.2-2.5-29.2-2.5l0.7-10.6c12.9 1.2 22.3 2.2 28.6 2.2 6.3 0 11.1-1 14.4-3s5-5.4 5-10.1 -1.4-7.9-4.2-9.6c-2.8-1.7-9-3.3-18.6-4.8s-16.4-3.7-20.4-6.7c-4-2.9-6-8.4-6-16.3 0-7.9 2.8-13.8 8.4-17.6 5.6-3.8 12.6-5.7 20.9-5.7 6.6 0 29.6 1.7 29.6 1.7v10.7C354.4 487.6 344.5 486.7 337.6 486.7z"></path><path d="M428 488.1h-25.9v39c0 9.3 0.7 15.5 2 18.4 1.4 2.9 4.6 4.4 9.7 4.4l14.5-1 0.8 10.1c-7.3 1.2-12.8 1.8-16.6 1.8 -8.5 0-14.3-2.1-17.6-6.2s-4.9-12-4.9-23.6v-42.9h-11.6v-10.6H390v-25h12.1v24.9H428V488.1z"></path><path d="M445 459v-14.1h12.2v14.2L445 459 445 459zM445 559v-81.5h12.2V559H445z"></path><path d="M510.2 475.8c3.6 0 9.7 0.7 18.3 2l3.9 0.5 -0.5 9.9c-8.7-1-15.1-1.5-19.2-1.5 -9.2 0-15.5 2.2-18.8 6.6s-5 12.6-5 24.5c0 11.9 1.5 20.2 4.6 24.9 3.1 4.7 9.5 7 19.3 7l19.2-1.5 0.5 10.1c-10.1 1.5-17.7 2.3-22.7 2.3 -12.7 0-21.5-3.3-26.3-9.8s-7.3-17.5-7.3-33 2.6-26.4 7.8-32.6C489.3 479 498 475.8 510.2 475.8z"></path></svg>
+						</div>
+					</a>
+				</h1>
+			</div>
+		</div>
+		<div class="4u 6u(small) 6u(xsmall) text-right">
+			<!-- <div class="mobile-menu-wrapper"> -->
+				<ul class="m-shortcuts">
+
+
+
+
+							<li><a href="#" class="m-search" id="header-search"></a></li>
+
+
+
+
+
+							<li><a href="/guide" class="m-docs" id="mobile-docs"></a></li>
+
+
+
+
+
+							<li><a href="/contact" class="m-contact" id="mobile-contact"></a></li>
+
+
+				</ul>
+				<nav class="nav-menu">
+					<div class="menu-button">
+						<span></span>
+					</div>
+					<div class="nav-menu-list-wrap" style="height: 1038px;">
+						<div class="nav-menu-list">
+
+								<h3><a href="/products" id="nav_products">Products</a></h3>
+
+								<ul>
+
+
+
+
+										<li><a href="/products/elasticsearch" id="nav_elasticsearch">elasticsearch</a></li>
+
+
+
+
+
+
+										<li><a href="/cloud" id="nav_elasticsearch_as_a_service">elasticsearch as a service</a></li>
+
+
+
+
+
+
+										<li><a href="/products/logstash" id="nav_logstash">logstash</a></li>
+
+
+
+
+
+
+										<li><a href="/products/kibana" id="nav_kibana">kibana</a></li>
+
+
+
+
+
+
+										<li><a href="/products/beats" id="nav_beats">beats</a></li>
+
+
+
+
+
+
+										<li><a href="/products/watcher" id="nav_watcher">watcher</a></li>
+
+
+
+
+
+
+										<li><a href="/products/shield" id="nav_shield">shield</a></li>
+
+
+
+
+
+
+										<li><a href="/products/marvel" id="nav_marvel">marvel</a></li>
+
+
+
+
+
+
+										<li><a href="/products/graph" id="nav_graph">graph</a></li>
+
+
+
+
+
+
+										<li><a href="/products/hadoop" id="nav_hadoop">hadoop</a></li>
+
+
+
+
+
+
+										<li><a href="/downloads" id="nav_downloads">downloads</a></li>
+
+
+
+								</ul>
+
+
+								<h3><a href="/cloud" id="nav_cloud">Cloud</a></h3>
+
+
+								<h3><a href="/subscriptions" id="nav_subscriptions">Subscriptions</a></h3>
+
+
+								<h3><a href="/learn" id="nav_learn">Learn</a></h3>
+
+								<ul>
+
+
+
+
+										<li><a href="/guide" id="nav_guide">docs</a></li>
+
+
+
+
+
+
+										<li><a href="/videos" id="nav_videos">videos</a></li>
+
+
+
+
+
+
+										<li><a href="/training" id="nav_training">training</a></li>
+
+
+
+
+
+
+										<li><a href="/services" id="nav_services">services</a></li>
+
+
+
+
+
+
+										<li><a href="/blog" id="nav_learn_blog">blog</a></li>
+
+
+
+
+
+
+										<li><a href="/elasticon" id="nav_learn_elasticon">elastic{ON}</a></li>
+
+
+
+								</ul>
+
+
+								<h3><a href="/community" id="nav_community">Community</a></h3>
+
+								<ul>
+
+
+
+
+										<li><a href="/community/meetups" id="nav_meetups">meetups</a></li>
+
+
+
+
+
+
+										<li><a href="https://discuss.elastic.co" id="nav_forums" target="_blank">forums</a></li>
+
+
+
+
+
+
+										<li><a href="/community/codeofconduct" id="nav_codeofconduct">code of conduct</a></li>
+
+
+
+								</ul>
+
+
+								<h3><a href="/use-cases" id="nav_usecases">Use Cases</a></h3>
+
+
+								<h3><a href="/blog" id="nav_blog">Blog</a></h3>
+
+								<ul>
+
+
+
+
+										<li><a href="/blog/category/news" id="blog_news">News</a></li>
+
+
+
+
+
+
+										<li><a href="/blog/category/engineering" id="blog_engineering">Engineering</a></li>
+
+
+
+
+
+
+										<li><a href="/blog/category/user-stories" id="blog_user-stories">User Stories</a></li>
+
+
+
+
+
+
+										<li><a href="/blog/category/releases" id="blog_releases">Releases</a></li>
+
+
+
+
+
+
+										<li><a href="/blog/archive" id="blog_archive">Archive</a></li>
+
+
+
+								</ul>
+
+
+								<h3><a href="/about" id="nav_about">About</a></h3>
+
+								<ul>
+
+
+
+
+										<li><a href="/about/leadership" id="nav_leadership">leadership</a></li>
+
+
+
+
+
+
+										<li><a href="/about/board" id="nav_board">board of directors</a></li>
+
+
+
+
+
+
+										<li><a href="/about/careers" id="nav_careers">careers</a></li>
+
+
+
+
+
+
+										<li><a href="/about/partners" id="nav_partners">partners</a></li>
+
+
+
+
+
+
+										<li><a href="/about/press" id="nav_press">press</a></li>
+
+
+
+								</ul>
+
+
+						</div>
+					</div>
+				</nav>
+			<!-- </div> -->
+		</div>
+	</div>
+</div>
+<!-- Mobile Menu -->
+
+
+		</div>
+	</div>
+</div>
+<div class="header-search-wrapper" style="display: none;">
+	<div class="container">
+		<div class="big-search">
+			<i class="big-search-icon"></i>
+			<form method="get" action="/search" autocomplete="on" name="searchForm" id="searchfrm">
+				<ul class="tags-wrapper">
+					<li class="section"><span class="bg-1">Docs/Elasticsearch/Reference/2.3</span></li><li class="search-field"><input type="text" class="form-control global-input" id="autocomplete" name="q" autocomplete="off"></li>
+				<input type="hidden" class="hiddenSection" name="section" value="Docs/Elasticsearch/Reference/2.3"></ul>
+			</form>
+			<a href="#" class="header-search-cancel"></a>
+		</div>
+		<div class="nav-auto-complete"><div class="autocomplete-suggestions" style="position: absolute; display: none; max-height: 300px; z-index: 99999;"></div></div>
+	</div>
+</div>
+<style>
+
+
+		.m-shortcuts li a.m-search {
+			background: url("https://static-www.elastic.co/assets/blt174b13be89ff803c/m-search-icon.png?q=142") no-repeat scroll center center rgba(0, 0, 0, 0);
+			background-size: contain;}
+
+		.m-shortcuts li a.m-docs {
+			background: url("https://static-www.elastic.co/assets/blt5ba03f594a7d610a/m-guide-icon.png?q=142") no-repeat scroll center center rgba(0, 0, 0, 0);
+			background-size: contain;}
+
+		.m-shortcuts li a.m-contact {
+			background: url("https://static-www.elastic.co/assets/blt38c3e853c4b1174d/m-contact-icon.png?q=142") no-repeat scroll center center rgba(0, 0, 0, 0);
+			background-size: contain;}
+
+</style>
+		</div>
+	</div>
+  	<div id="content">
+
+
+            <div id="pageheader">
+    <div class="container">
+        <header>
+            <h1><a href="/learn" title="Learn">Learn</a> |</h1>
+            <h2><a href="/guide" title="Docs">Docs</a></h2>
+        </header>
+    </div>
+</div>
+<section id="guide"><div id="rtpcontainer" style="display: block;">
+	<h3>Top Videos</h3>
+	<ul class="lists">
+		<li><a href="https://www.elastic.co/webinars/elasticsearch-2-0-overview?baymax=default&amp;elektra=docs&amp;storm=top-video">Getting Started</a></li>
+		<li><a href="http://www.elastic.co/webinars/elasticsearch-performance-optimization-tale-two-tickets/?elektra=docs">Scaling</a></li>
+		<li><a href="http://www.elastic.co/webinars/shield-securing-your-data-in-elasticsearch/?elektra=docs">Security</a></li>
+	</ul>
+</div>
+
+            <!-- start body -->
+<div class="breadcrumbs"><span class="breadcrumb-link"><a href="index.html">Elasticsearch Reference
+      [2.3]
+    </a></span> » <span class="breadcrumb-link"><a href="getting-started.html">Getting Started </a></span> » <span class="breadcrumb-link"><a href="_exploring_your_cluster.html">Exploring Your Cluster</a></span> » <span class="breadcrumb-node">Cluster Health</span></div><div class="navheader"><span class="prev"><a href="_exploring_your_cluster.html">
+              «&nbsp;
+              Exploring Your Cluster</a>
+          &nbsp;
+        </span><span class="next">
+          &nbsp;
+          <a href="_list_all_indices.html">List All Indices
+              &nbsp;»
+            </a></span></div><div class="section"><div class="titlepage"><div><div><h2 class="title"><a id="_cluster_health" href="#_cluster_health"></a>Cluster Health<a href="https://github.com/elastic/elasticsearch/edit/2.3/docs/reference/getting-started.asciidoc" class="edit_me" title="Edit this page on GitHub" rel="nofollow">edit</a></h2></div></div></div><div class="toc"><ul class="toc"><li id="book_title" class="collapsible"><span>Elasticsearch Reference: <select><option value="master">5.0.0-alpha1</option><option value="2.3" selected="">2.3 (current)</option><option value="2.2">2.2</option><option value="2.1">2.1</option><option value="2.0">2.0</option><option value="1.7">1.7</option><option value="1.6">1.6</option><option value="1.5">1.5</option><option value="1.4">1.4</option><option value="1.3">1.3</option><option value="0.90">0.90</option></select></span></li><li class="collapsible show"><span class="part"><a href="getting-started.html">Getting Started </a></span><ul><li><span class="chapter"><a href="_basic_concepts.html">Basic Concepts</a></span></li><li><span class="chapter"><a href="_installation.html">Installation</a></span></li><li class="collapsible show"><span class="chapter"><a href="_exploring_your_cluster.html">Exploring Your Cluster</a></span><ul><li><span class="section"><a href="_cluster_health.html">Cluster Health</a></span></li><li><span class="section"><a href="_list_all_indices.html">List All Indices</a></span></li><li><span class="section"><a href="_create_an_index.html">Create an Index</a></span></li><li><span class="section"><a href="_index_and_query_a_document.html">Index and Query a Document</a></span></li><li><span class="section"><a href="_delete_an_index.html">Delete an Index</a></span></li></ul></li><li class="collapsible"><span class="chapter"><a href="_modifying_your_data.html">Modifying Your Data</a></span><ul><li><span class="section"><a href="_updating_documents.html">Updating Documents</a></span></li><li><span class="section"><a href="_deleting_documents.html">Deleting Documents</a></span></li><li><span class="section"><a href="_batch_processing.html">Batch Processing</a></span></li></ul></li><li class="collapsible"><span class="chapter"><a href="_exploring_your_data.html">Exploring Your Data</a></span><ul><li><span class="section"><a href="_the_search_api.html">The Search API</a></span></li><li><span class="section"><a href="_introducing_the_query_language.html">Introducing the Query Language</a></span></li><li><span class="section"><a href="_executing_searches.html">Executing Searches</a></span></li><li><span class="section"><a href="_executing_filters.html">Executing Filters</a></span></li><li><span class="section"><a href="_executing_aggregations.html">Executing Aggregations</a></span></li></ul></li><li><span class="chapter"><a href="_conclusion.html">Conclusion</a></span></li></ul></li><li class="collapsible"><span class="part"><a href="setup.html">Setup </a></span><ul><li><span class="chapter"><a href="setup-configuration.html">Configuration</a></span></li><li><span class="chapter"><a href="setup-service.html">Running as a Service on Linux</a></span></li><li><span class="chapter"><a href="setup-service-win.html">Running as a Service on Windows</a></span></li><li><span class="chapter"><a href="setup-dir-layout.html">Directory Layout</a></span></li><li><span class="chapter"><a href="setup-repositories.html">Repositories</a></span></li><li class="collapsible"><span class="chapter"><a href="setup-upgrade.html">Upgrading</a></span><ul><li><span class="section"><a href="backup.html">Back Up Your Data!</a></span></li><li><span class="section"><a href="rolling-upgrades.html">Rolling upgrades</a></span></li><li><span class="section"><a href="restart-upgrade.html">Full cluster restart upgrade</a></span></li></ul></li></ul></li><li class="collapsible"><span class="part"><a href="breaking-changes.html">Breaking changes </a></span><ul><li><span class="chapter"><a href="breaking-changes-2.3.html">Breaking changes in 2.3</a></span></li><li class="collapsible"><span class="chapter"><a href="breaking-changes-2.2.html">Breaking changes in 2.2</a></span><ul><li><span class="section"><a href="float.html">Mapping APIs</a></span></li></ul></li><li class="collapsible"><span class="chapter"><a href="breaking-changes-2.1.html">Breaking changes in 2.1</a></span><ul><li><span class="section"><a href="breaking_21_search_changes.html">Search changes</a></span></li><li><span class="section"><a href="breaking_21_update_changes.html">Update changes</a></span></li><li><span class="section"><a href="breaking_21_index_apis.html">Index APIs</a></span></li><li><span class="section"><a href="breaking_21_removed_features.html">Removed features</a></span></li></ul></li><li class="collapsible"><span class="chapter"><a href="breaking-changes-2.0.html">Breaking changes in 2.0</a></span><ul><li><span class="section"><a href="breaking_20_removed_features.html">Removed features</a></span></li><li><span class="section"><a href="breaking_20_network_changes.html">Network changes</a></span></li><li><span class="section"><a href="breaking_20_multiple_literal_data_path_literal_striping.html">Multiple <code class="literal">path.data</code> striping</a></span></li><li><span class="section"><a href="breaking_20_mapping_changes.html">Mapping changes</a></span></li><li><span class="section"><a href="breaking_20_crud_and_routing_changes.html">CRUD and routing changes</a></span></li><li><span class="section"><a href="breaking_20_query_dsl_changes.html">Query DSL changes</a></span></li><li><span class="section"><a href="breaking_20_search_changes.html">Search changes</a></span></li><li><span class="section"><a href="breaking_20_aggregation_changes.html">Aggregation changes</a></span></li><li><span class="section"><a href="breaking_20_parent_child_changes.html">Parent/Child changes</a></span></li><li><span class="section"><a href="breaking_20_scripting_changes.html">Scripting changes</a></span></li><li><span class="section"><a href="breaking_20_index_api_changes.html">Index API changes</a></span></li><li><span class="section"><a href="breaking_20_snapshot_and_restore_changes.html">Snapshot and Restore changes</a></span></li><li><span class="section"><a href="breaking_20_plugin_and_packaging_changes.html">Plugin and packaging changes</a></span></li><li><span class="section"><a href="breaking_20_setting_changes.html">Setting changes</a></span></li><li><span class="section"><a href="breaking_20_stats_info_and_literal_cat_literal_changes.html">Stats, info, and <code class="literal">cat</code> changes</a></span></li><li><span class="section"><a href="breaking_20_java_api_changes.html">Java API changes</a></span></li></ul></li><li><span class="chapter"><a href="breaking-changes-1.6.html">Breaking changes in 1.6</a></span></li><li><span class="chapter"><a href="breaking-changes-1.4.html">Breaking changes in 1.4</a></span></li><li class="collapsible"><span class="chapter"><a href="breaking-changes-1.0.html">Breaking changes in 1.0</a></span><ul><li><span class="section"><a href="_system_and_settings.html">System and settings</a></span></li><li><span class="section"><a href="_stats_and_info_apis.html">Stats and Info APIs</a></span></li><li><span class="section"><a href="_indices_apis_2.html">Indices APIs</a></span></li><li><span class="section"><a href="_index_request.html">Index request</a></span></li><li><span class="section"><a href="_search_requests.html">Search requests</a></span></li><li><span class="section"><a href="_multi_fields.html">Multi-fields</a></span></li><li><span class="section"><a href="_stopwords.html">Stopwords</a></span></li><li><span class="section"><a href="_dates_without_years.html">Dates without years</a></span></li><li><span class="section"><a href="_parameters.html">Parameters</a></span></li><li><span class="section"><a href="_return_values.html">Return values</a></span></li><li><span class="section"><a href="_deprecations.html">Deprecations</a></span></li><li><span class="section"><a href="_percolator_2.html">Percolator</a></span></li></ul></li></ul></li><li class="collapsible"><span class="part"><a href="api-conventions.html">API Conventions </a></span><ul><li><span class="chapter"><a href="multi-index.html">Multiple Indices</a></span></li><li><span class="chapter"><a href="date-math-index-names.html">Date math support in index names</a></span></li><li><span class="chapter"><a href="common-options.html">Common options</a></span></li><li><span class="chapter"><a href="url-access-control.html">URL-based access control</a></span></li></ul></li><li class="collapsible"><span class="part"><a href="docs.html">Document APIs </a></span><ul><li><span class="chapter"><a href="docs-index_.html">Index API</a></span></li><li><span class="chapter"><a href="docs-get.html">Get API</a></span></li><li><span class="chapter"><a href="docs-delete.html">Delete API</a></span></li><li><span class="chapter"><a href="docs-update.html">Update API</a></span></li><li><span class="chapter"><a href="docs-update-by-query.html">Update By Query API</a></span></li><li><span class="chapter"><a href="docs-multi-get.html">Multi Get API</a></span></li><li><span class="chapter"><a href="docs-bulk.html">Bulk API</a></span></li><li><span class="chapter"><a href="docs-reindex.html">Reindex API</a></span></li><li><span class="chapter"><a href="docs-termvectors.html">Term Vectors</a></span></li><li><span class="chapter"><a href="docs-multi-termvectors.html">Multi termvectors API</a></span></li></ul></li><li class="collapsible"><span class="part"><a href="search.html">Search APIs </a></span><ul><li><span class="chapter"><a href="search-search.html">Search</a></span></li><li><span class="chapter"><a href="search-uri-request.html">URI Search</a></span></li><li class="collapsible"><span class="chapter"><a href="search-request-body.html">Request Body Search</a></span><ul><li><span class="section"><a href="search-request-query.html">Query</a></span></li><li><span class="section"><a href="search-request-from-size.html">From / Size</a></span></li><li><span class="section"><a href="search-request-sort.html">Sort</a></span></li><li><span class="section"><a href="search-request-source-filtering.html">Source filtering</a></span></li><li><span class="section"><a href="search-request-fields.html">Fields</a></span></li><li><span class="section"><a href="search-request-script-fields.html">Script Fields</a></span></li><li><span class="section"><a href="search-request-fielddata-fields.html">Field Data Fields</a></span></li><li><span class="section"><a href="search-request-post-filter.html">Post filter</a></span></li><li><span class="section"><a href="search-request-highlighting.html">Highlighting</a></span></li><li><span class="section"><a href="search-request-rescore.html">Rescoring</a></span></li><li><span class="section"><a href="search-request-search-type.html">Search Type</a></span></li><li><span class="section"><a href="search-request-scroll.html">Scroll</a></span></li><li><span class="section"><a href="search-request-preference.html">Preference</a></span></li><li><span class="section"><a href="search-request-explain.html">Explain</a></span></li><li><span class="section"><a href="search-request-version.html">Version</a></span></li><li><span class="section"><a href="search-request-index-boost.html">Index Boost</a></span></li><li><span class="section"><a href="search-request-min-score.html">min_score</a></span></li><li><span class="section"><a href="search-request-named-queries-and-filters.html">Named Queries</a></span></li><li><span class="section"><a href="search-request-inner-hits.html">Inner hits</a></span></li></ul></li><li><span class="chapter"><a href="search-template.html">Search Template</a></span></li><li><span class="chapter"><a href="search-shards.html">Search Shards API</a></span></li><li class="collapsible"><span class="chapter"><a href="search-suggesters.html">Suggesters</a></span><ul><li><span class="section"><a href="search-suggesters-term.html">Term suggester</a></span></li><li><span class="section"><a href="search-suggesters-phrase.html">Phrase Suggester</a></span></li><li><span class="section"><a href="search-suggesters-completion.html">Completion Suggester</a></span></li><li><span class="section"><a href="suggester-context.html">Context Suggester</a></span></li></ul></li><li><span class="chapter"><a href="search-multi-search.html">Multi Search API</a></span></li><li><span class="chapter"><a href="search-count.html">Count API</a></span></li><li><span class="chapter"><a href="search-exists.html">Search Exists API</a></span></li><li><span class="chapter"><a href="search-validate.html">Validate API</a></span></li><li><span class="chapter"><a href="search-explain.html">Explain API</a></span></li><li class="collapsible"><span class="chapter"><a href="search-profile.html">Profile API</a></span><ul><li><span class="section"><a href="_literal_query_literal_section.html"><code class="literal">query</code> Section</a></span></li><li><span class="section"><a href="_literal_collectors_literal_section.html"><code class="literal">collectors</code> Section</a></span></li><li><span class="section"><a href="_literal_rewrite_literal_section.html"><code class="literal">rewrite</code> Section</a></span></li><li><span class="section"><a href="_a_more_complex_example.html">A more complex example</a></span></li><li><span class="section"><a href="_performance_notes.html">Performance Notes</a></span></li><li><span class="section"><a href="_limitations.html">Limitations</a></span></li><li><span class="section"><a href="_understanding_multitermquery_output.html">Understanding MultiTermQuery output</a></span></li></ul></li><li><span class="chapter"><a href="search-percolate.html">Percolator</a></span></li><li><span class="chapter"><a href="search-field-stats.html">Field stats API</a></span></li></ul></li><li class="collapsible"><span class="part"><a href="search-aggregations.html">Aggregations </a></span><ul><li class="collapsible"><span class="chapter"><a href="search-aggregations-metrics.html">Metrics Aggregations</a></span><ul><li><span class="section"><a href="search-aggregations-metrics-avg-aggregation.html">Avg Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-metrics-cardinality-aggregation.html">Cardinality Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-metrics-extendedstats-aggregation.html">Extended Stats Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-metrics-geobounds-aggregation.html">Geo Bounds Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-metrics-geocentroid-aggregation.html">Geo Centroid Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-metrics-max-aggregation.html">Max Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-metrics-min-aggregation.html">Min Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-metrics-percentile-aggregation.html">Percentiles Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-metrics-percentile-rank-aggregation.html">Percentile Ranks Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-metrics-scripted-metric-aggregation.html">Scripted Metric Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-metrics-stats-aggregation.html">Stats Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-metrics-sum-aggregation.html">Sum Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-metrics-top-hits-aggregation.html">Top hits Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-metrics-valuecount-aggregation.html">Value Count Aggregation</a></span></li></ul></li><li class="collapsible"><span class="chapter"><a href="search-aggregations-bucket.html">Bucket Aggregations</a></span><ul><li><span class="section"><a href="search-aggregations-bucket-children-aggregation.html">Children Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-bucket-datehistogram-aggregation.html">Date Histogram Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-bucket-daterange-aggregation.html">Date Range Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-bucket-filter-aggregation.html">Filter Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-bucket-filters-aggregation.html">Filters Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-bucket-geodistance-aggregation.html">Geo Distance Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-bucket-geohashgrid-aggregation.html">GeoHash grid Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-bucket-global-aggregation.html">Global Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-bucket-histogram-aggregation.html">Histogram Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-bucket-iprange-aggregation.html">IPv4 Range Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-bucket-missing-aggregation.html">Missing Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-bucket-nested-aggregation.html">Nested Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-bucket-range-aggregation.html">Range Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-bucket-reverse-nested-aggregation.html">Reverse nested Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-bucket-sampler-aggregation.html">Sampler Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-bucket-significantterms-aggregation.html">Significant Terms Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-bucket-terms-aggregation.html">Terms Aggregation</a></span></li></ul></li><li class="collapsible"><span class="chapter"><a href="search-aggregations-pipeline.html">Pipeline Aggregations</a></span><ul><li><span class="section"><a href="search-aggregations-pipeline-avg-bucket-aggregation.html">Avg Bucket Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-pipeline-derivative-aggregation.html">Derivative Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-pipeline-max-bucket-aggregation.html">Max Bucket Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-pipeline-min-bucket-aggregation.html">Min Bucket Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-pipeline-sum-bucket-aggregation.html">Sum Bucket Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-pipeline-stats-bucket-aggregation.html">Stats Bucket Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-pipeline-extended-stats-bucket-aggregation.html">Extended Stats Bucket Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-pipeline-percentiles-bucket-aggregation.html">Percentiles Bucket Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-pipeline-movavg-aggregation.html">Moving Average Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-pipeline-cumulative-sum-aggregation.html">Cumulative Sum Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-pipeline-bucket-script-aggregation.html">Bucket Script Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-pipeline-bucket-selector-aggregation.html">Bucket Selector Aggregation</a></span></li><li><span class="section"><a href="search-aggregations-pipeline-serialdiff-aggregation.html">Serial Differencing Aggregation</a></span></li></ul></li><li><span class="chapter"><a href="caching-heavy-aggregations.html">Caching heavy aggregations</a></span></li><li><span class="chapter"><a href="returning-only-agg-results.html">Returning only aggregation results</a></span></li><li><span class="chapter"><a href="agg-metadata.html">Aggregation Metadata</a></span></li></ul></li><li class="collapsible"><span class="part"><a href="indices.html">Indices APIs </a></span><ul><li><span class="chapter"><a href="indices-create-index.html">Create Index</a></span></li><li><span class="chapter"><a href="indices-delete-index.html">Delete Index</a></span></li><li><span class="chapter"><a href="indices-get-index.html">Get Index</a></span></li><li><span class="chapter"><a href="indices-exists.html">Indices Exists</a></span></li><li><span class="chapter"><a href="indices-open-close.html">Open / Close Index API</a></span></li><li><span class="chapter"><a href="indices-put-mapping.html">Put Mapping</a></span></li><li><span class="chapter"><a href="indices-get-mapping.html">Get Mapping</a></span></li><li><span class="chapter"><a href="indices-get-field-mapping.html">Get Field Mapping</a></span></li><li><span class="chapter"><a href="indices-types-exists.html">Types Exists</a></span></li><li><span class="chapter"><a href="indices-aliases.html">Index Aliases</a></span></li><li><span class="chapter"><a href="indices-update-settings.html">Update Indices Settings</a></span></li><li><span class="chapter"><a href="indices-get-settings.html">Get Settings</a></span></li><li class="collapsible"><span class="chapter"><a href="indices-analyze.html">Analyze</a></span><ul><li><span class="section"><a href="_explain_analyze.html">Explain Analyze</a></span></li></ul></li><li><span class="chapter"><a href="indices-templates.html">Index Templates</a></span></li><li><span class="chapter"><a href="indices-warmers.html">Warmers</a></span></li><li class="collapsible"><span class="chapter"><a href="indices-shadow-replicas.html">Shadow replica indices</a></span><ul><li><span class="section"><a href="_node_level_settings_related_to_shadow_replicas.html">Node level settings related to shadow replicas</a></span></li></ul></li><li><span class="chapter"><a href="indices-stats.html">Indices Stats</a></span></li><li><span class="chapter"><a href="indices-segments.html">Indices Segments</a></span></li><li><span class="chapter"><a href="indices-recovery.html">Indices Recovery</a></span></li><li><span class="chapter"><a href="indices-shards-stores.html">Indices Shard Stores</a></span></li><li><span class="chapter"><a href="indices-clearcache.html">Clear Cache</a></span></li><li class="collapsible"><span class="chapter"><a href="indices-flush.html">Flush</a></span><ul><li><span class="section"><a href="indices-synced-flush.html">Synced Flush</a></span></li></ul></li><li><span class="chapter"><a href="indices-refresh.html">Refresh</a></span></li><li><span class="chapter"><a href="indices-forcemerge.html">Force Merge</a></span></li><li><span class="chapter"><a href="indices-optimize.html">Optimize</a></span></li><li><span class="chapter"><a href="indices-upgrade.html">Upgrade</a></span></li></ul></li><li class="collapsible"><span class="part"><a href="cat.html">cat APIs </a></span><ul><li><span class="chapter"><a href="cat-alias.html">cat aliases</a></span></li><li><span class="chapter"><a href="cat-allocation.html">cat allocation</a></span></li><li><span class="chapter"><a href="cat-count.html">cat count</a></span></li><li><span class="chapter"><a href="cat-fielddata.html">cat fielddata</a></span></li><li><span class="chapter"><a href="cat-health.html">cat health</a></span></li><li><span class="chapter"><a href="cat-indices.html">cat indices</a></span></li><li><span class="chapter"><a href="cat-master.html">cat master</a></span></li><li><span class="chapter"><a href="cat-nodeattrs.html">cat nodeattrs</a></span></li><li><span class="chapter"><a href="cat-nodes.html">cat nodes</a></span></li><li><span class="chapter"><a href="cat-pending-tasks.html">cat pending tasks</a></span></li><li><span class="chapter"><a href="cat-plugins.html">cat plugins</a></span></li><li><span class="chapter"><a href="cat-recovery.html">cat recovery</a></span></li><li><span class="chapter"><a href="cat-repositories.html">cat repositories</a></span></li><li><span class="chapter"><a href="cat-thread-pool.html">cat thread pool</a></span></li><li><span class="chapter"><a href="cat-shards.html">cat shards</a></span></li><li><span class="chapter"><a href="cat-segments.html">cat segments</a></span></li><li><span class="chapter"><a href="cat-snapshots.html">cat snapshots</a></span></li></ul></li><li class="collapsible"><span class="part"><a href="cluster.html">Cluster APIs </a></span><ul><li><span class="chapter"><a href="cluster-health.html">Cluster Health</a></span></li><li><span class="chapter"><a href="cluster-state.html">Cluster State</a></span></li><li><span class="chapter"><a href="cluster-stats.html">Cluster Stats</a></span></li><li><span class="chapter"><a href="cluster-pending.html">Pending cluster tasks</a></span></li><li><span class="chapter"><a href="cluster-reroute.html">Cluster Reroute</a></span></li><li><span class="chapter"><a href="cluster-update-settings.html">Cluster Update Settings</a></span></li><li><span class="chapter"><a href="cluster-nodes-stats.html">Nodes Stats</a></span></li><li><span class="chapter"><a href="cluster-nodes-info.html">Nodes Info</a></span></li><li><span class="chapter"><a href="tasks.html">Task Management API</a></span></li><li><span class="chapter"><a href="cluster-nodes-hot-threads.html">Nodes hot_threads</a></span></li></ul></li><li class="collapsible"><span class="part"><a href="query-dsl.html">Query DSL </a></span><ul><li><span class="chapter"><a href="query-filter-context.html">Query and filter context</a></span></li><li><span class="chapter"><a href="query-dsl-match-all-query.html">Match All Query</a></span></li><li class="collapsible"><span class="chapter"><a href="full-text-queries.html">Full text queries</a></span><ul><li><span class="section"><a href="query-dsl-match-query.html">Match Query</a></span></li><li><span class="section"><a href="query-dsl-multi-match-query.html">Multi Match Query</a></span></li><li><span class="section"><a href="query-dsl-common-terms-query.html">Common Terms Query</a></span></li><li><span class="section"><a href="query-dsl-query-string-query.html">Query String Query</a></span></li><li><span class="section"><a href="query-dsl-simple-query-string-query.html">Simple Query String Query</a></span></li></ul></li><li class="collapsible"><span class="chapter"><a href="term-level-queries.html">Term level queries</a></span><ul><li><span class="section"><a href="query-dsl-term-query.html">Term Query</a></span></li><li><span class="section"><a href="query-dsl-terms-query.html">Terms Query</a></span></li><li><span class="section"><a href="query-dsl-range-query.html">Range Query</a></span></li><li><span class="section"><a href="query-dsl-exists-query.html">Exists Query</a></span></li><li><span class="section"><a href="query-dsl-missing-query.html">Missing Query</a></span></li><li><span class="section"><a href="query-dsl-prefix-query.html">Prefix Query</a></span></li><li><span class="section"><a href="query-dsl-wildcard-query.html">Wildcard Query</a></span></li><li><span class="section"><a href="query-dsl-regexp-query.html">Regexp Query</a></span></li><li><span class="section"><a href="query-dsl-fuzzy-query.html">Fuzzy Query</a></span></li><li><span class="section"><a href="query-dsl-type-query.html">Type Query</a></span></li><li><span class="section"><a href="query-dsl-ids-query.html">Ids Query</a></span></li></ul></li><li class="collapsible"><span class="chapter"><a href="compound-queries.html">Compound queries</a></span><ul><li><span class="section"><a href="query-dsl-constant-score-query.html">Constant Score Query</a></span></li><li><span class="section"><a href="query-dsl-bool-query.html">Bool Query</a></span></li><li><span class="section"><a href="query-dsl-dis-max-query.html">Dis Max Query</a></span></li><li><span class="section"><a href="query-dsl-function-score-query.html">Function Score Query</a></span></li><li><span class="section"><a href="query-dsl-boosting-query.html">Boosting Query</a></span></li><li><span class="section"><a href="query-dsl-indices-query.html">Indices Query</a></span></li><li><span class="section"><a href="query-dsl-and-query.html">And Query</a></span></li><li><span class="section"><a href="query-dsl-not-query.html">Not Query</a></span></li><li><span class="section"><a href="query-dsl-or-query.html">Or Query</a></span></li><li><span class="section"><a href="query-dsl-filtered-query.html">Filtered Query</a></span></li><li><span class="section"><a href="query-dsl-limit-query.html">Limit Query</a></span></li></ul></li><li class="collapsible"><span class="chapter"><a href="joining-queries.html">Joining queries</a></span><ul><li><span class="section"><a href="query-dsl-nested-query.html">Nested Query</a></span></li><li><span class="section"><a href="query-dsl-has-child-query.html">Has Child Query</a></span></li><li><span class="section"><a href="query-dsl-has-parent-query.html">Has Parent Query</a></span></li></ul></li><li class="collapsible"><span class="chapter"><a href="geo-queries.html">Geo queries</a></span><ul><li><span class="section"><a href="query-dsl-geo-shape-query.html">GeoShape Query</a></span></li><li><span class="section"><a href="query-dsl-geo-bounding-box-query.html">Geo Bounding Box Query</a></span></li><li><span class="section"><a href="query-dsl-geo-distance-query.html">Geo Distance Query</a></span></li><li><span class="section"><a href="query-dsl-geo-distance-range-query.html">Geo Distance Range Query</a></span></li><li><span class="section"><a href="query-dsl-geo-polygon-query.html">Geo Polygon Query</a></span></li><li><span class="section"><a href="query-dsl-geohash-cell-query.html">Geohash Cell Query</a></span></li></ul></li><li class="collapsible"><span class="chapter"><a href="specialized-queries.html">Specialized queries</a></span><ul><li><span class="section"><a href="query-dsl-mlt-query.html">More Like This Query</a></span></li><li><span class="section"><a href="query-dsl-template-query.html">Template Query</a></span></li><li><span class="section"><a href="query-dsl-script-query.html">Script Query</a></span></li></ul></li><li class="collapsible"><span class="chapter"><a href="span-queries.html">Span queries</a></span><ul><li><span class="section"><a href="query-dsl-span-term-query.html">Span Term Query</a></span></li><li><span class="section"><a href="query-dsl-span-multi-term-query.html">Span Multi Term Query</a></span></li><li><span class="section"><a href="query-dsl-span-first-query.html">Span First Query</a></span></li><li><span class="section"><a href="query-dsl-span-near-query.html">Span Near Query</a></span></li><li><span class="section"><a href="query-dsl-span-or-query.html">Span Or Query</a></span></li><li><span class="section"><a href="query-dsl-span-not-query.html">Span Not Query</a></span></li><li><span class="section"><a href="query-dsl-span-containing-query.html">Span Containing Query</a></span></li><li><span class="section"><a href="query-dsl-span-within-query.html">Span Within Query</a></span></li></ul></li><li><span class="chapter"><a href="query-dsl-minimum-should-match.html">Minimum Should Match</a></span></li><li><span class="chapter"><a href="query-dsl-multi-term-rewrite.html">Multi Term Query Rewrite</a></span></li></ul></li><li class="collapsible"><span class="part"><a href="mapping.html">Mapping </a></span><ul><li class="collapsible"><span class="chapter"><a href="mapping-types.html">Field datatypes</a></span><ul><li><span class="section"><a href="array.html">Array datatype</a></span></li><li><span class="section"><a href="binary.html">Binary datatype</a></span></li><li><span class="section"><a href="boolean.html">Boolean datatype</a></span></li><li><span class="section"><a href="date.html">Date datatype</a></span></li><li><span class="section"><a href="geo-point.html">Geo-point datatype</a></span></li><li><span class="section"><a href="geo-shape.html">Geo-Shape datatype</a></span></li><li><span class="section"><a href="ip.html">IPv4 datatype</a></span></li><li><span class="section"><a href="nested.html">Nested datatype</a></span></li><li><span class="section"><a href="number.html">Numeric datatypes</a></span></li><li><span class="section"><a href="object.html">Object datatype</a></span></li><li><span class="section"><a href="string.html">String datatype</a></span></li><li><span class="section"><a href="token-count.html">Token count datatype</a></span></li></ul></li><li class="collapsible"><span class="chapter"><a href="mapping-fields.html">Meta-Fields</a></span><ul><li><span class="section"><a href="mapping-all-field.html"><code class="literal">_all</code> field</a></span></li><li><span class="section"><a href="mapping-field-names-field.html"><code class="literal">_field_names</code> field</a></span></li><li><span class="section"><a href="mapping-id-field.html"><code class="literal">_id</code> field</a></span></li><li><span class="section"><a href="mapping-index-field.html"><code class="literal">_index</code> field</a></span></li><li><span class="section"><a href="mapping-meta-field.html"><code class="literal">_meta</code> field</a></span></li><li><span class="section"><a href="mapping-parent-field.html"><code class="literal">_parent</code> field</a></span></li><li><span class="section"><a href="mapping-routing-field.html"><code class="literal">_routing</code> field</a></span></li><li><span class="section"><a href="mapping-source-field.html"><code class="literal">_source</code> field</a></span></li><li><span class="section"><a href="mapping-timestamp-field.html"><code class="literal">_timestamp</code> field</a></span></li><li><span class="section"><a href="mapping-ttl-field.html"><code class="literal">_ttl</code> field</a></span></li><li><span class="section"><a href="mapping-type-field.html"><code class="literal">_type</code> field</a></span></li><li><span class="section"><a href="mapping-uid-field.html"><code class="literal">_uid</code> field</a></span></li></ul></li><li class="collapsible"><span class="chapter"><a href="mapping-params.html">Mapping parameters</a></span><ul><li><span class="section"><a href="analyzer.html"><code class="literal">analyzer</code></a></span></li><li><span class="section"><a href="index-boost.html"><code class="literal">boost</code></a></span></li><li><span class="section"><a href="coerce.html"><code class="literal">coerce</code></a></span></li><li><span class="section"><a href="copy-to.html"><code class="literal">copy_to</code></a></span></li><li><span class="section"><a href="doc-values.html"><code class="literal">doc_values</code></a></span></li><li><span class="section"><a href="dynamic.html"><code class="literal">dynamic</code></a></span></li><li><span class="section"><a href="enabled.html"><code class="literal">enabled</code></a></span></li><li><span class="section"><a href="fielddata.html"><code class="literal">fielddata</code></a></span></li><li><span class="section"><a href="mapping-date-format.html"><code class="literal">format</code></a></span></li><li><span class="section"><a href="geohash.html"><code class="literal">geohash</code></a></span></li><li><span class="section"><a href="geohash-precision.html"><code class="literal">geohash_precision</code></a></span></li><li><span class="section"><a href="geohash-prefix.html"><code class="literal">geohash_prefix</code></a></span></li><li><span class="section"><a href="ignore-above.html"><code class="literal">ignore_above</code></a></span></li><li><span class="section"><a href="ignore-malformed.html"><code class="literal">ignore_malformed</code></a></span></li><li><span class="section"><a href="include-in-all.html"><code class="literal">include_in_all</code></a></span></li><li><span class="section"><a href="mapping-index.html"><code class="literal">index</code></a></span></li><li><span class="section"><a href="index-options.html"><code class="literal">index_options</code></a></span></li><li><span class="section"><a href="lat-lon.html"><code class="literal">lat_lon</code></a></span></li><li><span class="section"><a href="multi-fields.html"><code class="literal">fields</code></a></span></li><li><span class="section"><a href="norms.html"><code class="literal">norms</code></a></span></li><li><span class="section"><a href="null-value.html"><code class="literal">null_value</code></a></span></li><li><span class="section"><a href="position-increment-gap.html"><code class="literal">position_increment_gap</code></a></span></li><li><span class="section"><a href="precision-step.html"><code class="literal">precision_step</code></a></span></li><li><span class="section"><a href="properties.html"><code class="literal">properties</code></a></span></li><li><span class="section"><a href="search-analyzer.html"><code class="literal">search_analyzer</code></a></span></li><li><span class="section"><a href="similarity.html"><code class="literal">similarity</code></a></span></li><li><span class="section"><a href="mapping-store.html"><code class="literal">store</code></a></span></li><li><span class="section"><a href="term-vector.html"><code class="literal">term_vector</code></a></span></li></ul></li><li class="collapsible"><span class="chapter"><a href="dynamic-mapping.html">Dynamic Mapping</a></span><ul><li><span class="section"><a href="default-mapping.html"><code class="literal">_default_</code> mapping</a></span></li><li><span class="section"><a href="dynamic-field-mapping.html">Dynamic field mapping</a></span></li><li><span class="section"><a href="dynamic-templates.html">Dynamic templates</a></span></li><li><span class="section"><a href="override-default-template.html">Override default template</a></span></li></ul></li><li class="collapsible"><span class="chapter"><a href="mapping-transform.html">Transform</a></span><ul><li><span class="section"><a href="_get_transformed.html">Get Transformed</a></span></li><li><span class="section"><a href="_immutable_transformation.html">Immutable Transformation</a></span></li></ul></li></ul></li><li class="collapsible"><span class="part"><a href="analysis.html">Analysis </a></span><ul><li class="collapsible"><span class="chapter"><a href="analysis-analyzers.html">Analyzers</a></span><ul><li><span class="section"><a href="analysis-standard-analyzer.html">Standard Analyzer</a></span></li><li><span class="section"><a href="analysis-simple-analyzer.html">Simple Analyzer</a></span></li><li><span class="section"><a href="analysis-whitespace-analyzer.html">Whitespace Analyzer</a></span></li><li><span class="section"><a href="analysis-stop-analyzer.html">Stop Analyzer</a></span></li><li><span class="section"><a href="analysis-keyword-analyzer.html">Keyword Analyzer</a></span></li><li><span class="section"><a href="analysis-pattern-analyzer.html">Pattern Analyzer</a></span></li><li><span class="section"><a href="analysis-lang-analyzer.html">Language Analyzers</a></span></li><li><span class="section"><a href="analysis-snowball-analyzer.html">Snowball Analyzer</a></span></li><li><span class="section"><a href="analysis-custom-analyzer.html">Custom Analyzer</a></span></li></ul></li><li class="collapsible"><span class="chapter"><a href="analysis-tokenizers.html">Tokenizers</a></span><ul><li><span class="section"><a href="analysis-standard-tokenizer.html">Standard Tokenizer</a></span></li><li><span class="section"><a href="analysis-edgengram-tokenizer.html">Edge NGram Tokenizer</a></span></li><li><span class="section"><a href="analysis-keyword-tokenizer.html">Keyword Tokenizer</a></span></li><li><span class="section"><a href="analysis-letter-tokenizer.html">Letter Tokenizer</a></span></li><li><span class="section"><a href="analysis-lowercase-tokenizer.html">Lowercase Tokenizer</a></span></li><li><span class="section"><a href="analysis-ngram-tokenizer.html">NGram Tokenizer</a></span></li><li><span class="section"><a href="analysis-whitespace-tokenizer.html">Whitespace Tokenizer</a></span></li><li><span class="section"><a href="analysis-pattern-tokenizer.html">Pattern Tokenizer</a></span></li><li><span class="section"><a href="analysis-uaxurlemail-tokenizer.html">UAX Email URL Tokenizer</a></span></li><li><span class="section"><a href="analysis-pathhierarchy-tokenizer.html">Path Hierarchy Tokenizer</a></span></li><li><span class="section"><a href="analysis-classic-tokenizer.html">Classic Tokenizer</a></span></li><li><span class="section"><a href="analysis-thai-tokenizer.html">Thai Tokenizer</a></span></li></ul></li><li class="collapsible"><span class="chapter"><a href="analysis-tokenfilters.html">Token Filters</a></span><ul><li><span class="section"><a href="analysis-standard-tokenfilter.html">Standard Token Filter</a></span></li><li><span class="section"><a href="analysis-asciifolding-tokenfilter.html">ASCII Folding Token Filter</a></span></li><li><span class="section"><a href="analysis-length-tokenfilter.html">Length Token Filter</a></span></li><li><span class="section"><a href="analysis-lowercase-tokenfilter.html">Lowercase Token Filter</a></span></li><li><span class="section"><a href="analysis-uppercase-tokenfilter.html">Uppercase Token Filter</a></span></li><li><span class="section"><a href="analysis-ngram-tokenfilter.html">NGram Token Filter</a></span></li><li><span class="section"><a href="analysis-edgengram-tokenfilter.html">Edge NGram Token Filter</a></span></li><li><span class="section"><a href="analysis-porterstem-tokenfilter.html">Porter Stem Token Filter</a></span></li><li><span class="section"><a href="analysis-shingle-tokenfilter.html">Shingle Token Filter</a></span></li><li><span class="section"><a href="analysis-stop-tokenfilter.html">Stop Token Filter</a></span></li><li><span class="section"><a href="analysis-word-delimiter-tokenfilter.html">Word Delimiter Token Filter</a></span></li><li><span class="section"><a href="analysis-stemmer-tokenfilter.html">Stemmer Token Filter</a></span></li><li><span class="section"><a href="analysis-stemmer-override-tokenfilter.html">Stemmer Override Token Filter</a></span></li><li><span class="section"><a href="analysis-keyword-marker-tokenfilter.html">Keyword Marker Token Filter</a></span></li><li><span class="section"><a href="analysis-keyword-repeat-tokenfilter.html">Keyword Repeat Token Filter</a></span></li><li><span class="section"><a href="analysis-kstem-tokenfilter.html">KStem Token Filter</a></span></li><li><span class="section"><a href="analysis-snowball-tokenfilter.html">Snowball Token Filter</a></span></li><li><span class="section"><a href="analysis-phonetic-tokenfilter.html">Phonetic Token Filter</a></span></li><li><span class="section"><a href="analysis-synonym-tokenfilter.html">Synonym Token Filter</a></span></li><li><span class="section"><a href="analysis-compound-word-tokenfilter.html">Compound Word Token Filter</a></span></li><li><span class="section"><a href="analysis-reverse-tokenfilter.html">Reverse Token Filter</a></span></li><li><span class="section"><a href="analysis-elision-tokenfilter.html">Elision Token Filter</a></span></li><li><span class="section"><a href="analysis-truncate-tokenfilter.html">Truncate Token Filter</a></span></li><li><span class="section"><a href="analysis-unique-tokenfilter.html">Unique Token Filter</a></span></li><li><span class="section"><a href="analysis-pattern-capture-tokenfilter.html">Pattern Capture Token Filter</a></span></li><li><span class="section"><a href="analysis-pattern_replace-tokenfilter.html">Pattern Replace Token Filter</a></span></li><li><span class="section"><a href="analysis-trim-tokenfilter.html">Trim Token Filter</a></span></li><li><span class="section"><a href="analysis-limit-token-count-tokenfilter.html">Limit Token Count Token Filter</a></span></li><li><span class="section"><a href="analysis-hunspell-tokenfilter.html">Hunspell Token Filter</a></span></li><li><span class="section"><a href="analysis-common-grams-tokenfilter.html">Common Grams Token Filter</a></span></li><li><span class="section"><a href="analysis-normalization-tokenfilter.html">Normalization Token Filter</a></span></li><li><span class="section"><a href="analysis-cjk-width-tokenfilter.html">CJK Width Token Filter</a></span></li><li><span class="section"><a href="analysis-cjk-bigram-tokenfilter.html">CJK Bigram Token Filter</a></span></li><li><span class="section"><a href="analysis-delimited-payload-tokenfilter.html">Delimited Payload Token Filter</a></span></li><li><span class="section"><a href="analysis-keep-words-tokenfilter.html">Keep Words Token Filter</a></span></li><li><span class="section"><a href="analysis-keep-types-tokenfilter.html">Keep Types Token Filter</a></span></li><li><span class="section"><a href="analysis-classic-tokenfilter.html">Classic Token Filter</a></span></li><li><span class="section"><a href="analysis-apostrophe-tokenfilter.html">Apostrophe Token Filter</a></span></li><li><span class="section"><a href="analysis-decimal-digit-tokenfilter.html">Decimal Digit Token Filter</a></span></li></ul></li><li class="collapsible"><span class="chapter"><a href="analysis-charfilters.html">Character Filters</a></span><ul><li><span class="section"><a href="analysis-mapping-charfilter.html">Mapping Char Filter</a></span></li><li><span class="section"><a href="analysis-htmlstrip-charfilter.html">HTML Strip Char Filter</a></span></li><li><span class="section"><a href="analysis-pattern-replace-charfilter.html">Pattern Replace Char Filter</a></span></li></ul></li></ul></li><li class="collapsible"><span class="part"><a href="modules.html">Modules </a></span><ul><li class="collapsible"><span class="chapter"><a href="modules-cluster.html">Cluster</a></span><ul><li><span class="section"><a href="shards-allocation.html">Cluster Level Shard Allocation</a></span></li><li><span class="section"><a href="disk-allocator.html">Disk-based Shard Allocation</a></span></li><li><span class="section"><a href="allocation-awareness.html">Shard Allocation Awareness</a></span></li><li><span class="section"><a href="allocation-filtering.html">Shard Allocation Filtering</a></span></li><li><span class="section"><a href="misc-cluster.html">Miscellaneous cluster settings</a></span></li></ul></li><li class="collapsible"><span class="chapter"><a href="modules-discovery.html">Discovery</a></span><ul><li><span class="section"><a href="modules-discovery-azure.html">Azure Discovery</a></span></li><li><span class="section"><a href="modules-discovery-ec2.html">EC2 Discovery</a></span></li><li><span class="section"><a href="modules-discovery-gce.html">Google Compute Engine Discovery</a></span></li><li><span class="section"><a href="modules-discovery-zen.html">Zen Discovery</a></span></li></ul></li><li><span class="chapter"><a href="modules-gateway.html">Local Gateway</a></span></li><li><span class="chapter"><a href="modules-http.html">HTTP</a></span></li><li class="collapsible"><span class="chapter"><a href="modules-indices.html">Indices</a></span><ul><li><span class="section"><a href="circuit-breaker.html">Circuit Breaker</a></span></li><li><span class="section"><a href="modules-fielddata.html">Fielddata</a></span></li><li><span class="section"><a href="query-cache.html">Node Query Cache</a></span></li><li><span class="section"><a href="indexing-buffer.html">Indexing Buffer</a></span></li><li><span class="section"><a href="shard-request-cache.html">Shard request cache</a></span></li><li><span class="section"><a href="recovery.html">Indices Recovery</a></span></li><li><span class="section"><a href="indices-ttl.html">TTL interval</a></span></li></ul></li><li><span class="chapter"><a href="modules-network.html">Network Settings</a></span></li><li><span class="chapter"><a href="modules-node.html">Node</a></span></li><li><span class="chapter"><a href="modules-plugins.html">Plugins</a></span></li><li class="collapsible"><span class="chapter"><a href="modules-scripting.html">Scripting</a></span><ul><li><span class="section"><a href="modules-advanced-scripting.html">Text scoring in scripts</a></span></li><li><span class="section"><a href="modules-scripting-security.html">Scripting and the Java Security Manager</a></span></li></ul></li><li><span class="chapter"><a href="modules-snapshots.html">Snapshot And Restore</a></span></li><li><span class="chapter"><a href="modules-threadpool.html">Thread Pool</a></span></li><li><span class="chapter"><a href="modules-transport.html">Transport</a></span></li><li><span class="chapter"><a href="modules-tribe.html">Tribe node</a></span></li></ul></li><li class="collapsible"><span class="part"><a href="index-modules.html">Index Modules </a></span><ul><li><span class="chapter"><a href="index-modules-analysis.html">Analysis</a></span></li><li class="collapsible"><span class="chapter"><a href="index-modules-allocation.html">Index Shard Allocation</a></span><ul><li><span class="section"><a href="shard-allocation-filtering.html">Shard Allocation Filtering</a></span></li><li><span class="section"><a href="delayed-allocation.html">Delaying allocation when a node leaves</a></span></li><li><span class="section"><a href="recovery-prioritization.html">Index recovery prioritization</a></span></li><li><span class="section"><a href="allocation-total-shards.html">Total Shards Per Node</a></span></li></ul></li><li><span class="chapter"><a href="index-modules-mapper.html">Mapper</a></span></li><li><span class="chapter"><a href="index-modules-merge.html">Merge</a></span></li><li><span class="chapter"><a href="index-modules-similarity.html">Similarity module</a></span></li><li><span class="chapter"><a href="index-modules-slowlog.html">Slow Log</a></span></li><li><span class="chapter"><a href="index-modules-store.html">Store</a></span></li><li><span class="chapter"><a href="index-modules-translog.html">Translog</a></span></li></ul></li><li class="collapsible"><span class="part"><a href="testing.html">Testing </a></span><ul><li class="collapsible"><span class="chapter"><a href="testing-framework.html">Java Testing Framework</a></span><ul><li><span class="section"><a href="why-randomized-testing.html">why randomized testing?</a></span></li><li><span class="section"><a href="using-elasticsearch-test-classes.html">Using the elasticsearch test classes</a></span></li><li><span class="section"><a href="unit-tests.html">unit tests</a></span></li><li><span class="section"><a href="integration-tests.html">integration tests</a></span></li><li><span class="section"><a href="randomized-testing.html">Randomized testing</a></span></li><li><span class="section"><a href="assertions.html">Assertions</a></span></li></ul></li></ul></li><li><span class="glossary"><a href="glossary.html">Glossary of terms</a></span></li><li class="collapsible"><span class="part"><a href="es-release-notes.html">Release Notes </a></span><ul><li><span class="chapter"><a href="release-notes-2.3.1.html">2.3.1 Release Notes</a></span></li><li><span class="chapter"><a href="release-notes-2.3.0.html">2.3.0 Release Notes</a></span></li><li><span class="chapter"><a href="release-notes-2.2.2.html">2.2.2 Release Notes</a></span></li><li><span class="chapter"><a href="release-notes-2.2.1.html">2.2.1 Release Notes</a></span></li><li><span class="chapter"><a href="release-notes-2.2.0.html">2.2.0 Release Notes</a></span></li><li><span class="chapter"><a href="release-notes-2.1.2.html">2.1.2 Release Notes</a></span></li><li><span class="chapter"><a href="release-notes-2.1.1.html">2.1.1 Release Notes</a></span></li><li><span class="chapter"><a href="release-notes-2.1.0.html">2.1.0 Release Notes</a></span></li><li><span class="chapter"><a href="release-notes-2.0.2.html">2.0.2 Release Notes</a></span></li><li><span class="chapter"><a href="release-notes-2.0.1.html">2.0.1 Release Notes</a></span></li><li><span class="chapter"><a href="release-notes-2.0.0.html">2.0.0 Release Notes</a></span></li><li><span class="chapter"><a href="release-notes-2.0.0-rc1.html">2.0.0-rc1 Release Notes</a></span></li><li><span class="chapter"><a href="release-notes-2.0.0-beta2.html">2.0.0-beta2 Release Notes</a></span></li><li><span class="chapter"><a href="release-notes-2.0.0-beta1.html">2.0.0-beta1 Release Notes</a></span></li></ul></li></ul></div><p>Let’s start with a basic health check, which we can use to see how our cluster is doing. We’ll be using curl to do this but you can use any tool that allows you to make HTTP/REST calls. Let’s assume that we are still on the same node where we started Elasticsearch on and open another command shell window.</p><p>To check the cluster health, we will be using the <a class="link" href="cat.html" title="cat APIs"><code class="literal">_cat</code> API</a>. Remember previously that our node HTTP endpoint is available at port <code class="literal">9200</code>:</p><div class="pre_wrapper"><pre class="programlisting prettyprint lang-sh prettyprinted"><span class="pln">curl </span><span class="str">'localhost:9200/_cat/health?v'</span></pre></div><p>And the response:</p><div class="pre_wrapper"><pre class="programlisting prettyprint lang-sh prettyprinted"><span class="pln">epoch      timestamp cluster       status node</span><span class="pun">.</span><span class="pln">total node</span><span class="pun">.</span><span class="pln">data shards pri relo init unassign
+</span><span class="lit">1394735289</span><span class="pln"> </span><span class="lit">14</span><span class="pun">:</span><span class="lit">28</span><span class="pun">:</span><span class="lit">09</span><span class="pln">  elasticsearch green           </span><span class="lit">1</span><span class="pln">         </span><span class="lit">1</span><span class="pln">      </span><span class="lit">0</span><span class="pln">   </span><span class="lit">0</span><span class="pln">    </span><span class="lit">0</span><span class="pln">    </span><span class="lit">0</span><span class="pln">        </span><span class="lit">0</span></pre></div><p>We can see that our cluster named "elasticsearch" is up with a green status.</p><p>Whenever we ask for the cluster health, we either get green, yellow, or red. Green means everything is good (cluster is fully functional), yellow means all data is available but some replicas are not yet allocated (cluster is fully functional), and red means some data is not available for whatever reason. Note that even if a cluster is red, it still is partially functional (i.e. it will continue to serve search requests from the available shards) but you will likely need to fix it ASAP since you have missing data.</p><p>Also from the above response, we can see and total of 1 node and that we have 0 shards since we have no data in it yet. Note that since we are using the default cluster name (elasticsearch) and since Elasticsearch uses unicast network discovery by default to find other nodes on the same machine, it is possible that you could accidentally start up more than one node on your computer and have them all join a single cluster. In this scenario, you may see more than 1 node in the above response.</p><p>We can also get a list of nodes in our cluster as follows:</p><div class="pre_wrapper"><pre class="programlisting prettyprint lang-sh prettyprinted"><span class="pln">curl </span><span class="str">'localhost:9200/_cat/nodes?v'</span></pre></div><p>And the response:</p><div class="pre_wrapper"><pre class="programlisting prettyprint lang-sh prettyprinted"><span class="pln">curl </span><span class="str">'localhost:9200/_cat/nodes?v'</span><span class="pln">
+host         ip        heap</span><span class="pun">.</span><span class="pln">percent ram</span><span class="pun">.</span><span class="pln">percent load node</span><span class="pun">.</span><span class="pln">role master name
+mwubuntu1    </span><span class="lit">127.0</span><span class="pun">.</span><span class="lit">1.1</span><span class="pln">            </span><span class="lit">8</span><span class="pln">           </span><span class="lit">4</span><span class="pln"> </span><span class="lit">0.00</span><span class="pln"> d         </span><span class="pun">*</span><span class="pln">      </span><span class="typ">New</span><span class="pln"> </span><span class="typ">Goblin</span></pre></div><p>Here, we can see our one node named "New Goblin", which is the single node that is currently in our cluster.</p></div><div class="navfooter"><span class="prev"><a href="_exploring_your_cluster.html">
+              «&nbsp;
+              Exploring Your Cluster</a>
+          &nbsp;
+        </span><span class="next">
+          &nbsp;
+          <a href="_list_all_indices.html">List All Indices
+              &nbsp;»
+            </a></span></div>
+<!-- end body -->
+
+            </section>
+
+
+
+
+
+
+
+
+<script src="//app-lon02.marketo.com/js/forms2/js/forms2.min.js"></script>
+	<!-- subscribe-newsletter -->
+	<div id="subscribe-newsletter">
+		<div class="container">
+			<div class="row">
+				<div class="12u">
+					<div class="subscribe-wrapper" id="rtp-newsletter">
+						<header>
+							<h3>Subscribe to our newsletter</h3>
+						</header>
+						<div class="subscribe-form">
+							<form id="mktoForm_1398" class="container sb-form mktoForm mktoHasWidth mktoLayoutAbove" novalidate="novalidate" style="font-family: inherit; font-size: 13px; color: rgb(51, 51, 51); width: 291px;"><style type="text/css"></style><div class="mktoFormRow"><div class="mktoFieldDescriptor mktoFormCol" style="margin-bottom: 5px;"><div class="mktoOffset" style="width: 5px;"></div><div class="mktoFieldWrap mktoRequiredField"><label for="Email" class="mktoLabel mktoHasWidth" style="width: 270px;"><div class="mktoAsterix">*</div>Email Address:</label><div class="mktoGutter mktoHasWidth" style="width: 5px;"></div><input id="Email" name="Email" maxlength="255" type="email" class="mktoField mktoEmailField mktoHasWidth mktoRequired" style="width: 270px;"><div class="mktoClear"></div></div><div class="mktoClear"></div></div><div class="mktoClear"></div></div><div class="mktoFormRow"><input type="hidden" name="Internal_CTA__c" class="mktoField mktoFieldDescriptor mktoFormCol" value="-" style="margin-bottom: 5px;"><input type="hidden" name="Internal_Page__c" class="mktoField mktoFieldDescriptor mktoFormCol" value="-" style="margin-bottom: 5px;"><input type="hidden" name="Internal_Placement__c" class="mktoField mktoFieldDescriptor mktoFormCol" value="-" style="margin-bottom: 5px;"><input type="hidden" name="Ad_Source__c" class="mktoField mktoFieldDescriptor mktoFormCol" value="-" style="margin-bottom: 5px;"><input type="hidden" name="Ad_technology__c" class="mktoField mktoFieldDescriptor mktoFormCol" value="-" style="margin-bottom: 5px;"><input type="hidden" name="Marketing_Internal_Search__c" class="mktoField mktoFieldDescriptor mktoFormCol" value="-" style="margin-bottom: 5px;"><input type="hidden" name="Marketing_Page__c" class="mktoField mktoFieldDescriptor mktoFormCol" value="-" style="margin-bottom: 5px;"><input type="hidden" name="Marketing_CTA__c" class="mktoField mktoFieldDescriptor mktoFormCol" value="-" style="margin-bottom: 5px;"><input type="hidden" name="Marketing_Placement__c" class="mktoField mktoFieldDescriptor mktoFormCol" value="-" style="margin-bottom: 5px;"><input type="hidden" name="Marketing_Technology__c" class="mktoField mktoFieldDescriptor mktoFormCol" value="-" style="margin-bottom: 5px;"><input type="hidden" name="Marketing_Term__c" class="mktoField mktoFieldDescriptor mktoFormCol" value="-" style="margin-bottom: 5px;"><input type="hidden" name="Marketing_Content__c" class="mktoField mktoFieldDescriptor mktoFormCol" value="-" style="margin-bottom: 5px;"><input type="hidden" name="Marketing_Medium__c" class="mktoField mktoFieldDescriptor mktoFormCol" value="-" style="margin-bottom: 5px;"><input type="hidden" name="Marketing_Source__c" class="mktoField mktoFieldDescriptor mktoFormCol" value="-" style="margin-bottom: 5px;"><input type="hidden" name="Marketing_Campaign__c" class="mktoField mktoFieldDescriptor mktoFormCol" value="-" style="margin-bottom: 5px;"><input type="hidden" name="Form_Source" class="mktoField mktoFieldDescriptor mktoFormCol" value="Web.co Newsletter" style="margin-bottom: 5px;"><div class="mktoClear"></div></div><div class="mktoButtonRow"><span class="mktoButtonWrap mktoNative" style="margin-left: 110px;"><button type="submit" class="mktoButton">Submit</button></span></div><input type="hidden" name="formid" class="mktoField mktoFieldDescriptor" value="1398"><input type="hidden" name="munchkinId" class="mktoField mktoFieldDescriptor" value="813-MAM-392"></form>
+							<div class="form_thanks hide">
+
+									<p>Thanks for subscribing! We'll keep you updated with new releases.</p>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+  	<!-- Footer -->
+	<div id="footer-wrapper">
+		<section id="footer" class="container">
+			<div class="row">
+				<div class="12u">
+					<!-- Copyright -->
+					<div id="copyright">
+	<p>
+		© 2016. All Rights Reserved - Elasticsearch
+	</p>
+	<ul class="links">
+		<li>Elasticsearch is a trademark of Elasticsearch BV, registered in the U.S. and in other countries</li>
+		<li><a href="/legal/trademarks" id="footer_trademarks">Trademarks</a></li>
+		<li><a href="/legal/terms-of-use" id="footer_terms">Terms</a></li>
+		<li><a href="/legal/privacy-policy" id="footer_privacy">Privacy</a></li>
+<li><a href="/brand" id="footer_brand">Brand</a></li>
+	</ul>
+	<p>
+		Apache, Apache Lucene, Apache Hadoop, Hadoop, HDFS and the yellow elephant logo are trademarks of the <a href="http://www.apache.org/" target="_blank">Apache Software Foundation</a> in the United States and/or other&nbsp;countries.
+	</p>
+</div>
+<!--<div class="row">
+{replace4}
+</div>-->
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<!-- Social Media -->
+	<div id="socialmedia-wrapper">
+		<section id="socialmedia" class="container">
+			<!-- social icons -->
+			<div id="social">
+				<ul class="links">
+
+						<li class="facebook grayscale"><a href="http://www.facebook.com/elastic.co" target="_blank" id="footer_facebook"></a></li>
+
+						<li class="twitter grayscale"><a href="https://www.twitter.com/elastic" target="_blank" id="footer_twitter"></a></li>
+
+						<li class="linkedin grayscale"><a href="https://www.linkedin.com/company/elastic-co" target="_blank" id="footer_linkedin"></a></li>
+
+						<li class="xing grayscale"><a href="https://www.xing.com/companies/elastic.co" target="_blank" id="footer_xing"></a></li>
+
+						<li class="youtube grayscale"><a href="https://www.youtube.com/user/elasticsearch" target="_blank" id="footer_youtube"></a></li>
+
+				</ul>
+			</div>
+		</section>
+	</div>
+
+<style type="text/css">
+
+		.facebook{background:url("https://static-www.elastic.co/assets/bltda40eebd7c7cae9a/facebook.svg?q=142") no-repeat;}
+
+		.twitter{background:url("https://static-www.elastic.co/assets/bltfd3b1511512f4632/twitter.svg?q=142") no-repeat;}
+
+		.linkedin{background:url("https://static-www.elastic.co/assets/blt6b4f6f8d6b96f814/linkedin.svg?q=142") no-repeat;}
+
+		.xing{background:url("https://static-www.elastic.co/assets/blta76b2ae2b2f10a98/xing.svg?q=142") no-repeat;}
+
+		.youtube{background:url("https://static-www.elastic.co/assets/blt5761648c9581fb53/youtube.svg?q=142") no-repeat;}
+
+</style>
+
+<script>
+MktoForms2.loadForm("//app-lon02.marketo.com", "813-MAM-392", 1398,function(form){
+	form.onSuccess(function(form){
+		$('#mktoForm_1398').css('display','none');
+		$('#subscribe-newsletter header').hide();
+		$('#mktoForm_1398').siblings('.form_thanks').removeClass('hide')
+		dataLayer.push({'event': 'mktoFormSubmit'});
+	    return false;
+  	});
+});
+</script>
+
+
+  	</div>
+  	<!-- <div class="preloader">
+    	<div class="status"></div>
+	</div> -->
+  	<style></style>
+   	<script type="text/javascript">
+	var suggestionsUrl = "https://search.elastic.co/suggest";
+</script>
+<script src="https://static-www.elastic.co/static/js/jquery.autocomplete.js?q=142"></script>
+<script src="https://static-www.elastic.co/static/js/script.js?q=142"></script>
+
+
+
+
+
+
+            <script type="text/javascript" src="docs.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+
+
+
+<script type="text/javascript" id="">function is404(){return"404 | Page Not Found"==document.title?!0:!1}function isEnLang(){var a=$("html").attr("lang");return"en-us"==a?!0:!1}if(is404()&&!isEnLang()){var path=google_tag_manager["GTM-58RLH5"].macro('gtm1461638386903'),qs=google_tag_manager["GTM-58RLH5"].macro('gtm1461638386904'),splitPath=path.split("/");splitPath.shift();splitPath.shift();var newUrl="https://www.elastic.co/"+splitPath.join("/");$.ajax({url:newUrl,type:"HEAD",dataType:"html",success:function(a){window.location=qs?[newUrl,qs].join("?"):newUrl}})};</script><div style="display: none; visibility: hidden;"><script type="text/javascript">(function(){function b(){!1===c&&(c=!0,Munchkin.init("813-MAM-392",{clickTime:0,asyncOnly:!0}))}var c=!1,a=document.createElement("script");a.type="text/javascript";a.async=!0;a.src="//munchkin.marketo.net/munchkin.js";a.onreadystatechange=function(){"complete"!=this.readyState&&"loaded"!=this.readyState||b()};a.onload=b;document.getElementsByTagName("head")[0].appendChild(a)})();</script></div><div style="display: none; visibility: hidden;">
+<script type="text/javascript">var DID=237487,pcheck="https:"==window.location.protocol?"https://sniff.visistat.com/live.js":"http://stats.visistat.com/live.js";document.writeln('\x3cscript src\x3d"'+pcheck+'" type\x3d"text/javascript"\x3e\x3c/script\x3e');</script><script src="https://sniff.visistat.com/live.js" type="text/javascript"></script>
+
+</div><div style="display: none; visibility: hidden;"><script>(function(){var a=window._fbq||(window._fbq=[]);if(!a.loaded){var b=document.createElement("script");b.async=!0;b.src="//connect.facebook.net/en_US/fbds.js";var c=document.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c);a.loaded=!0}a.push(["addPixelId","1636465863246433"])})();window._fbq=window._fbq||[];window._fbq.push(["track","PixelInitialized",{}]);</script>
+<noscript></noscript></div><script type="text/javascript" id="" src="//cdn.captora.com/js/track.js"></script><script type="text/javascript" id="">function setCookie(a,b,c){var d=new Date;d.setTime(d.getTime()+864E5*c);c=";domain\x3d.elastic.co;path\x3d/;expires\x3d"+d.toGMTString();document.cookie=a+"\x3d"+b+c}function getCookie(a){a=new RegExp(a+"\x3d([^;]+)");a=a.exec(document.cookie);return null!=a?unescape(a[1]):null}function getParam(a){try{var b=RegExp("[?\x26]"+a+"\x3d([^\x26]*)").exec(window.location.search);return b&&decodeURIComponent(b[1].replace(/\+/g," "))}catch(c){return null}}var gclid=getParam("gclid");
+if(gclid){var gclsrc=getParam("gclsrc");gclsrc&&-1===gclsrc.indexOf("aw")||setCookie("mktg_gclid",gclid,90)}
+var url_values=[{param_name:"camp",cookie_name:"mktg_camp"},{param_name:"ultron",cookie_name:"mktg_camp"},{param_name:"src",cookie_name:"mktg_src"},{param_name:"blade",cookie_name:"mktg_src"},{param_name:"mdm",cookie_name:"mktg_mdm"},{param_name:"hulk",cookie_name:"mktg_mdm"},{param_name:"trm",cookie_name:"mktg_trm"},{param_name:"thor",cookie_name:"mktg_trm"},{param_name:"cnt",cookie_name:"mktg_cnt"},{param_name:"gambit",cookie_name:"mktg_cnt"},{param_name:"tech",cookie_name:"mktg_tech"},{param_name:"baymax",
+cookie_name:"mktg_tech"},{param_name:"plcmt",cookie_name:"mktg_plcmt"},{param_name:"storm",cookie_name:"mktg_plcmt"},{param_name:"cta",cookie_name:"mktg_cta"},{param_name:"rogue",cookie_name:"mktg_cta"},{param_name:"pg",cookie_name:"mktg_pg"},{param_name:"elektra",cookie_name:"mktg_pg"},{param_name:"q",cookie_name:"mktg_q"}],did_reset_camp=!1,i;
+for(i in url_values){var item=url_values[i],utm_param=getParam(item.param_name);utm_param&&(setCookie(item.cookie_name,utm_param,30),"mktg_camp"==item.cookie_name&&(setCookie("mktg_src","",-1),setCookie("mktg_mdm","",-1),setCookie("mktg_cnt","",-1),setCookie("mktg_trm","",-1),did_reset_camp=!0),"mktg_src"!=item.cookie_name||did_reset_camp||(setCookie("mktg_camp","",-1),setCookie("mktg_mdm","",-1),setCookie("mktg_cnt","",-1),setCookie("mktg_trm","",-1)))}
+if(google_tag_manager["GTM-58RLH5"].macro('gtm1461638386967')){var mktg_camp_cookie=getCookie("mktg_camp"),matches=google_tag_manager["GTM-58RLH5"].macro('gtm1461638386968').match(/(google|bing|yahoo|duckduckgo|baidu)/i);!matches||mktg_camp_cookie&&"organic"!=mktg_camp_cookie||(setCookie("mktg_camp","organic",30),setCookie("mktg_src",matches[0],30),setCookie("mktg_mdm","",-1),setCookie("mktg_cnt","",-1),setCookie("mktg_trm","",-1))};</script><div id="mktoStyleLoaded" style="display: none; border-top-color: rgb(18, 52, 86);"></div><form class="container sb-form mktoForm mktoHasWidth mktoLayoutAbove" novalidate="novalidate" style="font-family: inherit; font-size: 13px; color: rgb(51, 51, 51); visibility: hidden; position: absolute; top: -500px; left: -1000px; width: 1914px;"></form><iframe name="mktoFormsXDIframe0.8066291401723913" id="MktoForms2XDIframe" src="https://app-lon02.marketo.com/index.php/form/XDFrame" style="display: none;"></iframe><span style="display: none;"><iframe style="display: none !important;" id="_olark_framesocket15505" src="https://static.olark.com/jsclient-bucket1/storage.html?v=1460051891937#TK6050698924360765"></iframe></span><div id="habla_beta_container_do_not_rely_on_div_classes_or_names" class="habla-browser-chrome habla-desktop olrk-noquirks"><div id="hbl_operator_state_div" class="olrk-away"><div id="hbl_region" class="olrk-normal"><div id="habla_window_state_div" class=" olrk-state-compressed"><div id="habla_window_div" style="margin: 0px 20px; bottom: 0px; right: 0px; display: none; position: fixed;" class="habla_window_div_base hbl_pal_main_width olrk-fixed-bottom olrk-fixed-right "><div id="habla_compressed_div" style="display: none;"></div><div id="habla_panel_div" class="habla_panel_border hbl_pal_main_bg hbl_pal_panel_border hbl_pal_main_font_family hbl_pal_main_font_size " style="display: none;"><div id="habla_both_div" style="display: none;"><div id="habla_topbar_div" class="habla_topbar_div_normal habla_topbar_clickable hbl_pal_title_fg hbl_pal_title_bg habla_topbar_div_expanded "><a id="habla_sizebutton_a" class="habla_button habla_button_a_normal hbl_pal_header_font_size hbl_pal_main_font_family hbl_pal_button_bg hbl_pal_button_fg ">^</a><a id="habla_oplink_a" class="habla_oplink_a_normal hbl_pal_header_font_size hbl_pal_title_fg ">Contact us!</a></div></div><div id="habla_expanded_div" style="display: none;"><div id="habla_middle_div"><div id="habla_middle_wrapper_div"><div id="habla_conversation_div" class="hbl_panel habla_conversation_div hbl_pal_main_height hbl_pal_control_border hbl_pal_main_fg hbl_pal_main_bg     habla_conversation_message_on " style="height: 155px; overflow: hidden; display: block;"><span id="hbl_body_message">We're not around, but we'd love to chat another time.</span></div><div id="habla_offline_message_sent_div" class="hbl_panel habla_offline_message_sent_div hbl_pal_main_height hbl_pal_control_border hbl_pal_main_fg " style="display: none;">Thanks for your message!  We'll get back to you shortly.</div><div id="habla_offline_message_div" class="hbl_panel habla_offline_message_div hbl_pal_control_border hbl_pal_main_fg " style="display: none;"><span id="habla_offline_message_span"></span><div class="hbl_txt_wrapper"><textarea id="habla_name_input" name="habla_name_input" class="habla_wcsend_field habla_wcsend_input_pre habla_wcsend_input_normal hbl_pal_input_pre_fg hbl_pal_main_font_family hbl_pal_input_font_size hbl_pal_control_border " placeholder="click here and type your Name" style="height: 20px; display: block;"></textarea></div><div class="hbl_txt_wrapper"><textarea id="habla_offline_email_input" name="habla_offline_email_input" class="habla_wcsend_field habla_wcsend_input_pre habla_wcsend_input_normal hbl_pal_input_pre_fg hbl_pal_main_font_family hbl_pal_input_font_size hbl_pal_control_border " placeholder="click here and type your Email" style="height: 20px; display: block;"></textarea></div><div class="hbl_txt_wrapper"><textarea id="habla_offline_body_input" name="habla_offline_body_input" class="habla_wcsend_field habla_wcsend_input_pre habla_wcsend_input_normal hbl_pal_input_pre_fg hbl_pal_main_font_family hbl_pal_input_font_size hbl_pal_control_border " placeholder="We're not around but we still want to hear from you!  Leave us a note:" style="height: 70px; display: block;"></textarea></div><span id="habla_offline_error_span" class="habla_offline_error_span "></span><input id="habla_offline_submit_input" name="habla_offline_submit_input" type="submit" class="habla_offline_submit_input hbl_pal_offline_submit_fg hbl_pal_control_border hbl_pal_offline_submit_bg " value="Send" style="display: block;"><div id="habla_offline_clear_div" class="clear_style "></div></div><div id="habla_pre_chat_div" class="hbl_panel habla_pre_chat_div hbl_pal_main_height hbl_pal_main_fg " style="display: none; height: 155px;"><span id="habla_pre_chat_span">Hi, I am around, click 'start chatting' to contact me.</span><div class="hbl_txt_wrapper"><textarea id="habla_pre_chat_name_input" name="habla_pre_chat_name_input" class="habla_wcsend_field habla_wcsend_input_pre habla_wcsend_input_normal hbl_pal_input_pre_fg hbl_pal_main_font_family hbl_pal_input_font_size hbl_pal_control_border " placeholder="click here and type your Name" style="height: 20px; line-height: 20px;"></textarea></div><div class="hbl_txt_wrapper"><textarea id="habla_pre_chat_email_input" name="habla_pre_chat_email_input" class="habla_wcsend_field habla_wcsend_input_pre habla_wcsend_input_normal hbl_pal_input_pre_fg hbl_pal_main_font_family hbl_pal_input_font_size hbl_pal_control_border " placeholder="click here and type your Email" style="height: 20px; line-height: 20px;"></textarea></div><div class="hbl_txt_wrapper" style="display: none;"><textarea id="habla_pre_chat_phone_input" name="habla_pre_chat_phone_input" class="habla_wcsend_field habla_wcsend_input_pre habla_wcsend_input_normal hbl_pal_input_pre_fg hbl_pal_main_font_family hbl_pal_input_font_size hbl_pal_control_border " placeholder="click here and type your Phone" style="height: 20px; line-height: 20px; display: none;"></textarea></div><span id="habla_pre_chat_error_span"></span><input id="habla_pre_chat_submit_input" name="habla_pre_chat_submit_input" type="submit" class="habla_pre_chat_form_field habla_offline_submit_input hbl_pal_offline_submit_fg hbl_pal_control_border hbl_pal_offline_submit_bg " value="Click here to start chatting"><div id="habla_pre_chat_clear_div" class="clear_style "></div></div></div><form id="habla_chatform_form" action="#" method="GET" autocomplete="off" class="habla_chatform_form "><div id="habla_input_div" class="habla_input_div "><div class="hbl_txt_wrapper"><textarea id="habla_wcsend_input" name="habla_wcsend_input" size="undefined" class="habla_wcsend_field habla_wcsend_input_pre habla_wcsend_input_normal hbl_pal_input_pre_fg hbl_pal_main_font_family hbl_pal_input_font_size hbl_pal_control_border " placeholder="Type here and hit enter to chat" disabled="" style="line-height: 20px; height: 20px; display: none;"></textarea></div></div></form></div><div style="clear: both;"><div id="olk-b-10509" data-reactid=".0"><div class="wrapper-olk-3310" style="display:none;" data-reactid=".0.0"><p class="description-olk-3310" data-reactid=".0.0.0">10,000+ companies rely on Olark software to chat with customers directly.</p><button class="cancel-button-olk-3310" data-reactid=".0.0.1">Go back</button><button class="referral-button-olk-3310" data-reactid=".0.0.2">Try Olark on your site</button></div><a class="brand-olk-3310" data-reactid=".0.1">Powered by Olark</a></div></div></div></div><div id="habla_closed_div" style="display: none;"></div></div></div></div></div></div><script type="text/javascript" id="">function setFieldValue(b,a){try{document.getElementsByName(b)[0].value=a}catch(c){}}function getParam(b){try{var a=RegExp("[?\x26]"+b+"\x3d([^\x26]*)").exec(window.location.search);return a&&decodeURIComponent(a[1].replace(/\+/g," "))}catch(c){return null}}
+var url_values=[{param_name:"camp",cookie_name:"mktg_camp",field_name:"Ad_Campaign__c"},{param_name:"ultron",cookie_name:"mktg_camp",field_name:"Ad_Campaign__c"},{param_name:"src",cookie_name:"mktg_src",field_name:"Ad_Source__c"},{param_name:"blade",cookie_name:"mktg_src",field_name:"Ad_Source__c"},{param_name:"tech",cookie_name:"mktg_tech",field_name:"Ad_technology__c"},{param_name:"baymax",cookie_name:"mktg_tech",field_name:"Ad_technology__c"},{param_name:"plcmt",cookie_name:"mktg_plcmt",field_name:"Internal_Placement__c"},
+{param_name:"storm",cookie_name:"mktg_plcmt",field_name:"Internal_Placement__c"},{param_name:"cta",cookie_name:"mktg_cta",field_name:"Internal_CTA__c"},{param_name:"rogue",cookie_name:"mktg_cta",field_name:"Internal_CTA__c"},{param_name:"pg",cookie_name:"mktg_pg",field_name:"Internal_Page__c"},{param_name:"elektra",cookie_name:"mktg_pg",field_name:"Internal_Page__c"}],i;for(i in url_values){var item=url_values[i],utm_param=getParam(item.param_name);utm_param&&setFieldValue(item.field_name,utm_param)};</script></body></html>
