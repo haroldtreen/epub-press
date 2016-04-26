@@ -20,27 +20,18 @@ describe('Content Extractor', () => {
             }).catch(done);
         }).timeout(2500);
 
-		it('can extract a blogspot article', (done) => {
-			ContentExtractor.extract(
-				fs.readFileSync(`${__dirname}/fixtures/articles/blogspot.html`).toString()
-			).then((article) => {
-				assert.include(article.content, 'End the life of the hardware (brick it)');
-				assert.include(article.content, 'Anytime you work on a software project,');
-				done();
-			}).catch(done);
-		}).timeout(2500);
+        it('can extract a blogspot article', (done) => {
+            ContentExtractor.extract(
+                fs.readFileSync(`${__dirname}/fixtures/articles/blogspot.html`).toString()
+            ).then((article) => {
+                assert.include(article.content, 'End the life of the hardware (brick it)');
+                assert.include(article.content, 'Anytime you work on a software project,');
+                done();
+            }).catch(done);
+        }).timeout(2500);
     });
 
     describe('preprocess', () => {
-        it('should remove script tags', (done) => {
-            ContentExtractor.preprocess(
-                fs.readFileSync(`${__dirname}/fixtures/scripts.html`).toString()
-            ).then((html) => {
-                assert.notMatch(html, /<script>/);
-                done();
-            }).catch(done);
-        });
-
         it('should bubble up no script content', (done) => {
             const html = fs.readFileSync(`${__dirname}/fixtures/noscript.html`).toString();
             ContentExtractor.preprocess(html).then((preHtml) => {
@@ -55,6 +46,17 @@ describe('Content Extractor', () => {
             ContentExtractor.preprocess(html).then((preHtml) => {
                 assert.notMatch(preHtml, /hidden/);
                 done();
+            }).catch(done);
+        });
+
+        it('should remove certain elements', (done) => {
+            const html = fs.readFileSync(`${__dirname}/fixtures/invalid-elements.html`).toString();
+
+            ContentExtractor.preprocess(html).then((preHtml) => {
+                ContentExtractor.preprocess.REMOVE_ELEMENTS.forEach((element) => {
+                    assert.notMatch(preHtml, new RegExp(element));
+                });
+                done()
             }).catch(done);
         });
     });
