@@ -8,8 +8,6 @@ You can also follow us on [Twitter](https://twitter.com/Epub_Press) to get the l
 
 To follow the development of new features or get involved, visit the [Github Repo](https://github.com/haroldtreen/epub-press-chrome)
 
-Extension code is open source! Feel free to submit issues and pull requests on [Github](https://github.com/haroldtreen/epub-press-chrome).
-
 ## Known Issues
 1. **Empty/Incomplete Articles:**  
 Some possible causes:  

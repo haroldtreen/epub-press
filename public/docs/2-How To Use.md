@@ -23,7 +23,7 @@ Describes the type of eReader file to create.
 ### Email
 If your eReader delivers books by email, you can enter your email address through the settings menu.
 
-Books will be delivered by **epubpress@gmail.com**.
+Books will be delivered by **noreply@epub.press**.
 
 **Some eReaders (eg. Kindle) require you to whitelist emails that can deliver to your eReader.**
 - [Kindle Whitelist Instructions](http://www.amazon.com/gp/sendtokindle/email)
