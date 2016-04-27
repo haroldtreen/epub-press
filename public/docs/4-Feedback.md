@@ -20,6 +20,10 @@ Some possible causes:
 1. **Chapter is of a login screen:**  
 Should be fixed in the latest version.
 
+1. **Books not being delivered:**  
+The delivery email has been updated to **noreply@epub.press**. Make sure your device has the right email [whitelisted](#email). 
+
+
 ## Planned Features
 - Custom titles/descriptions/metadata.
 - Track and share your generated ebooks.
