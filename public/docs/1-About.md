@@ -6,5 +6,5 @@ EpubPress is a [Chrome extension](https://chrome.google.com/webstore/detail/epub
 ### Benefits
 - Removes ads and other distractions from content.
 - Content available offline, for reading on the go.
-- Viewable on eReaders with e-ink screens.
-- Group relevant content together.
+- Viewable on all eReader devices.
+- Groups relevant content together.

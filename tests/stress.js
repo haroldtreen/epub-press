@@ -48,7 +48,7 @@ var urls = [
     'http://www.cbc.ca/news/health/organic-eggs-nutrition-1.3485640?cmp=rss',
     'http://www.cbc.ca/news/business/february-jobs-advancer-1.3485603?cmp=rss',
     'http://www.cbc.ca/news/politics/hall-trudeau-obama-bromance-1.3486409?cmp=rss',
-    'http://www.cbc.ca/news/canada/north/trudeau-obama-washington-visit-arctic-promises-1.3486076?cmp=rss'
+    'http://www.cbc.ca/news/canada/north/trudeau-obama-washington-visit-arctic-promises-1.3486076?cmp=rss',
 ];
 
 // function(params, options, client, callback) {
@@ -84,7 +84,7 @@ const options = {
             'https://www.thestar.com/news/world/2016/03/11/ben-carson-backs-donald-trump-buries-the-hatchet-with-former-rival.html',
         ],
     },
-    url: 'http://104.154.19.246/api/books',
+    url: 'http://localhost:3000/api/books',
     contentType: 'application/json',
     maxRequests: 300,
 };

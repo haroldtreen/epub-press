@@ -3,12 +3,8 @@ module.exports = {
   up: function(queryInterface, Sequelize) {
     return queryInterface.createTable('Books', {
       id: {
-        allowNull: false,
         autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
-      },
-      id: {
+		primaryKey: true,
         type: Sequelize.INTEGER
       },
       title: {

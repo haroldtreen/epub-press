@@ -13,6 +13,7 @@ describe('Book Model', () => {
         ).then((book) => {
             Object.keys(attrs).forEach((key) => {
                 assert.deepEqual(attrs[key], book[key]);
+                assert.isNumber(book.id);
             });
             done();
         }).catch(done);

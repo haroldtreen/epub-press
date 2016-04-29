@@ -50,6 +50,11 @@ describe('Book', () => {
         assert.include(untitledBook.getTitle(), Date().slice(0, 9));
     });
 
+    it('it can generate a title', () => {
+        const generatedTitle = Book.sanitizeTitle('  Title \n');
+        assert.equal(generatedTitle, 'Title');
+    });
+
     describe('Book Sections', () => {
         it('can add sections', () => {
             book.addSection({ title: 'Section 1', content });
