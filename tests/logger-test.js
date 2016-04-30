@@ -8,14 +8,14 @@ const Logger = require('../lib/logger');
 let log;
 
 describe('Logger', () => {
+    after(() => {
+        fs.unlinkSync(Logger.outputFile());
+    });
     describe('basic usage', () => {
         before(() => {
             log = new Logger({ options: [Logger.Console] });
         });
 
-        after(() => {
-            fs.unlinkSync(Logger.outputFile());
-        });
 
         it('defines all the basic log levels', () => {
             ['error', 'warn', 'info', 'verbose', 'debug', 'silly'].forEach((level) => {
@@ -73,6 +73,29 @@ describe('Logger', () => {
             new Promise((resolve, reject) => {
                 reject(new Error('some horrible error!'));
             }).then(() => {}).catch(fileLogger.exception('a promise'));
+        });
+    });
+
+    describe('querying', () => {
+        it('can query the log file', (done) => {
+            const fileLogger = new Logger({ outputs: [Logger.File] });
+            const numLogs = 40;
+            let calls = 0;
+
+            const msgLogged = () => {
+                calls++;
+                if (calls === numLogs) {
+                    fileLogger.query({ limit: 10 }, (err, results) => {
+                        assert.lengthOf(results.file, 10);
+                        results.file.forEach((result) => assert.isDefined(result, 'field'));
+                        done();
+                    });
+                }
+            };
+
+            for (let i = 0; i < numLogs; i++) {
+                fileLogger.info(`Query result ${i}`, { field: true }, msgLogged);
+            }
         });
     });
 
