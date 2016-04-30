@@ -73,8 +73,6 @@ describe('Logger', () => {
             new Promise((resolve, reject) => {
                 reject(new Error('some horrible error!'));
             }).then(() => {}).catch(fileLogger.exception('a promise'));
-
-
         });
     });
 
