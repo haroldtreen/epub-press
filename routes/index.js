@@ -8,6 +8,10 @@ const DocumentationLoader = require('../lib/documentation-loader');
 const express = require('express');
 const router = express.Router();
 
+const Logger = require('./logger');
+
+const log = new Logger();
+
 /* GET home page. */
 router.get('/', (req, res) => {
     const docsLoader = new DocumentationLoader();
@@ -30,6 +34,7 @@ function bookFromBody(body) {
     if (body.urls || body.sections) {
         const sections = [];
         if (body.urls) {
+            log.verbose('Urls request');
             body.urls.forEach((url) => {
                 sections.push({
                     url,
@@ -37,6 +42,7 @@ function bookFromBody(body) {
                 });
             });
         } else if (body.sections) {
+            log.verbose('Sections request');
             body.sections.forEach((section) => {
                 sections.push({
                     url: section.url,
@@ -45,7 +51,7 @@ function bookFromBody(body) {
             });
         }
         book = new Book({}, sections);
-        console.log(book.getUrls());
+        log.verbose('Urls:', book.getUrls());
     } else {
         book = null;
     }
@@ -55,34 +61,35 @@ function bookFromBody(body) {
 router.post('/api/books', (req, res) => {
     const book = bookFromBody(req.body);
     if (book) {
-        console.log('Downloading HTML');
+        log.verbose('Downloading HTML');
         BookServices.updateSectionsHtml(book).then((updatedBook) => {
-            console.log('Extracting Content');
+            log.verbose('Extracting Content');
             return BookServices.extractSectionsContent(updatedBook);
         }).then((updatedBook) => {
-            console.log('Downloading Images');
+            log.verbose('Downloading Images');
             return BookServices.localizeSectionsImages(updatedBook);
         }).then((updatedBook) => {
-            console.log('Converting contents');
+            log.verbose('Converting contents');
             return BookServices.convertSectionsContent(updatedBook);
         }).then((updatedBook) => {
-            console.log('Writting Ebook');
+            log.verbose('Writting Ebook');
             return updatedBook.writeEpub();
         }).then((writtenBook) => {
-            console.log('Creating .mobi');
+            log.verbose('Creating .mobi');
             return BookServices.convertToMobi(writtenBook);
         }).then((writtenBook) => {
-            console.log('Responding');
+            log.verbose('Responding');
             writtenBook.commit();
             res.json({ id: writtenBook.getMetadata().id });
-        }).catch(console.log);
+        }).catch(log.exception('Book Create'));
     } else {
+        log.warn('Body with no book', req.body);
         res.status(400).send('No sections provided.');
     }
 });
 
 router.get('/api/books/download', (req, res) => {
-    console.log(req.query);
+    log.verbose('Download', req.query);
     if (req.query.id) {
         const book = new Book({ id: req.query.id });
 
@@ -92,8 +99,7 @@ router.get('/api/books/download', (req, res) => {
             mailerMethod(req.query.email, book).then(() => {
                 res.status(200).send('Email Sent');
             }).catch((error) => {
-                console.log('Mail error:');
-                console.log(error);
+                log.exception('Mailer Download')(error);
                 res.status(500).send('Email could not be sent');
             });
         } else {
@@ -101,6 +107,7 @@ router.get('/api/books/download', (req, res) => {
             res.download(path);
         }
     } else {
+        log.verbose('No ID provided');
         res.status(400).send('ID Must be provided');
     }
 });
