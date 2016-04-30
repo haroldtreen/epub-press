@@ -8,7 +8,7 @@ const DocumentationLoader = require('../lib/documentation-loader');
 const express = require('express');
 const router = express.Router();
 
-const Logger = require('./logger');
+const Logger = require('../lib/logger');
 
 const log = new Logger();
 
