@@ -1,9 +1,9 @@
 const assert = require('chai').assert;
 const fs = require('fs');
-const ContentExtractor = require('../lib/content-extractor');
-const Book = require('../lib/book');
+const ContentExtractor = require('../../lib/content-extractor');
+const Book = require('../../lib/book');
 
-const articleFixtures = `${__dirname}/fixtures/articles`;
+const articleFixtures = `${__dirname}/../fixtures/articles`;
 
 
 describe('Article Extraction', () => {
