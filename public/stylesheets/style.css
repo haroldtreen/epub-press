@@ -1,5 +1,5 @@
 body {
-    margin: 40px 0px;
+    margin: 30px 0px;
     padding: 0px;
     font: 18px;
     font-family: 'Quicksand', sans-serif;
@@ -68,7 +68,7 @@ nav > a:hover {
     display: block;
     height: auto;
     width: auto;
-    max-height: 400px;
+    max-height: 350px;
     max-width: 100%;
     margin: 10px auto;
 }
@@ -81,7 +81,7 @@ nav > a:hover {
 }
 
 #logo {
-    width: 200px;
+    width: 150px;
     align-self: center;
 }
 
