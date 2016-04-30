@@ -23,7 +23,7 @@ const fields = program.fields || '';
 const options = {
     from: new Date() - 7 * 24 * 60 * 60 * 1000, // Weeks worth of data
     until: new Date(),
-    order: 'desc',
+    order: 'asc',
     start: START,
     limit: NUMBER,
 };
