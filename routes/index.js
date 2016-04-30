@@ -51,7 +51,7 @@ function bookFromBody(body) {
             });
         }
         book = new Book({}, sections);
-        log.verbose('Urls:', book.getUrls());
+        log.verbose('Urls:', { urls: book.getUrls() });
     } else {
         book = null;
     }
@@ -83,13 +83,13 @@ router.post('/api/books', (req, res) => {
             res.json({ id: writtenBook.getMetadata().id });
         }).catch(log.exception('Book Create'));
     } else {
-        log.warn('Body with no book', req.body);
+        log.warn('Body with no book', { body: req.body });
         res.status(400).send('No sections provided.');
     }
 });
 
 router.get('/api/books/download', (req, res) => {
-    log.verbose('Download', req.query);
+    log.verbose('Download', { query: req.query });
     if (req.query.id) {
         const book = new Book({ id: req.query.id });
 
