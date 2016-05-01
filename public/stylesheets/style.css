@@ -2,11 +2,12 @@ body {
     margin: 30px 0px;
     padding: 0px;
     font: 18px;
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Lato', sans-serif;
 }
 
 h1, h2, h3 {
     margin: 25px 0px 5px 0px;
+    font-family: 'Quicksand', sans-serif;
 }
 
 p {
