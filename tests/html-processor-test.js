@@ -46,6 +46,9 @@ describe('HTML Processor', () => {
 
             assert.notMatch(html, /100%/);
             html = HtmlProcessor.maximizeSize('img', html);
+            console.log(html);
+            assert.match(html, /80px/);
+            assert.notMatch(html, /30%/);
             assert.match(html, /100%/);
         });
 
