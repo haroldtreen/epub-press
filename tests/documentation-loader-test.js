@@ -16,7 +16,7 @@ describe('Documentation Loader', () => {
 
         fs.readdir(Config.DOCS_PATH, (err, files) => {
             loader.readDocs().then((docs) => {
-                assert.lengthOf(docs, files.length - 1);
+                assert.lengthOf(docs, files.length - 2);
                 docs.forEach((doc) => {
                     assert.property(doc, 'title');
                     assert.property(doc, 'html');

@@ -11,8 +11,8 @@ EpubPress is a [Chrome extension](https://chrome.google.com/webstore/detail/epub
 
 ## Sample Books
 - Bundle the days best articles from HackerNews
-<a href="./docs/Hacker-News.epub" style="text-decoration: none;" download>(Download)</a>
+<a href="./docs/samples/Hacker-News.epub" style="text-decoration: none;" download>(Download)</a>
 - Build a custom travel guide for South America
-<a href="./docs/South-America.epub" style="text-decoration: none;" download>(Download)</a>
+<a href="./docs/samples/South-America.epub" style="text-decoration: none;" download>(Download)</a>
 
 **All the amazing content of the internet, available on devices that were made for reading.**
