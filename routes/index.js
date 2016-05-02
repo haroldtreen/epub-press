@@ -50,8 +50,9 @@ function bookFromBody(body) {
                 });
             });
         }
-        book = new Book({}, sections);
-        log.verbose('Urls:', { urls: book.getUrls() });
+        book = new Book({ title: body.title, description: body.description }, sections);
+        log.verbose('Book Metadata',
+            { title: body.title, description: body.description, urls: book.getUrls() });
     } else {
         book = null;
     }
