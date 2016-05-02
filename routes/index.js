@@ -82,7 +82,10 @@ router.post('/api/books', (req, res) => {
             log.verbose('Responding');
             writtenBook.commit();
             res.json({ id: writtenBook.getMetadata().id });
-        }).catch(log.exception('Book Create'));
+        }).catch((e) => {
+            log.exception('Book Create')(e);
+            res.status(500).send('Unknown error');
+        });
     } else {
         log.warn('Body with no book', { body: req.body });
         res.status(400).send('No sections provided.');
