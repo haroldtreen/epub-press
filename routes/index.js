@@ -13,6 +13,8 @@ const Logger = require('../lib/logger');
 
 const log = new Logger();
 
+const MAX_NUM_SECTIONS = 50;
+
 /* GET home page. */
 router.get('/', (req, res) => {
     const docsLoader = new DocumentationLoader();
@@ -29,6 +31,13 @@ router.get('/api/version', (req, resp) => {
         message: 'An update for EpubPress is available.',
     });
 });
+
+function validateRequest(req) {
+    const sections = req.body.urls || req.body.sections;
+    const isValid = !!sections && sections.length < MAX_NUM_SECTIONS;
+
+    return isValid;
+}
 
 function bookFromBody(body) {
     let book;
@@ -61,35 +70,41 @@ function bookFromBody(body) {
 }
 
 router.post('/api/books', (req, res) => {
-    const book = bookFromBody(req.body);
-    if (book) {
-        log.verbose('Downloading HTML');
-        BookServices.updateSectionsHtml(book).then((updatedBook) => {
-            log.verbose('Extracting Content');
-            return BookServices.extractSectionsContent(updatedBook);
-        }).then((updatedBook) => {
-            log.verbose('Downloading Images');
-            return BookServices.localizeSectionsImages(updatedBook);
-        }).then((updatedBook) => {
-            log.verbose('Converting contents');
-            return BookServices.convertSectionsContent(updatedBook);
-        }).then((updatedBook) => {
-            log.verbose('Writting Ebook');
-            return updatedBook.writeEpub();
-        }).then((writtenBook) => {
-            log.verbose('Creating .mobi');
-            return BookServices.convertToMobi(writtenBook);
-        }).then((writtenBook) => {
-            log.verbose('Responding');
-            writtenBook.commit();
-            res.json({ id: writtenBook.getMetadata().id });
-        }).catch((e) => {
-            log.exception('Book Create')(e);
-            res.status(500).send('Unknown error');
-        });
+    const isValid = validateRequest(req);
+    if (isValid) {
+        const book = bookFromBody(req.body);
+        if (book) {
+            log.verbose('Downloading HTML');
+            BookServices.updateSectionsHtml(book).then((updatedBook) => {
+                log.verbose('Extracting Content');
+                return BookServices.extractSectionsContent(updatedBook);
+            }).then((updatedBook) => {
+                log.verbose('Downloading Images');
+                return BookServices.localizeSectionsImages(updatedBook);
+            }).then((updatedBook) => {
+                log.verbose('Converting contents');
+                return BookServices.convertSectionsContent(updatedBook);
+            }).then((updatedBook) => {
+                log.verbose('Writting Ebook');
+                return updatedBook.writeEpub();
+            }).then((writtenBook) => {
+                log.verbose('Creating .mobi');
+                return BookServices.convertToMobi(writtenBook);
+            }).then((writtenBook) => {
+                log.verbose('Responding');
+                writtenBook.commit();
+                res.json({ id: writtenBook.getMetadata().id });
+            }).catch((e) => {
+                log.exception('Book Create')(e);
+                res.status(500).send('Unknown error');
+            });
+        } else {
+            log.warn('Body with no book', { body: req.body });
+            res.status(400).send('No sections provided.');
+        }
     } else {
-        log.warn('Body with no book', { body: req.body });
-        res.status(400).send('No sections provided.');
+        log.warn('Invalid request attempted', req.body);
+        res.status(400).send(`Max of ${MAX_NUM_SECTIONS} items exceeded.`);
     }
 });
 
