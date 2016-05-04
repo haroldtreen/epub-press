@@ -60,6 +60,7 @@ describe('Book Services', () => {
                     { 'Content-type': 'image/png' }
                 );
             });
+            scope.get('/bad-source').reply('404', 'Not Found');
             const section = {
                 content: fs.readFileSync(`${fixturesPath}/images.html`).toString(),
                 url: 'http://test.fake/article',
