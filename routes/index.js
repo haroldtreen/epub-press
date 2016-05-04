@@ -4,6 +4,7 @@ const BookServices = require('../lib/book-services');
 const Mailer = require('../lib/mailer');
 const Book = require('../lib/book');
 const DocumentationLoader = require('../lib/documentation-loader');
+const metadata = require('../package.json');
 
 const express = require('express');
 const router = express.Router();
@@ -17,7 +18,7 @@ router.get('/', (req, res) => {
     const docsLoader = new DocumentationLoader();
 
     docsLoader.readDocs().then((docs) => {
-        res.render('index', { title: 'EpubPress (Beta)', docs });
+        res.render('index', { metadata, docs });
     });
 });
 
