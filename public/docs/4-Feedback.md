@@ -9,9 +9,8 @@ You can also follow us on [Twitter](https://twitter.com/Epub_Press) to get the l
 To follow the development of new features or get involved, visit the [Github Repo](https://github.com/haroldtreen/epub-press-chrome)
 
 ## Planned Features
-- Custom titles/descriptions/metadata.
-- Track and share your generated ebooks.
-- Shared book info pages.
 - Firefox and Safari extensions.
 - Detection of sites with lists of articles (eg. Feedly).
+- Track and share your generated ebooks.
+- Shared book info pages.
 - [*< insert your idea here >*](mailto:feedback@epub.press)
