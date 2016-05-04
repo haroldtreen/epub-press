@@ -126,6 +126,23 @@ describe('HTML Processor', () => {
             }).catch(done);
         });
 
+        it('doesn\'t resize small images', (done) => {
+            scope = nock('http://test.fake');
+            scope.get('/small-image.png').replyWithFile(
+                200,
+                `${fixturesPath}/small-placeholder.png`,
+                { 'Content-Type': 'image/png', 'Content-Length': 3000 }
+            );
+
+            HtmlProcessor.extractImages(
+                mockSection.url,
+                '<img src="./small-image.png" width="100%">'
+            ).then((output) => {
+                assert.notInclude(output.html, '100%');
+                done();
+            }).catch(done);
+        });
+
         describe('helpers', () => {
             it('can convert urls', () => {
                 const root = 'http://test.fake/hello/stuff.html';
