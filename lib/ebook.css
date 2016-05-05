@@ -21,7 +21,7 @@ pre > code {
 pre {
     border-left: 3px solid black;
     background-color: rgb(240, 240, 240);
-    padding: 2px 5px;
+    padding-left: 10px;
     text-align: left;
     white-space: pre-wrap;
     font-size: 75%;
