@@ -4,6 +4,7 @@
 1. Arrange them in the order they should appear in the book.
 1. Click the EpubPress icon.  
   ![icon](./docs/images/epub-press-icon.jpg)
+1. Add a custom title and description. **(Optional)**
 1. Select the articles to include in your book.
   ![list](./docs/images/list.jpg)
 1. Click **Download**
