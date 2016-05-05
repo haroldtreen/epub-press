@@ -141,7 +141,7 @@ describe('HTML Processor', () => {
 
             HtmlProcessor.extractImages(
                 mockSection.url,
-                '<img src="./small-image.png" width="100%">'
+                '<img src="./small-image.png" style="width: 100%;">'
             ).then((output) => {
                 assert.notInclude(output.html, '100%');
                 done();
