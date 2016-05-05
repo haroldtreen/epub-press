@@ -103,7 +103,7 @@ router.post('/api/books', (req, res) => {
             res.status(400).send('No sections provided.');
         }
     } else {
-        log.warn('Invalid request attempted', req.body);
+        log.warn('Invalid request attempted');
         res.status(400).send(`Max of ${MAX_NUM_SECTIONS} items exceeded.`);
     }
 });
