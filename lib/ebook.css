@@ -2,6 +2,13 @@ body {
     font-size: medium;
 }
 
+blockquote {
+    font-style: italic;
+    border-left: 3px solid black;
+    margin-left: 0px;
+    padding-left: 10px;
+}
+
 code {
     font-family: monospace;
     word-wrap: break-word;
