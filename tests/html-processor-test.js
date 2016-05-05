@@ -85,6 +85,11 @@ describe('HTML Processor', () => {
             assert.notMatch(html, /wrapper/);
             assert.match(html, /content/);
         });
+
+        it('can convert elements into div', () => {
+            const html = HtmlProcessor.convertToDiv('section', '<section>Hello World</section>');
+            assert.equal(html, '<div>Hello World</div>');
+        });
     });
 
     describe('Image Extraction', () => {
