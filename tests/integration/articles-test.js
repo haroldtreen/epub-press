@@ -63,6 +63,15 @@ describe('Article Extraction', () => {
             'disastrous mortal disease known as the Black Death spread across Europe in the years',
             'This dramatic fall in Europe',
         ],
+    },
+    {
+        fixture: 'telegraph-uk',
+        title: '', // Will be found by book.fallbackTitle
+        include: [
+            'Welsh biologist once criticised for stealing eggs from',
+            'When the 61-year-old first travelled to the east African',
+            'But the biologist, now chief scientist of the Durrell',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             ContentExtractor.extract(
