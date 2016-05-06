@@ -1,6 +1,6 @@
 {
   "name": "epub-press",
-  "title": "EpubPress (Beta) - Create ebooks from your favorite websites",
+  "title": "EpubPress (Beta) - Create ebooks from your favorite webpages",
   "description": "A browser extension creating custom ebooks from your favorite web content. Build books that are offline, ad-free and compatible with all your devices.",
   "image": "http://epub.press/images/logo-full.jpg",
   "version": "0.2.0",

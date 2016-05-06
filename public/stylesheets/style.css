@@ -20,6 +20,11 @@ ul, ol {
 
 li {
     margin: 10px 0px;
+    line-height: 25px;
+}
+
+p {
+    line-height: 25px;
 }
 
 nav {

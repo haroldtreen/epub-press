@@ -1,5 +1,6 @@
 # How To Use
-1. Open all of your favorite sites in separate tabs.
+1. Open all of your favorite webpages in separate tabs.  
+   (**Note:** Sites with large blocks of text work best.)
   ![tabs](./docs/images/tabs.jpg)
 1. Arrange them in the order they should appear in the book.
 1. Click the EpubPress icon.  
