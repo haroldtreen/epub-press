@@ -90,6 +90,17 @@ describe('HTML Processor', () => {
             const html = HtmlProcessor.convertToDiv('section', '<section>Hello World</section>');
             assert.equal(html, '<div>Hello World</div>');
         });
+
+        it('can remove hidden elements', () => {
+            [
+                { selector: 'span', html: '<span style="display:none;"></span>', remove: true },
+                { selector: 'div', html: '<div style="display:block;"></div>', remove: false },
+                { selector: 'div', html: '<div style="display: none;"></div>', remove: true },
+            ].forEach((test) => {
+                const method = test.remove ? 'notInclude' : 'include';
+                assert[method](HtmlProcessor.removeHidden(test.selector, test.html), test.selector);
+            });
+        });
     });
 
     describe('Image Extraction', () => {

@@ -72,6 +72,17 @@ describe('Article Extraction', () => {
             'When the 61-year-old first travelled to the east African',
             'But the biologist, now chief scientist of the Durrell',
         ],
+    },
+    {
+        fixture: 'buzzfeed',
+        title: 'Inside Palantir, Silicon Valley\'s Most Secretive Company',
+        include: [
+            '<b>A trove of internal</b> documents and insider interviews has pulled back the',
+            'More than 100 Palantir employees, including several prominent managers',
+            'Palantir, like other highly valued tech &#x201C;unicorns,&#x201D; has long avoided',
+            'But they can also produce lucrative results',
+            'definitely been a little bit of a shift from bookings to cash',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             ContentExtractor.extract(
