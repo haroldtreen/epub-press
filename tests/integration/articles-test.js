@@ -83,6 +83,7 @@ describe('Article Extraction', () => {
             'But they can also produce lucrative results',
             'definitely been a little bit of a shift from bookings to cash',
         ],
+        notInclude: ['rel:buzz_num'],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             ContentExtractor.extract(
