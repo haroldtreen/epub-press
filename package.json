@@ -34,7 +34,7 @@
     "nock": "^7.7.3",
     "node-readability": "github:haroldtreen/readability#extraction-improvements",
     "nodemailer": "^2.3.2",
-    "nodepub": "^1.0.6",
+    "nodepub": "github:haroldtreen/nodepub",
     "pg": "^4.5.5",
     "pg-hstore": "^2.3.2",
     "request-promise": "^2.0.1",
