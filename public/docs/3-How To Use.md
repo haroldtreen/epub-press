@@ -27,3 +27,14 @@ Books will be delivered by **noreply@epub.press**.
 
 **Some eReaders (eg. Kindle) require you to whitelist emails that can deliver to your eReader.**
 - [Kindle Whitelist Instructions](http://www.amazon.com/gp/sendtokindle/email)
+
+## Compatible Readers
+Almost all reading apps and devices support either `.mobi` or `.epub`.
+
+But here are a list of some readers that have been tested with:
+- [Calibre](http://calibre-ebook.com/) **(Windows, Mac OSX)**
+- [iBooks](https://www.apple.com/ibooks/) **(Mac OSX, iOS)**
+- [Google Play Books](https://play.google.com/books) **(iOS, Android, Web)**
+- [Kindle](https://www.amazon.com/gp/digital/fiona/kcp-landing-page/ref=klp_mn) **(Windows, Mac OSX, iOS, Android, Web)**
+
+If you have others that you'd like to add, let us know!
