@@ -84,7 +84,15 @@ describe('Article Extraction', () => {
             'definitely been a little bit of a shift from bookings to cash',
         ],
         notInclude: ['rel:buzz_num'],
-    }].forEach((testCase) => {
+    },
+    {
+        fixture: 'kayiprihtim',
+        title: '', // Filled in by fallback title
+        include: [
+            'ÇROP’un dokuzuncu yaşı şerefine düzenlenen',
+            'Reha Ülkü – Çizgi romanlar, Filmleri ve Ötesi',
+        ],
+    }].reverse().forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             ContentExtractor.extract(
                 fs.readFileSync(`${articleFixtures}/${testCase.fixture}.html`).toString()

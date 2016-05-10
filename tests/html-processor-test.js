@@ -101,6 +101,29 @@ describe('HTML Processor', () => {
                 assert[method](HtmlProcessor.removeHidden(test.selector, test.html), test.selector);
             });
         });
+
+        it('can set elements to their innerText', () => {
+            let html = '<code><span>var</span> hello;</code>';
+            html = HtmlProcessor.replaceWithInnerText('code', html);
+
+            assert.notInclude(html, '<span>');
+            assert.include(html, 'var hello');
+        });
+
+        it('can remove indents', () => {
+            const html = [
+                '   if (true) {',
+                '      hello();',
+                '   }',
+            ].join('\n');
+            const expectedHtml = [
+                'if (true) {',
+                '   hello();',
+                '}',
+            ].join('\n');
+
+            assert.equal(HtmlProcessor.removeIndent(html), expectedHtml);
+        });
     });
 
     describe('Image Extraction', () => {
