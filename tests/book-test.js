@@ -23,6 +23,11 @@ describe('Book', () => {
         assert.equal(book.getTitle(), bookMetadata.title, 'Title not passed to book');
     });
 
+    it('sanitizes the title', () => {
+        const specialBook = new Book({ title: "Book with ' in the title" });
+        assert.include(specialBook.getTitle(), '&#39;');
+    });
+
     it('can be saved as epub', (done) => {
         const sectionStub = Sinon.stub(book._ebook, 'addSection');
         const writeStub = Sinon.stub(book._ebook, 'writeEPUB', (onError, path, file, onSuccess) => {
