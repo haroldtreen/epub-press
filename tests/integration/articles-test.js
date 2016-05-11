@@ -89,9 +89,10 @@ describe('Article Extraction', () => {
         fixture: 'kayiprihtim',
         title: '', // Filled in by fallback title
         include: [
-            'ÇROP’un dokuzuncu yaşı şerefine düzenlenen',
-            'Reha Ülkü – Çizgi romanlar, Filmleri ve Ötesi',
+            'nice seneler diliyoruz',
+            'roman sitelerinden',
         ],
+        notInclude: ['Yorum', 'Kategoriler'],
     }].reverse().forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             ContentExtractor.extract(
