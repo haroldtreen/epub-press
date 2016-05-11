@@ -14,6 +14,10 @@ code {
     word-wrap: break-word;
 }
 
+p {
+    text-indent: 1em;
+}
+
 pre > code {
     line-height: 1.5;
 }
