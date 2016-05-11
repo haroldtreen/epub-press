@@ -93,7 +93,18 @@ describe('Article Extraction', () => {
             'roman sitelerinden',
         ],
         notInclude: ['Yorum', 'Kategoriler'],
-    }].reverse().forEach((testCase) => {
+    },
+    {
+        fixture: 'elektrek',
+        title: 'Spectacular Tesla Model S crash after flying 82+ft in the air shows importance of a large crumple zone [Gallery]', //eslint-disable-line
+        include: [
+            'Earlier this week, a 18-year old took her father',
+            '<a href="http://electrek.co/2016/05/06/tesla-model-s-crash-large-crumple-zone-gallery',
+            'http://electrek.co/2016/05/06/tesla-model-s-crash-large-crumple-zone-gallery/model-s',
+            'Hopefully the 5 young adults recover quickly and can learn something from this accid',
+        ],
+        notInclude: ['9TO5MAC'],
+    }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             ContentExtractor.extract(
                 fs.readFileSync(`${articleFixtures}/${testCase.fixture}.html`).toString()

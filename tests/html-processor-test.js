@@ -54,13 +54,13 @@ describe('HTML Processor', () => {
         it('can remmove non ebook friendly attributes', () => {
             let html = fs.readFileSync(`${__dirname}/fixtures/invalid-attributes.html`).toString();
 
-            ['srcset', 'property', 'style', 'itemprop'].forEach((attr) =>
+            ['srcset', 'property', 'itemprop'].forEach((attr) =>
                 assert.match(html, new RegExp(attr))
             );
 
             html = HtmlProcessor.removeInvalidAttributes('div', html);
 
-            ['srcset', 'property', 'style', 'itemprop'].forEach((attr) =>
+            ['srcset', 'property', 'itemprop'].forEach((attr) =>
                 assert.notMatch(html, new RegExp(attr))
             );
         });
