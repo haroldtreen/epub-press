@@ -112,17 +112,21 @@ describe('HTML Processor', () => {
 
         it('can remove indents', () => {
             const html = [
+                '<code>',
                 '   if (true) {',
                 '      hello();',
                 '   }',
+                '</code>',
             ].join('\n');
             const expectedHtml = [
+                '<code>',
                 'if (true) {',
                 '   hello();',
                 '}',
+                '</code>',
             ].join('\n');
 
-            assert.equal(HtmlProcessor.removeIndent(html), expectedHtml);
+            assert.equal(HtmlProcessor.removeIndent('code', html), expectedHtml);
         });
     });
 
