@@ -36,5 +36,6 @@ But here are a list of some readers that have been tested with:
 - [iBooks](https://www.apple.com/ibooks/) **(Mac OSX, iOS)**
 - [Google Play Books](https://play.google.com/books) **(iOS, Android, Web)**
 - [Kindle](https://www.amazon.com/gp/digital/fiona/kcp-landing-page/ref=klp_mn) **(Windows, Mac OSX, iOS, Android, Web)**
+- [Kobo](https://store.kobobooks.com/en-us/p/apps) **(Windows, Mac OSX, iOS, Android)**
 
 If you have others that you'd like to add, let us know!
