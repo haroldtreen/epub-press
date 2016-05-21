@@ -104,6 +104,16 @@ describe('Article Extraction', () => {
             'Hopefully the 5 young adults recover quickly and can learn something from this accid',
         ],
         notInclude: ['9TO5MAC'],
+    },
+    {
+        fixture: 'threatpost',
+        title: 'Academics Make Theoretical Breakthrough in Random Number Generation',
+        include: [
+            'Two University of Texas academics have made what some experts believe is',
+            'thrilled to have solved it',
+            'You expect to see advances in steps',
+        ],
+        notInclude: ['Chrome Defaults to HTML5 over Adobe Flash Starting in Q4', 'Leave A Comment'],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             ContentExtractor.extract(
