@@ -114,6 +114,21 @@ describe('Article Extraction', () => {
             'You expect to see advances in steps',
         ],
         notInclude: ['Chrome Defaults to HTML5 over Adobe Flash Starting in Q4', 'Leave A Comment'],
+    },
+    {
+        fixture: 'reddit-post',
+        title: 'Inner Confidence Series: Introduction : GetSuave',
+        include: [
+            'Thus far, just about everything you',
+            'The World is More Malleable Than You Think',
+            'Your mind shapes your experiences.',
+            'techniques designed to circumvent your own fears and doubts were',
+        ],
+        notInclude: [
+            'I am currently reading psycho-cybernetic',
+            'all 2 comments',
+            'Submit a new link',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             ContentExtractor.extract(
