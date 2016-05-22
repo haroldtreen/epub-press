@@ -129,6 +129,16 @@ describe('Article Extraction', () => {
             'all 2 comments',
             'Submit a new link',
         ],
+    }, {
+        fixture: 'github-readme',
+        title: 'snap/README.md at master · intelsdi-x/snap',
+        include: [
+            'is an open telemetry framework designed to simplify the collection',
+            'Your contribution, through code and participation, is incredibly important to us.',
+        ],
+        notInclude: [
+            'Fix plugin path in README.md',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             ContentExtractor.extract(
