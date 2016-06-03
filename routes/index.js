@@ -27,7 +27,7 @@ router.get('/', (req, res) => {
 router.get('/api/version', (req, resp) => {
     resp.json({
         version: require('../package.json').version,
-        minCompatible: '0.6.0',
+        minCompatible: '0.8.0',
         message: 'An update for EpubPress is available.',
     });
 });
