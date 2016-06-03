@@ -6,7 +6,7 @@ describe('Book Model', () => {
     it('can create books', (done) => {
         const attrs = {
             title: 'Test Book',
-            sections: [{ title: 'Section 1', url: 'http://epub.press' }],
+            sections: [{ title: 'Section 1', url: 'https://epub.press' }],
         };
         BookModel.create(attrs).then(() =>
             BookModel.findOne({ title: attrs.title })
