@@ -15,7 +15,7 @@ program
   .parse(process.argv);
 
 const LEVEL = program.level || false;
-const NUMBER = program.number || 100;
+const NUMBER = program.number || 10000;
 const REGEXP = new RegExp(program.regex, 'i') || false;
 const START = program.start || 0;
 
