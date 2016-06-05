@@ -22,8 +22,10 @@ log.query(options, (err, result) => {
         const dateCounts = {};
 
         entries.forEach((entry) => {
-            const entryDate = new Date(entry.timestamp).getDate();
-            dateCounts[entryDate] = dateCounts[entryDate] ? dateCounts[entryDate] + 1 : 1;
+            const entryDate = new Date(entry.timestamp);
+            const entryKey = `${entryDate.getMonth()}/${entryDate.getDay()}`;
+
+            dateCounts[entryKey] = dateCounts[entryKey] ? dateCounts[entryKey] + 1 : 1;
         });
 
         console.log(dateCounts);
