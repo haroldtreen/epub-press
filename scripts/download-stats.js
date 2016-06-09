@@ -23,7 +23,7 @@ log.query(options, (err, result) => {
 
         entries.forEach((entry) => {
             const entryDate = new Date(entry.timestamp);
-            const entryKey = `${entryDate.getMonth()}/${entryDate.getDay()}`;
+            const entryKey = `${entryDate.getMonth()}/${entryDate.getDate()}`;
 
             dateCounts[entryKey] = dateCounts[entryKey] ? dateCounts[entryKey] + 1 : 1;
         });
