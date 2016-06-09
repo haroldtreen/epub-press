@@ -130,6 +130,32 @@ describe('HTML Processor', () => {
         });
     });
 
+    describe('Correction methods', () => {
+        it('can convert misused divs to paragraphs', () => {
+            const badHtml = '<div>This text should not be here</div>';
+            const expectedHtml = '<div><p>This text should not be here</p></div>';
+
+            const fixedHtml = HtmlProcessor.insertMissingParagraphTags('div', badHtml);
+            assert.equal(fixedHtml, expectedHtml);
+        });
+
+        it('can fix isolated text blocks', () => {
+            const badHtml = '<div>A block of text.<p>Next to a paragraph.</p></div>';
+            const expectedHtml = '<div><p>A block of text.</p><p>Next to a paragraph.</p></div>';
+
+            const fixedHtml = HtmlProcessor.insertMissingParagraphTags('div', badHtml);
+            assert.equal(fixedHtml, expectedHtml);
+        });
+
+        it('can ignore text blocks that are small', () => {
+            const badHtml = '<div>div<div>div</div></div>';
+            const expectedHtml = badHtml;
+
+            const fixedHtml = HtmlProcessor.insertMissingParagraphTags('div', badHtml);
+            assert.equal(fixedHtml, expectedHtml);
+        });
+    });
+
     describe('Image Extraction', () => {
         let scope;
         beforeEach(() => {

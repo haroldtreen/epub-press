@@ -139,6 +139,33 @@ describe('Article Extraction', () => {
         notInclude: [
             'Fix plugin path in README.md',
         ],
+    }, {
+        fixture: 'moneycontrol',
+        title: 'Skipper bags orders worth Rs 135 cr from Power Grid',
+        include: [
+            'Looking to bag orders worth Rs 300',
+            'the filing added.',
+        ],
+        notInclude: [
+            'Mutual Funds',
+            'Defence stocks up',
+        ],
+    },
+    {
+        fixture: 'sousetsuka',
+        title: 'Death March kara Hajimaru Isekai Kyousoukyoku 13-1',
+        include: [
+            'In order to escape the predicament',
+            'More than 1000 nobles are lined up in the great audience hall',
+            'I put the golden helmet again',
+            'I said more to hold back Lulu who had stood up.',
+            'work vigorously again tomorrow!',
+        ],
+        notInclude: [
+            'He can literally just sit back',
+            'Join the discussion',
+            'for me how she deboned an assassin while they',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             ContentExtractor.extract(
