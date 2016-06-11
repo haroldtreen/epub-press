@@ -11,6 +11,6 @@ To follow the development of new features or get involved, visit the [Github Rep
 ## Planned Features
 - Firefox and Safari extensions.
 - Detection of sites with lists of articles (eg. Feedly).
+- Open source javascript library + npm package for using EpubPress in your applications.
 - Track and share your generated ebooks.
-- Shared book info pages.
 - [*< insert your idea here >*](mailto:feedback@epub.press)
