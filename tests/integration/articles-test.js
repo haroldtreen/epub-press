@@ -166,6 +166,19 @@ describe('Article Extraction', () => {
             'Join the discussion',
             'for me how she deboned an assassin while they',
         ],
+    },
+    {
+        fixture: 'mediashift',
+        title: 'Columbia’s Lede Program Aims to Go Beyond the Data Hype',
+        include: [
+            'This all began at Joe',
+            'Big Data models and practices aren',
+            'Data-driven journalism in larger contexts',
+        ],
+        notInclude: [
+            'Self-Publishing Your Book: Where’s the Money',
+            'About EducationShift',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             ContentExtractor.extract(
