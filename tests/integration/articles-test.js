@@ -66,7 +66,7 @@ describe('Article Extraction', () => {
     },
     {
         fixture: 'telegraph-uk',
-        title: '', // Will be found by book.fallbackTitle
+        title: 'Biologist who snatched eggs from nests of world\'s rarest bird wins the \'Nobel prize\' of conservation', //eslint-disable-line
         include: [
             'Welsh biologist once criticised for stealing eggs from',
             'When the 61-year-old first travelled to the east African',
@@ -117,7 +117,7 @@ describe('Article Extraction', () => {
     },
     {
         fixture: 'reddit-post',
-        title: 'Inner Confidence Series: Introduction : GetSuave',
+        title: 'Inner Confidence Series: Introduction • /r/GetSuave',
         include: [
             'Thus far, just about everything you',
             'The World is More Malleable Than You Think',
@@ -131,7 +131,7 @@ describe('Article Extraction', () => {
         ],
     }, {
         fixture: 'github-readme',
-        title: 'snap/README.md at master · intelsdi-x/snap',
+        title: 'intelsdi-x/snap',
         include: [
             'is an open telemetry framework designed to simplify the collection',
             'Your contribution, through code and participation, is incredibly important to us.',
@@ -169,7 +169,7 @@ describe('Article Extraction', () => {
     },
     {
         fixture: 'mediashift',
-        title: 'Columbia’s Lede Program Aims to Go Beyond the Data Hype',
+        title: 'Columbia\'s Lede Program Aims to Go Beyond the Data Hype',
         include: [
             'This all began at Joe',
             'Big Data models and practices aren',
