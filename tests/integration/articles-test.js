@@ -179,6 +179,19 @@ describe('Article Extraction', () => {
             'Self-Publishing Your Book: Where’s the Money',
             'About EducationShift',
         ],
+    },
+    {
+        fixture: 'bloomberg',
+        title: 'The 100-Year-Old Man Who Lives in the Future',
+        include: [
+            'To reach the Venus Project Research Center',
+            'Fresco, now hard of hearing',
+            'As for Fresco, he remains convinced his computer-governed city can become reality',
+        ],
+        notInclude: [
+            'At least 53 other people were hospitalized',
+            '50 Dead in Florida Nightclub Shooting',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             ContentExtractor.extract(

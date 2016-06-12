@@ -154,6 +154,14 @@ describe('HTML Processor', () => {
             const fixedHtml = HtmlProcessor.insertMissingParagraphTags('div', badHtml);
             assert.equal(fixedHtml, expectedHtml);
         });
+
+        it('can remove duplicates', () => {
+            const badHtml = '<article>First.</article><article>Second.</article>';
+            const expectedHtml = '<article>First.</article>';
+
+            const fixedHtml = HtmlProcessor.removeDuplicates('article', badHtml);
+            assert.equal(fixedHtml, expectedHtml);
+        });
     });
 
     describe('Image Extraction', () => {
