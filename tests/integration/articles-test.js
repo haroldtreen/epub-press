@@ -217,6 +217,18 @@ describe('Article Extraction', () => {
             '俺的招聘经验',
             '是避而不谈',
         ],
+    },
+    {
+        fixture: 'business-insider',
+        title: 'A top psychologist says there\'s only one way to become the best in your field', // eslint-disable-line
+        include: [
+            'As a teenager in Sweden,\n  Anders Ericsson used to play chess against one of his',
+            'In the last few years,\n  however, Ericsson\'s findings on deliberate practice have',
+            '"Partly because I am\n  Swedish," Ericsson said, "it took over 30 different drafts',
+        ],
+        notInclude: [
+            'Orlando shooter',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             ContentExtractor.extract(
