@@ -54,6 +54,7 @@ describe('Article Extraction', () => {
             'My initial impressions are extremely positive.',
             '<img',
         ],
+        notInclude: ['progressiveMedia-thumbnail'],
     },
     {
         fixture: 'historytoday',
