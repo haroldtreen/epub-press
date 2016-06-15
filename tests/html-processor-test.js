@@ -96,6 +96,7 @@ describe('HTML Processor', () => {
                 { selector: 'span', html: '<span style="display:none;"></span>', remove: true },
                 { selector: 'div', html: '<div style="display:block;"></div>', remove: false },
                 { selector: 'div', html: '<div style="display: none;"></div>', remove: true },
+                { selector: 'div', html: '<div style="visibility: hidden;"></div>', remove: true },
             ].forEach((test) => {
                 const method = test.remove ? 'notInclude' : 'include';
                 assert[method](HtmlProcessor.removeHidden(test.selector, test.html), test.selector);
@@ -150,6 +151,14 @@ describe('HTML Processor', () => {
         it('can ignore text blocks that are small', () => {
             const badHtml = '<div>div<div>div</div></div>';
             const expectedHtml = badHtml;
+
+            const fixedHtml = HtmlProcessor.insertMissingParagraphTags('div', badHtml);
+            assert.equal(fixedHtml, expectedHtml);
+        });
+
+        it('can handle text blocks with special characters', () => {
+            const badHtml = '<div>又到了又到了一年一度</div>';
+            const expectedHtml = '<div><p>又到了又到了一年一度</p></div>';
 
             const fixedHtml = HtmlProcessor.insertMissingParagraphTags('div', badHtml);
             assert.equal(fixedHtml, expectedHtml);

@@ -5,7 +5,6 @@ const Book = require('../../lib/book');
 
 const articleFixtures = `${__dirname}/../fixtures/articles`;
 
-
 describe('Article Extraction', () => {
     [{
         fixture: 'new-york-times',
@@ -42,7 +41,7 @@ describe('Article Extraction', () => {
         title: 'BYOT',
         include: [
             'Do you know anyone who makes you incredibly better at what you do?',
-            'This is an experiment and we&#x2019;ll tweak it as we go.',
+            'This is an experiment and we’ll tweak it as we go.',
         ],
     },
     {
@@ -79,7 +78,7 @@ describe('Article Extraction', () => {
         include: [
             '<b>A trove of internal</b> documents and insider interviews has pulled back the',
             'More than 100 Palantir employees, including several prominent managers',
-            'Palantir, like other highly valued tech &#x201C;unicorns,&#x201D; has long avoided',
+            'Palantir, like other highly valued tech “unicorns,” has long avoided',
             'But they can also produce lucrative results',
             'definitely been a little bit of a shift from bookings to cash',
         ],
@@ -191,6 +190,31 @@ describe('Article Extraction', () => {
         notInclude: [
             'At least 53 other people were hospitalized',
             '50 Dead in Florida Nightclub Shooting',
+        ],
+    },
+    {
+        fixture: 'wedemain',
+        title: 'Pour prévenir des inondations et préserver sa baie, San Francisco taxera ses habitants', // eslint-disable-line
+        include: [
+            'Au niveau mondial',
+            'Relayée fin mai par',
+            'San Francisco sera donc la',
+        ],
+        notInclude: [
+            'Française et éco-construite',
+        ],
+    },
+    {
+        fixture: 'program-think',
+        title: '回顾六四系列[30]：发起绝食的过程 @ 编程随想的博客',
+        include: [
+            '又到了一',
+            '当时这番话',
+            '在学运初期',
+        ],
+        notInclude: [
+            '俺的招聘经验',
+            '是避而不谈',
         ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
