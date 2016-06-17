@@ -3,7 +3,7 @@
 }
 
 #title {
-    font-size: 30px;
+    font-size: 40px;
 }
 
 body {
@@ -12,10 +12,10 @@ body {
 
 nav > a {
     font-size: 12px;
-    padding: 10px 10px;
+    padding: 8px 10px;
     text-align: center;
 }
 
 #content {
-    width: 90%
+    width: 92%
 }

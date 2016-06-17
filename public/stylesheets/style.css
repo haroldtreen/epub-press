@@ -35,7 +35,7 @@ nav {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin: 10px 0px;
+    margin: 5px 0px;
 }
 
 nav > a {
@@ -92,7 +92,8 @@ nav > a:hover {
 }
 
 #title {
-    font-size: 50px;
+    margin: 10px 0px;
+    font-size: 70px;
     align-self: center;
     font-weight: bolder;
 }
