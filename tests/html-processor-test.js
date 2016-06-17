@@ -177,12 +177,14 @@ describe('HTML Processor', () => {
                 '<div>',
                 '<div class="merge"><p>Hello</p></div>',
                 '<div class="wrapper"><div class="merge"><p>World</p></div><p>Stuff</p></div>',
+                '<div class="wrapper"><div class="merge"><p>and</p><p>Friends</p></div></div>',
                 '</div>',
             ].join('\n');
             const expectedHtml = [
                 '<div>',
-                '<div class="merge"><p>Hello</p><p>World</p></div>',
+                '<div class="merge"><p>Hello</p><p>World</p><p>and</p><p>Friends</p></div>',
                 '<div class="wrapper"><p>Stuff</p></div>',
+                '<div class="wrapper"></div>',
                 '</div>',
             ].join('\n');
 
