@@ -171,6 +171,25 @@ describe('HTML Processor', () => {
             const fixedHtml = HtmlProcessor.removeDuplicates('article', badHtml);
             assert.equal(fixedHtml, expectedHtml);
         });
+
+        it('can merge divs', () => {
+            const badHtml = [
+                '<div>',
+                '<div class="merge"><p>Hello</p></div>',
+                '<div class="wrapper"><div class="merge"><p>World</p></div><p>Stuff</p></div>',
+                '</div>',
+            ].join('\n');
+            const expectedHtml = [
+                '<div>',
+                '<div class="merge"><p>Hello</p><p>World</p></div>',
+                '<div class="wrapper"><p>Stuff</p></div>',
+                '</div>',
+            ].join('\n');
+
+            const fixedHtml = HtmlProcessor.mergeNodes('.merge', badHtml);
+
+            assert.equal(fixedHtml, expectedHtml);
+        });
     });
 
     describe('Image Extraction', () => {

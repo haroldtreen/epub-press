@@ -229,6 +229,18 @@ describe('Article Extraction', () => {
         notInclude: [
             'Orlando shooter',
         ],
+    },
+    {
+        fixture: 'engadget',
+        title: 'Google is working on a kill switch to prevent an AI uprising',
+        include: [
+            'Humans don\'t like the idea of not being at the top of the food chain',
+            'The latter is considered more important',
+            'Sleep tight.',
+        ],
+        notInclude: [
+            'The TTIP Has Missed Its Political Moment',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             ContentExtractor.extract(
