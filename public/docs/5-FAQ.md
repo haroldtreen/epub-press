@@ -1,4 +1,3 @@
-
 # FAQ
 
 ### Q: How is this different from Readability, Instapaper, Pocket, dotEpub, etc.?
