@@ -241,6 +241,19 @@ describe('Article Extraction', () => {
         notInclude: [
             'The TTIP Has Missed Its Political Moment',
         ],
+    },
+    {
+        fixture: 'game-programming',
+        title: 'Command · Design Patterns Revisited · Game Programming Patterns',
+        include: [
+            'Command is one of my favorite patterns',
+            'Both terms mean taking some',
+            'You may end up with a lot of different command classes',
+        ],
+        notInclude: [
+            'You could make it a',
+            'About The Book',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             ContentExtractor.extract(
