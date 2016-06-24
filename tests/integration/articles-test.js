@@ -279,6 +279,16 @@ describe('Article Extraction', () => {
             'This Shikanosuke will not be pleased by being tormented',
             'Your engagement with Juubei and your love',
         ],
+    },
+    {
+        fixture: 'wired',
+        title: 'The Weirdest Senses Animals Have That You Don’t',
+        include: [
+            'imagine that they’re the pinnacle',
+        ],
+        notInclude: [
+            'But ads help us keep the lights on.',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             ContentExtractor.extract(
