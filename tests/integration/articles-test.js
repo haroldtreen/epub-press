@@ -269,6 +269,16 @@ describe('Article Extraction', () => {
             'Probably because of a geology',
             'Sign In',
         ],
+    },
+    {
+        fixture: 'wattpad',
+        title: 'Oda Nobuna no Yabou: Volume 11',
+        include: [
+            'Will the conqueror of the next',
+            'Shikanosuke? What suffering, * pant pant *',
+            'This Shikanosuke will not be pleased by being tormented',
+            'Your engagement with Juubei and your love',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             ContentExtractor.extract(
