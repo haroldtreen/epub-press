@@ -254,6 +254,21 @@ describe('Article Extraction', () => {
             'You could make it a',
             'About The Book',
         ],
+    },
+    {
+        fixture: 'npr',
+        title: 'Scientists Say They\'ve Unearthed A Completely New Kind Of Meteorite',
+        include: [
+            'Scientists say that in a Swedish quarry',
+            'Schmitz says that there are indications',
+            'So he showed me the grains',
+            'in addition to looking up at',
+        ],
+        notInclude: [
+            'BBC Projects United Kingdom Votes To Leave The European Union',
+            'Probably because of a geology',
+            'Sign In',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             ContentExtractor.extract(
