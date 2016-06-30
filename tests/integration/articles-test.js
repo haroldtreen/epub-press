@@ -289,6 +289,30 @@ describe('Article Extraction', () => {
         notInclude: [
             'But ads help us keep the lights on.',
         ],
+    },
+    {
+        fixture: 'artofmanliness',
+        title: 'Native American Maxims of Wabasha I',
+        include: [
+            'Editor’s Note: Wabasha',
+            'Editor’s Note: Wabasha',
+            'over again in a different manner.',
+        ],
+        notInclude: [
+            'Related Articles',
+            'The Complete Guide to Giving a Great Handshake',
+        ],
+    },
+    {
+        fixture: 'nationalgeographic',
+        title: 'Inside the Daring Mission That Thwarted a Nazi Atomic Bomb',
+        include: [
+            'On February 27, 1942, nine saboteurs',
+            'who did equally patriotic work.',
+        ],
+        notInclude: [
+            'Comment on This Story',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             ContentExtractor.extract(
