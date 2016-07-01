@@ -37,7 +37,7 @@ describe('HTML Processor', () => {
             assert.match(html, /article/);
             const articleContents = html.match(/<article>((.|\s)*)<\/article>/m)[1];
             html = HtmlProcessor.replaceWithChildren('article', html);
-            assert.include(html, articleContents);
+            assert.include(html, articleContents.trim().substring(0, 20));
             assert.notMatch(html, /<article>/);
         });
 
@@ -128,6 +128,36 @@ describe('HTML Processor', () => {
             ].join('\n');
 
             assert.equal(HtmlProcessor.removeIndent('code', html), expectedHtml);
+        });
+
+        it('can set a root', () => {
+            const nestyHtml = [
+                '<html><body>',
+                '<div><span>',
+                '<div class="root"><p>Hello World</p></div>',
+                '</span></div>',
+                '</body></html>',
+            ].join('\n');
+            const expectedHtml = [
+                '<html><body>',
+                '<p>Hello World</p>',
+                '</body></html>',
+            ].join('');
+            const fixedHtml = HtmlProcessor.setRootNode('.root', nestyHtml);
+
+            assert.equal(fixedHtml, expectedHtml);
+        });
+
+        it('defaults to nothing if no root found', () => {
+            const nestyHtml = [
+                '<html><body>',
+                '<div><span>',
+                '</span></div>',
+                '</body></html>',
+            ].join('\n');
+            const fixedHtml = HtmlProcessor.setRootNode('.root', nestyHtml);
+
+            assert.equal(fixedHtml, nestyHtml);
         });
     });
 

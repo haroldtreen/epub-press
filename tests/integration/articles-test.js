@@ -313,10 +313,43 @@ describe('Article Extraction', () => {
         notInclude: [
             'Comment on This Story',
         ],
+    },
+    {
+        fixture: 'quora-1',
+        title: 'Can a tortoise walk around the Earth in its life time?',
+        include: [
+            'A Galapagos Tortoise can walk at a top speed',
+            'Would probably be able to travel around the world',
+            'This means that it would take it 6,184',
+            'Harold Treen, Software Engineer',
+            'Walid Mustafa',
+        ],
+        notInclude: [
+            'What are your most common',
+            'You\'ve written an answer',
+            'This page may be out of date.',
+            'Question Stats',
+            'k Views',
+        ],
+        url: 'https://www.quora.com/Can-a-tortoise-walk-around-the-Earth-in-its-life-time',
+    },
+    {
+        fixture: 'quora-2',
+        title: 'What are the highest compounding life habits?',
+        include: [
+            'I used to do StrongLift training.',
+            'Dean Yeong',
+            'There is something really powerful when',
+            'Nela Canovic',
+            'I have always broken through',
+            'William Ranger',
+        ],
+        url: 'https://www.quora.com/What-are-the-highest-compounding-life-habits',
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
-            ContentExtractor.extract(
-                fs.readFileSync(`${articleFixtures}/${testCase.fixture}.html`).toString()
+            const html = fs.readFileSync(`${articleFixtures}/${testCase.fixture}.html`).toString();
+            ContentExtractor.runUrlSpecificOperations(html, testCase.url).then(newHtml =>
+                ContentExtractor.extract(newHtml)
             ).then((article) => {
                 assert.equal(Book.sanitizeTitle(article.title), testCase.title);
                 (testCase.include || []).forEach((content) => {
