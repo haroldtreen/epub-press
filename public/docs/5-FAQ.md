@@ -21,6 +21,11 @@ It usually means one of two things:
 If you are a publisher and want to make your page easier to extract content from, follow the [Readability Publishing Guidelines](https://www.readability.com/developers/guidelines#publisher).
 If you find a page that isn't being extracted properly, don't hesitate to email [support@epub.press](mailto:support@epub.press)
 
+### Q: What are the limitations of EpubPress?
+
+- Books are limited to containing **50 articles**.
+- Images in an article must be **1 Mb or less**. Images that exceed this limit will be removed.
+
 ### Q: Is EpubPress available for other platforms?
 
 EpubPress client are planned for a variety of platforms. To see the development status of different clients, visit the [Github repo](https://github.com/haroldtreen/epub-press-clients).
