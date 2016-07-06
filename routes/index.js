@@ -24,6 +24,10 @@ router.get('/', (req, res) => {
     });
 });
 
+router.get('/support-success', (req, res) => {
+    res.render('support-success', { metadata });
+});
+
 router.get('/api/version', (req, resp) => {
     resp.json({
         version: require('../package.json').version,

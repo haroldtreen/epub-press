@@ -6,11 +6,13 @@
 - Ability to bulk-select articles using the [Chrome Extension](https://chrome.google.com/webstore/detail/epubpress/pnhdnpnnffpijjbnhnipkehhibchdeok)
 - Allows you to combine content from all kinds of sources.
 - Custom title and descriptions.
+- No signup required. Supported through [donations](#q-how-does-epubpress-keep-the-lights-on-).
 
 **Other Services**
 - Each article represented on your device as a separate book.
 - Pages need to be sent one by one.
 - No ability to customize ebook.
+- Require accounts. Supported through premium pricing.
 
 ### Q: EpubPress was unable to find content for a page. What does that mean?
 
@@ -29,6 +31,25 @@ If you find a page that isn't being extracted properly, don't hesitate to email 
 ### Q: Is EpubPress available for other platforms?
 
 EpubPress client are planned for a variety of platforms. To see the development status of different clients, visit the [Github repo](https://github.com/haroldtreen/epub-press-clients).
+
+### Q: How does EpubPress keep the lights on?
+
+Currently EpubPress is a free tool I've developed in my spare time. Hosting this service is paid for entirely out of my own pocket.
+
+You can help keep EpubPress alive with your donations.  
+[Similar services](#q-how-is-this-different-from-readability-instapaper-pocket-dotepub-etc-) operate off premium pricing between **[30](https://www.instapaper.com/premium)- [70](http://sendtoreader.com/pricing/) $/year**, but all contributions are appreciated! ❤
+
+### Credit Card/Paypal  
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="WPPGUUWZSFASU">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form>
+
+### Bitcoin  
+<script src="https://gateway.gear.mycelium.com/gear-widget-host.js"></script>
+<iframe id="gear-widget" scrolling="no" src="https://gateway.gear.mycelium.com/widgets/c0a5bcfdcc07f8722c763d64cfeaadf65904cbd03152f12e0687fab6a21b29ab" style="border: none; display: inline-block; height: 130px; min-width: 250px; max-width: 350px;"></iframe>
 
 # Privacy Policy
 EpubPress has no way of tracking who is creating ebooks.

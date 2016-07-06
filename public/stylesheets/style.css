@@ -96,3 +96,10 @@ nav > a:hover {
     align-self: center;
     font-weight: bolder;
 }
+
+form, iframe {
+    display: block;
+    height: auto;
+    width: auto;
+    margin: 10px auto;
+}
