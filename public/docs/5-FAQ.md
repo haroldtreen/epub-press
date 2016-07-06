@@ -1,12 +1,13 @@
 # FAQ
 
+<div id="other-services"></div>
 ### Q: How is this different from Readability, Instapaper, Pocket, dotEpub, etc.?
 **EpubPress**
 - Single .epub file.
 - Ability to bulk-select articles using the [Chrome Extension](https://chrome.google.com/webstore/detail/epubpress/pnhdnpnnffpijjbnhnipkehhibchdeok)
 - Allows you to combine content from all kinds of sources.
 - Custom title and descriptions.
-- No signup required. Supported through [donations](#q-how-does-epubpress-keep-the-lights-on-).
+- No signup required. Supported through [donations](#donate).
 
 **Other Services**
 - Each article represented on your device as a separate book.
@@ -32,12 +33,13 @@ If you find a page that isn't being extracted properly, don't hesitate to email 
 
 EpubPress client are planned for a variety of platforms. To see the development status of different clients, visit the [Github repo](https://github.com/haroldtreen/epub-press-clients).
 
+<div id="donate"></div>
 ### Q: How does EpubPress keep the lights on?
 
 Currently EpubPress is a free tool I've developed in my spare time. Hosting this service is paid for entirely out of my own pocket.
 
 You can help keep EpubPress alive with your donations.  
-[Similar services](#q-how-is-this-different-from-readability-instapaper-pocket-dotepub-etc-) operate off premium pricing between **[30](https://www.instapaper.com/premium)- [70](http://sendtoreader.com/pricing/) $/year**, but all contributions are appreciated! ❤
+[Similar services](#other-services) operate off premium pricing between **[30](https://www.instapaper.com/premium)- [70](http://sendtoreader.com/pricing/) $/year**, but all contributions are appreciated! ❤
 
 ### Credit Card/Paypal  
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
