@@ -345,6 +345,19 @@ describe('Article Extraction', () => {
             'William Ranger',
         ],
         url: 'https://www.quora.com/What-are-the-highest-compounding-life-habits',
+    },
+    {
+        fixture: 'fachords',
+        title: 'How to practice guitar',
+        include: [
+            'Seems like a funny title right',
+            'They say practice makes perfect, and of course they are right',
+            'Sleep and rest are essential to the learning process',
+            'Do you have some guitar practice tips that',
+        ],
+        notInclue: [
+            'I\'m Gianca, a guitar',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             const html = fs.readFileSync(`${articleFixtures}/${testCase.fixture}.html`).toString();
