@@ -6,7 +6,8 @@
   "version": "0.3.0",
   "private": true,
   "scripts": {
-    "start": "nodemon --harmony ./bin/www"
+    "start": "nodemon --harmony ./bin/www",
+    "debug": "node --inspect ./bin/www"
   },
   "dependencies": {
     "async": "^1.5.2",
