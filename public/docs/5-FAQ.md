@@ -37,7 +37,7 @@ EpubPress client are planned for a variety of platforms. To see the development 
 Currently EpubPress is a free tool I've developed in my spare time. Hosting this service is paid for entirely out of my own pocket.
 
 You can help keep EpubPress alive with your donations.  
-[Similar services](#other-services) operate off premium pricing between **[30](https://www.instapaper.com/premium)- [70](http://sendtoreader.com/pricing/) $/year**, but all contributions are appreciated! ❤
+[Similar services](#other-services) operate off premium pricing between **[3](https://www.instapaper.com/premium)- [6](http://sendtoreader.com/pricing/) $/month**, but all contributions are appreciated! ❤
 
 ### Credit Card/Paypal  
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
