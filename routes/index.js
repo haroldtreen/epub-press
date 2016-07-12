@@ -3,6 +3,7 @@
 const BookServices = require('../lib/book-services');
 const Mailer = require('../lib/mailer');
 const Book = require('../lib/book');
+const BookModel = require('../models/').Book;
 const DocumentationLoader = require('../lib/documentation-loader');
 const metadata = require('../package.json');
 
@@ -115,21 +116,30 @@ router.post('/api/books', (req, res) => {
 router.get('/api/books/download', (req, res) => {
     log.verbose('Download', { query: req.query });
     if (req.query.id) {
-        const book = new Book({ id: req.query.id });
+        BookModel.findOne({ where: { uid: req.query.id } }).then((bookModel) => {
+            const book = new Book({ id: bookModel.uid, title: bookModel.title });
+            if (req.query.email) {
+                const mailerMethod = req.query.filetype === 'mobi' ? Mailer.sendMobi : Mailer.sendEpub;
 
-        if (req.query.email) {
-            const mailerMethod = req.query.filetype === 'mobi' ? Mailer.sendMobi : Mailer.sendEpub;
-
-            mailerMethod(req.query.email, book).then(() => {
-                res.status(200).send('Email Sent');
-            }).catch((error) => {
-                log.exception('Mailer Download')(error);
-                res.status(500).send('Email could not be sent');
-            });
-        } else {
-            const path = req.query.filetype === 'mobi' ? book.getMobiPath() : book.getEpubPath();
-            res.download(path);
-        }
+                mailerMethod(req.query.email, book).then(() => {
+                    res.status(200).send('Email Sent');
+                }).catch((error) => {
+                    log.exception('Mailer Download')(error);
+                    res.status(500).send('Email could not be sent');
+                });
+            } else {
+                const path = req.query.filetype === 'mobi' ? book.getMobiPath() : book.getEpubPath();
+                try {
+                    res.download(path);
+                } catch (error) {
+                    log.exception('Mailer Download')(error);
+                    res.status(500).send('Email could not be sent');
+                }
+            }
+        }).catch((error) => {
+            log.warn('No book with id', req.query, error);
+            req.status(404).send(`Book with id ${req.query.id} not found.`);
+        });
     } else {
         log.verbose('No ID provided');
         res.status(400).send('ID Must be provided');
