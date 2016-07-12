@@ -23,9 +23,17 @@ It usually means one of two things:
 If you are a publisher and want to make your page easier to extract content from, follow the [Readability Publishing Guidelines](https://www.readability.com/developers/guidelines#publisher).
 If you find a page that isn't being extracted properly, don't hesitate to email [support@epub.press](mailto:support@epub.press)
 
+### Q: I tried email delivery, but my book never arrived. What's going on?
+
+- Check your spam.
+- Verify you entered the correct email.
+- Try creating the book again and make sure that EpubPress returns success.
+- If you have a lot of pages in your book, the result may be too big to email. Try removing your email and downloading instead.
+
 ### Q: What are the limitations of EpubPress?
 
 - Books are limited to containing **50 articles**.
+- Books must be **10 Mb or less** for email delivery to work.
 - Images in an article must be **1 Mb or less**. Images that exceed this limit will be removed.
 
 ### Q: Is EpubPress available for other platforms?

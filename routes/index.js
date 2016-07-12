@@ -39,7 +39,7 @@ router.get('/api/version', (req, resp) => {
 
 function validateRequest(req) {
     const sections = req.body.urls || req.body.sections;
-    const isValid = !!sections && sections.length < MAX_NUM_SECTIONS;
+    const isValid = !!sections && sections.length <= MAX_NUM_SECTIONS;
 
     return isValid;
 }
