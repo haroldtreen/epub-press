@@ -358,6 +358,42 @@ describe('Article Extraction', () => {
         notInclue: [
             'I\'m Gianca, a guitar',
         ],
+    },
+    {
+        fixture: 'yahoo-jp',
+        title: 'エアバス、Ａ３８０の生産大幅減へ　航空会社の戦略変化（朝日新聞デジタル）',
+        include: [
+            '欧州航空機最',
+            'ただ、エ',
+        ],
+        notInclude: [
+            '生き続け',
+        ],
+    },
+    {
+        fixture: 'lifehacker-jp',
+        title: '「PCが重い...」と感じているなら要チェック。ChromeがRAMを大量に使用する理由とその対応策',
+        include: [
+            'ズバリ、答え',
+            'また、自',
+            'もちろん、R',
+            'れませんね。',
+        ],
+        notInclude: [
+            'NISSAN GT-R 2017',
+        ],
+    },
+    {
+        fixture: 'huffington-jp',
+        title: '福島と、「知る」という技術',
+        include: [
+            '地球の反対側にいた',
+            '土地の被害者と',
+            'United Nations: New York',
+        ],
+        notInclude: [
+            '黒人女性、機動隊の前に静かに立ちふさ',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             const html = fs.readFileSync(`${articleFixtures}/${testCase.fixture}.html`).toString();

@@ -202,6 +202,14 @@ describe('HTML Processor', () => {
             assert.equal(fixedHtml, expectedHtml);
         });
 
+        it('only removes duplicates from the top level', () => {
+            const badHtml = '<html><div><div>Hello</div></div><div>World</div></html>';
+            const expectedHtml = '<html><div><div>Hello</div></div></html>';
+
+            const fixedHtml = HtmlProcessor.removeDuplicates('div', badHtml);
+            assert.equal(fixedHtml, expectedHtml);
+        });
+
         it('can merge divs', () => {
             const badHtml = [
                 '<div>',
