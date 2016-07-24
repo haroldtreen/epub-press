@@ -419,6 +419,19 @@ describe('Article Extraction', () => {
             'Dancing Badly',
             'Netflix taught us to watch',
         ],
+    },
+    {
+        fixture: 'ibm-developer',
+        title: 'Offline-first QR-code Badge Scanner',
+        include: [
+            'Offline-first web applications are websites',
+            'END:VCARD',
+            'In PouchDB, syncing',
+            'Combining PouchDB with Cloudant makes',
+        ],
+        notInclude: [
+            'Enter your email address to subscribe to this blog',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             const html = fs.readFileSync(`${articleFixtures}/${testCase.fixture}.html`).toString();

@@ -1,0 +1,648 @@
+<html lang="en-US" prefix="og: http://ogp.me/ns#" class="pn-sticky-footer  js flexbox hashchange history rgba hsla multiplebgs backgroundsize borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients csstransforms csstransforms3d csstransitions generatedcontent localstorage cssremunit"><!--<![endif]--><head>
+<meta name="google-site-verification" content="ZOQeHRygaaWj2MxEwU36AgbPigyRTIM9RmNd6jwoNUk">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="IBM.WTMSite" content="DWNEXT">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!--
+Force IE8+ into Standards mode by default (now done with http header)
+<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
+ -->
+
+<title>Offline-first QR-code Badge Scanner - Cloud Data Services</title>
+
+
+<!-- This site is optimized with the Yoast WordPress SEO plugin v2.2.1 - https://yoast.com/wordpress/plugins/seo/ -->
+<meta name="description" content="Build a data collection app that captures and stores QR Code data, even when your network is unavailable.">
+<link rel="canonical" href="https://developer.ibm.com/clouddataservices/2016/05/05/offline-first-qr-code-badge-scanner/">
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Offline-first QR-code Badge Scanner - Cloud Data Services">
+<meta property="og:description" content="Build a data collection app that captures and stores QR Code data, even when your network is unavailable.">
+<meta property="og:url" content="https://developer.ibm.com/clouddataservices/2016/05/05/offline-first-qr-code-badge-scanner/">
+<meta property="og:site_name" content="Cloud Data Services">
+<meta property="article:tag" content="cloudant">
+<meta property="article:tag" content="Offline First">
+<meta property="article:tag" content="PouchDB">
+<meta property="article:section" content="Cloudant">
+<meta property="article:published_time" content="2016-05-05T12:07:40+00:00">
+<meta property="article:modified_time" content="2016-05-05T12:41:22+00:00">
+<meta property="og:updated_time" content="2016-05-05T12:41:22+00:00">
+<meta property="og:image" content="http://developer.ibm.com/clouddataservices/wp-content/uploads/sites/47/2016/04/qr-code-glynnbird.com_.png">
+<meta property="og:image" content="http://developer.ibm.com/clouddataservices/wp-content/uploads/sites/47/2016/04/qr-code-vcard.png">
+<meta property="og:image" content="https://i.gyazo.com/03d1bae0f0a6559f0d8fb74253269a50.gif">
+<!-- / Yoast WordPress SEO plugin. -->
+
+<link rel="alternate" type="application/rss+xml" title="Cloud Data Services » Feed" href="https://developer.ibm.com/clouddataservices/feed/">
+<link rel="alternate" type="application/rss+xml" title="Cloud Data Services » Comments Feed" href="https://developer.ibm.com/clouddataservices/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="Cloud Data Services » Offline-first QR-code Badge Scanner Comments Feed" href="https://developer.ibm.com/clouddataservices/2016/05/05/offline-first-qr-code-badge-scanner/feed/">
+<link rel="stylesheet" id="events-manager-css" href="https://developer.ibm.com/clouddataservices/wp-content/plugins/events-manager/includes/css/events_manager.css" type="text/css" media="all">
+<link rel="stylesheet" id="tab-styles-css" href="https://developer.ibm.com/clouddataservices/wp-content/plugins/projectnext-shortcodes/tab-styles.css" type="text/css" media="all">
+<link rel="stylesheet" id="wp-polls-css" href="https://developer.ibm.com/clouddataservices/wp-content/plugins/wp-polls/polls-css.css" type="text/css" media="all">
+<style id="wp-polls-inline-css" type="text/css">
+.wp-polls .pollbar {
+	margin: 1px;
+	font-size: 6px;
+	line-height: 8px;
+	height: 8px;
+	background-image: url('https://developer.ibm.com/clouddataservices/wp-content/plugins/wp-polls/images/default/pollbg.gif');
+	border: 1px solid #c8c8c8;
+}
+
+</style>
+<link rel="stylesheet" id="pnext_common-css" href="https://developer.ibm.com/c/css/common.css" type="text/css" media="screen">
+<link rel="stylesheet" id="pnext-css" href="https://developer.ibm.com/clouddataservices/wp-content/themes/projectnext/style.css" type="text/css" media="screen">
+<link rel="stylesheet" id="pnext-child-css" href="https://developer.ibm.com/clouddataservices/wp-content/themes/projectnext-clouddata/style.css" type="text/css" media="screen">
+<link rel="stylesheet" id="social-logos-css" href="https://developer.ibm.com/clouddataservices/wp-content/plugins/jetpack/_inc/social-logos/social-logos.min.css" type="text/css" media="all">
+<link rel="stylesheet" id="jetpack_css-css" href="https://developer.ibm.com/clouddataservices/wp-content/plugins/jetpack/css/jetpack.css" type="text/css" media="all">
+<script type="text/javascript" async="" charset="utf-8" src="//libs.coremetrics.com/eluminate.js" id="tealium_cormetrics1239"></script><script type="text/javascript" async="" defer="" src="//developer.ibm.com/piwik/piwik.js"></script><script async="" src="//www.google-analytics.com/analytics.js"></script><script type="text/javascript" async="" src="https://www.google.com/cse/cse.js?cx=002602540803703215521:pmoyvjwf4xi&amp;hq=more:more:next"></script><script type="text/javascript" defer="" async="" src="https://ibm-cds-labs.github.io/dW/js/piwik.js"></script><script src="//tags.tiqcdn.com/utag/ibm/main/prod/utag.js" type="text/javascript" async=""></script><script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://developer.ibm.com/clouddataservices/wp-includes/js/jquery/ui/core.min.js"></script>
+<script type="text/javascript" src="https://developer.ibm.com/clouddataservices/wp-includes/js/jquery/ui/widget.min.js"></script>
+<script type="text/javascript" src="https://developer.ibm.com/clouddataservices/wp-includes/js/jquery/ui/position.min.js"></script>
+<script type="text/javascript" src="https://developer.ibm.com/clouddataservices/wp-includes/js/jquery/ui/mouse.min.js"></script>
+<script type="text/javascript" src="https://developer.ibm.com/clouddataservices/wp-includes/js/jquery/ui/sortable.min.js"></script>
+<script type="text/javascript" src="https://developer.ibm.com/clouddataservices/wp-includes/js/jquery/ui/datepicker.min.js"></script>
+<script type="text/javascript" src="https://developer.ibm.com/clouddataservices/wp-includes/js/jquery/ui/menu.min.js"></script>
+<script type="text/javascript" src="https://developer.ibm.com/clouddataservices/wp-includes/js/jquery/ui/autocomplete.min.js"></script>
+<script type="text/javascript" src="https://developer.ibm.com/clouddataservices/wp-includes/js/jquery/ui/resizable.min.js"></script>
+<script type="text/javascript" src="https://developer.ibm.com/clouddataservices/wp-includes/js/jquery/ui/draggable.min.js"></script>
+<script type="text/javascript" src="https://developer.ibm.com/clouddataservices/wp-includes/js/jquery/ui/button.min.js"></script>
+<script type="text/javascript" src="https://developer.ibm.com/clouddataservices/wp-includes/js/jquery/ui/dialog.min.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var EM = {"ajaxurl":"https:\/\/developer.ibm.com\/clouddataservices\/wp-admin\/admin-ajax.php","locationajaxurl":"https:\/\/developer.ibm.com\/clouddataservices\/wp-admin\/admin-ajax.php?action=locations_search","firstDay":"1","locale":"en","dateFormat":"dd\/mm\/yy","ui_css":"https:\/\/developer.ibm.com\/clouddataservices\/wp-content\/plugins\/events-manager\/includes\/css\/ui-lightness.css","show24hours":"0","is_ssl":"1","bookingInProgress":"Please wait while the booking is being submitted.","tickets_save":"Save Ticket","bookingajaxurl":"https:\/\/developer.ibm.com\/clouddataservices\/wp-admin\/admin-ajax.php","bookings_export_save":"Export Bookings","bookings_settings_save":"Save Settings","booking_delete":"Are you sure you want to delete?","bb_full":"Sold Out","bb_book":"Book Now","bb_booking":"Booking...","bb_booked":"Booking Submitted","bb_error":"Booking Error. Try again?","bb_cancel":"Cancel","bb_canceling":"Canceling...","bb_cancelled":"Cancelled","bb_cancel_error":"Cancellation Error. Try again?","txt_search":"Search","txt_searching":"Searching...","txt_loading":"Loading..."};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://developer.ibm.com/clouddataservices/wp-content/plugins/events-manager/includes/js/events-manager.js"></script>
+<script type="text/javascript" src="https://developer.ibm.com/clouddataservices/wp-content/plugins/projectnext-shortcodes/tab-dropdown.js"></script>
+<script type="text/javascript" src="//www.ibm.com/common/stats/ida_production.js"></script>
+<script type="text/javascript" src="https://developer.ibm.com/c/js/modernizr-production.js"></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://developer.ibm.com/clouddataservices/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://developer.ibm.com/clouddataservices/wp-includes/wlwmanifest.xml">
+<meta name="generator" content="WordPress 4.2.9">
+<link rel="shortlink" href="https://wp.me/p6nwVO-1PY">
+
+<link rel="dns-prefetch" href="//v0.wordpress.com">
+<link rel="dns-prefetch" href="//i0.wp.com">
+<link rel="dns-prefetch" href="//i1.wp.com">
+<link rel="dns-prefetch" href="//i2.wp.com">
+<style type="text/css">img#wpstats{display:none}</style><style type="text/css" id="syntaxhighlighteranchor"></style>
+
+<link rel="pingback" href="https://developer.ibm.com/clouddataservices/xmlrpc.php">
+<link rel="shortcut icon" href="https://developer.ibm.com/clouddataservices/wp-content/themes/projectnext/css/favicon.ico">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="//rawgit.com/ibm-cds-labs/dW/master/css/styles_less.css">
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.1/less.min.js"></script>
+<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="//ibm-cds-labs.github.io/dW/js/tracker.js" siteid="cds.devcenter" trackerurl="http://metrics-collector-ms.mybluemix.net/tracker"></script>
+
+
+
+<!-- This is the CSE for a topical site. It must be loaded in head, before google search Form -->
+
+	<script>//<![CDATA[
+
+		(function() {
+
+			var cx = '002602540803703215521:pmoyvjwf4xi';
+			var hq = 'more:next';
+
+			var gcse = document.createElement('script'); gcse.type = 'text/javascript'; gcse.async = true;
+			gcse.type = 'text/javascript';
+			gcse.async = true;
+
+			gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') +
+
+			'//www.google.com/cse/cse.js?cx=' + cx + ( hq ? '&hq=more:' + hq : '');
+
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(gcse, s);
+
+		})();//]]>
+
+	</script>
+<script type="text/javascript" async="" src="//ibmclouddataservicesdevelopercenter.disqus.com/embed.js"></script><script src="https://www.google.com/jsapi?autoload=%7B%22modules%22%3A%5B%7B%22name%22%3A%22search%22%2C%22version%22%3A%221.0%22%2C%22callback%22%3A%22__gcse.scb%22%2C%22style%22%3A%22https%3A%2F%2Fwww.google.com%2Fcse%2Fstyle%2Flook%2Fminimalist.css%22%2C%22language%22%3A%22en%22%7D%5D%7D" type="text/javascript"></script><link type="text/css" href="https://www.google.com/uds/api/search/1.0/8bdfc79787aa2b2b1ac464140255872c/default+en.css" rel="stylesheet"><link type="text/css" href="https://www.google.com/cse/style/look/minimalist.css" rel="stylesheet"><script type="text/javascript" src="https://www.google.com/uds/api/search/1.0/8bdfc79787aa2b2b1ac464140255872c/default+en.I.js"></script><style type="text/css">
+</style><script type="text/javascript" async="" charset="utf-8" src="//tags.tiqcdn.com/utag/ibm/main/prod/utag.3738765.js?utv=ut4.39.201607221541" id="utag_ibm.main_3738765"></script><script type="text/javascript" async="" charset="utf-8" src="//tags.tiqcdn.com/utag/ibm/main/prod/utag.1239.js?utv=ut4.39.201607201511" id="utag_ibm.main_1239"></script><script type="text/javascript" async="" charset="utf-8" src="//tags.tiqcdn.com/utag/ibm/main/prod/utag.728.js?utv=ut4.39.201607221541" id="utag_ibm.main_728"></script><script type="text/javascript" async="" charset="utf-8" src="//tags.tiqcdn.com/utag/ibm/main/prod/utag.745.js?utv=ut4.39.201607221541" id="utag_ibm.main_745"></script><script type="text/javascript" async="" charset="utf-8" src="//tags.tiqcdn.com/utag/ibm/main/prod/utag.792.js?utv=ut4.39.201607221541" id="utag_ibm.main_792"></script><script type="text/javascript" async="" charset="utf-8" src="//tags.tiqcdn.com/utag/ibm/main/prod/utag.1170.js?utv=ut4.39.201607221541" id="utag_ibm.main_1170"></script><script type="text/javascript" async="" charset="utf-8" src="//tags.tiqcdn.com/utag/ibm/main/prod/utag.1218.js?utv=ut4.39.201607221541" id="utag_ibm.main_1218"></script><script type="text/javascript" async="" charset="utf-8" src="//tags.tiqcdn.com/utag/ibm/main/prod/utag.1278.js?utv=ut4.39.201601202142" id="utag_ibm.main_1278"></script><script type="text/javascript" async="" charset="utf-8" src="//tags.tiqcdn.com/utag/ibm/main/prod/utag.1899.js?utv=ut4.39.201607221541" id="utag_ibm.main_1899"></script><script type="text/javascript" async="" charset="utf-8" src="//tags.tiqcdn.com/utag/ibm/main/prod/utag.1900.js?utv=ut4.39.201607221541" id="utag_ibm.main_1900"></script><script type="text/javascript" async="" charset="utf-8" src="//tags.tiqcdn.com/utag/ibm/main/prod/utag.1175.js?utv=ut4.39.201607221541" id="utag_ibm.main_1175"></script><script type="text/javascript" async="" charset="utf-8" src="//tags.tiqcdn.com/utag/ibm/main/prod/utag.3738749.js?utv=ut4.39.201607221541" id="utag_ibm.main_3738749"></script><script type="text/javascript" async="" charset="utf-8" src="//tags.tiqcdn.com/utag/tiqapp/utag.v.js?a=ibm/main/201607222238&amp;cb=1469388179657" id="tiqapp"></script><script type="text/javascript" async="" charset="utf-8" src="//datacloud.tealiumiq.com/tealium_ttd/main/16/i.js?jsonp=utag.ut.tealium_setTTDid" id="tealium_setTTDid"></script><script type="text/javascript" async="" charset="utf-8" src="//datacloud.tealiumiq.com/tealium_ttd/main/16/i.js?jsonp=utag.ut.tealium_setTTDid" id="tealium_setTTDid"></script><script language="javascript" type="text/javascript" src="https://libs.coremetrics.com/configs/50200000.js"></script><link rel="stylesheet" href="//a.disquscdn.com/next/embed/styles/loading.8023a7350e47171f7bb79707886cd7c5.css"><script type="text/javascript" async="" charset="utf-8" src="//datacloud.tealiumiq.com/tealium_ttd/main/16/i.js?jsonp=utag.ut.tealium_setTTDid" id="tealium_setTTDid"></script><script language="javascript" type="text/javascript" src="https://data.cmcore.com/cookie-id.js?fn=cmSetAvid"></script><script language="javascript" type="text/javascript" src="https://data.coremetrics.com/at/rules_50200000.js"></script><script language="javascript" type="text/javascript" src="https://tmscdn.coremetrics.com/tms/dispatcher-v3.js"></script><script type="text/javascript" async="" charset="utf-8" src="//datacloud.tealiumiq.com/tealium_ttd/main/16/i.js?jsonp=utag.ut.tealium_setTTDid" id="tealium_setTTDid"></script><script src="https://libs.coremetrics.com/ddxlibs/yahoo-min.js" type="text/javascript"></script><script src="https://tmscdn.coremetrics.com/tms/50200000/cp-v3.js?__t=20160724142301093" type="text/javascript"></script><script src="https://libs.coremetrics.com/ddxlibs/json-min.js" type="text/javascript"></script><script src="//a.disquscdn.com/next/embed/alfie.f51946af45e0b561c60f768335c9eb79.js" async="" charset="UTF-8"></script></head>
+
+<body class="single single-post postid-7066 single-format-standard">
+
+	<div role="region" aria-label="Skip link">
+ <a class="visuallyhidden focusable" href="#pnext-main">Skip to main content</a>
+</div>
+<div class="pn-dw-master cf" role="banner">
+
+	<div class="fl">
+    <a href="http://www.ibm.com/developerworks/" class="pn-dw-fed-logo"><span class="pn-dw-ibm">IBM</span> <span class="pn-mast-text pn-dw-dWorks">developerWorks</span></a>
+    <span class="pn-mast-text">/</span>
+    <a class="pn-mast-text pn-dw-fed-logo" href="/centers/">Developer Centers</a>
+	</div>
+
+
+	<div class="fr">
+	  <span id="loginout_link" class="links-dw pn-login-link ">
+
+	  			<a href="https://developer.ibm.com/sso/login?d=https%3A%2F%2Fdeveloper.ibm.com%2Fclouddataservices%2F2016%2F05%2F05%2Foffline-first-qr-code-badge-scanner&amp;lang=en_US">Sign In</a>
+			<span class="dw-mf-signin-spacer">|</span>
+			<a href="https://developer.ibm.com/sso/register?lang=en_US&amp;d=https%3A%2F%2Fdeveloper.ibm.com%2Fclouddataservices%2F2016%2F05%2F05%2Foffline-first-qr-code-badge-scanner" style="color: #ef9700;">Register</a>
+
+	  </span>
+
+
+	  <span id="pnext-dw-tab" class="pn-dw-tab"><a href="http://www.ibm.com/developerworks/" rel="external"><img alt="dW" src="https://developer.ibm.com/clouddataservices/wp-content/themes/projectnext/css/dw-tab.png"></a></span>
+	</div>
+
+</div>
+
+<nav id="pnext-top-menu" class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#CDSnav">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <span class="navbar-brand">
+                <a rel="home" href="https://developer.ibm.com/clouddataservices">
+                    <span>Cloud Data Services</span>
+                </a>
+            </span>
+        </div>
+
+
+      <div id="CDSnav" class="collapse navbar-collapse"><ul id="menu-main" class="nav navbar-nav navbar-right"><li id="menu-item-190" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-190"><a href="https://developer.ibm.com/clouddataservices/services/">Services</a></li>
+<li id="menu-item-189" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-189"><a href="https://developer.ibm.com/clouddataservices/how-tos/">How-Tos</a></li>
+<li id="menu-item-31" class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-31"><a href="https://developer.ibm.com/clouddataservices/blog/">Blog</a></li>
+<li id="menu-item-1942" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1942"><a href="https://developer.ibm.com/clouddataservices/all-events/">Events</a></li>
+<li id="menu-item-182" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-182"><a href="https://developer.ibm.com/clouddataservices/connect/">Connect</a></li>
+</ul></div>
+
+    </div>
+
+</nav>
+
+    <div id="pnext-main" class="mbxl pn-sticky-footer-body container" role="main">
+
+
+	<div class="pn-pcon">
+		<article id="post-7066" class="post-7066 post type-post status-publish format-standard hentry category-cloudant-2 category-community category-couchdb category-mobile category-offline tag-cloudant tag-offline-first tag-pouchdb">
+
+			<div class="pn-single-post-header">
+				<header>
+					<h1 class="pn-page-title">Offline-first QR-code Badge Scanner</h1>
+				</header>
+
+
+<footer class="pn-post-meta pn-post-data-with-avatar">
+
+	<div class="flag links-std">
+				<div class="flag-img pn-meta-avatar">
+			<span class="author-avatar">
+				<img alt="" src="//www.ibm.com/developerworks/community/profiles/photo.do?userid=270007NV7B" srcset="//www.ibm.com/developerworks/community/profiles/photo.do?userid=270007NV7B" class="avatar avatar-42 photo" height="42" width="42">			</span>
+		</div>
+
+		<div class="flag-bd">
+			        <span class="pn-meta-author">
+        <a href="https://developer.ibm.com/clouddataservices/author/glynnbir/" title="Posts by Glynn Bird" rel="author">Glynn Bird</a>
+        </span>
+        <span class="pn-meta-divider">/</span>
+
+			<span class="pn-meta-date">
+			May 5, 2016			</span>
+		</div>
+
+	</div>
+
+</footer>
+			</div>
+
+			<div class="pn-columns">
+
+									<div class="pn-col-6-4">
+
+						<div class="pn-copy">
+							<p>Offline-first web applications are websites with a twist; they instruct the browser to cache all of the assets they need to render themselves, such as images, css, and JavaScript files. Once loaded, the websites continue to function even when there is a flaky or non-existent network connection. The killer feature of such apps is that they can use in-browser storage to read and write dynamic data without relying on the presence of a cloud server. <a href="https://pouchdb.com/" target="_blank">PouchDB</a> lets the web application store data in the browser using a variety of local storage mechanisms, while presenting a simple API. Furthermore, when it does find a network connection, a PouchDB database can sync with a remote Apache® CouchDB™ or Cloudant database, and changes flow seamlessly in both directions without loss of data.</p>
+<p>Last year I made a simple <a href="https://github.com/glynnbird/proforma" target="_blank">offline-first data collection app</a> that lets you design an HTML form and then use it to capture structured data, which is stored in PouchDB. My developer advocate colleagues used the app to collect submissions for a competition at a tech conference where the wifi was so poor that offline-first was the only option. When they returned home, they synced the PouchDB in their iPads to a shared Cloudant database.</p>
+<p>I thought I’d revisit this app to allow it to scan conference badges that contain a <a href="https://en.wikipedia.org/wiki/QR_code" target="_blank">QR code</a>. In fact, I ended up writing a whole new app.</p>
+<h2 id="toc_1">QR codes</h2>
+<p>QR Codes are two-dimensional barcodes containing a text payload that is encoded in black squares on a white background.</p>
+<p>The payload can be a URL or some text. At conferences, the payload tends to be a <a href="https://en.wikipedia.org/wiki/QR_code" target="_blank">vCard</a>—a blob of text that contains the attendee’s name, email, company, and url. The more data the QR code has to store, the more detailed the blocks on the QR code image have to be:</p>
+<table width="600">
+<thead>
+<tr>
+<th style="text-align: center">url</th>
+<th style="text-align: center">vCard</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="https://i1.wp.com/developer.ibm.com/clouddataservices/wp-content/uploads/sites/47/2016/04/qr-code-glynnbird.com_.png?w=160" alt="url" width="160" height="160"></td>
+<td style="text-align: center"><img src="https://i0.wp.com/developer.ibm.com/clouddataservices/wp-content/uploads/sites/47/2016/04/qr-code-vcard.png?w=290" alt="vCard" width="290" height="290"></td>
+</tr>
+</tbody>
+</table>
+<p>The URL example above contains only <code>http://www.glynnbird.com</code>. The vCard example contains:</p>
+<div>
+<pre><code class="language-none">BEGIN:VCARD
+VERSION:3.0
+N:Bird;Glynn
+FN:Glynn Bird
+ORG:IBM
+TITLE:Developer Advocate
+ADR;work:;;1 The Square;Bristol;;BS1 6DG;UK
+TEL;WORK;VOICE:01179295012
+EMAIL;WORK;INTERNET:glynn.bird@uk.ibm.com
+URL:www.glynnbird.com
+END:VCARD</code></pre>
+</div>
+<h2 id="toc_2">Leveraging open-source</h2>
+<p>At first, I thought I would have to create a native iPhone or Android app to capture images from a camera, decode QR codes, and store data in a database. Fortunately other open-source heroes have solved the hard problems for me:</p>
+<ul>
+<li><a href="https://w3c.github.io/mediacapture-main/getusermedia.html" target="_blank">W3C MediaStream API</a> – to capture the host’s video camera feed</li>
+<li><a href="https://github.com/LazarSoft/jsqrcode" target="_blank">JavaScript QR code parsing library</a> – to find QR codes in images</li>
+<li><a href="http://jsfiddle.net/ARTsinn/P2t2P/" target="_blank">vCard parsing snippet</a> – to parse vCard text</li>
+<li><a href="https://pouchdb.com/" target="_blank">PouchDB</a> – to store data in a local, in-browser database</li>
+<li><a href="http://picnicss.com/" target="_blank">Picnic CSS</a> – to make the front-end presentable</li>
+<li><a href="https://www.w3.org/TR/2011/WD-html5-20110525/offline.html" target="_blank">AppCache API</a> – to cache page assets</li>
+</ul>
+<p>Still, it’s not quite that simple. The MediaStream API is new and not universally supported, so my code has to fall back on the older but also not universally supported <a href="https://developer.mozilla.org/en/docs/Web/API/Navigator/getUserMedia" target="_blank">getUserMedia API</a>. I was also unable to get the media streaming code to work properly on mobile devices. Conversely, the AppCache API is deprecated but its replacement, <a href="https://www.w3.org/TR/service-workers/" target="_blank">Service Workers</a>, is not widely supported. Developers have to make such compromises every day; weighing established but deprecated functions against the latest bleeding edge code that doesn’t have wide browser support.</p>
+<p><a href="https://badgescanner.mybluemix.net" target="_blank">The finished demo app uses all of the above technologies in a single-page web app that can be deployed to IBM Bluemix</a>. Once you visit the page, it should be cached by your browser – try turning off your wifi and revisiting the page:</p>
+<p><img src="https://i2.wp.com/i.gyazo.com/03d1bae0f0a6559f0d8fb74253269a50.gif?w=980&amp;ssl=1" alt="badgescanner gif" width="606" height="457"></p>
+<h2 id="toc_3">How does it work?</h2>
+<p>The web page contains a video tag, which the JavaScript uses to render a real-time feed of your machine’s webcam. The first time you open the website, you should be asked for permission for the app to access your webcam’s feed. There is also an invisible “canvas” control in the HTML markup, which takes a snapshot of the image every 0.5s. The data in the canvas goes to the QR-code parsing library, which returns some data if it finds a QR code on the canvas image.</p>
+<p>The QR-code is parsed and turned into a JSON object:</p>
+<div>
+<pre><code class="language-javascript">{
+    "version": "3.0",
+    "fn": "Glynn Bird",
+    "org": "IBM",
+    "title": "Developer Advocate",
+    "adr": ",,1 The Square,Bristol,,BS1 6DG,UK",
+    "tel": "01179295012",
+    "email": "glynn.bird@uk.ibm.com",
+    "url": "www.glynnbird.com",
+    "ts": 1461074275541,
+    "date": "2016-04-19T13:57:55.541Z"
+}</code></pre>
+</div>
+<p>which is saved to a PouchDB database using the <a href="https://pouchdb.com/api.html#create_document" target="_blank">db.post</a> function call.</p>
+<p>Below the real-time video feed, is a table of previously saved cards presented in “newest-first” order. This is achieved by <a href="https://pouchdb.com/api.html#query_database" target="_blank">querying</a> the PouchDB database using a Map/Reduce index ordered on the <code>ts</code> (timestamp) value we created inside the JSON object.</p>
+<h2 id="toc_4">Syncing to Cloudant</h2>
+<p>In PouchDB, syncing to a remote CouchDB or Cloudant database is a simple as calling the <a href="https://pouchdb.com/api.html#replication" target="_blank">replicateTo</a> function:</p>
+<div>
+<pre><code class="language-javascript">  db.replicate.to(remoteDB)
+    .on("change", function(info) {
+      // something changed
+    })
+    .on("complete", function(info) {
+      // all done
+    })
+    .on("error",  function(err) {
+      // something went wrong
+    });</code></pre>
+</div>
+<p>The variable <code>remoteDB</code> contains a URL of the remote database in the form:</p>
+<div>
+<pre><code>  https://username:password@myhostname.cloudant.com/mydatabase</code></pre>
+</div>
+<h2 id="toc_5">Conclusions</h2>
+<p>Creating offline-first applications is in some ways easier than creating traditional client-server applications. Your database is always available because it resides on the same device as the browser, making for fast performance and 100% uptime. The hard part—getting data from the client to the server and vice versa—is handled for you by PouchDB/CouchDB/Cloudant replication, which requires only a single function call to initiate the process. Allowing webpages to render and function without a network lets web apps go places they couldn’t normally go to:</p>
+<ul>
+<li>capturing health data in developing countries </li>
+<li>recording IoT data from remote sites</li>
+<li>collecting information when the network is down or unusably slow </li>
+</ul>
+<p>Combining PouchDB with Cloudant makes it easy to create such applications, without getting into native application development.</p>
+<h2 id="toc_6">Links</h2>
+<ul>
+<li>Source code – <a href="https://github.com/ibm-cds-labs/badgescanner" target="_blank">https://github.com/ibm-cds-labs/badgescanner</a></li>
+<li>Demo – <a href="https://badgescanner.mybluemix.net/" target="_blank">https://badgescanner.mybluemix.net/</a></li>
+</ul>
+<p class="text-muted"><small>© “Apache”, “CouchDB,” and “Apache CouchDB” are trademarks or registered trademarks of The Apache Software Foundation. All other brands and trademarks are the property of their respective owners.</small></p>
+<div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon sd-sharing"><h3 class="sd-title">Share this:</h3><div class="sd-content"><ul><li class="share-email share-service-visible"><a rel="nofollow" data-shared="" class="share-email sd-button share-icon no-text" href="https://developer.ibm.com/clouddataservices/2016/05/05/offline-first-qr-code-badge-scanner/?share=email&amp;nb=1" target="_blank" title="Click to email this to a friend"><span></span><span class="sharing-screen-reader-text">Click to email this to a friend (Opens in new window)</span></a></li><li class="share-twitter"><a rel="nofollow" data-shared="sharing-twitter-7066" class="share-twitter sd-button share-icon no-text" href="https://developer.ibm.com/clouddataservices/2016/05/05/offline-first-qr-code-badge-scanner/?share=twitter&amp;nb=1" target="_blank" title="Click to share on Twitter"><span></span><span class="sharing-screen-reader-text">Click to share on Twitter (Opens in new window)</span></a></li><li class="share-linkedin"><a rel="nofollow" data-shared="sharing-linkedin-7066" class="share-linkedin sd-button share-icon no-text" href="https://developer.ibm.com/clouddataservices/2016/05/05/offline-first-qr-code-badge-scanner/?share=linkedin&amp;nb=1" target="_blank" title="Click to share on LinkedIn"><span><span class="share-count">3</span></span><span class="sharing-screen-reader-text">Click to share on LinkedIn (Opens in new window)<span class="share-count">3</span></span></a></li><li class="share-facebook"><a rel="nofollow" data-shared="sharing-facebook-7066" class="share-facebook sd-button share-icon no-text" href="https://developer.ibm.com/clouddataservices/2016/05/05/offline-first-qr-code-badge-scanner/?share=facebook&amp;nb=1" target="_blank" title="Click to share on Facebook"><span><span class="share-count">4</span></span><span class="sharing-screen-reader-text">Click to share on Facebook (Opens in new window)<span class="share-count">4</span></span></a></li><li class="share-reddit"><a rel="nofollow" data-shared="" class="share-reddit sd-button share-icon no-text" href="https://developer.ibm.com/clouddataservices/2016/05/05/offline-first-qr-code-badge-scanner/?share=reddit&amp;nb=1" target="_blank" title="Click to share on Reddit"><span></span><span class="sharing-screen-reader-text">Click to share on Reddit (Opens in new window)</span></a></li><li class="share-pocket"><a rel="nofollow" data-shared="" class="share-pocket sd-button share-icon no-text" href="https://developer.ibm.com/clouddataservices/2016/05/05/offline-first-qr-code-badge-scanner/?share=pocket&amp;nb=1" target="_blank" title="Click to share on Pocket"><span></span><span class="sharing-screen-reader-text">Click to share on Pocket (Opens in new window)</span></a></li><li class="share-end"></li></ul></div></div></div>						</div>
+
+						<div class="cf pn-post-tags-and-share">
+															<div class="fl pn-nav-links pn-tags mrm">
+									Tagged: <a href="https://developer.ibm.com/clouddataservices/tag/cloudant/" rel="tag">cloudant</a> / <a href="https://developer.ibm.com/clouddataservices/tag/offline-first/" rel="tag">Offline First</a> / <a href="https://developer.ibm.com/clouddataservices/tag/pouchdb/" rel="tag">PouchDB</a>								</div>
+
+              <!-- This is where I deleted sharing links because we are using JetPack Sharing -->
+						</div>
+
+
+						<div id="comments" class="pn-post-comments">
+							<div id="respond">
+							<div id="disqus_thread"><iframe id="dsq-app2" name="dsq-app2" allowtransparency="true" frameborder="0" scrolling="no" tabindex="0" title="Disqus" width="100%" src="https://disqus.com/embed/comments/?base=default&amp;version=0cf5e625cf195bf4196ece183524d745&amp;f=ibmclouddataservicesdevelopercenter&amp;t_u=https%3A%2F%2Fdeveloper.ibm.com%2Fclouddataservices%2F2016%2F05%2F05%2Foffline-first-qr-code-badge-scanner%2F&amp;t_d=Offline-first%20QR-code%20Badge%20Scanner&amp;t_t=Offline-first%20QR-code%20Badge%20Scanner&amp;s_o=default" style="width: 1px !important; min-width: 100% !important; border: none !important; overflow: hidden !important; height: 628px !important;" horizontalscrolling="no" verticalscrolling="no"></iframe></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: * * */
+    var disqus_shortname = 'ibmclouddataservicesdevelopercenter';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;</noscript>
+
+							</div>
+						</div>
+
+					</div>
+
+									<div class="pn-col-6-2">
+
+						<ul class="pn-widgets pn-widgets-post">
+							<li id="blog_subscription-5" class="widget jetpack_subscription_widget"><h3 class="pn-widgettitle">Subscribe to Blog Updates</h3>
+			<form action="#" method="post" accept-charset="utf-8" id="subscribe-blog-blog_subscription-5">
+				<div id="subscribe-text"><p>Enter your email address to subscribe to this blog and receive notifications of new posts by email.</p>
+</div>					<p id="subscribe-email">
+						<label id="jetpack-subscribe-label" for="subscribe-field-blog_subscription-5" style="clip: rect(1px 1px 1px 1px); position: absolute; height: 1px; width: 1px; overflow: hidden;">
+							Email Address						</label>
+						<input type="email" name="email" required="required" class="required" value="" id="subscribe-field-blog_subscription-5" placeholder="Email Address">
+					</p>
+
+					<p id="subscribe-submit">
+						<input type="hidden" name="action" value="subscribe">
+						<input type="hidden" name="source" value="https://developer.ibm.com/clouddataservices/2016/05/05/offline-first-qr-code-badge-scanner/">
+						<input type="hidden" name="sub-type" value="widget">
+						<input type="hidden" name="redirect_fragment" value="blog_subscription-5">
+												<input type="submit" value="Subscribe" name="jetpack_subscriptions_widget">
+					</p>
+							</form>
+
+			<script>
+			/*
+			Custom functionality for safari and IE
+			 */
+			(function( d ) {
+				// In case the placeholder functionality is available we remove labels
+				if ( ( 'placeholder' in d.createElement( 'input' ) ) ) {
+					var label = d.querySelector( 'label[for=subscribe-field-blog_subscription-5]' );
+						label.style.clip 	 = 'rect(1px, 1px, 1px, 1px)';
+						label.style.position = 'absolute';
+						label.style.height   = '1px';
+						label.style.width    = '1px';
+						label.style.overflow = 'hidden';
+				}
+
+				// Make sure the email value is filled in before allowing submit
+				var form = d.getElementById('subscribe-blog-blog_subscription-5'),
+					input = d.getElementById('subscribe-field-blog_subscription-5'),
+					handler = function( event ) {
+						if ( '' === input.value ) {
+							input.focus();
+
+							if ( event.preventDefault ){
+								event.preventDefault();
+							}
+
+							return false;
+						}
+					};
+
+				if ( window.addEventListener ) {
+					form.addEventListener( 'submit', handler, false );
+				} else {
+					form.attachEvent( 'onsubmit', handler );
+				}
+			})( document );
+			</script>
+
+</li><li id="categories-4" class="widget widget_categories"><h3 class="pn-widgettitle">Categories</h3>		<ul>
+	<li class="cat-item cat-item-46"><a href="https://developer.ibm.com/clouddataservices/category/analytics/">Analytics</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="https://developer.ibm.com/clouddataservices/category/cloudant-2/">Cloudant</a>
+</li>
+	<li class="cat-item cat-item-15"><a href="https://developer.ibm.com/clouddataservices/category/community/">Community</a>
+</li>
+	<li class="cat-item cat-item-135"><a href="https://developer.ibm.com/clouddataservices/category/compose/">Compose</a>
+</li>
+	<li class="cat-item cat-item-151"><a href="https://developer.ibm.com/clouddataservices/category/couchdb/">CouchDB</a>
+</li>
+	<li class="cat-item cat-item-96"><a href="https://developer.ibm.com/clouddataservices/category/dashdb/">dashDB</a>
+</li>
+	<li class="cat-item cat-item-47"><a href="https://developer.ibm.com/clouddataservices/category/data-warehousing/">Data Warehousing</a>
+</li>
+	<li class="cat-item cat-item-114"><a href="https://developer.ibm.com/clouddataservices/category/db2/">DB2</a>
+</li>
+	<li class="cat-item cat-item-99"><a href="https://developer.ibm.com/clouddataservices/category/elasticsearch/">Elasticsearch</a>
+</li>
+	<li class="cat-item cat-item-48"><a href="https://developer.ibm.com/clouddataservices/category/gaming/">Gaming</a>
+</li>
+	<li class="cat-item cat-item-230"><a href="https://developer.ibm.com/clouddataservices/category/geospatial/">Geospatial</a>
+</li>
+	<li class="cat-item cat-item-45"><a href="https://developer.ibm.com/clouddataservices/category/hybrid/">Hybrid</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="https://developer.ibm.com/clouddataservices/category/iot/">IoT</a>
+</li>
+	<li class="cat-item cat-item-8"><a href="https://developer.ibm.com/clouddataservices/category/location/">Location</a>
+</li>
+	<li class="cat-item cat-item-174"><a href="https://developer.ibm.com/clouddataservices/category/message-hub/">Message Hub</a>
+</li>
+	<li class="cat-item cat-item-49"><a href="https://developer.ibm.com/clouddataservices/category/migration/">Migration</a>
+</li>
+	<li class="cat-item cat-item-50"><a href="https://developer.ibm.com/clouddataservices/category/mobile/">Mobile</a>
+</li>
+	<li class="cat-item cat-item-100"><a href="https://developer.ibm.com/clouddataservices/category/mongodb/">MongoDB</a>
+</li>
+	<li class="cat-item cat-item-51"><a href="https://developer.ibm.com/clouddataservices/category/nosql/">NoSQL</a>
+</li>
+	<li class="cat-item cat-item-52"><a href="https://developer.ibm.com/clouddataservices/category/offline/">Offline</a>
+</li>
+	<li class="cat-item cat-item-53"><a href="https://developer.ibm.com/clouddataservices/category/open-data/">Open Data</a>
+</li>
+	<li class="cat-item cat-item-97"><a href="https://developer.ibm.com/clouddataservices/category/postgresql/">PostgreSQL</a>
+</li>
+	<li class="cat-item cat-item-98"><a href="https://developer.ibm.com/clouddataservices/category/redis/">Redis</a>
+</li>
+	<li class="cat-item cat-item-101"><a href="https://developer.ibm.com/clouddataservices/category/spark/">Spark</a>
+</li>
+	<li class="cat-item cat-item-54"><a href="https://developer.ibm.com/clouddataservices/category/sql/">SQL</a>
+</li>
+		</ul>
+</li>						</ul>
+
+					</div>
+
+			</div>
+
+		</article>
+
+	</div>
+
+
+
+
+
+</div>  <!-- // main class from header.php (note: does not actually center) -->
+
+
+
+<div id="pnext-footer" class="pn-footer links-footer" role="navigation" aria-label="Page footer">
+
+	<div class="pn-pcon">
+
+		<div class="pn-columns">
+			<div class="pn-col-6-1">
+
+
+<a class="pn-footer-social-link" href="https://developer.ibm.com/clouddataservices/feed/">
+  <i class="sprite rss-footer"></i><span class="visuallyhidden">RSS Feed</span>
+</a>
+			</div>
+			<div class="pn-col-6-4">
+
+			  <div class="pn-footer-menu" role="contentinfo">
+
+          <ul id="menu-footer" class="pn-footer-menu pn-il pn-il--center"><li class="pn-footer-menu-item pn-il-item"><a href="https://www.ibm.com/developerworks/secure/reportabuse?referingURL=https%3A%2F%2Fdeveloper.ibm.com%2Fclouddataservices%2F2016%2F05%2F05%2Foffline-first-qr-code-badge-scanner">Report Abuse</a></li><li class="pn-footer-menu-item pn-il-item"><a href="/terms-of-use/">Terms of Use</a></li><li class="pn-footer-menu-item pn-il-item"><a href="/third-party-notice/">Third Party Notice</a></li><li class="pn-footer-menu-item pn-il-item"><a href="http://www.ibm.com/privacy/">IBM Privacy</a></li></ul>
+			  </div>
+
+			</div>
+
+			<div class="pn-col-6-1">
+
+			  <span class="fr">
+			  <a href="http://ibm.com"><i class="sprite ibm-smlogo"></i><span class="visuallyhidden">IBM</span></a>
+			  </span>
+
+			</div>
+		</div>
+
+
+	</div>
+
+</div>
+
+	<div style="display:none">
+	<div class="grofile-hash-map-3b7979d1e1aaf63dbcd99cc58e732a11">
+	</div>
+	</div>
+
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/developer.ibm.com\/clouddataservices\/2016\/05\/05\/offline-first-qr-code-badge-scanner\/":7066};
+	</script>
+
+		<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-twitter' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-linkedin' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomlinkedin', 'menubar=1,resizable=1,width=580,height=450' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-facebook' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+		});
+		</script>
+				<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-pocket' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcompocket', 'menubar=1,resizable=1,width=450,height=450' );
+				return false;
+			});
+		});
+		</script>
+		<script type="text/javascript" src="https://developer.ibm.com/clouddataservices/wp-content/plugins/jetpack/modules/photon/photon.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var pollsL10n = {"ajax_url":"https:\/\/developer.ibm.com\/clouddataservices\/wp-admin\/admin-ajax.php","text_wait":"Your last request is still being processed. Please wait a while ...","text_valid":"Please choose a valid poll answer.","text_multiple":"Maximum number of choices allowed: ","show_loading":"1","show_fading":"1"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://developer.ibm.com/clouddataservices/wp-content/plugins/wp-polls/polls-js.js"></script>
+<script type="text/javascript" src="https://s0.wp.com/wp-content/js/devicepx-jetpack.js"></script>
+<script type="text/javascript" src="https://developer.ibm.com/clouddataservices/wp-content/themes/projectnext/js/util.js"></script>
+<script type="text/javascript" src="https://developer.ibm.com/clouddataservices/wp-content/themes/projectnext/js/google-analytics.js"></script>
+<script type="text/javascript" src="https://developer.ibm.com/clouddataservices/wp-content/themes/projectnext/js/pnext.jquery.nav-tree.js"></script>
+<script type="text/javascript" src="https://developer.ibm.com/clouddataservices/wp-includes/js/comment-reply.min.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var sharing_js_options = {"lang":"en","counts":"1"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://developer.ibm.com/clouddataservices/wp-content/plugins/jetpack/modules/sharedaddy/sharing.js"></script>
+<script type="text/javascript" src="https://stats.wp.com/e-201629.js" async="" defer=""></script>
+<script type="text/javascript">
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:4.1.1',blog:'94266152',post:'7066',tz:'-4',srv:'developer.ibm.com'} ]);
+	_stq.push([ 'clickTrackerInit', '94266152', '7066' ]);
+</script>
+
+<!-- Piwik -->
+<script>
+  var _paq = _paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  _paq.push(['setCustomVariable',1,"devCenter",'47',"visit"]);
+   _paq.push(['setCustomVariable',2,"theme",'pnext_47',"visit"]);
+
+  (function() {
+    var u="//developer.ibm.com/piwik/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', 3]);
+
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript>&lt;p&gt;&lt;img src="//developer.ibm.com/piwik/piwik.php?idsite=3&amp;devCenter=47&amp;theme=pnext_47" style="border:0;" alt="" /&gt;&lt;/p&gt;</noscript>
+<!-- End Piwik Code -->
+
+
+<div id="sharing_email" style="display: none;">
+		<form action="/clouddataservices/2016/05/05/offline-first-qr-code-badge-scanner/" method="post">
+			<label for="target_email">Send to Email Address</label>
+			<input type="email" name="target_email" id="target_email" value="">
+
+
+				<label for="source_name">Your Name</label>
+				<input type="text" name="source_name" id="source_name" value="">
+
+				<label for="source_email">Your Email Address</label>
+				<input type="email" name="source_email" id="source_email" value="">
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off">
+			<script> document.getElementById('jetpack-source_f_name').value = ''; </script>
+
+			<img style="float: right; display: none" class="loading" src="https://developer.ibm.com/clouddataservices/wp-content/plugins/jetpack/modules/sharedaddy/images/loading.gif" alt="loading" width="16" height="16">
+			<input type="submit" value="Send Email" class="sharing_send">
+			<a rel="nofollow" href="#cancel" class="sharing_cancel">Cancel</a>
+
+			<div class="errors errors-1" style="display: none;">
+				Post was not sent - check your email addresses!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				Email check failed, please try again			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Sorry, your blog cannot share posts by email.			</div>
+		</form>
+	</div><img src="https://pixel.wp.com/g.gif?v=ext&amp;j=1%3A4.1.1&amp;blog=94266152&amp;post=7066&amp;tz=-4&amp;srv=developer.ibm.com&amp;host=developer.ibm.com&amp;ref=&amp;rand=0.39117562921104376" alt=":)" width="6" height="5" id="wpstats"></body></html>
