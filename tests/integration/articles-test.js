@@ -432,6 +432,18 @@ describe('Article Extraction', () => {
         notInclude: [
             'Enter your email address to subscribe to this blog',
         ],
+    },
+    {
+        fixture: 'royal-road',
+        title: 'chap 0. Prologue (re.vamped) - Re:sword',
+        include: [
+            'I was the best sword-smith in my kingdom',
+            'At that moment the blade dissolved into dust and blew away',
+            'As I fell forward, I took',
+        ],
+        notInclude: [
+            'This user has no achievements',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             const html = fs.readFileSync(`${articleFixtures}/${testCase.fixture}.html`).toString();
