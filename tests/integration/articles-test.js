@@ -271,6 +271,18 @@ describe('Article Extraction', () => {
         ],
     },
     {
+        fixture: 'npr-org',
+        title: 'Truckers Take The Wheel In Effort To Halt Sex Trafficking',
+        include: [
+            'Sex trafficking wasn\'t a major concern in the early 1980s',
+            'Kimmel called the police',
+            'and these people need a hero.',
+        ],
+        notInclude: [
+            'ON AIR NOW',
+        ],
+    },
+    {
         fixture: 'wattpad',
         title: 'Oda Nobuna no Yabou: Volume 11',
         include: [
@@ -393,6 +405,19 @@ describe('Article Extraction', () => {
         ],
         notInclude: [
             '黒人女性、機動隊の前に静かに立ちふさ',
+        ],
+    },
+    {
+        fixture: 'good-is',
+        title: 'When A Racist Imagined ‘A World Without Muslims,’ He Got Owned In The Most Brilliant Way', //eslint-disable-line
+        include: [
+            'Recent terrorist attacks in France',
+            'achievements throughout history.',
+            'nothing to do with this incident!',
+        ],
+        notInclude: [
+            'Dancing Badly',
+            'Netflix taught us to watch',
         ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
