@@ -444,6 +444,18 @@ describe('Article Extraction', () => {
         notInclude: [
             'This user has no achievements',
         ],
+    },
+    {
+        fixture: 'psychology-today',
+        title: 'Online Dating: Quit Bragging',
+        include: [
+            'dictates that presenting yourself in the best',
+            'The key to successful online dating, then',
+        ],
+        notInclude: [
+            'Most Recent Posts from Romantically Attached',
+            'You Might Also Like',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             const html = fs.readFileSync(`${articleFixtures}/${testCase.fixture}.html`).toString();
