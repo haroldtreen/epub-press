@@ -456,6 +456,21 @@ describe('Article Extraction', () => {
             'Most Recent Posts from Romantically Attached',
             'You Might Also Like',
         ],
+    },
+    {
+        fixture: 'ux-milk',
+        title: 'より良いCSSを書くための様々なCSS設計まとめ',
+        include: [
+            'CSSは誰でも簡単に自由に',
+            'SMACSSでは、スタイル',
+            'Scoped CSS自体は、CSS設',
+            'どのCSS設',
+        ],
+        notInclude: [
+            'Web制作の作業効率を格段にア',
+            'ライフハック',
+            '個人情報の取り扱いについて',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             const html = fs.readFileSync(`${articleFixtures}/${testCase.fixture}.html`).toString();
