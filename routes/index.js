@@ -138,7 +138,7 @@ router.get('/api/books/download', (req, res) => {
             }
         }).catch((error) => {
             log.warn('No book with id', req.query, error);
-            req.status(404).send(`Book with id ${req.query.id} not found.`);
+            res.status(404).send(`Book with id ${req.query.id} not found.`);
         });
     } else {
         log.verbose('No ID provided');
