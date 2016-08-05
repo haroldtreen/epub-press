@@ -520,6 +520,18 @@ describe('Article Extraction', () => {
             '？なまずの刺身を食べる',
             'ヘボコン直前！不器用な人が作ったロボ',
         ],
+    },
+    {
+        fixture: 'songmeanings',
+        title: 'Gorillaz - Last Living Souls Lyrics',
+        include: [
+            'Are we the last living souls',
+            'Or how you say',
+            'We\'re the last living souls',
+        ],
+        notInclude: [
+            '30 Comments',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             const html = fs.readFileSync(`${articleFixtures}/${testCase.fixture}.html`).toString();
