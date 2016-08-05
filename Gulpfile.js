@@ -27,3 +27,8 @@ gulp.task('test-integration', () => {
     return gulp.src('./tests/integration/*-test.js', { read: false })
             .pipe(mocha(options));
 });
+
+process.on('unhandledRejection', (reason, p) => {
+    console.log("Unhandled Rejection at: Promise ", p, " reason: ", reason);
+    // application specific logging, throwing an error, or other logic here
+});
