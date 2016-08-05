@@ -471,6 +471,20 @@ describe('Article Extraction', () => {
             'ライフハック',
             '個人情報の取り扱いについて',
         ],
+    },
+    {
+        fixture: 'journalism-uk',
+        title: 'Google at 15: Tips and tools for journalists',
+        include: [
+            'Fifteen years ago yesterday, Google was first incorporated as a company',
+            'Looking for information within specific',
+            'yet to be fully understood.',
+        ],
+        notInclude: [
+            'Jobs board',
+            'Tips for freelance',
+            'Manage vacancy postings',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             const html = fs.readFileSync(`${articleFixtures}/${testCase.fixture}.html`).toString();
