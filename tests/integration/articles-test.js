@@ -494,6 +494,16 @@ describe('Article Extraction', () => {
             'When designing this tool',
             'we’d love to hear from you.',
         ],
+    },
+    {
+        fixture: 'edureka',
+        title: 'What is DevOps and why learn DevOps- Edureka',
+        include: [
+            'DevOps can be termed as brothers',
+            'In delivering valuable software to customers',
+            'Machines are really good at doing',
+            'Multihost SSH Wrapper',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             const html = fs.readFileSync(`${articleFixtures}/${testCase.fixture}.html`).toString();

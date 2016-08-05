@@ -159,6 +159,26 @@ describe('HTML Processor', () => {
 
             assert.equal(fixedHtml, nestyHtml);
         });
+
+        it('can remove elements with too few paragraphs', () => {
+            const paragraphlessHtml = [
+                '<article>',
+                '<p>Hello</p>',
+                '</article>',
+            ].join('\n');
+            const fixedHtml = HtmlProcessor.filterParagraphless('article', paragraphlessHtml);
+            assert.equal(fixedHtml, '');
+        });
+
+        it('can ignore elements with enough paragraphs', () => {
+            const paragraphHtml = [
+                '<article>',
+                '<p>Hello</p>', '<p>Hello</p>', '<p>Hello</p>',
+                '</article>',
+            ].join('\n');
+            const fixedHtml = HtmlProcessor.filterParagraphless('article', paragraphHtml);
+            assert.equal(fixedHtml, paragraphHtml);
+        });
     });
 
     describe('Correction methods', () => {
