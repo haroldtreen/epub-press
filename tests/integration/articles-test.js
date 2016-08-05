@@ -485,6 +485,15 @@ describe('Article Extraction', () => {
             'Tips for freelance',
             'Manage vacancy postings',
         ],
+    },
+    {
+        fixture: 'airbnb',
+        title: 'Experiment Reporting Framework',
+        include: [
+            'At Airbnb we are always trying to learn',
+            'When designing this tool',
+            'we’d love to hear from you.',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             const html = fs.readFileSync(`${articleFixtures}/${testCase.fixture}.html`).toString();

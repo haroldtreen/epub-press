@@ -1,0 +1,485 @@
+<html lang="en-US" prefix="og: http://ogp.me/ns#"><!--<![endif]--><head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Experiment Reporting Framework - Airbnb Engineering</title>
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<link rel="pingback" href="http://nerds.airbnb.com/xmlrpc.php">
+	<link rel="shortcut icon" href="http://nerds.airbnb.com/wp-content/themes/airbnb-blog/assets/images/logotype_favicon_pretzel.ico?1">
+
+<!-- This site is optimized with the Yoast WordPress SEO plugin v1.7.4 - https://yoast.com/wordpress/plugins/seo/ -->
+<link rel="canonical" href="http://nerds.airbnb.com/experiment-reporting-framework/">
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Experiment Reporting Framework - Airbnb Engineering">
+<meta property="og:description" content="At Airbnb we are always trying to learn more about our users and improve their experience on the site. Much of that learning and improvement comes through the deployment of controlled experiments. If you haven’t already read our other post about experimentation I highly recommend you do it, but I will summarize the two main …">
+<meta property="og:url" content="http://nerds.airbnb.com/experiment-reporting-framework/">
+<meta property="og:site_name" content="Airbnb Engineering">
+<meta property="article:tag" content="Data,experiments,internal tool,Search">
+<meta property="article:section" content="Code">
+<meta property="article:published_time" content="2014-05-29T23:01:17+00:00">
+<meta property="article:modified_time" content="2015-03-30T16:28:29+00:00">
+<meta property="og:updated_time" content="2015-03-30T16:28:29+00:00">
+<meta property="og:image" content="http://nerds.airbnb.com/wp-content/uploads/2014/05/img_4509.thumb_.jpg">
+<!-- / Yoast WordPress SEO plugin. -->
+
+<link rel="alternate" type="application/rss+xml" title="Airbnb Engineering » Experiment Reporting Framework Comments Feed" href="http://nerds.airbnb.com/experiment-reporting-framework/feed/">
+<link rel="stylesheet" id="yarppWidgetCss-css" href="http://nerds.airbnb.com/wp-content/plugins/yet-another-related-posts-plugin/style/widget.css" type="text/css" media="all">
+<link rel="stylesheet" id="slick-slider-css" href="http://nerds.airbnb.com/wp-content/themes/airbnb-blog/assets/vendor/slick/slick.css" type="text/css" media="all">
+<link rel="stylesheet" id="highlight-css" href="http://nerds.airbnb.com/wp-content/themes/airbnb-blog/assets/vendor/highlight/highlight.min.css" type="text/css" media="all">
+<link rel="stylesheet" id="o2-fonts-css" href="http://nerds.airbnb.com/wp-content/themes/airbnb-blog/assets/css/o2-fonts.css" type="text/css" media="all">
+<link rel="stylesheet" id="o2-css" href="http://nerds.airbnb.com/wp-content/themes/airbnb-blog/assets/css/o2.min.css" type="text/css" media="all">
+<link rel="stylesheet" id="airbnb-blog-css" href="http://nerds.airbnb.com/wp-content/themes/airbnb-blog/assets/css/theme.css" type="text/css" media="all">
+<link rel="stylesheet" id="yarpp-thumbnails-yarpp-thumbnail-css" href="http://nerds.airbnb.com/wp-content/plugins/yet-another-related-posts-plugin/includes/styles_thumbnails.css.php?width=120&amp;height=120" type="text/css" media="all">
+<link rel="stylesheet" id="yarppRelatedCss-css" href="http://nerds.airbnb.com/wp-content/plugins/yet-another-related-posts-plugin/style/related.css" type="text/css" media="all">
+<!-- This site uses the Google Analytics by Yoast plugin v5.3.3 - Universal disabled - https://yoast.com/wordpress/plugins/google-analytics/ -->
+<script type="text/javascript" async="" src="http://www.google-analytics.com/ga.js"></script><script type="text/javascript">
+
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-2725447-9']);
+	_gaq.push(['_gat._forceSSL']);
+	_gaq.push(['_trackPageview']);
+
+	(function () {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+
+</script>
+<!-- / Google Analytics by Yoast -->
+<script type="text/javascript" src="http://nerds.airbnb.com/wp-includes/js/jquery/jquery.js"></script>
+<script type="text/javascript" src="http://nerds.airbnb.com/wp-includes/js/jquery/jquery-migrate.min.js"></script>
+<script type="text/javascript" src="http://nerds.airbnb.com/wp-content/themes/airbnb-blog/assets/vendor/slick/slick.min.js"></script>
+<script type="text/javascript" src="http://nerds.airbnb.com/wp-content/themes/airbnb-blog/assets/js/theme.js"></script>
+<script type="text/javascript" src="http://nerds.airbnb.com/wp-content/themes/airbnb-blog/assets/vendor/highlight/highlight.min.js"></script>
+<script type="text/javascript" src="http://nerds.airbnb.com/wp-content/themes/airbnb-blog/assets/vendor/highlight/highlight.init.js"></script>
+<link rel="shortlink" href="http://nerds.airbnb.com/?p=176594309">
+<script data-cfasync="false" src="//load.sumome.com/" data-sumo-site-id="1850bf9eb357b98b9e887d9c720104515bfbc50a4bb0f120c0f9970c748b9e09" async=""></script><style>
+.post .post-content img,
+.page .post-content img {
+  width: 100%;
+}
+
+.post-176595109 .post-content img {
+  width: 100%;
+}
+
+.yarpp-related .yarpp-thumbnails-horizontal .yarpp-thumbnail > img {
+ width: 100%;
+}
+
+.post-176595215.post {
+  background-color: white;
+}
+.post-176595215.post .post-content img {
+  width: auto;
+  margin: 15px auto 25px;
+}
+
+.post .post-content .yarpp-thumbnail img {
+  width: 100%;
+  height: 130px;
+}
+
+.post-176595215.post .post-content code,
+.post-176595232.post .post-content code {
+  padding: 2px 4px;
+  border-top: none;
+  background-color: transparent;
+  font-size: 0.8em;
+  white-space: nowrap;
+  color: #565a5c;
+}
+
+.post-176595215 .media-cover.media-cover-dark,
+.post-176595232 .media-cover.media-cover-dark {
+  background-position: center !important;
+}
+
+.post-176595424 .media-cover.media-cover-dark {
+  background-size: initial !important;
+  background-position: bottom center !important;
+  background-repeat: no-repeat !important;
+  background-color: #FDF5E1 !important;
+}
+
+.post-176595306 img.wp-image-176595311 {
+  max-width: 400px;
+}
+
+.post-176595382 .media-cover.media-cover-dark,
+.post-176595414 .media-cover.media-cover-dark {
+  background-position: center !important;
+} {
+  background-position: center !important;
+}
+
+.post-176595394 .media-cover.media-cover-dark {
+  background-position: center !important;
+}
+
+.post-176595394 .wp-caption.alignnone {
+  text-align: center;
+  opacity: 0.9;
+  font-size: 12px;
+  width: 100% !important;
+}
+
+.post-176595394 .wp-caption-text {
+  margin: 10px 25px 20px;
+}
+</style><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="9e8a4d2a-6f8c-415e-851b-bdfe4c01d5c1/service" src="//sumome-140a.kxcdn.com/virtual/ba782a276f745862f842e6531942e9a6474d5f59/client/js/9e8a4d2a-6f8c-415e-851b-bdfe4c01d5c1/service.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="2c40add5-3570-45d7-8212-8fc2942f7f74/service" src="//sumome-140a.kxcdn.com/virtual/65653642cc3017225e6371fce869ef489e9ebfc9/client/js/2c40add5-3570-45d7-8212-8fc2942f7f74/service.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="a25489e9-848c-4356-97ff-161b0852c509/service" src="//sumome-140a.kxcdn.com/virtual/85f095c236b63c3a230fa9c96889f8d73cb3c709/client/js/a25489e9-848c-4356-97ff-161b0852c509/service.js"></script><style>@-webkit-keyframes insQ_100 {  from {  outline: 1px solid transparent  } to {  outline: 0px solid transparent }  }
+#menufication-top { animation-duration: 0.001s; animation-name: insQ_100; -webkit-animation-duration: 0.001s; -webkit-animation-name: insQ_100;  } </style><link type="text/css" rel="stylesheet" href="//sumome-140a.kxcdn.com/virtual/1279eed6f2dc87210c107d33d9db98dd0a64fb8d/client/js/../css/sumome-share-client.css"></head>
+
+<body class="single single-post postid-176594309 single-format-standard">
+
+	<div id="header">
+
+		<div class="navbar-inner">
+
+			<div class="container container-full-width page-container page-container-responsive navbar-container">
+
+				<a id="burger" href="#">
+					<i class="icon icon-reorder"></i>
+				</a>
+
+				<a id="logo" href="https://www.airbnb.com/">
+					<img width="91px" height="28px" src="http://nerds.airbnb.com/wp-content/themes/airbnb-blog/assets/images/logo-red.png">
+				</a>
+
+				<a id="blog-label" class="text-muted" href="http://nerds.airbnb.com">Nerds</a>
+
+				<ul id="top-nav" class="menu list-unstyled"><li id="menu-item-176593901" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-176593901"><a href="http://nerds.airbnb.com/code/" class="text-normal">Code</a></li>
+<li id="menu-item-176595288" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-176595288"><a href="http://airbnb.io/events/tech-talks/" onclick="_gaq.push(['_trackEvent', 'outbound-widget', 'http://airbnb.io/events/tech-talks/', 'Tech Talks']);" class="text-normal">Tech Talks</a></li>
+<li id="menu-item-176595289" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-176595289"><a href="http://airbnb.io/projects/" onclick="_gaq.push(['_trackEvent', 'outbound-widget', 'http://airbnb.io/projects/', 'Open Source']);" class="text-normal">Open Source</a></li>
+<li id="menu-item-176593904" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-176593904"><a href="http://nerds.airbnb.com/news/" class="text-normal">News</a></li>
+<li id="menu-item-176593905" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-176593905"><a href="http://nerds.airbnb.com/data/" class="text-normal">Data</a></li>
+</ul>
+			</div>
+
+		</div>
+
+	</div>
+
+		<div class="post-176594309 post type-post status-publish format-standard hentry category-code tag-data tag-experiments tag-internal-tool tag-search">
+
+		<div class="page-container page-container-full post-cover">
+
+			<div class="media-photo media-photo-block" style="height:510px">
+				<div class="media-cover media-cover-dark" style="background-image:url('http://nerds.airbnb.com/wp-content/files_mf/1400552255img_4509.thumb.jpg');background-size:cover;background-position: 0 0;"></div>
+
+				<div class="row row-table row-full-height">
+					<div class="col-12  col-middle text-center text-contrast">
+													<h4 class="row-space-1">Code</h4>
+												<h1 class="row-space-top-1">Experiment Reporting Framework</h1>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="page-container">
+
+			<div class="row row-space-top-8 post-body-wrap">
+
+				<div class="col-8 post-content">
+					<p dir="ltr"><span style="line-height: 1.5em;">At Airbnb we are always trying to learn more about our users and improve their experience on the site. Much of that learning and improvement comes through the deployment of controlled experiments. If you haven’t already read <a href="http://nerds.airbnb.com/experiments-at-airbnb/">our other post</a> about experimentation I highly recommend you do it, but I will summarize the two main points: (1) running controlled experiments is the best way to learn about your users, and (2) there are a lot of pitfalls when running experiments. To that end, we built a tool to make running experiments easier by hiding all the pitfalls and automating the analytical heavy lifting.</span></p>
+<p><a href="http://nerds.airbnb.com/wp-content/uploads/2014/05/pngbase6468ee7ac577d881c5.png"><img class="size-large wp-image-176594311" alt="png;base6468ee7ac577d881c5" src="http://nerds.airbnb.com/wp-content/uploads/2014/05/pngbase6468ee7ac577d881c5-1024x424.png" width="1024" height="424"></a></p>
+<p dir="ltr">When designing this tool, making experiments simple to run was the primary focus. We also had some specific design goals that came out of what we’ve learned from running and analyzing experiments with our <a href="https://github.com/airbnb/trebuchet" onclick="_gaq.push(['_trackEvent', 'outbound-article', 'https://github.com/airbnb/trebuchet', 'previous tool']);">previous tool</a>.</p>
+<ul>
+<li>
+<p dir="ltr">Make sure the underlying data are correct. While this seems obvious, I’ll show some examples below of problems we ran into before that caused us to lose confidence in our analysis.</p>
+</li>
+<li>
+<p dir="ltr">Limit the ways someone setting up an experiment could accidentally introduce bias and ensure that we automatically and reliably logged when a user was placed into a treatment for an experiment.</p>
+</li>
+<li>
+<p dir="ltr">Subject experimental changes to the same code review process we use for code changes–they can affect the site in the same way, after all.</p>
+</li>
+<li>
+<p dir="ltr">Run the analysis automatically so the barrier to entry to running (and learning from) an experiment is as low as possible.</p>
+</li>
+</ul>
+<h2>Example Experiment</h2>
+<p dir="ltr">For the rest of this post, let’s consider a sample experiment we might want to run and how we’d get there–from setting it up, to making the code changes, to seeing the results.</p>
+<p dir="ltr"><a href="http://nerds.airbnb.com/wp-content/uploads/2014/05/pngbase642a2f6b2731637022.png"><img class="alignnone size-large wp-image-176594313" alt="png;base642a2f6b2731637022" src="http://nerds.airbnb.com/wp-content/uploads/2014/05/pngbase642a2f6b2731637022-1024x521.png" width="1024" height="521"></a></p>
+<p dir="ltr">Here is our current <a href="https://www.airbnb.com/s/San-Francisco--CA--United-States?guests=2">search results page</a>,&nbsp;on the left we have a map of the results and on the right, images of the listings. By default, we show 18 results per page, but we wanted to understand how showing 12 or 24 results would affect user behaviour. Do users prefer getting more information at once? Or is it confusing to show too much? Let’s walk through the process of running that experiment.</p>
+<h2>Declaring treatments</h2>
+<p dir="ltr">For declaring experiments we settled on <a href="http://www.yaml.org/" onclick="_gaq.push(['_trackEvent', 'outbound-article', 'http://www.yaml.org/', 'yaml']);">yaml</a> since it provides a nice balance between human and machine readability. To define an experiment, you need two key things–the subject and the treatments. The subject is who you want to run this experiment against. In this case, we choose visitor since not all users who search are logged in. If we were running an experiment on the booking flow (where users have to log in first) we could run the experiment against users. &nbsp;For a more in-depth look at the issues we’ve seen with visitor versus user experiments, check out <a href="http://nerds.airbnb.com/experiments-at-airbnb/">our other post</a>. Second, we have to define the treatments; in this case we have the control (of 18 results per page) and our two experimental groups, 12 and 24 results per page. The <code>human_readable</code> fields are what will be used in the UI.</p>
+<pre><code>search_per_page:
+  human_readable: Search results per page
+  subject: visitor
+  treatments:
+    12_per_page:
+      human_readable: 12 per page
+    18_per_page:
+      human_readable: 18 per page
+    24_per_page:
+      human_readable: 24 per page
+  control: 18_per_page
+</code></pre>
+<h2>Deploying</h2>
+<p dir="ltr">The next step is to implement this experiment in code. In the examples below, we’ll be looking at Ruby code but we have a very similar function in Javascript that we can use for running experiments on cached pages.</p>
+<pre><code>deliver_experiment(
+  "search_per_page",
+  :12_per_page  =&gt;  lambda { &lt;%= render "search_results", :results =&gt; 12 %&gt; },
+  :18_per_page  =&gt;  lambda { &lt;%= render "search_results", :results =&gt; 18 %&gt; },
+  :24_per_page  =&gt;  lambda { &lt;%= render "search_results", :results =&gt; 24 %&gt; },
+  :unknown      =&gt;  lambda { &lt;%= render "search_results", :results =&gt; 18 %&gt; }
+)</code></pre>
+<p dir="ltr">The first argument is just the name of the experiment (from above). Then we’ve got an argument for each treatment above as well as a lambda function. The <code>deliver_experiment</code> function does three main things, (1) assign a user to a group (based on the specified subject), (2) log that the user was put into the treatment group, and (3) execute the provided lambda for the treatment group. You’ll also notice one more argument, <code>:unknown</code>. This is there in the case we run into some unexpected failure. We want to make sure, even in the case that something goes horribly wrong, we still provide the user with a good experience. This group allows us to handle those cases by rendering that view to the user and logging that the unknown treatment was given (and, of course, also logging the error as needed).</p>
+<p dir="ltr">This design may seem a little unorthodox, but there is a method behind the madness. To understand why we chose lambdas instead of something simpler like if statements, let’s look at a few examples of doing it differently. Imagine, instead, we had a function that would return the treatment for a given user. We could then deploy an experiment like this:</p>
+<pre><code>treatment = user.get_treatment("search_page_number")
+if treatment == :12_per_page
+  ...
+elsif treatment == :18_per_page
+  ...
+elsif treatment == :24_per_page
+  ...
+else
+  ...</code></pre>
+<p dir="ltr">This would work perfectly, and we could log which treatment a user was put into in the <code>get_treatment</code> function. What if, however, someone is looking at site performance later on and realizes that serving 24 results per page is causing the load times to skyrocket in China? They don’t know about the experiment you’re trying to run, but want to improve the user experience for Chinese users, so they come to the code and make the following change:</p>
+<pre><code>treatment = user.get_treatment("search_page_number")
+if treatment == :12_per_page
+  ...
+elsif treatment == :18_per_page
+  ...
+elsif <strong>user.country !~ "china" &amp;&amp;</strong>
+      treatment == :24_per_page
+  ...
+else
+  ...</code></pre>
+<p dir="ltr">Now, what’s happening? Well, we’re still going to log that Chinese users are put into the 24 results per page group (since that happens on line 1) but, in fact, they will not be seeing 24 results per page because of the change. We’ve biased our experiment. While you could do that with the lambda too, we’ve found by making it very explicit that this code path is related to an experiment, people are more aware that they shouldn’t be putting switching logic in there.</p>
+<p dir="ltr">Let’s look at another example, what about the following two statements?</p>
+<pre><code><strong>if user.country !~ "china" &amp;&amp;</strong>
+   user.get_treatment("search_page_number") == :24_per_page
+  ...
+
+if user.get_treatment("search_page_number") == :24_per_page &amp;&amp;
+   <strong>user.country !~ "china"</strong>
+  ...</code></pre>
+<p dir="ltr">In this case we have identical logic and the same users will see the treatment. The problem is that because the tests are short-circuited in the if statement, in the first case we correctly log only when a user actually sees the treatment. In the second case we have the same problem as above, where we log that Chinese users are seeing the 24 results per page treatment even though they are not.</p>
+<h2>Analyzing</h2>
+<p dir="ltr">Finally, once that’s all done and deployed into the wild, we wait for the results to roll in. Currently we process the experiment results nightly, although it could easily be run more frequently. You can see a screenshot of the UI for the search results per page experiment in the image at the beginning of the post. At first glance, you’ll see red and green cells. These cells signify metrics that we think are statistically significant based the methods presented in <a href="http://nerds.airbnb.com/experiments-at-airbnb/">our previous post</a> (red for bad and green for good). The uncolored cells with grey text represent metrics for which we are not yet sufficiently confident in the results. We also plot a spark line of the p-value and delta over time, which allows a user to look for convergence of these values.</p>
+<p dir="ltr">As you can also see from the UI, we provide two other mechanisms for looking at the data, but I won’t go into too much detail on those here. These allow for filtering the results, for example by new or returning users. &nbsp;We also support pivoting the results, so that a user could see how a specific metric performed on new vs. returning users.</p>
+<p dir="ltr">Once we have significant results for the metrics we were interested in for an experiment, we can make a determination about the success (or failure) of that experiment and deploy a specific treatment in the code. To avoid building up confusing code paths, we try to tear down all completed experiments. Experiments can then be marked as retired, which will stop running the analysis, but retain the data so it can be still referred to in the future.</p>
+<p>We plan to eventually open source much of this work. In the meantime, we hope this post gives you a taste of some of the decisions we made when designing this tool and why we made them. If you’re trying to build something similar (or already have) we’d love to hear from you.</p>
+<div class="yarpp-related">
+<h3></h3>
+<div class="yarpp-thumbnails-horizontal">
+<a class="yarpp-thumbnail" href="http://nerds.airbnb.com/experiments-at-airbnb/" title="Experiments at Airbnb">
+<img width="120" height="78" src="http://nerds.airbnb.com/wp-content/uploads/2014/05/hero.jpg" class="attachment-yarpp-thumbnail wp-post-image" alt="hero"><span class="yarpp-thumbnail-title">Experiments at Airbnb</span></a>
+<a class="yarpp-thumbnail" href="http://nerds.airbnb.com/mapping-world/" title="Mapping the World">
+<img width="120" height="120" src="http://nerds.airbnb.com/wp-content/uploads/2015/01/issaquah-120x120.png" class="attachment-yarpp-thumbnail wp-post-image" alt="issaquah"><span class="yarpp-thumbnail-title">Mapping the World</span></a>
+<a class="yarpp-thumbnail" href="http://nerds.airbnb.com/architecting-machine-learning-system-risk/" title="Architecting a Machine Learning System for Risk">
+<img width="120" height="80" src="http://nerds.airbnb.com/wp-content/uploads/2014/06/367153040ff28b87c1d9744d17658d6595cc6d7cd6a4647e-original.jpeg" class="attachment-yarpp-thumbnail wp-post-image" alt="36715304~0ff28b87c1d9744d17658d6595cc6d7cd6a4647e-original"><span class="yarpp-thumbnail-title">Architecting a Machine Learning System for Risk</span></a>
+</div>
+</div>
+
+					<div class="row dot-babu text-contrast row-space-8 row-space-top-4">
+					  <div class="col-8 panel-body">
+					    <div class="h3 icon-white pull-left" style="">
+					      Want to work with us? <strong><em>We're hiring!</em></strong>
+					    </div>
+					  </div>
+					  <div class="col-4 panel-body">
+					    <a href="https://www.airbnb.com/jobs/departments/engineering" target="_blank" class="btn btn-primary">
+					      View Open Positions
+					    </a>
+					  </div>
+					</div>
+				</div>
+
+				<div class="col-3 post-sidebar text-center text-muted">
+
+
+					<ul class="list-unstyled">
+
+						<li class="avatar-wrap"><img alt="" src="http://0.gravatar.com/avatar/ee96dd0aabfe630ab677a51aa3d00987?s=120&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D120&amp;r=G" class="avatar avatar-120 photo" height="120" width="120"></li>
+
+												<li class="published-in">Published in <a href="http://nerds.airbnb.com/code/">Code</a></li>
+
+						<li>May 29, 2014 by <a href="http://nerds.airbnb.com/author/will_moss/" title="Posts by Will Moss" class="url fn" rel="author">Will Moss</a></li>
+
+						<li><a href="http://nerds.airbnb.com/experiment-reporting-framework/#comments">3 Comments</a></li>
+
+					</ul>
+
+				</div>
+
+				<div style="clear:both;"></div>
+
+			</div>
+
+			<div class="row">
+
+
+<div id="comments" class="col-8 col-offset-3 post-comments">
+
+		<h2>3 Comments</h2>
+
+
+
+			<ol class="comment-list list-unstyled">
+					<li id="comment-35008" class="comment even thread-even depth-1 parent">
+			<article id="div-comment-35008" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt="" src="http://1.gravatar.com/avatar/f0b7ad2e9a9a0263ade548fc92d8e028?s=32&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D32&amp;r=G" class="avatar avatar-32 photo" height="32" width="32">						<b class="fn">Luke Thomas</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="http://nerds.airbnb.com/experiment-reporting-framework/#comment-35008">
+							<time datetime="2014-05-30T23:04:44+00:00">
+								May 30, 2014 at 11:04 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Will, great post!</p>
+<p>Just a couple quick questions.</p>
+<p>1. Since these users are anonymous (non logged-in), are you setting a cookie so each user only sees one variation? For example, let’s say I visit the site and search 1x, and then see 12 results. I decide to search again, and then see 18 results. Is there something to prevent the viewer from seeing different variation?</p>
+<p>2. Also, I’m curious what the results were. What was the key metric that you were trying to measure? Bookings?</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply">
+									</div><!-- .reply -->
+			</article><!-- .comment-body -->
+<ol class="children">
+		<li id="comment-38388" class="comment byuser comment-author-will_moss bypostauthor odd alt depth-2">
+			<article id="div-comment-38388" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt="" src="http://0.gravatar.com/avatar/ee96dd0aabfe630ab677a51aa3d00987?s=32&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D32&amp;r=G" class="avatar avatar-32 photo" height="32" width="32">						<b class="fn">Will Moss</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="http://nerds.airbnb.com/experiment-reporting-framework/#comment-38388">
+							<time datetime="2014-06-03T22:09:36+00:00">
+								June 3, 2014 at 10:09 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Hey Luke,</p>
+<p>1. Yup, that’s exactly what we do. If the user eventually logs in or creates an account we then associate that cookie with the user id. This is how we detect multiple exposures, which Jan discusses in his post.</p>
+<p>2. It varies from experiment to experiment, but bookings is almost always one of the most important ones. We’ve been testing options for login other than Facebook and those experiments are particularly interested in user signups, for example.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply">
+									</div><!-- .reply -->
+			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-95119" class="comment even thread-odd thread-alt depth-1">
+			<article id="div-comment-95119" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt="" src="http://0.gravatar.com/avatar/e94c501a5ed55478c94cfa18472d0834?s=32&amp;d=http%3A%2F%2F0.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D32&amp;r=G" class="avatar avatar-32 photo" height="32" width="32">						<b class="fn">Nicholas Evans</b> <span class="says">says:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="http://nerds.airbnb.com/experiment-reporting-framework/#comment-95119">
+							<time datetime="2014-08-13T23:05:14+00:00">
+								August 13, 2014 at 11:05 pm							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Have you open-sourced the experiment tool or any pieces of it yet? Do you have anything to preview? We’d love to try it out at Reverb.com. Thanks.</p>
+				</div><!-- .comment-content -->
+
+				<div class="reply">
+									</div><!-- .reply -->
+			</article><!-- .comment-body -->
+</li><!-- #comment-## -->
+			</ol>
+
+			<p class="no-comments">Comments are closed.</p>
+
+</div>
+
+			</div>
+
+
+		</div>
+
+	</div>
+
+
+
+
+	<div id="footer">
+
+					<div class="page-container">
+				<div class="row row-space-top-8">
+					<ul id="footer-sidebar" class="text-contrast list-unstyled">
+						<li id="nav_menu-2" class="widget col-2 col-offset-1 widget_nav_menu"><div class="menu-top-nav-container"><ul id="menu-top-nav" class="menu"><li class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-176593901"><a href="http://nerds.airbnb.com/code/">Code</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-176595288"><a href="http://airbnb.io/events/tech-talks/" onclick="_gaq.push(['_trackEvent', 'outbound-widget', 'http://airbnb.io/events/tech-talks/', 'Tech Talks']);">Tech Talks</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-176595289"><a href="http://airbnb.io/projects/" onclick="_gaq.push(['_trackEvent', 'outbound-widget', 'http://airbnb.io/projects/', 'Open Source']);">Open Source</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-176593904"><a href="http://nerds.airbnb.com/news/">News</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-176593905"><a href="http://nerds.airbnb.com/data/">Data</a></li>
+</ul></div></li><li id="black-studio-tinymce-2" class="widget col-2 col-offset-1 widget_black_studio_tinymce"><h5 class="row-space-3">More Airbnb blogs</h5><div class="textwidget"><ul>
+<li><a href="http://blog.airbnb.com">Airbnb blog</a></li>
+<li><a href="http://publicpolicy.airbnb.com/">Public Policy</a></li>
+<li><a href="http://designairs.com/" onclick="_gaq.push(['_trackEvent', 'outbound-widget', 'http://designairs.com/', 'Design']);">Design</a></li>
+<li><a href="https://www.airbnb.com/careers/departments/engineering" target="_blank">We're hiring</a></li>
+</ul></div></li><li id="black-studio-tinymce-3" class="widget col-2 col-offset-1 widget_black_studio_tinymce"><h5 class="row-space-3">Find Us at</h5><div class="textwidget"><ul>
+<li><a href="https://twitter.com/AirbnbEng" onclick="_gaq.push(['_trackEvent', 'outbound-widget', 'https://twitter.com/AirbnbEng', 'Twitter']);" target="_blank">Twitter</a></li>
+<li><a href="https://github.com/airbnb" onclick="_gaq.push(['_trackEvent', 'outbound-widget', 'https://github.com/airbnb', 'Github']);" target="_blank">Github</a></li>
+<li><a href="https://www.facebook.com/airbnb" onclick="_gaq.push(['_trackEvent', 'outbound-widget', 'https://www.facebook.com/airbnb', 'Facebook']);" target="_blank">Facebook</a></li>
+<li><a href="https://plus.google.com/u/0/+airbnb/posts" onclick="_gaq.push(['_trackEvent', 'outbound-widget', 'https://plus.google.com/u/0/+airbnb/posts', 'Google+']);" target="_blank">Google+</a></li>
+<li><a href="https://twitter.com/Airbnb" onclick="_gaq.push(['_trackEvent', 'outbound-widget', 'https://twitter.com/Airbnb', 'Twitter']);" target="_blank">Twitter</a></li>
+<li><a href="http://www.youtube.com/airbnb" onclick="_gaq.push(['_trackEvent', 'outbound-widget', 'http://www.youtube.com/airbnb', 'YouTube']);" target="_blank">YouTube</a></li>
+<li><a href="http://nerds.airbnb.com/feed/" target="_blank">RSS</a></li>
+</ul>
+<p>© Airbnb, Inc</p></div></li><li id="black-studio-tinymce-4" class="widget col-2 col-offset-1 widget_black_studio_tinymce"><h5 class="row-space-3">About Airbnb</h5><div class="textwidget"><p>Airbnb is a global community marketplace that connects travelers seeking authentic, high-quality accommodations with hosts who offer unique places to stay.</p>
+<p>Find more in our <a href="https://www.airbnb.com/sitemaps">Sitemap</a></p></div></li><li id="text-4" class="widget col-2 col-offset-1 widget_text">			<div class="textwidget"><style>
+.post-cover .text-contrast {
+  text-shadow: 0 2px 5px rgba(0,0,0,0.6);
+}
+</style></div>
+		</li>					</ul>
+				</div>
+			</div>
+
+		<div class="footer-content-container-slim container-semi-opaque">
+			<div class="container page-container">
+				<div class="row text-muted text-center row-space-8 row-space-top-6 copy-wrap">
+					<div id="copyright">© Airbnb, Inc.</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div id="mobile-nav-modal-backdrop" style="display:none;"></div>
+	<div id="mobile-nav-modal-wrap" style="display:none;">
+		<a href="#" id="close-mobile-nav" class="text-contrast"><i class="icon icon-remove"></i></a>
+
+		<div id="mobile-nav-wrap" class="text-center">
+			<ul id="mobile-nav" class="menu list-unstyled"><li class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-176593901"><a href="http://nerds.airbnb.com/code/" class="text-contrast">Code</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-176595288"><a href="http://airbnb.io/events/tech-talks/" onclick="_gaq.push(['_trackEvent', 'outbound-widget', 'http://airbnb.io/events/tech-talks/', 'Tech Talks']);" class="text-contrast">Tech Talks</a></li>
+<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-176595289"><a href="http://airbnb.io/projects/" onclick="_gaq.push(['_trackEvent', 'outbound-widget', 'http://airbnb.io/projects/', 'Open Source']);" class="text-contrast">Open Source</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-176593904"><a href="http://nerds.airbnb.com/news/" class="text-contrast">News</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-176593905"><a href="http://nerds.airbnb.com/data/" class="text-contrast">Data</a></li>
+</ul>
+			<a class="text-contrast visit-cta" href="https://airbnb.com">Visit Airbnb.com</a>
+		</div>
+	</div>
+
+	<!-- MathJax Latex Plugin installed: Disabled as no shortcodes on this page -->
+
+
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Page Caching using disk: enhanced
+
+ Served from: nerds.airbnb.com @ 2016-08-04 20:28:08 by W3 Total Cache --><iframe id="sumome-jquery-iframe" style="display: none;"></iframe><a href="javascript:void(0);" title="SumoMe" style="border-radius: 3px 0px 0px 3px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 10px; position: fixed; z-index: 2147483647; padding: 0px; width: 44px; height: 40px; text-indent: -10000px; opacity: 1; display: none !important; background-color: rgb(0, 115, 183);"><span style="display:block;width:40px;height:40px;background:white;margin-left:4px;-webkit-border-radius: 3px 0 0 3px;-moz-border-radius: 3px 0 0 3px;-ms-border-radius: 3px 0 0 3px;-o-border-radius: 3px 0 0 3px;border-radius: 3px 0 0 3px;background-repeat:no-repeat;background-position:8px 8px;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAPBJREFUeNpi/P//PwMtAeOoBSPAAobi7fVAuomh15OwTcXbO4AkMxCXEam+mAlIaQLxNCCHkQjDy4G4hAT1liALDgBxBhDPAwoy41BcDzUcBjLwWoJwzAGYBSCQAMSLMCwp3l4BJBuwGIPdEoThIHCAESr4DEhKQgWXAXEiMIx/AcXLgOxOAiE9A4izwHGCavgbIBaDWbAESEYjadoMxHuAeCKRiQVkyUe0YFwLtDSEBeYVNAt8oZhYkIFFDBz0TMgcKgMkC3o97wDJp1Q0HBT+V5F9wAANc2qBg7CMyITuJWoGD10sGC2uRy2gHAAEGACB725KrIq6EgAAAABJRU5ErkJggg==);"></span></a><div class="sumome-share-client-wrapper sumome-share-client-wrapper-left-page sumome-share-client-counts sumome-share-client-light sumome-share-client-medium" style="top: 352px;"><div class="sumome-share-client-show"><span></span></div><div data-sumome-share-pos="lp" class="sumome-share-client sumome-share-client-left-page sumome-share-client-counts sumome-share-client-light sumome-share-client-medium"><div class="sumome-share-client-animated sumome-share-client-share sumome-share-client-share-share sumome-share-client-count" data-sumome-share="share" style="color: rgb(0, 0, 0); background: transparent;"><span style="bottom: auto; top: 11px;"><strong>75</strong><br>Shares</span></div><a title="LinkedIn" class="sumome-share-client-animated sumome-share-client-share sumome-share-client-count" data-sumome-share="linkedin" href="javascript:void(0);" style="color: rgb(255, 255, 255); background: rgb(0, 123, 182);"><img src="//sumome-140a.kxcdn.com/static/0f16851f735762f2d4369282f5717b8829682287/client/images/apps/9e8a4d2a-6f8c-415e-851b-bdfe4c01d5c1/linkedin-white-60.png"><span>35</span></a><a title="Google+" class="sumome-share-client-animated sumome-share-client-share" data-sumome-share="googleplus" href="javascript:void(0);" style="color: rgb(255, 255, 255); background: rgb(221, 75, 57);"><img src="//sumome-140a.kxcdn.com/static/0f16851f735762f2d4369282f5717b8829682287/client/images/apps/9e8a4d2a-6f8c-415e-851b-bdfe4c01d5c1/googleplus-white-60.png"></a><a title="Facebook" class="sumome-share-client-animated sumome-share-client-share" data-sumome-share="facebook" href="javascript:void(0);" style="color: rgb(255, 255, 255); background: rgb(59, 89, 152);"><img src="//sumome-140a.kxcdn.com/static/0f16851f735762f2d4369282f5717b8829682287/client/images/apps/9e8a4d2a-6f8c-415e-851b-bdfe4c01d5c1/facebook-white-60.png"></a><a title="Twitter" class="sumome-share-client-animated sumome-share-client-share" data-sumome-share="twitter" href="javascript:void(0);" style="color: rgb(255, 255, 255); background: rgb(0, 172, 237);"><img src="//sumome-140a.kxcdn.com/static/0f16851f735762f2d4369282f5717b8829682287/client/images/apps/9e8a4d2a-6f8c-415e-851b-bdfe4c01d5c1/twitter-white-60.png"></a><a title="Email" class="sumome-share-client-animated sumome-share-client-share" data-sumome-share="email" href="javascript:void(0);" style="color: rgb(255, 255, 255); background: rgb(170, 170, 170);"><img src="//sumome-140a.kxcdn.com/static/0f16851f735762f2d4369282f5717b8829682287/client/images/apps/9e8a4d2a-6f8c-415e-851b-bdfe4c01d5c1/email-white-60.png"></a></div><div class="sumome-share-client-hide"><span></span></div></div></body></html>
