@@ -13,7 +13,7 @@ describe('Logger', () => {
     });
     describe('basic usage', () => {
         before(() => {
-            log = new Logger({ options: [Logger.Console] });
+            log = new Logger({ options: [Logger.Console], overrideMock: true });
         });
 
 
@@ -50,14 +50,14 @@ describe('Logger', () => {
                 }, 1);
             };
 
-            const fileLogger = new Logger({ outputs: [Logger.File] });
+            const fileLogger = new Logger({ outputs: [Logger.File], overrideMock: true });
 
             fileLogger.error(errorMsg, metadata, msgLogged);
             fileLogger.info(infoMsg, metadata, msgLogged);
         });
 
         it('creates exception loggers', (done) => {
-            const fileLogger = new Logger({ outputs: [Logger.File] });
+            const fileLogger = new Logger({ outputs: [Logger.File], overrideMock: true });
 
             fileLogger.on('logging', () => {
                 fs.readFile(Logger.outputFile(), (err, data) => {
@@ -78,7 +78,7 @@ describe('Logger', () => {
 
     describe('querying', () => {
         it('can query the log file', (done) => {
-            const fileLogger = new Logger({ outputs: [Logger.File] });
+            const fileLogger = new Logger({ outputs: [Logger.File], overrideMock: true });
             const numLogs = 40;
             let calls = 0;
 
