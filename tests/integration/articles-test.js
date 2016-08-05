@@ -532,6 +532,18 @@ describe('Article Extraction', () => {
         notInclude: [
             '30 Comments',
         ],
+    },
+    {
+        fixture: 'spacemacs-docs',
+        title: 'Spacemacs documentation',
+        include: [
+            ' Core Pillars',
+            ' Highlighted feature',
+            ' Binding keys',
+            'It is also possible to search in a project',
+            'It is possible to keep the server alive',
+            'Thank you to all the contributors and the whole Emacs community',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             const html = fs.readFileSync(`${articleFixtures}/${testCase.fixture}.html`).toString();
