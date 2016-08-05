@@ -504,6 +504,22 @@ describe('Article Extraction', () => {
             'Machines are really good at doing',
             'Multihost SSH Wrapper',
         ],
+    },
+    {
+        fixture: 'portal-nifty',
+        title: 'ウナギが無いならナマズの蒲焼きを食べればいいのかしら',
+        include: [
+            'ナマズは蒲焼きにするとおい',
+            'こんなにありふれた魚であ',
+            'たくさんの人に両者を',
+            'あの独特の食感を持つ',
+            'src="/2014/08/12/b/img/pc/18.jpg',
+            'ウナギはウナギ',
+        ],
+        notInclude: [
+            '？なまずの刺身を食べる',
+            'ヘボコン直前！不器用な人が作ったロボ',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             const html = fs.readFileSync(`${articleFixtures}/${testCase.fixture}.html`).toString();
