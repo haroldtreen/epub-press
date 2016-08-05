@@ -317,6 +317,21 @@ describe('HTML Processor', () => {
                     assert.equal(HtmlProcessor.absolutifyUrl(root, test), expected[idx]);
                 });
             });
+
+            it('can figure out a filetype', () => {
+                const types = {
+                    '.png': { src: 'http://google.com/image.png' },
+                    '.jpg': { contentType: 'image/jpg' },
+                    '.JPEG': { src: '/image.JPEG' },
+                    '.gif': { contentType: 'image/gif' },
+                    '': {}, // error case
+                };
+
+                Object.keys(types).forEach((output) => {
+                    const input = types[output];
+                    assert.equal(HtmlProcessor.getFiletype(input), output);
+                });
+            });
         });
     });
 });
