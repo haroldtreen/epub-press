@@ -95,11 +95,12 @@ router.post('/api/books', (req, res) => {
             }).then((writtenBook) => {
                 log.verbose('Creating .mobi');
                 return BookServices.convertToMobi(writtenBook);
-            }).then((writtenBook) => {
-                log.verbose('Responding');
-                writtenBook.commit();
-                res.json({ id: writtenBook.getMetadata().id });
-            }).catch((e) => {
+            }).then((writtenBook) =>
+                writtenBook.commit()
+            ).then((writtenBook) =>
+                res.json({ id: writtenBook.getMetadata().id })
+            )
+            .catch((e) => {
                 log.exception('Book Create')(e);
                 res.status(500).send('Unknown error');
             });
