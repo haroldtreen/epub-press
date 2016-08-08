@@ -544,6 +544,18 @@ describe('Article Extraction', () => {
             'It is possible to keep the server alive',
             'Thank you to all the contributors and the whole Emacs community',
         ],
+    },
+    {
+        fixture: 'novinky',
+        title: 'Parašutistovi se zamotal padák, k zemi se řítil rychlostí 85 km/h',
+        include: [
+            'Čtyřiadvacetiletého mladíka',
+            'prvním okamžiku si myslel',
+        ],
+        notInclude: [
+            'Slavnosti na jihu Čech nabídly zmrzlinu z ovčího mléka',
+            'ANO v průzkumu výrazně vede, ODS dotahuje komunisty',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             const html = fs.readFileSync(`${articleFixtures}/${testCase.fixture}.html`).toString();
