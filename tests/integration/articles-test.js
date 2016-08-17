@@ -585,6 +585,20 @@ describe('Article Extraction', () => {
             'Самое читаемое',
             'Спасибо, у вас замечательные научно-популярные статьи.',
         ],
+    },
+    {
+        fixture: 'nrich',
+        title: 'Disease Dilemmas : nrich.maths.org',
+        include: [
+            'This exercise raises ethical questions relating',
+            'To understand that infectious disease',
+            'Divide the class into small groups.',
+            'Why do people participate in such research?',
+            'Should we allow future generations to face a',
+        ],
+        notInclude: [
+            'The NRICH Project aims to enrich the mathematical',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             const html = fs.readFileSync(`${articleFixtures}/${testCase.fixture}.html`).toString();
