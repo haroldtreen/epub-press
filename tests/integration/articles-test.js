@@ -569,6 +569,22 @@ describe('Article Extraction', () => {
             'Every day, SBI delivers a proven best practice',
             'Chief Differentiators for Topgraded Sales Talent',
         ],
+    },
+    {
+        fixture: 'geektimes',
+        title: 'Взгляд изнутри: LCD и E-Ink дисплеи',
+        include: [
+            'Так начинается известная',
+            'Осознавая свои смехотворные',
+            'Когда мы нажимаем на такой',
+            'После «аккуратной» отвёрточной разборки',
+            'Конечно, такое происходит не часто',
+            'В конце моего повествования',
+        ],
+        notInclude: [
+            'Самое читаемое',
+            'Спасибо, у вас замечательные научно-популярные статьи.',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             const html = fs.readFileSync(`${articleFixtures}/${testCase.fixture}.html`).toString();
