@@ -12,6 +12,7 @@ const router = express.Router();
 
 const Logger = require('../lib/logger');
 
+const packageJSON = require('../package.json');
 const log = new Logger();
 
 const MAX_NUM_SECTIONS = 50;
@@ -31,7 +32,7 @@ router.get('/support-success', (req, res) => {
 
 router.get('/api/version', (req, resp) => {
     resp.json({
-        version: require('../package.json').version,
+        version: packageJSON.version,
         minCompatible: '0.8.0',
         message: 'An update for EpubPress is available.',
     });
@@ -74,6 +75,7 @@ function bookFromBody(body) {
     return book;
 }
 
+
 router.post('/api/books', (req, res) => {
     const isValid = validateRequest(req);
     if (isValid) {
@@ -95,11 +97,11 @@ router.post('/api/books', (req, res) => {
             }).then((writtenBook) => {
                 log.verbose('Creating .mobi');
                 return BookServices.convertToMobi(writtenBook);
-            }).then((writtenBook) =>
-                writtenBook.commit()
-            ).then((writtenBook) =>
-                res.json({ id: writtenBook.getMetadata().id })
-            )
+            }).then((writtenBook) => {
+                return writtenBook.commit();
+            }).then((writtenBook) => {
+                res.json({ id: writtenBook.getMetadata().id });
+            })
             .catch((e) => {
                 log.exception('Book Create')(e);
                 res.status(500).send('Unknown error');
