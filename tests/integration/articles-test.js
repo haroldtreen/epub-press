@@ -556,6 +556,19 @@ describe('Article Extraction', () => {
             'Slavnosti na jihu Čech nabídly zmrzlinu z ovčího mléka',
             'ANO v průzkumu výrazně vede, ODS dotahuje komunisty',
         ],
+    },
+    {
+        fixture: 'salesbenchmarkindex',
+        title: 'Sales Enablement: From Hire to Retire',
+        include: [
+            'Getting an increase in sales head count is difficult',
+            'Kent oversees a varied sales operations',
+            'which includes a strong sales enablement program.',
+        ],
+        notInclude: [
+            'Every day, SBI delivers a proven best practice',
+            'Chief Differentiators for Topgraded Sales Talent',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             const html = fs.readFileSync(`${articleFixtures}/${testCase.fixture}.html`).toString();
