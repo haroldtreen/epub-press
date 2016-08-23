@@ -599,6 +599,31 @@ describe('Article Extraction', () => {
         notInclude: [
             'The NRICH Project aims to enrich the mathematical',
         ],
+    },
+    {
+        fixture: 'mentalfloss',
+        title: '11 Misconceptions About Ancient Rome, Debunked',
+        include: [
+            'Released in 1959',
+            'ROMANS DIDN’T',
+            'At first, the toga emphasized function over form',
+            'NOT ALL GLADIATORS WERE SLAVES',
+            'Eventually, the government cracked down on freeborn combatants.',
+        ],
+    },
+    {
+        fixture: 'katehon',
+        title: 'Ten Secret Organizers of Pro-American coup in Turkey',
+        include: [
+            'The list of Americans involved in the Turkish putsch arrangement was published.',
+            'According to him, Graham Fuller',
+            'Henri Barkey is one of the leaders',
+            'The operational work of the Turkish secret services identified these CIA members',
+        ],
+        notInclude: [
+            'NATO\'s fingerprints in Turkish coup',
+            'You can also include a comment.',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             const html = fs.readFileSync(`${articleFixtures}/${testCase.fixture}.html`).toString();
