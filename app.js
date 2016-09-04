@@ -4,8 +4,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
+var index = require('./routes/index');
 var users = require('./routes/users');
+var books = require('./routes/api/books');
+var version = require('./routes/api/version');
 
 var app = express();
 
@@ -30,8 +32,10 @@ const allowCrossDomain = (req, res, next) => {
 
 app.use(allowCrossDomain);
 
-app.use('/', routes);
+app.use('/', index);
 app.use('/users', users);
+app.use('/api/books', books);
+app.use('/api/version', version);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
