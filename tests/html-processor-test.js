@@ -214,6 +214,22 @@ describe('HTML Processor', () => {
             assert.equal(fixedHtml, expectedHtml);
         });
 
+        it('can convert misused inline nodes to paragraphs', () => {
+            const badHtml = '<span>This is a lot of text! This should actually a p tag</span>';
+            const expectedHtml = badHtml.replace(/span/g, 'p');
+
+            const fixedHtml = HtmlProcessor.convertToParagraph('span', badHtml);
+            assert.equal(fixedHtml, expectedHtml);
+        });
+
+        it('can ignored well used inline nodes', () => {
+            const badHtml = '<span>This is a lot of text! <div>But also children</div></span>';
+            const expectedHtml = badHtml;
+
+            const fixedHtml = HtmlProcessor.convertToParagraph('span', badHtml);
+            assert.equal(fixedHtml, expectedHtml);
+        });
+
         it('can remove duplicates', () => {
             const badHtml = '<article>First.</article><article>Second.</article>';
             const expectedHtml = '<article>First.</article>';
