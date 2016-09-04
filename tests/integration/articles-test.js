@@ -637,6 +637,18 @@ describe('Article Extraction', () => {
         notInclude: [
             '37 Comments',
         ],
+    },
+    {
+        fixture: 'ilikebigbits',
+        title: 'The Myth of RAM, part I',
+        include: [
+            'This article is the first of four in a series',
+            'Intro',
+            'If you have studied computing science',
+            'Note that this is a log-log graph',
+            '<img class="thumb-image loaded"',
+            'be a theoretical limit to the latency of a memory access',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             const html = fs.readFileSync(`${articleFixtures}/${testCase.fixture}.html`).toString();
