@@ -35,6 +35,7 @@ If you find a page that isn't being extracted properly, don't hesitate to email 
 - Books are limited to containing **50 articles**.
 - Books must be **10 Mb or less** for email delivery to work.
 - Images in an article must be **1 Mb or less**. Images that exceed this limit will be removed.
+- No more then **10 images** will be downloaded.
 
 ### Q: Is EpubPress available for other platforms?
 
