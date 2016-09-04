@@ -624,6 +624,19 @@ describe('Article Extraction', () => {
             'NATO\'s fingerprints in Turkish coup',
             'You can also include a comment.',
         ],
+    },
+    {
+        fixture: 'value-picks',
+        title: 'VALUE PICK FROM INDIAN STOCK MARKETS: Basic Cocepts of Cash Flow',
+        include: [
+            'Cash flow analysis is a critical process',
+            'Upgrading equipment and buying',
+            'flow is a key element of a successful',
+            'The Bottom Line',
+        ],
+        notInclude: [
+            '37 Comments',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             const html = fs.readFileSync(`${articleFixtures}/${testCase.fixture}.html`).toString();
