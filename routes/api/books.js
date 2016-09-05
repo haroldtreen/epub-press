@@ -7,7 +7,7 @@ const BookModel = require('../../models/').Book;
 
 const fs = require('fs');
 const express = require('express');
-const router = express.Router();
+const router = new express.Router();
 
 const Logger = require('../../lib/logger');
 const log = new Logger();
@@ -100,35 +100,35 @@ router.post('/', (req, res) => {
  * Book Download
  */
 
+ function findBook(req) {
+     return new Promise((resolve, reject) => {
+         BookModel.findOne({ where: { uid: req.query.id } }).then((bookModel) => {
+             if (!bookModel) {
+                 return reject(new Error('Not found in DB'));
+             }
+
+             const book = new Book({ id: bookModel.uid, title: bookModel.title });
+             const path = req.query.filetype === 'mobi' ? book.getMobiPath() : book.getEpubPath();
+
+             fs.stat(path, (err) => {
+                 if (err) {
+                     reject(new Error('File not found.'));
+                 } else {
+                     resolve(book);
+                 }
+             });
+         });
+     });
+ }
+
 function validateDownloadRequest(req) {
     return new Promise((resolve, reject) => {
         if (req.query.id) {
             resolve(req);
         } else {
             log.verbose('No ID provided');
-            reject(new Error('ID must be provided'));
+            reject(new Error('ID must be provided.'));
         }
-    });
-}
-
-function findBook(req) {
-    return new Promise((resolve, reject) => {
-        BookModel.findOne({ where: { uid: req.query.id } }).then((bookModel) => {
-            if (!bookModel) {
-                return reject(new Error('Not found in DB'));
-            }
-
-            const book = new Book({ id: bookModel.uid, title: bookModel.title });
-            const path = req.query.filetype === 'mobi' ? book.getMobiPath() : book.getEpubPath();
-
-            fs.stat(path, (err) => {
-                if (err) {
-                    reject(new Error('File not found.'));
-                } else {
-                    resolve(book);
-                }
-            });
-        });
     });
 }
 
@@ -158,6 +158,42 @@ router.get('/download', (req, res) => {
         }).catch((error) => {
             log.warn('No book with id', req.query, error);
             res.status(404).send(`Book with id ${req.query.id} not found.`);
+        });
+    }).catch((e) => {
+        res.status(400).send(e.message);
+    });
+});
+
+function validateEmailRequest(req) {
+    return new Promise((resolve, reject) => {
+        if (req.query.id) {
+            if (req.query.email && req.email.trim()) {
+                resolve(req);
+            } else {
+                log.verbose('No email provided');
+                reject(new Error('Email must be provided.'));
+            }
+        } else {
+            log.verbose('No id provided');
+            reject(new Error('ID must be provided.'));
+        }
+    });
+}
+
+router.get('/email-delivery', (req, res) => {
+    log.verbose('Email', { query: req.query });
+
+    const isMobi = req.query.filetype === 'mobi';
+
+    validateEmailRequest(req).then((validReq) => {
+        return findBook(validReq).then((book) => {
+            const mailerFn = isMobi ? Mailer.sendMobi : Mailer.sendEpub;
+            return mailerFn(req.query.email, book).catch((error) => {
+                log.warn('Book delivery failed', req.query, error);
+                res.status(500).send('Email failed');
+            });
+        }).then(() => {
+            res.status(200).send('Email sent!');
         });
     }).catch((e) => {
         res.status(400).send(e.message);

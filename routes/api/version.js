@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
         minCompatible: '0.8.0',
         clients: {
             'epub-press-chrome': {
-                minCompatible: '0.8.0',
+                minCompatible: '0.9.0',
                 message: 'An update is available.',
             },
             'epub-press-js': {
