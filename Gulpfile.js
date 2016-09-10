@@ -24,7 +24,7 @@ gulp.task('test-unit', () => {
 
 gulp.task('test-integration', () => {
     process.env.NODE_ENV = 'test';
-    return gulp.src('./tests/integration/*-test.js', { read: false })
+    return gulp.src('./tests/integration/**/*-test.js', { read: false })
             .pipe(mocha(options));
 });
 
