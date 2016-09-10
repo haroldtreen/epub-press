@@ -2,9 +2,14 @@
     "extends": "airbnb",
     "rules": {
         "indent": [2, 4],
-        "strict": 0
+        "strict": 0,
+        "no-use-before-define": 0,
+        "react/jsx-uses-react": "off"
     },
     "env": {
         "mocha": true
+    },
+    "ecmaFeatures": {
+        "jsx": false
     }
 }
