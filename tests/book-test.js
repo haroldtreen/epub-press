@@ -19,64 +19,15 @@ describe('Book', () => {
         book = new Book(bookMetadata);
     });
 
-    it('has metadata', () => {
-        assert.equal(book.getTitle(), bookMetadata.title, 'Title not passed to book');
-    });
-
-    it('sanitizes the title', () => {
-        const specialBook = new Book({ title: "Book with ' in the title" });
-        assert.include(specialBook.getTitle(), '&#39;');
-    });
-
-    it('can be saved as epub', (done) => {
-        const sectionStub = Sinon.stub(book._ebook, 'addSection');
-        const writeStub = Sinon.stub(book._ebook, 'writeEPUB', (onError, path, file, onSuccess) => {
-            onSuccess();
+    describe('constructor', () => {
+        it('sanitizes the title', () => {
+            const specialBook = new Book({ title: "Book with ' in the title" });
+            assert.include(specialBook.getTitle(), '&#39;');
         });
 
-        book.getSections().forEach((section) => {
-            const updatedSection = section;
-            updatedSection.title = 'Title';
-            updatedSection.xhtml = '<div></div>';
-        });
-
-        book.writeEpub().then(() => {
-            assert.equal(sectionStub.callCount, book.getSections().length);
-            assert.equal(writeStub.callCount, 1);
-
-            sectionStub.restore();
-            writeStub.restore();
-            done();
-        }).catch(done);
-    });
-
-    it('uses the current date in the title', () => {
-        const untitledBook = new Book();
-        assert.include(untitledBook.getTitle(), Date().slice(0, 9));
-    });
-
-    it('it can generate a title', () => {
-        const generatedTitle = Book.sanitizeTitle('  Title \n');
-        assert.equal(generatedTitle, 'Title');
-    });
-
-    describe('Book Sections', () => {
-        it('can add sections', () => {
-            book.addSection({ title: 'Section 1', content });
-            book.addSection({ title: 'Section 2', content });
-
-            const sections = book.getSections();
-
-            assert.equal(sections[sections.length - 1].title, 'Section 2');
-            assert.equal(sections[sections.length - 1].content, content);
-        });
-
-        it('can validate sections', () => {
-            assert.isTrue(Book.isValidSection({ title, content }), 'Title and content is valid');
-            assert.isTrue(Book.isValidSection({ url }), 'Url only is valid');
-
-            assert.isFalse(Book.isValidSection({ title }), 'Content must be present');
-            assert.isFalse(Book.isValidSection({ content }), 'Title must be present');
+        it('uses the current date in the title', () => {
+            const untitledBook = new Book();
+            assert.include(untitledBook.getTitle(), Date().slice(0, 9));
         });
 
         it('can be constructed with sections', () => {
@@ -88,6 +39,96 @@ describe('Book', () => {
             assert.lengthOf(sections, 1);
             assert.equal(sections[0].url, 'http://google.com');
             assert.equal(sections[0].html, '<html></html>');
+        });
+    });
+
+    describe('#getId', () => {
+        it('returns an id', () => {
+            assert.isString(book.getId());
+        });
+    });
+
+    describe('#getTitle', () => {
+        it('returns titles passed to the book', () => {
+            assert.equal(book.getTitle(), bookMetadata.title, 'Title not passed to book');
+        });
+    });
+
+    describe('#addSection', () => {
+        it('can add sections', () => {
+            book.addSection({ title: 'Section 1', content });
+            book.addSection({ title: 'Section 2', content });
+
+            const sections = book.getSections();
+
+            assert.equal(sections[sections.length - 1].title, 'Section 2');
+            assert.equal(sections[sections.length - 1].content, content);
+        });
+    });
+
+    describe('#writeEpub', () => {
+        it('saves an epub file', (done) => {
+            const sectionStub = Sinon.stub(book._ebook, 'addSection');
+            const writeStub = Sinon.stub(book._ebook, 'writeEPUB', (onErr, p, f, onSuccess) => {
+                onSuccess();
+            });
+
+            book.getSections().forEach((section) => {
+                const updatedSection = section;
+                updatedSection.title = 'Title';
+                updatedSection.xhtml = '<div></div>';
+            });
+
+            book.writeEpub().then(() => {
+                assert.equal(sectionStub.callCount, book.getSections().length);
+                assert.equal(writeStub.callCount, 1);
+
+                sectionStub.restore();
+                writeStub.restore();
+                done();
+            }).catch(done);
+        });
+    });
+
+    describe('.isValidSection', () => {
+        it('can validate sections', () => {
+            assert.isTrue(Book.isValidSection({ title, content }), 'Title and content is valid');
+            assert.isTrue(Book.isValidSection({ url }), 'Url only is valid');
+
+            assert.isFalse(Book.isValidSection({ title }), 'Content must be present');
+            assert.isFalse(Book.isValidSection({ content }), 'Title must be present');
+        });
+    });
+
+
+    describe('.fromJSON', () => {
+        const reqBody = {
+            title: 'A book',
+            description: 'A description',
+            urls: ['url1', 'url2'],
+        };
+
+        it('builds books from request objects', () => {
+            const objBook = Book.fromJSON(reqBody);
+            assert.lengthOf(objBook.getSections(), 2);
+            const jsonBook = Book.fromJSON(JSON.stringify(reqBody));
+            assert.lengthOf(jsonBook.getSections(), 2);
+        });
+
+        it('converts urls to sections', () => {
+            const jsonBook = Book.fromJSON(reqBody);
+
+            jsonBook.getSections().forEach((section) => {
+                assert.isObject(section);
+                assert.isNull(section.html);
+            });
+        });
+    });
+
+    describe('.sanitizeTitle', () => {
+        it('cleans potential titles', () => {
+            const generatedTitle = Book.sanitizeTitle('  Title \n');
+            assert.equal(generatedTitle, 'Title');
         });
     });
 });
