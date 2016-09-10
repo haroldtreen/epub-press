@@ -20,8 +20,49 @@ describe('Book Services', () => {
         book = new Book({}, [{ url: urls[0] }, { url: urls[1] }]);
     });
 
-    describe('html methods', () => {
-        it('can update sections html', (done) => {
+    describe('.publish', () => {
+        it('calls all necessary services', () => {
+            const sandbox = Sinon.sandbox.create();
+            const publishServices = [
+                'updateSectionsHtml',
+                'extractSectionsContent',
+                'localizeSectionsImages',
+                'convertSectionsContent',
+                'writeEpub',
+                'convertToMobi',
+                'commit',
+            ];
+            publishServices.forEach((service) => {
+                sandbox.stub(BookServices, service).returns(Promise.resolve(book));
+            });
+
+            return BookServices.publish(book).then((publishedBook) => {
+                assert.equal(book, publishedBook);
+                publishServices.forEach((service) => {
+                    assert.isTrue(BookServices[service].calledWith(book), `${service} not called`);
+                });
+                sandbox.restore();
+            }).catch((err) => {
+                sandbox.restore();
+                return Promise.reject(err);
+            });
+        });
+    });
+
+    describe('.writeEpub', () => {
+        it('calls writeEpub on the book', () => {
+            const fakeBook = { writeEpub() { return Promise.resolve(); } };
+            const bookSpy = Sinon.spy(fakeBook, 'writeEpub');
+
+            return BookServices.writeEpub(fakeBook).then((writtenBook) => {
+                assert.equal(writtenBook, fakeBook);
+                assert.isTrue(bookSpy.calledOnce);
+            });
+        });
+    });
+
+    describe('.updateSectionsHtml', () => {
+        it('calls .updateSectionHtml', (done) => {
             const stub = Sinon.stub(BookServices, 'updateSectionHtml');
             stub.resolves({});
 
@@ -36,8 +77,10 @@ describe('Book Services', () => {
                 done(err);
             });
         });
+    });
 
-        it('can update section html', (done) => {
+    describe('.updateSectionHtml', () => {
+        it('download the html for every section', (done) => {
             const section = { url: urls[0] };
             nock(urls[0]).get('/').reply(200, html);
 
@@ -47,8 +90,10 @@ describe('Book Services', () => {
                 done();
             }).catch(done);
         });
+    });
 
-        it('will extract images', (done) => {
+    describe('.localizeSectionImages', () => {
+        it('downloads images referenced in html', (done) => {
             const scope = nock('http://test.fake');
 
             [
