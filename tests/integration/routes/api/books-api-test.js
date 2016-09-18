@@ -150,7 +150,7 @@ const V1_ENDPOINTS = {
                 BookServices.publish.restore();
                 Book.prototype.getId.restore();
             },
-        }
+        },
     ],
 };
 
