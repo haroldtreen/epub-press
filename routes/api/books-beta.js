@@ -1,18 +1,55 @@
 'use strict';
 
-const BookServices = require('../../lib/book-services');
-const Mailer = require('../../lib/mailer');
-const Book = require('../../lib/book');
-const BookModel = require('../../models/').Book;
-
 const fs = require('fs');
 const express = require('express');
 const router = new express.Router();
 
+const AppErrors = require('../../lib/app-errors');
+
+const BookServices = require('../../lib/book-services');
+const Mailer = require('../../lib/mailer');
+const Book = require('../../lib/book');
+const BookModel = require('../../models').Book;
+
 const Logger = require('../../lib/logger');
 const log = new Logger();
 
+const StatusTracker = require('../../lib/status-tracker');
+const tracker = new StatusTracker();
+
 const MAX_NUM_SECTIONS = 50;
+
+/*
+ * Book Status
+ */
+
+function trackStep(book, status) {
+    log.verbose(status);
+    tracker.setStatus(book.getId(), status);
+}
+
+function validateStatusRequest(req) {
+    return new Promise((resolve, reject) => {
+        if (!req.query.id) {
+            reject(AppErrors.getApiError('NO_ID_SPECIFIED'));
+        } else if (!tracker.getStatus(req.query.id)) {
+            reject(AppErrors.getApiError('NOT_FOUND'));
+        } else {
+            resolve(req);
+        }
+    });
+}
+
+router.get('/status', (req, res) => {
+    validateStatusRequest(req).then((validReq) => {
+        const status = tracker.getStatus(validReq.query.id);
+        res.status(200).json({ data: { status } });
+    }).catch((e) => {
+        const error = AppErrors.buildApiResponse(e);
+        res.status(error.status).json({ errors: [error] });
+    });
+});
+
 
 /*
  * Book Publish
@@ -21,13 +58,13 @@ const MAX_NUM_SECTIONS = 50;
 function validatePublishRequest(req) {
     return new Promise((resolve, reject) => {
         const sections = req.body.urls || req.body.sections;
-        const isValid = !!sections && sections.length <= MAX_NUM_SECTIONS;
 
-        if (isValid) {
-            resolve(req);
+        if (!sections) {
+            reject(AppErrors.getApiError('NO_SECTIONS_SPECIFIED'));
+        } else if (sections.length >= MAX_NUM_SECTIONS) {
+            reject(AppErrors.getApiError('TOO_MANY_ITEMS'));
         } else {
-            log.warn('Invalid request attempted');
-            reject(new Error(`Max of ${MAX_NUM_SECTIONS} items exceeded.`));
+            resolve(req);
         }
     });
 }
@@ -66,33 +103,18 @@ router.post('/', (req, res) => {
     validatePublishRequest(req).then((validReq) =>
         bookFromBody(validReq.body)
     ).then((book) => {
-        log.verbose('Downloading HTML');
-        BookServices.updateSectionsHtml(book).then((updatedBook) => {
-            log.verbose('Extracting Content');
-            return BookServices.extractSectionsContent(updatedBook);
-        }).then((updatedBook) => {
-            log.verbose('Downloading Images');
-            return BookServices.localizeSectionsImages(updatedBook);
-        }).then((updatedBook) => {
-            log.verbose('Converting contents');
-            return BookServices.convertSectionsContent(updatedBook);
-        }).then((updatedBook) => {
-            log.verbose('Writting Ebook');
-            return updatedBook.writeEpub();
-        }).then((writtenBook) => {
-            log.verbose('Creating .mobi');
-            return BookServices.convertToMobi(writtenBook);
-        }).then((writtenBook) => {
-            return writtenBook.commit();
-        }).then((writtenBook) => {
-            res.json({ id: writtenBook.getMetadata().id });
-        })
-        .catch((e) => {
+        trackStep(book, 'Downloading HTML');
+        BookServices.publish(book).then((publishedBook) => {
+            return res.status(201).json({ id: publishedBook.getId() });
+        }).catch((e) => {
             log.exception('Book Create')(e);
-            res.status(500).send('Unknown error');
+            const error = AppErrors.buildApiResponse(e);
+            res.status(error.status).json({ errors: [error] });
         });
     }).catch((e) => {
-        res.status(400).send(e.message);
+        log.exception('Book create')(e);
+        const error = AppErrors.buildApiResponse(e);
+        res.status(error.status).json({ errors: [error] });
     });
 });
 
@@ -104,7 +126,7 @@ router.post('/', (req, res) => {
      return new Promise((resolve, reject) => {
          BookModel.findOne({ where: { uid: req.query.id } }).then((bookModel) => {
              if (!bookModel) {
-                 return reject(new Error('Not found in DB'));
+                 return reject(AppErrors.getApiError('BOOK_NOT_FOUND'));
              }
 
              const book = new Book({ id: bookModel.uid, title: bookModel.title });
@@ -112,7 +134,7 @@ router.post('/', (req, res) => {
 
              fs.stat(path, (err) => {
                  if (err) {
-                     reject(new Error('File not found.'));
+                     reject(AppErrors.getApiError('BOOK_FILE_NOT_FOUND'));
                  } else {
                      resolve(book);
                  }
@@ -127,7 +149,7 @@ function validateDownloadRequest(req) {
             resolve(req);
         } else {
             log.verbose('No ID provided');
-            reject(new Error('ID must be provided.'));
+            reject(AppErrors.getApiError('NO_ID_SPECIFIED'));
         }
     });
 }
@@ -139,7 +161,8 @@ router.get('/download', (req, res) => {
     const isMobi = req.query.filetype === 'mobi';
 
     validateDownloadRequest(req).then((validReq) => {
-        return findBook(validReq).then((book) => {
+        const { id, filetype } = validReq.params;
+        return Book.find(id, filetype).then((book) => {
             if (isEmail) {
                 const mailerFn = isMobi ? Mailer.sendMobi : Mailer.sendEpub;
                 return mailerFn(req.query.email, book).catch((error) => {
@@ -155,12 +178,13 @@ router.get('/download', (req, res) => {
             } else {
                 res.download(bookPath);
             }
-        }).catch((error) => {
-            log.warn('No book with id', req.query, error);
-            res.status(404).send(`Book with id ${req.query.id} not found.`);
+        }).catch((e) => {
+            const error = AppErrors.buildApiResponse(e);
+            res.status(error.status).json({ errors: [error] });
         });
     }).catch((e) => {
-        res.status(400).send(e.message);
+        const error = AppErrors.buildApiResponse(e);
+        res.status(error.status).json({ errors: [error] });
     });
 });
 
