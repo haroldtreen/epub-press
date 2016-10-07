@@ -1,13 +1,4 @@
-const _ = require('lodash');
 const AppErrors = require('../../lib/app-errors');
-
-function getAttribute(body, attributeName) {
-    return _.get(body, ['data', 'attributes', attributeName]);
-}
-
-function isType(body, type) {
-    return _.get(body, 'data.type') === type;
-}
 
 class RequestValidators {
     static validatePublishRequest(req) {
@@ -17,7 +8,17 @@ class RequestValidators {
             } else if ((req.body.urls || []).length >= this.MAX_NUM_SECTIONS) {
                 reject(AppErrors.getApiError('TOO_MANY_ITEMS'));
             } else if ((req.body.sections || []).length >= this.MAX_NUM_SECTIONS) {
-                reject(AppErrors.getApiError('TOO_MANY_ITEMS'))
+                reject(AppErrors.getApiError('TOO_MANY_ITEMS'));
+            } else {
+                resolve(req);
+            }
+        });
+    }
+
+    static validateEmailRequest(req) {
+        return new Promise((resolve, reject) => {
+            if (!req.query.email) {
+                reject(AppErrors.getApiError('NO_EMAIL_SPECIFIED'));
             } else {
                 resolve(req);
             }
