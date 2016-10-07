@@ -2,10 +2,12 @@
 
 const assert = require('chai').assert;
 const BookServices = require('../lib/book-services');
+const StatusTracker = require('../lib/status-tracker');
 const Book = require('../lib/book');
 const Sinon = require('sinon');
 const nock = require('nock');
 const fs = require('fs');
+const { isError } = require('./helpers');
 
 require('sinon-as-promised');
 
@@ -18,6 +20,36 @@ const fixturesPath = './tests/fixtures';
 describe('Book Services', () => {
     beforeEach(() => {
         book = new Book({}, [{ url: urls[0] }, { url: urls[1] }]);
+    });
+
+    describe('.setStatus', () => {
+        it('sets a status for a given book', () => {
+            const spy = Sinon.spy(StatusTracker.prototype, 'setStatus');
+            return BookServices.setStatus(book, 'PUBLISHING').then((trackedBook) => {
+                assert.equal(trackedBook, book);
+                assert.isTrue(spy.called);
+            });
+        });
+    });
+
+    describe('.getStatus', () => {
+        it('gets the status for a given book', () =>
+            BookServices.setStatus(book, 'DEFAULT').then(trackedBook =>
+                BookServices.getStatus(trackedBook)
+            ).then((status) => {
+                assert.isString(status.message);
+                assert.isNumber(status.progress);
+            })
+        );
+
+        it('rejects when no status is set', () =>
+            BookServices.getStatus(book)
+                .then(() => Promise.reject('.getStatus should reject.'))
+                .catch(isError)
+                .then((e) => {
+                    assert.include(e.message, 'found');
+                })
+        );
     });
 
     describe('.publish', () => {
@@ -51,7 +83,7 @@ describe('Book Services', () => {
 
     describe('.writeEpub', () => {
         it('calls writeEpub on the book', () => {
-            const fakeBook = { writeEpub() { return Promise.resolve(); } };
+            const fakeBook = { getId: () => 1, writeEpub() { return Promise.resolve(); } };
             const bookSpy = Sinon.spy(fakeBook, 'writeEpub');
 
             return BookServices.writeEpub(fakeBook).then((writtenBook) => {
@@ -121,7 +153,7 @@ describe('Book Services', () => {
         });
     });
 
-    describe('extraction methods', () => {
+    describe('.extractSectionsContent', () => {
         it('can extract sections content', (done) => {
             const stub = Sinon.stub(BookServices, 'extractSectionContent');
             const mockSection = { content: '<p>Content</p>', title: 'HTML' };
@@ -137,7 +169,9 @@ describe('Book Services', () => {
                 done(err);
             });
         });
+    });
 
+    describe('.extractSectionContent', () => {
         it('can extract html content', (done) => {
             const section = { html, url: 'http://test.com' };
 
@@ -160,7 +194,7 @@ describe('Book Services', () => {
         });
     });
 
-    describe('Conversion methods', () => {
+    describe('.convertSectionsContent', () => {
         it('can convert a books HTML to XHTL', (done) => {
             const stub = Sinon.stub(BookServices, 'convertSectionContent');
             stub.resolves({});
@@ -175,7 +209,9 @@ describe('Book Services', () => {
                 done(err);
             });
         });
+    });
 
+    describe('.convertSectionContent', () => {
         it('can convert a section HTML to XHTML', (done) => {
             const content = '<p>Hello<br>World</p>';
             const mockSection = { content };

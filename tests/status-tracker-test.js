@@ -2,7 +2,7 @@ const assert = require('chai').assert;
 const StatusTracker = require('../lib/status-tracker');
 
 const id = 'id-123';
-const status = 'status';
+const status = StatusTracker.buildStatus();
 const statuses = Array.apply(null, {
     length: StatusTracker.MAX_STATUSES,
 }).map((a, i) => i);
@@ -55,9 +55,26 @@ describe('StatusTracker', () => {
         });
     });
 
+    describe('.buildStatus', () => {
+        it('has a default', () => {
+            const builtStatus = StatusTracker.buildStatus('DOES_NOT_EXIST');
+            assert.include(builtStatus.message.toLowerCase(), 'unknown');
+            assert.equal(builtStatus.progress, 0);
+        });
+
+        it('returns the correct status', () => {
+            Object.keys(StatusTracker.STATUSES).forEach((statusType) => {
+                const storedMessage = StatusTracker.STATUSES[statusType].message;
+                const builtMessage = StatusTracker.buildStatus(statusType).message;
+                assert.equal(storedMessage, builtMessage);
+            });
+        });
+    });
+
     describe('constants', () => {
         it('has a .MAX_STATUSES', () => {
             assert.isNumber(StatusTracker.MAX_STATUSES);
         });
     });
+
 });
