@@ -2,9 +2,8 @@
     "extends": "airbnb",
     "rules": {
         "indent": [2, 4],
-        "strict": 0,
-        "no-use-before-define": 0,
-        "react/jsx-uses-react": "off"
+        "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/*.js", "tests/*.js"]}],
+        "strict": 0
     },
     "env": {
         "mocha": true
