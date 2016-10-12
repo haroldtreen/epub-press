@@ -41,6 +41,7 @@ app.use('/users', users);
 app.use('/api/books', booksBeta);
 app.use('/api/v1/books', booksV1);
 app.use('/api/version', version);
+app.use('/api/v1/version', version);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
