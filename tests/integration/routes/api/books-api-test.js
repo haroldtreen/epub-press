@@ -1,12 +1,22 @@
 const sinon = require('sinon');
 require('sinon-as-promised');
 const request = require('supertest');
+const { assert } = require('chai');
+
+const fs = require('fs');
 
 const app = require('../../../../app');
 const BookModel = require('../../../../models').Book;
 const AppErrors = require('../../../../lib/app-errors');
 const Book = require('../../../../lib/book');
 const BookServices = require('../../../../lib/book-services');
+const StatusTracker = require('../../../../lib/status-tracker');
+const Mailer = require('../../../../lib/mailer');
+
+const urls = Array.apply(null, { length: 1000 }).map((a, i) => `http://google.com/${i}`);
+const session = request(app);
+
+const sandbox = sinon.sandbox.create();
 
 function buildErrorsResponse(...args) {
     const errors = args.map((errorName) => {
@@ -16,25 +26,46 @@ function buildErrorsResponse(...args) {
     return { errors };
 }
 
+function limitLength(str) {
+    const MAX_LEN = 55;
+    if (str.length > MAX_LEN + 3) {
+        return `${str.slice(0, MAX_LEN)}...`;
+    }
+    return str;
+}
+
 function buildDescription(testCase) {
-    const MAX_LEN = 50;
-    const reqBody = testCase.post ? JSON.stringify(testCase.post) : JSON.stringify(testCase.get);
-    const bodyStr = reqBody.length > MAX_LEN ? `${reqBody.slice(0, MAX_LEN - 3)}...` : reqBody;
-    return `responds ${testCase.status} to ${bodyStr}`;
+    const isGET = !!testCase.get;
+    let reqStr;
+
+    if (isGET) {
+        reqStr = Object.keys(testCase.get || {}).reduce((prev, current) => {
+            const start = prev ? `${prev}&` : '?';
+            return `${start}${current}=${testCase.get[current]}`;
+        }, '');
+        reqStr = reqStr && ` with ${reqStr}`;
+        reqStr = `GET${reqStr}`;
+    } else {
+        reqStr = `POST with ${JSON.stringify(testCase.post || {})}`;
+    }
+    return `${limitLength(reqStr)} responds ${testCase.status}`;
 }
 
 function runTestCase(endpoint, testCase) {
     const description = buildDescription(testCase);
 
     it(description, (done) => {
+        sandbox.restore();
         if (testCase.before) { testCase.before(); }
 
         const method = testCase.post ? 'post' : 'get';
         const reqData = testCase[method];
         let req = session[method](endpoint);
-        req = method === 'get' ? req.query(reqData) : req.send(reqData);
+        req = testCase.get ? req.query(reqData) : req.send(reqData);
+
         req.expect(testCase.status, testCase.response).end((err) => {
             if (testCase.after) { testCase.after(); }
+            sandbox.restore();
             done(err);
         });
     });
@@ -50,9 +81,6 @@ function testEndpoints(endpoints) {
     });
 }
 
-const urls = Array.apply(null, { length: 1000 }).map((a, i) => `http://google.com/${i}`);
-const session = request(app);
-
 const BETA_ENDPOINTS = {
     '/api/books': [
         {
@@ -60,51 +88,123 @@ const BETA_ENDPOINTS = {
             status: 201,
             response: { id: '1' },
             before: () => {
-                sinon.stub(BookServices, 'publish').resolves({ getId: () => '1' });
-            },
-            after: () => {
-                BookServices.publish.restore();
+                sandbox.stub(BookServices, 'publish').resolves({ getId: () => '1' });
             },
         },
         {
             post: { urls: urls.slice(0, 10) },
             status: 500,
-            response: buildErrorsResponse('DEFAULT'),
+            response: AppErrors.getApiError('DEFAULT').message,
             before: () => {
-                sinon.stub(BookServices, 'publish').rejects(new Error());
-            },
-            after: () => {
-                BookServices.publish.restore();
+                sandbox.stub(BookServices, 'publish').rejects(new Error());
             },
         },
-        { post: { h: 'W' }, status: 422, response: buildErrorsResponse('NO_SECTIONS_SPECIFIED') },
-        { post: { urls }, status: 422, response: buildErrorsResponse('TOO_MANY_ITEMS') },
-        { post: { sections: urls }, status: 422, response: buildErrorsResponse('TOO_MANY_ITEMS') },
+        { post: { h: 'W' }, status: 400, response: AppErrors.getApiError('NO_SECTIONS_SPECIFIED').message },
+        { post: { urls }, status: 500, response: AppErrors.getApiError('TOO_MANY_ITEMS').message },
+        { post: { sections: urls }, status: 500, response: AppErrors.getApiError('TOO_MANY_ITEMS').message },
     ],
     '/api/books/download': [
         {
-            get: { id: 'GOOD-ID' },
+            get: { id: 'DELETED-ID' },
             status: 404,
-            response: buildErrorsResponse('BOOK_NOT_FOUND'),
+            response: AppErrors.getApiError('BOOK_NOT_FOUND').message,
             before: () => {
-                sinon.stub(BookModel, 'findOne').resolves({ uid: '123' });
+                sandbox.stub(BookModel, 'findOne').resolves({ uid: '123' });
             },
-            after: () => { BookModel.findOne.restore(); },
         },
-        { get: {}, status: 422, response: buildErrorsResponse('NO_ID_SPECIFIED') },
+        { get: {}, status: 400, response: AppErrors.getApiError('NO_ID_SPECIFIED').message },
         {
             get: { id: 'BAD-ID' },
             status: 404,
-            response: buildErrorsResponse('BOOK_NOT_FOUND'),
+            response: AppErrors.getApiError('BOOK_NOT_FOUND').message,
             before: () => {
-                sinon.stub(BookModel, 'findOne').resolves(null);
+                sandbox.stub(BookModel, 'findOne').resolves(null);
             },
-            after: () => { BookModel.findOne.restore(); },
+        },
+        {
+            get: { id: 'GOOD-ID' },
+            status: 200,
+            response: fs.readFileSync(__filename).toString(),
+            before: () => {
+                sandbox.stub(Book, 'find').resolves({ getEpubPath: () => __filename });
+            },
+        },
+        {
+            get: { id: 'GOOD-ID', filetype: 'mobi' },
+            status: 200,
+            response: fs.readFileSync(__filename).toString(),
+            before: () => {
+                sandbox.stub(Book, 'find').resolves({ getMobiPath: () => __filename });
+            },
+            after: () => {
+                assert.deepEqual(Book.find.args, [['GOOD-ID', 'mobi']]);
+            },
+        },
+        {
+            get: { id: 'GOOD-ID', email: 'haroldtreen@gmail.com' },
+            status: 200,
+            response: 'Email sent!',
+            before: () => {
+                sandbox.stub(Book, 'find').resolves({ getEpubPath: () => __filename });
+                sandbox.stub(Mailer, 'sendEpub').resolves();
+            },
+            after: () => {
+                assert.isTrue(Book.find.called);
+                assert.isTrue(Mailer.sendEpub.called);
+            },
+        },
+        {
+            get: { id: 'GOOD-ID', email: 'example@gmail.com', filetype: 'mobi' },
+            status: 200,
+            response: 'Email sent!',
+            before: () => {
+                sandbox.stub(Book, 'find').resolves({ getEpubPath: () => __filename });
+                sandbox.stub(Mailer, 'sendMobi').resolves();
+            },
+            after: () => {
+                assert.isTrue(Book.find.called);
+                assert.isTrue(Mailer.sendMobi.called);
+            },
         },
     ],
-    '/api/books/status': [
-        { get: {}, status: 422, response: buildErrorsResponse('NO_ID_SPECIFIED') },
-        { get: { id: 'BAD-ID' }, status: 404, response: buildErrorsResponse('NOT_FOUND') },
+    '/api/books/email-delivery': [
+        {
+            get: {},
+            status: 400,
+            response: AppErrors.getApiError('NO_ID_SPECIFIED').message,
+        },
+        {
+            get: { id: 'GOOD-ID' },
+            status: 400,
+            response: AppErrors.getApiError('NO_EMAIL_SPECIFIED').message,
+        },
+        {
+            get: { id: 'GOOD-ID', email: 'example@gmail.com' },
+            status: 200,
+            response: 'Email sent!',
+            before: () => {
+                sandbox.stub(Book, 'find').resolves({ getEpubPath: () => __filename });
+                sandbox.stub(Mailer, 'sendEpub').resolves({});
+            },
+            after: () => {
+                assert.isTrue(Book.find.called);
+                assert.isTrue(Mailer.sendEpub.called);
+            },
+        },
+        {
+            get: { id: 'GOOD-ID', email: 'example@gmail.com', filetype: 'mobi' },
+            status: 200,
+            response: 'Email sent!',
+            before: () => {
+                sandbox.stub(Book, 'find').resolves({ getEpubPath: () => __filename });
+                sandbox.stub(Mailer, 'sendMobi').resolves({});
+            },
+            after: () => {
+                assert.isTrue(Book.find.called);
+                assert.isTrue(Mailer.sendMobi.called);
+                assert.deepEqual(Book.find.args, [['GOOD-ID', 'mobi']]);
+            },
+        },
     ],
 };
 
@@ -112,30 +212,26 @@ const V1_ENDPOINTS = {
     '/api/v1/books': [
         {
             post: { h: 'W' },
-            status: 422,
-            response: buildErrorsResponse('NO_SECTIONS_SPECIFIED')
+            status: 400,
+            response: buildErrorsResponse('NO_SECTIONS_SPECIFIED'),
         },
         {
             post: { urls },
             status: 422,
-            response: buildErrorsResponse('TOO_MANY_ITEMS')
+            response: buildErrorsResponse('TOO_MANY_ITEMS'),
         },
         {
             post: { sections: urls },
             status: 422,
-            response: buildErrorsResponse('TOO_MANY_ITEMS')
+            response: buildErrorsResponse('TOO_MANY_ITEMS'),
         },
         {
             post: { sections: urls.slice(0, 10) },
             status: 202,
             response: { id: 1 },
             before: () => {
-                sinon.stub(Book.prototype, 'getId').returns(1);
-                sinon.stub(BookServices, 'publish').resolves({ getId: () => '1' });
-            },
-            after: () => {
-                BookServices.publish.restore();
-                Book.prototype.getId.restore();
+                sandbox.stub(Book.prototype, 'getId').returns(1);
+                sandbox.stub(BookServices, 'publish').resolves({ getId: () => '1' });
             },
         },
         {
@@ -143,12 +239,93 @@ const V1_ENDPOINTS = {
             status: 202,
             response: { id: 1 },
             before: () => {
-                sinon.stub(Book.prototype, 'getId').returns(1);
-                sinon.stub(BookServices, 'publish').rejects({ getId: () => '1' });
+                sandbox.stub(Book.prototype, 'getId').returns(1);
+                sandbox.stub(BookServices, 'publish').rejects({ getId: () => '1' });
+            },
+        },
+    ],
+    '/api/v1/books/download': [
+        {
+            get: { id: 'id' },
+            status: 404,
+            response: {},
+        },
+    ],
+    '/api/v1/books/some-id/download': [
+        {
+            get: {},
+            status: 404,
+            response: buildErrorsResponse('BOOK_NOT_FOUND'),
+            before: () => {
+                sandbox.stub(Book, 'find').rejects(AppErrors.getApiError('BOOK_NOT_FOUND'));
+            },
+        },
+        {
+            get: {},
+            status: 200,
+            response: fs.readFileSync(__filename, 'utf-8'),
+            before: () => {
+                sandbox.stub(Book, 'find').resolves({ getEpubPath: () => __filename });
+            },
+        },
+        {
+            get: { filetype: 'mobi' },
+            status: 200,
+            response: fs.readFileSync(__filename, 'utf-8'),
+            before: () => {
+                sandbox.stub(Book, 'find').resolves({ getMobiPath: () => __filename });
             },
             after: () => {
-                BookServices.publish.restore();
-                Book.prototype.getId.restore();
+                assert.deepEqual(Book.find.args, [['some-id', 'mobi']]);
+            },
+        },
+    ],
+    '/api/v1/books/some-id/email': [
+        {
+            get: {},
+            status: 400,
+            response: buildErrorsResponse('NO_EMAIL_SPECIFIED'),
+        },
+        {
+            get: { email: 'example@gmail.com' },
+            status: 200,
+            response: 'Email sent!',
+            before: () => {
+                sandbox.stub(Book, 'find').resolves({ getEpubPath: () => {} });
+                sandbox.stub(Mailer, 'sendEpub').resolves({});
+            },
+            after: () => {
+                assert.isTrue(Book.find.called);
+                assert.isTrue(Mailer.sendEpub.called);
+            },
+        },
+        {
+            get: { email: 'example@gmail.com', filetype: 'mobi' },
+            status: 200,
+            response: 'Email sent!',
+            before: () => {
+                sandbox.stub(Book, 'find').resolves({ getMobiPath: () => {} });
+                sandbox.stub(Mailer, 'sendMobi').resolves({});
+            },
+            after: () => {
+                assert.deepEqual(Book.find.args, [['some-id', 'mobi']]);
+            },
+        },
+    ],
+    '/api/v1/books/some-id/status': [
+        {
+            get: {},
+            status: 404,
+            response: buildErrorsResponse('NOT_FOUND'),
+        },
+        {
+            get: {},
+            status: 200,
+            response: StatusTracker.buildStatus('DEFAULT'),
+            before: () => {
+                sandbox
+                    .stub(BookServices, 'getStatus')
+                    .resolves(StatusTracker.buildStatus('DEFAULT'));
             },
         },
     ],
