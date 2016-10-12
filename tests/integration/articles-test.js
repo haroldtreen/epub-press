@@ -664,6 +664,6 @@ describe('Article Extraction', () => {
                 });
                 done();
             }).catch(done);
-        }).timeout(4000);
+        }).timeout(4500);
     });
 });

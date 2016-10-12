@@ -1,14 +1,22 @@
 const gulp = require('gulp');
 const mocha = require('gulp-mocha');
+const istanbul = require('gulp-istanbul');
 const args = require('yargs').argv;
 
 const options = { reporter: 'spec', harmony: true, grep: args.regex || '.' };
 
-gulp.task('test', () => {
+gulp.task('pre-test', () => {
     process.env.NODE_ENV = 'test';
-    return gulp.src('./tests/**/*-test.js', { read: false })
-			.pipe(mocha(options));
+    return gulp.src(['lib/**/*.js', 'models/*.js', 'routes/**/*.js'])
+        .pipe(istanbul())
+        .pipe(istanbul.hookRequire());
 });
+
+gulp.task('test', ['pre-test'], () =>
+    gulp.src('./tests/**/*-test.js', { read: false })
+			.pipe(mocha(options))
+            .pipe(istanbul.writeReports())
+);
 
 gulp.task('test-db', () => {
     process.env.NODE_ENV = 'test';
@@ -24,7 +32,7 @@ gulp.task('test-unit', () => {
 
 gulp.task('test-integration', () => {
     process.env.NODE_ENV = 'test';
-    return gulp.src('./tests/integration/*-test.js', { read: false })
+    return gulp.src('./tests/integration/**/*-test.js', { read: false })
             .pipe(mocha(options));
 });
 
