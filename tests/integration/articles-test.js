@@ -663,6 +663,14 @@ describe('Article Extraction', () => {
         notInclude: [
             'Try it Yourself',
         ],
+    },
+    {
+        fixture: 'the-verge',
+        title: 'Mark Zuckerberg defends Peter Thiel\'s Trump ties in internal memo',
+        include: [
+            'Peter Thiel\'s donation of $1.25 million to Donald',
+            'Tech CEOs "are being insensitive to is the fact that for many people',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             const html = fs.readFileSync(`${articleFixtures}/${testCase.fixture}.html`).toString();
