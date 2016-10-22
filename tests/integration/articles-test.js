@@ -649,6 +649,20 @@ describe('Article Extraction', () => {
             '<img class="thumb-image loaded"',
             'be a theoretical limit to the latency of a memory access',
         ],
+    },
+    {
+        fixture: 'w3-school',
+        title: 'JavaScript DOM Elements',
+        include: [
+            'myElement = document.getElementById',
+            'x.getElementsByTagName',
+            'x = document.querySelectorAll',
+            'The querySelectorAll() method does not work in Internet Explorer 8',
+            'x = document.forms',
+        ],
+        notInclude: [
+            'Try it Yourself',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             const html = fs.readFileSync(`${articleFixtures}/${testCase.fixture}.html`).toString();
