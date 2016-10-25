@@ -42,7 +42,7 @@ router.post('/', (req, res) => {
 router.get('/:id/status', (req, res) => {
     const book = new Book({ id: req.params.id });
     BookServices.getStatus(book).then((status) => {
-        res.status(200).json(status);
+        res.status(status.httpStatus || 200).json(status);
     }).catch((e) => {
         respondWithError(res, e);
     });

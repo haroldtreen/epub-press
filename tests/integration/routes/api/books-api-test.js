@@ -328,6 +328,16 @@ const V1_ENDPOINTS = {
                     .resolves(StatusTracker.buildStatus('DEFAULT'));
             },
         },
+        {
+            get: {},
+            status: 500,
+            response: StatusTracker.buildStatus('FAILED'),
+            before: () => {
+                sandbox
+                    .stub(BookServices, 'getStatus')
+                    .resolves(StatusTracker.buildStatus('FAILED'))
+            },
+        }
     ],
 };
 

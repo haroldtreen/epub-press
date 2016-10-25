@@ -69,6 +69,12 @@ describe('StatusTracker', () => {
                 assert.equal(storedMessage, builtMessage);
             });
         });
+
+        it('has failures', () => {
+            const builtStatus = StatusTracker.buildStatus('FAILED');
+            assert.include(builtStatus.message.toLowerCase(), 'fail');
+            assert.isDefined(builtStatus.httpStatus);
+        });
     });
 
     describe('constants', () => {
@@ -76,5 +82,4 @@ describe('StatusTracker', () => {
             assert.isNumber(StatusTracker.MAX_STATUSES);
         });
     });
-
 });
