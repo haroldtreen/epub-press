@@ -2,8 +2,13 @@
     "extends": "airbnb",
     "rules": {
         "indent": [2, 4],
-        "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/*.js", "tests/*.js"]}],
-        "strict": 0
+        "strict": 0,
+        "no-underscore-dangle": 0,
+        "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/tests/*.js"]}],
+        "comma-dangle": ["error", {
+            "arrays": "always-multiline",
+            "functions": "ignore"
+        }]
     },
     "env": {
         "mocha": true
