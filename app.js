@@ -4,6 +4,11 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
+const Scheduler = require('./lib/scheduler');
+const ScheduledJobs = require('./lib/scheduled-jobs');
+
+Scheduler.runEvery('2 days', ScheduledJobs.cleanEbooks);
+
 const index = require('./routes/index');
 const users = require('./routes/users');
 const booksBeta = require('./routes/api/books-beta');
