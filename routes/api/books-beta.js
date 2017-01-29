@@ -13,7 +13,7 @@ const router = new express.Router();
 const MAX_NUM_SECTIONS = 50;
 
 function respondWithError(res, error) {
-    const validStatus = { '404': true, '400': true, '500': true };
+    const validStatus = { 404: true, 400: true, 500: true };
     const errorResp = AppErrors.buildApiResponse(error);
     if (!validStatus[errorResp.status]) {
         errorResp.status = '500';
@@ -70,12 +70,12 @@ function bookFromBody(body) {
 }
 
 router.post('/', (req, res) => {
-    validatePublishRequest(req).then((validReq) =>
+    validatePublishRequest(req).then(validReq =>
         bookFromBody(validReq.body)
     ).then((book) => {
-        BookServices.publish(book).then((publishedBook) => {
-            return res.status(201).json({ id: publishedBook.getId() });
-        }).catch((e) => {
+        BookServices.publish(book).then(publishedBook =>
+            res.status(201).json({ id: publishedBook.getId() })
+        ).catch((e) => {
             log.exception('Book Create')(e);
             respondWithError(res, e);
         });
@@ -153,8 +153,8 @@ router.get('/email-delivery', (req, res) => {
 
     const isMobi = req.query.filetype === 'mobi';
 
-    validateEmailRequest(req).then(() => {
-        return Book.find(req.query.id, req.query.filetype).then((book) => {
+    validateEmailRequest(req).then(() =>
+        Book.find(req.query.id, req.query.filetype).then((book) => {
             const mailerFn = isMobi ? Mailer.sendMobi : Mailer.sendEpub;
             return mailerFn(req.query.email, book).catch((error) => {
                 log.warn('Book delivery failed', req.query, error);
@@ -162,8 +162,8 @@ router.get('/email-delivery', (req, res) => {
             });
         }).then(() => {
             res.status(200).send('Email sent!');
-        });
-    }).catch((e) => {
+        })
+    ).catch((e) => {
         respondWithError(res, e);
     });
 });
