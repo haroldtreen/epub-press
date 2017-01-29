@@ -3,7 +3,7 @@
 const Logger = require('../lib/logger');
 const log = new Logger();
 
-const REGEXP = /Sections request/i;
+const REGEXP = /Book Published/i;
 
 const options = {
     from: new Date() - 30 * 24 * 60 * 60 * 1000, // Months worth of data
