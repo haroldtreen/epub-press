@@ -24,6 +24,8 @@ app.set('view engine', 'jade');
 // uncomment after placing your favicon in /public
 if (process.env.NODE_ENV !== 'test') {
     app.use(logger('dev'));
+} else {
+    Scheduler.clearIntervals();
 }
 
 app.use(bodyParser.json({ limit: '10mb' }));
