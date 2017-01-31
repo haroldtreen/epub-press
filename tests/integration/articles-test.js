@@ -671,6 +671,13 @@ describe('Article Extraction', () => {
             'Peter Thiel\'s donation of $1.25 million to Donald',
             'Tech CEOs "are being insensitive to is the fact that for many people',
         ],
+    },
+    {
+        fixture: 'landing-google',
+        title: 'Google - Site Reliability Engineering', // TODO: Change to Distributed Periodic Scheduling with Cron
+        include: [
+            'This chapter describes Google\'s implementation',
+        ],
     }].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             const html = fs.readFileSync(`${articleFixtures}/${testCase.fixture}.html`).toString();

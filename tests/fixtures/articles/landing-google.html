@@ -1,0 +1,958 @@
+<html class="google-js" lang="en"><head>
+    <meta charset="utf-8">
+    <script type="text/javascript" async="" src="https://ssl.google-analytics.com/ga.js"></script><script>
+    (function(H){H.className=H.className.replace(/\bgoogle\b/,'google-js')})(document.documentElement)
+    </script>
+    <meta content="initial-scale=1, minimum-scale=1, width=device-width" name="viewport">
+    <title>
+      Google - Site Reliability Engineering
+    </title>
+    <script src="//www.google.com/js/google.js">
+    </script>
+    <script>
+    new gweb.analytics.AutoTrack({profile:"UA-75468017-1"});
+    </script>
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;lang=en" rel="stylesheet">
+    <link href="../../../sre/book/css/main.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,700,500|Roboto+Mono:400,300,500,700" rel="stylesheet" type="text/css">
+    <link href="../../../sre/images/favicon.ico" rel="shortcut icon">
+  <style type="text/css">
+:root div[style^="height: 16px; font: bold 12px/16px"],
+:root [style="border: 1px solid rgb(51, 102, 204);"],
+:root [style="border: 1px solid rgb(51, 102, 153);"],
+:root [style="border: 1px solid rgb(241, 250, 248);"],
+:root [style="border: 1px solid rgb(145, 117, 77);"],
+:root [style="border: 1px solid rgb(0, 90, 136);"],
+:root .ts[style="margin:0 0 12px;height:92px;width:100%"],
+:root .nH.MC,
+:root .c[style="margin: 0pt;"],
+:root .GISRH3UDHB,
+:root .GGQPGYLCMCB,
+:root .GGQPGYLCD5,
+:root .GC3LC41DERB + div[style="position: relative; height: 170px;"],
+:root #tadsc,
+:root #ad,
+:root #sqh,
+:root .widget-pane-section-result[data-result-ad-type],
+:root .rscontainer > .ellip,
+:root .rhsvw[style="background-color:#fff;margin:0 0 14px;padding-bottom:1px;padding-top:1px;"],
+:root .ra[width="30%"][align="right"] + table[width="70%"][cellpadding="0"],
+:root .ra[align="right"][width="30%"],
+:root .ra[align="left"][width="30%"],
+:root .mw > #rcnt > #center_col > #taw > .c,
+:root .mw > #rcnt > #center_col > #taw > #tvcap > .c,
+:root .mod > ._jH + .rscontainer,
+:root .lads[width="100%"][style="background:#FFF8DD"],
+:root .commercial-unit-mobile-top,
+:root .commercial-unit-desktop-top,
+:root .commercial-unit-desktop-rhs,
+:root .ch[onclick="ga(this,event)"],
+:root .GPMV2XEDA2 > .GPMV2XEDP1 > .GPMV2XEDJBB,
+:root .GKJYXHBF2 > .GKJYXHBE2 > .GKJYXHBH5,
+:root .GJJKPX2N1 > .GJJKPX2M1 > .GJJKPX2P4,
+:root .GHOFUQ5BG2 > .GHOFUQ5BF2 > .GHOFUQ5BG5,
+:root .GFYY1SVE2 > .GFYY1SVD2 > .GFYY1SVG5,
+:root .GFYY1SVD2 > .GFYY1SVC2 > .GFYY1SVF5,
+:root .GB3L-QEDGY .GB3L-QEDF- > .GB3L-QEDE-,
+:root #topstuff > #tads,
+:root #tadsto.c,
+:root #tadsb.c,
+:root #tads.c,
+:root #tads + div + .c,
+:root #ssmiwdiv[jsdisplay],
+:root #rhswrapper > #rhssection[border="0"][bgcolor="#ffffff"],
+:root #rhs_block > script + .c._oc._Ve.rhsvw,
+:root #rhs_block > ol > .rhsvw > .kp-blk > .xpdopen > ._OKe > ol > ._DJe > .luhb-div,
+:root #rhs_block > .ts[cellspacing="0"][cellpadding="0"][style="padding:0"],
+:root #rhs_block > #mbEnd,
+:root #rhs_block .mod > .luhb-div > div[data-async-type="updateHotelBookingModule"],
+:root #rhs_block .mod > .gws-local-hotels__booking-module,
+:root #resultspanel > #topads,
+:root #mn div[style="position:relative"] > #center_col > div > ._dPg,
+:root #mn div[style="position:relative"] > #center_col > ._Ak,
+:root #mn #center_col > div > h2.spon:first-child + ol:last-child,
+:root #mn #center_col > div > h2.spon:first-child,
+:root #mclip_container:last-child,
+:root #mbEnd[cellspacing="0"][cellpadding="0"],
+:root #main_col > #center_col div[style="font-size:14px;margin:0 4px;padding:1px 5px;background:#fff7ed"],
+:root #cnt #center_col > #taw > #tvcap > .c._oc._Lp,
+:root #cnt #center_col > #res > #topstuff > .ts,
+:root #center_col > div[style="font-size:14px;margin-right:0;min-height:5px"] > div[style="font-size:14px;margin:0 4px;padding:1px 5px;background:#fff8e7"],
+:root #center_col > #taw > #tvcap > .rscontainer,
+:root #center_col > #resultStats + div[style="border:1px solid #dedede;margin-bottom:11px;padding:5px 7px 5px 6px"],
+:root #center_col > #resultStats + div + #res + #tads,
+:root #center_col > #resultStats + #tads + #res + #tads,
+:root #center_col > #resultStats + #tads,
+:root #center_col > #res > #topstuff + #search > div > #ires > #rso > #flun,
+:root #center_col > #main > .dfrd > .mnr-c > .c._oc._zs,
+:root #center_col > #\5f Emc
+{ display: none !important; }</style><style type="text/css">
+:root #content > #center > .dose > .dosesingle,
+:root #content > #right > .dose > .dosesingle
+{ display: none !important; }</style></head>
+  <body>
+    <div class="menu-closed" id="curtain"></div>
+    <div class="header clearfix">
+      <div class="header-wrraper">
+        <a class="expand" id="burger-menu"></a>
+        <h2 class="chapter-title">
+          Chapter 24 - Distributed Periodic Scheduling with Cron
+        </h2>
+      </div>
+    </div>
+    <div class="expands" id="overlay-element">
+      <div class="logo">
+        <a href="https://www.google.com"><img alt="Google" src="../../../sre/images/googlelogo-grey-color.png"></a>
+      </div>
+      <ol class="dropdown-content hide" id="drop-down">
+        <li>
+          <a class="menu-buttons" href="/sre/book/index.html">Table of Contents</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/foreword.html">Foreword</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/preface.html">Preface</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/part1.html">Part I - Introduction</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/introduction.html">1. Introduction</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/production-environment.html">2. The
+          Production Environment at Google, from the Viewpoint of an SRE</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/part2.html">Part II - Principles</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/embracing-risk.html">3. Embracing
+          Risk</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/service-level-objectives.html">4.
+          Service Level Objectives</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/eliminating-toil.html">5. Eliminating
+          Toil</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/monitoring-distributed-systems.html">6.
+          Monitoring Distributed Systems</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/automation-at-google.html">7. The
+          Evolution of Automation at Google</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/release-engineering.html">8. Release
+          Engineering</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/simplicity.html">9. Simplicity</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/part3.html">Part III - Practices</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/practical-alerting.html">10. Practical
+          Alerting</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/being-on-call.html">11. Being
+          On-Call</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/effective-troubleshooting.html">12.
+          Effective Troubleshooting</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/emergency-response.html">13. Emergency
+          Response</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/managing-incidents.html">14. Managing
+          Incidents</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/postmortem-culture.html">15. Postmortem
+          Culture: Learning from Failure</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/tracking-outages.html">16. Tracking
+          Outages</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/testing-reliability.html">17. Testing
+          for Reliability</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/software-engineering-in-sre.html">18.
+          Software Engineering in SRE</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/load-balancing-frontend.html">19. Load
+          Balancing at the Frontend</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/load-balancing-datacenter.html">20. Load
+          Balancing in the Datacenter</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/handling-overload.html">21. Handling
+          Overload</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/addressing-cascading-failures.html">22.
+          Addressing Cascading Failures</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/managing-critical-state.html">23.
+          Managing Critical State: Distributed Consensus for Reliability</a>
+        </li>
+        <li class="active">
+          <a class="menu-buttons" href="/sre/book/chapters/distributed-periodic-scheduling.html">24. Distributed Periodic
+          Scheduling with Cron</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/data-processing-pipelines.html">25. Data
+          Processing Pipelines</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/data-integrity.html">26. Data Integrity:
+          What You Read Is What You Wrote</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/reliable-product-launches.html">27.
+          Reliable Product Launches at Scale</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/part4.html">Part IV - Management</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/accelerating-sre-on-call.html">28.
+          Accelerating SREs to On-Call and Beyond</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/dealing-with-interrupts.html">29.
+          Dealing with Interrupts</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/operational-overload.html">30. Embedding
+          an SRE to Recover from Operational Overload</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/communication-and-collaboration.html">31. Communication and
+          Collaboration in SRE</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/evolving-sre-engagement-model.html">32.
+          The Evolving SRE Engagement Model</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/part5.html">Part V - Conclusions</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/lessons-learned.html">33. Lessons
+          Learned from Other Industries</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/conclusion.html">34. Conclusion</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/availability-table.html">Appendix A.
+          Availability Table</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/service-best-practices.html">Appendix B.
+          A Collection of Best Practices for Production Services</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/incident-document.html">Appendix C.
+          Example Incident State Document</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/postmortem.html">Appendix D. Example
+          Postmortem</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/launch-checklist.html">Appendix E.
+          Launch Coordination Checklist</a>
+        </li>
+        <li>
+          <a class="menu-buttons" href="/sre/book/chapters/bibliography.html">Appendix F.
+          Bibliography</a>
+        </li>
+      </ol>
+    </div>
+    <div id="maia-main" role="main">
+      <div class="maia-teleport" id="content"></div>
+      <div class="content">
+        <h1 class="heading">
+          Distributed Periodic Scheduling with Cron
+        </h1>
+        <p>
+          Written by Štěpán Davidovič<sup><a href="#id-WakuESLFd" id="id-WakuESLFd-marker">114</a></sup>
+        </p>
+        <p>
+          Edited by Kavita Guliani
+        </p>
+        <p>
+          This chapter describes Google's implementation of a distributed cron service that serves
+          the vast majority of internal teams that need periodic scheduling of compute jobs.
+          Throughout cron's existence, we have learned many lessons about how to design and
+          implement what might seem like a basic service. Here, we discuss the problems that
+          distributed crons face and outline some potential solutions.
+        </p>
+        <p>
+          Cron is a common Unix utility designed to periodically launch arbitrary jobs at
+          user-defined times or intervals. We first analyze the base principles of cron and its
+          most common implementations, and then review how an application such as cron can work in
+          a large, distributed environment in order to increase the reliability of the system
+          against single-machine failures. We describe a distributed cron system that is deployed
+          on a small number of machines, but can launch cron jobs across an entire datacenter in
+          conjunction with a datacenter scheduling system like Borg <a href="/sre/book/chapters/bibliography.html#Ver15" target="_blank">[Ver15]</a>.
+        </p>
+        <h1 class="heading">
+          Cron
+        </h1>
+        <p>
+          Let's discuss how cron is typically used, in the single machine case, before diving into
+          running it as a cross-datacenter service.
+        </p>
+        <h2 class="subheaders">
+          Introduction
+        </h2>
+        <p>
+          Cron is designed so that the system administrators and common users of the system can
+          specify commands to run, and when these commands run. Cron executes various types of
+          jobs, including garbage collection and periodic data analysis. The most common time
+          specification format is called "crontab." This format supports simple intervals (e.g.,
+          "once a day at noon" or "every hour on the hour"). Complex intervals, such as "every
+          Saturday, which is also the 30th day of the month," can also be configured.
+        </p>
+        <p>
+          Cron is usually implemented using a single component, which is commonly referred to as
+          <code>crond</code>. <code>crond</code> is a daemon that loads the list of scheduled cron
+          jobs. Jobs are launched according to their specified execution times.
+        </p>
+        <h2 class="subheaders">
+          Reliability Perspective
+        </h2>
+        <p>
+          Several aspects of the cron service are notable from a reliability perspective:
+        </p>
+        <ul>
+          <li>
+            <p>
+              Cron's failure domain is essentially just one machine. If the machine is not running,
+              neither the cron scheduler nor the jobs it launches can run.<sup><a href="#id-z0AIxSrSnSWIVtOTJ" id="id-z0AIxSrSnSWIVtOTJ-marker">115</a></sup> Consider a
+              very simple distributed case with two machines, in which your cron scheduler launches
+              jobs on a different worker machine (for example, using SSH). This scenario presents
+              two distinct failure domains that could impact our ability to launch jobs: either the
+              scheduler machine or the destination machine could fail.
+            </p>
+          </li>
+          <li>
+            <p>
+              The only state that needs to persist across <code>crond</code> restarts(including
+              machine reboots) is the crontab configuration itself. The cron launches are
+              fire-and-forget, and <code>crond</code> makes no attempt to track these launches.
+            </p>
+          </li>
+          <li>
+            <p>
+              anacron is a notable exception to this. anacron attempts to launch jobs that would
+              have been launched when the system was down. Relaunch attempts are limited to jobs
+              that run daily or less frequently. This functionality is very useful for running
+              maintenance jobs on workstations and notebooks, and is facilitated by a file that
+              retains the timestamp of the last launch for all registered cron jobs.
+            </p>
+          </li>
+        </ul>
+        <h1 class="heading">
+          Cron Jobs and Idempotency
+        </h1>
+        <p>
+          Cron jobs are designed to perform periodic work, but beyond that, it is hard to know in
+          advance what function they have. The variety of requirements that the diverse set of cron
+          jobs entails obviously impacts reliability requirements.
+        </p>
+        <p>
+          Some cron jobs, such as garbage collection processes, are idempotent. In case of system
+          malfunction, it is safe to launch such jobs multiple times. Other cron jobs, such as a
+          process that sends out an email newsletter to a wide distribution, should not be launched
+          more than once.
+        </p>
+        <p>
+          To make matters more complicated, failure to launch is acceptable for some cron jobs but
+          not for others. For example, a garbage collection cron job scheduled to run every five
+          minutes may be able to skip one launch, but a payroll cron job scheduled to run once a
+          month should not be skipped.
+        </p>
+        <p>
+          This large variety of cron jobs makes reasoning about failure modes difficult: in a
+          system like the cron service, there is no single answer that fits every situation. In
+          general, we favor skipping launches rather than risking double launches, as much as the
+          infrastructure allows. This is because recovering from a skipped launch is more tenable
+          than recovering from a double launch. Cron job owners can (and should!) monitor their
+          cron jobs; for example, an owner might have the cron service expose state for its managed
+          cron jobs, or set up independent monitoring of the effect of cron jobs. In case of a
+          skipped launch, cron job owners can take action that appropriately matches the nature of
+          the cron job. However, undoing a double launch, such as the previously mentioned
+          newsletter example, may be difficult or even entirely impossible. Therefore, we prefer to
+          "fail closed" to avoid systemically creating bad state.
+        </p>
+        <h1 class="heading">
+          Cron at Large Scale
+        </h1>
+        <p>
+          Moving away from single machines toward large-scale deployments requires some fundamental
+          rethinking of how to make cron work well in such an environment. Before presenting the
+          details of the Google cron solution, we'll discuss those differences between small-scale
+          and large-scale deployment, and describe what design changes large-scale deployments
+          necessitated.
+        </p>
+        <h2 class="subheaders">
+          Extended Infrastructure
+        </h2>
+        <p>
+          In its "regular" implementations, cron is limited to a single machine. Large-scale system
+          deployments extend our cron solution to multiple machines.
+        </p>
+        <p>
+          Hosting your cron service on a single machine could be catastrophic in terms of
+          reliability. Say this machine is located in a datacenter with exactly 1,000 machines. A
+          failure of just 1/1000th of your available machines could knock out the entire cron
+          service. For obvious reasons, this implementation is not acceptable.
+        </p>
+        <p>
+          To increase cron's reliability, we decouple processes from machines. If you want to run a
+          service, simply specify the service requirements and which datacenter it should run in.
+          The datacenter scheduling system (which itself should be reliable) determines the machine
+          or machines on which to deploy your service, in addition to handling machine deaths.
+          Launching a job in a datacenter then effectively turns into sending one or more RPCs to
+          the datacenter scheduler.
+        </p>
+        <p>
+          This process is, however, not instantaneous. Discovering a dead machine entails health
+          check timeouts, while rescheduling your service onto a different machine requires time to
+          install software and start up the new process.
+        </p>
+        <p>
+          Because moving a process to a different machine can mean loss of any local state stored
+          on the old machine (unless live migration is employed), and the rescheduling time may
+          exceed the smallest scheduling interval of one minute, we need procedures in place to
+          mitigate both data loss and excessive time requirements. To retain local state of the old
+          machine, you might simply persist the state on a distributed filesystem such as GFS, and
+          use this filesystem during startup to identify jobs that failed to launch due to
+          rescheduling. However, this solution falls short in terms of timeliness expectations: if
+          you run a cron job every five minutes, a one- to two-minute delay caused by the total
+          overhead of cron system rescheduling is potentially unacceptably substantial. In this
+          case, hot spares, which would be able to quickly jump in and resume operation, can
+          significantly shorten this time window.
+        </p>
+        <h2 class="subheaders">
+          Extended Requirements
+        </h2>
+        <p>
+          Single-machine systems typically just colocate all running processes with limited
+          isolation. While containers are now commonplace, it's not necessary or common to use
+          containers to isolate every single component of a service that's deployed on a single
+          machine. Therefore, if cron were deployed on a single machine, <code>crond</code> and all
+          the cron jobs it runs would likely not be isolated.
+        </p>
+        <p>
+          Deployment at datacenter scale commonly means deployment into containers that enforce
+          isolation. Isolation is necessary because the base expectation is that independent
+          processes running in the same datacenter should not negatively impact each other. In
+          order to enforce that expectation, you should know the quantity of resources you need to
+          acquire up front for any given process you want to run—both for the cron system and the
+          jobs it launches. A cron job may be delayed if the datacenter does not have resources
+          available to match the demands of the cron job. Resource requirements, in addition to
+          user demand for monitoring of cron job launches, means that we need to track the full
+          state of our cron job launches, from the scheduled launch to termination.
+        </p>
+        <p>
+          Decoupling process launches from specific machines exposes the cron system to partial
+          launch failure. The versatility of cron job configurations also means that launching a
+          new cron job in a datacenter may need multiple RPCs, such that sometimes we encounter a
+          scenario in which some RPCs succeeded but others did not (for example, because the
+          process sending the RPCs died in the middle of executing these tasks). The cron recovery
+          procedure must also account for this scenario.
+        </p>
+        <p>
+          In terms of the failure mode, a datacenter is a substantially more complex ecosystem than
+          a single machine. The cron service that began as a relatively simple binary on a single
+          machine now has many obvious and nonobvious dependencies when deployed at a larger scale.
+          For a service as basic as cron, we want to ensure that even if the datacenter suffers a
+          partial failure (for example, partial power outage or problems with storage services),
+          the service is still able to function. By requiring that the datacenter scheduler locates
+          replicas of cron in diverse locations within the datacenter, we avoid the scenario in
+          which failure of a single power distribution unit takes out all the processes of the cron
+          service.
+        </p>
+        <p>
+          It may be possible to deploy a single cron service across the globe, but deploying cron
+          within a single datacenter has benefits: the service enjoys low latency and shares fate
+          with the datacenter scheduler, cron's core dependency.
+        </p>
+        <h1 class="heading">
+          Building Cron at Google
+        </h1>
+        <p>
+          This section address the problems that must be resolved in order to provide a large-scale
+          distributed deployment of cron reliably. It also highlights some important decisions made
+          in regards to distributed cron at Google.
+        </p>
+        <h2 class="subheaders">
+          Tracking the State of Cron Jobs
+        </h2>
+        <p>
+          As discussed in previous sections, we need to hold some amount of state about cron jobs,
+          and be able to restore that information quickly in case of failure. Moreover, the
+          consistency of that state is paramount. Recall that many cron jobs, like a payroll run or
+          sending an email newsletter, are not idempotent.
+        </p>
+        <p>
+          We have two options to track the state of cron jobs:
+        </p>
+        <ul>
+          <li>
+            <p>
+              Store data externally in generally available distributed storage
+            </p>
+          </li>
+          <li>
+            <p>
+              Use a system that stores a small volume of state as part of the cron service itself
+            </p>
+          </li>
+        </ul>
+        <p>
+          When designing the distributed cron, we chose the second option. We made this choice for
+          several reasons:
+        </p>
+        <ul>
+          <li>
+            <p>
+              Distributed filesystems such as GFS or HDFS often cater to the use case of very large
+              files (for example, the output of web crawling programs), whereas the information we
+              need to store about cron jobs is very small. Small writes on a distributed filesystem
+              are very expensive and come with high latency, because the filesystem is not
+              optimized for these types of writes.
+            </p>
+          </li>
+          <li>
+            <p>
+              Base services for which outages have wide impact (such as cron) should have very few
+              dependencies. Even if parts of the datacenter go away, the cron service should be
+              able to function for at least some amount of time. But this requirement does not mean
+              that the storage has to be part of the cron process directly (how storage is handled
+              is essentially an implementation detail). However, cron should be able to operate
+              independently of downstream systems that cater to a large number of internal users.
+            </p>
+          </li>
+        </ul>
+        <h2 class="subheaders">
+          The Use of Paxos
+        </h2>
+        <p>
+          We deploy multiple replicas of the cron service and use the Paxos distributed consensus
+          algorithm (see <a href="/sre/book/chapters/managing-critical-state.html">Managing
+          Critical State: Distributed Consensus for Reliability</a>) to ensure they have consistent
+          state. As long as the majority of group members are available, the distributed system as
+          a whole can successfully process new state changes despite the failure of bounded subsets
+          of the <span>infrastructure</span>.
+        </p>
+        <p>
+          As shown in <a href="#fig_reliable_cron_interactions">Figure 24-1</a>, the distributed
+          cron uses a single leader job, which is the only replica that can modify the shared
+          state, as well as the only replica that can launch cron jobs. We take advantage of the
+          fact that the variant of Paxos we use, Fast Paxos <a href="/sre/book/chapters/bibliography.html#Lam06" target="_blank">[Lam06]</a>, uses a leader
+          replica internally as an optimization—the Fast Paxos leader replica also acts as the cron
+          service leader.
+        </p>
+        <figure class="horizontal vertical" id="fig_reliable_cron_interactions">
+          <img alt="The interactions between distributed cron replicas." src="../images/srle-2401.jpg">
+          <figcaption>
+            <span>Figure 24-1.</span> The interactions between distributed cron replicas
+          </figcaption>
+        </figure>
+        <p>
+          If the leader replica dies, the health-checking mechanism of the Paxos group discovers
+          this event quickly (within seconds). As another cron process is already started up and
+          available, we can elect a new leader. As soon as the new leader is elected, we follow a
+          leader election protocol specific to the cron service, which is responsible for taking
+          over all the work left unfinished by the previous leader. The leader specific to the cron
+          service is the same as the Paxos leader, but the cron service needs to take additional
+          action upon promotion. The fast reaction time for the leader re-election allows us to
+          stay well within a generally tolerable one-minute failover time.
+        </p>
+        <p>
+          The most important state we keep in Paxos is information regarding which cron jobs are
+          launched. We synchronously inform a quorum of replicas of the beginning and end of each
+          scheduled launch for each cron job.
+        </p>
+        <h2 class="subheaders">
+          The Roles of the Leader and the Follower
+        </h2>
+        <p>
+          As just described, our use of Paxos and its deployment in the cron service has two
+          assigned roles: the leader and the follower. The following sections describe each role.
+        </p>
+        <h3 class="subheaders">
+          The leader
+        </h3>
+        <p>
+          The leader replica is the only replica that actively launches cron jobs. The leader has
+          an internal scheduler that, much like the simple <code>crond</code> described at the
+          beginning of this chapter, maintains the list of cron jobs ordered by their scheduled
+          launch time. The leader replica waits until the scheduled launch time of the first job.
+        </p>
+        <p>
+          Upon reaching the scheduled launch time, the leader replica announces that it is about to
+          start this particular cron job's launch, and calculates the new scheduled launch time,
+          just like a regular <code>crond</code> implementation would. Of course, as with regular
+          <code>crond</code>, a cron job launch specification may have changed since the last
+          execution, and this launch specification must be kept in sync with the followers as well.
+          Simply identifying the cron job is not enough: we should also uniquely identify the
+          particular launch using the start time; otherwise, ambiguity in cron job launch tracking
+          may occur. (Such ambiguity is especially likely in the case of high-frequency cron jobs,
+          such as those running every minute.) As seen in <a href="#fig_reliable_cron_job_launch">Figure 24-2</a>, this communication is performed over
+          Paxos.
+        </p>
+        <p>
+          It is important that Paxos communication remain synchronous, and that the actual cron job
+          launch does not proceed until it receives confirmation that the Paxos quorum has received
+          the launch notification. The cron service needs to understand whether each cron job has
+          launched in order to decide the next course of action in case of leader failover. Not
+          performing this task synchronously could mean that the entire cron job launch happens on
+          the leader without informing the follower replicas. In case of failover, the follower
+          replicas might attempt to perform the very same launch again because they aren't aware
+          that the launch already occurred.
+        </p>
+        <figure class="horizontal vertical" id="fig_reliable_cron_job_launch">
+          <img alt="Illustration of progress of a cron job launch, from the leader's perspective." src="../images/srle-2402.jpg">
+          <figcaption>
+            <span>Figure 24-2.</span> Illustration of progress of a cron job launch, from the
+            leader's perspective
+          </figcaption>
+        </figure>
+        <p>
+          The completion of the cron job launch is announced via Paxos to the other replicas
+          synchronously. Note that it does not matter whether the launch succeeded or failed for
+          external reasons (for example, if the datacenter scheduler was unavailable). Here, we are
+          simply keeping track of the fact that the cron service attempted the launch at the given
+          scheduled time. We also need to be able to resolve failures of the cron system in the
+          middle of this operation, as discussed in the following section.
+        </p>
+        <p>
+          Another extremely important feature of the leader is that as soon as it loses its
+          leadership for any reason, it must immediately stop interacting with the datacenter
+          scheduler. Holding the leadership should guarantee mutual exclusion of access to the
+          datacenter scheduler. In the absence of this condition of mutual exclusion, the old and
+          new leaders might perform conflicting actions on the datacenter scheduler.
+        </p>
+        <h3 class="subheaders">
+          The follower
+        </h3>
+        <p>
+          The follower replicas keep track of the state of the world, as provided by the leader, in
+          order to take over at a moment's notice if needed. All the state changes tracked by
+          follower replicas are communicated via Paxos, from the leader replica. Much like the
+          leader, followers also maintain a list of all cron jobs in the system, and this list must
+          be kept consistent among the replicas (through the use of Paxos).
+        </p>
+        <p>
+          Upon receiving notification about a commenced launch, the follower replica updates its
+          local next scheduled launch time for the given cron job. This very important state change
+          (which is performed synchronously) ensures that all cron job schedules within the system
+          are consistent. We keep track of all open launches (launches that have begun but not
+          completed).
+        </p>
+        <p>
+          If a leader replica dies or otherwise malfunctions (e.g., is partitioned away from the
+          other replicas on the network), a follower should be elected as a new leader. The
+          election must converge faster than one minute, in order to avoid the risk of missing or
+          unreasonably delaying a cron job launch. Once a leader is elected, all open launches
+          (i.e., partial failures) must be concluded. This process can be quite complicated,
+          imposing additional requirements on both the cron system and the datacenter
+          infrastructure. The following section discusses how to resolve partial failures of this
+          type.
+        </p>
+        <h3 class="subheaders">
+          Resolving partial failures
+        </h3>
+        <p>
+          As mentioned, the interaction between the leader replica and the datacenter scheduler can
+          fail in between sending multiple RPCs that describe a single logical cron job launch. Our
+          systems should be able to handle this condition.
+        </p>
+        <p>
+          Recall that every cron job launch has two synchronization points:
+        </p>
+        <ul>
+          <li>
+            <p>
+              When we are about to perform the launch
+            </p>
+          </li>
+          <li>
+            <p>
+              When we have finished the launch
+            </p>
+          </li>
+        </ul>
+        <p>
+          These two points allow us to delimit the launch. Even if the launch consists of a single
+          RPC, how do we know if the RPC was actually sent? Consider the case in which we know that
+          the scheduled launch started, but we were not notified of its completion before the
+          leader replica died.
+        </p>
+        <p>
+          In order to determine if the RPC was actually sent, one of the following conditions must
+          be met:
+        </p>
+        <ul>
+          <li>
+            <p>
+              All operations on external systems, which we may need to continue upon re-election,
+              must be idempotent (i.e., we can safely perform the operations again)
+            </p>
+          </li>
+          <li>
+            <p>
+              We must be able to look up the state of all operations on external systems in order
+              to unambiguously determine whether they completed or not
+            </p>
+          </li>
+        </ul>
+        <p>
+          Each of these conditions imposes significant constraints, and may be difficult to
+          implement, but being able to meet at least one of these conditions is fundamental to the
+          accurate operation of a cron service in a distributed environment that could suffer a
+          single or several partial failures. Not handling this appropriately can lead to missed
+          launches or double launch of the same cron job.
+        </p>
+        <p>
+          Most infrastructure that launches logical jobs in datacenters (Mesos, for example)
+          provides naming for those datacenter jobs, making it possible to look up the state of
+          jobs, stop the jobs, or perform other maintenance. A reasonable solution to the
+          idempotency problem is to construct job names ahead of time (thereby avoiding causing any
+          mutating operations on the datacenter scheduler), and then distribute the names to all
+          replicas of your cron service. If the cron service leader dies during launch, the new
+          leader simply looks up the state of all the precomputed names and launches the missing
+          names.
+        </p>
+        <p>
+          Note that, similar to our method of identifying individual cron job launches by their
+          name and launch time, it is important that the constructed job names on the datacenter
+          scheduler include the particular scheduled launch time (or have this information
+          otherwise retrievable). In regular operation, the cron service should fail over quickly
+          in case of leader failure, but a quick failover doesn't always happen.
+        </p>
+        <p>
+          Recall that we track the scheduled launch time when keeping the internal state between
+          the replicas. Similarly, we need to disambiguate our interaction with the datacenter
+          scheduler, also by using the scheduled launch time. For example, consider a short-lived
+          but frequently run cron job. The cron job launches, but before the launch is communicated
+          to all replicas, the leader crashes and an unusually long failover—long enough that the
+          cron job finishes successfully—takes place. The new leader looks up the state of the cron
+          job, observes its completion, and attempts to launch the job again. Had the launch time
+          been included, the new leader would know that the job on the datacenter scheduler is the
+          result of this particular cron job launch, and this double launch would not have
+          happened.
+        </p>
+        <p>
+          The actual implementation has a more complicated system for state lookup, driven by the
+          implementation details of the underlying infrastructure. However, the preceding
+          description covers the implementation-independent requirements of any such system.
+          Depending on the available infrastructure, you may also need to consider the trade-off
+          between risking a double launch and risking skipping a launch.
+        </p>
+        <h2 class="subheaders">
+          Storing the State
+        </h2>
+        <p>
+          Using Paxos to achieve consensus is only one part of the problem of how to handle the
+          state. Paxos is essentially a continuous log of state changes, appended to synchronously
+          as state changes occur. This characteristic of Paxos has two implications:
+        </p>
+        <ul>
+          <li>
+            <p>
+              The log needs to be compacted, to prevent it from growing infinitely
+            </p>
+          </li>
+          <li>
+            <p>
+              The log itself must be stored somewhere
+            </p>
+          </li>
+        </ul>
+        <p>
+          In order to prevent the infinite growth of the Paxos log, we can simply take a snapshot
+          of the current state, which means that we can reconstruct the state without needing to
+          replay all state change log entries leading to the current state. To provide an example:
+          if our state changes stored in logs are "Increment a counter by 1," then after a thousand
+          iterations, we have a thousand log entries that can be easily changed to a snapshot of
+          "Set counter to 1,000."
+        </p>
+        <p>
+          In case of lost logs, we only lose the state since the last snapshot. Snapshots are in
+          fact our most critical state—if we lose our snapshots, we essentially have to start from
+          zero again because we've lost our internal state. Losing logs, on the other hand, just
+          causes a bounded loss of state and sends the cron system back in time to the point when
+          the latest snapshot was taken.
+        </p>
+        <p>
+          We have two main options for storing our data:
+        </p>
+        <ul>
+          <li>
+            <p>
+              Externally in a generally available distributed storage
+            </p>
+          </li>
+          <li>
+            <p>
+              In a system that stores the small volume of state as part of the cron service itself
+            </p>
+          </li>
+        </ul>
+        <p>
+          When designing the system, we combined elements of both options.
+        </p>
+        <p>
+          We store Paxos logs on local disk of the machine where cron service replicas are
+          scheduled. Having three replicas in default operation implies that we have three copies
+          of the logs. We store the snapshots on local disk as well. However, because they are
+          critical, we also back them up onto a distributed filesystem, thus protecting against
+          failures affecting all three machines.
+        </p>
+        <p>
+          We do not store logs on our distributed filesystem. We consciously decided that losing
+          logs, which represent a small amount of the most recent state changes, is an acceptable
+          risk. Storing logs on a distributed filesystem can entail a substantial performance
+          penalty caused by frequent small writes. The simultaneous loss of all three machines is
+          unlikely, and if simultaneous loss does occur, we automatically restore from the
+          snapshot. We thereby lose only a small amount of logs: those taken since the last
+          snapshot, which we perform on configurable intervals. Of course, these trade-offs may be
+          different depending on the details of the infrastructure, as well as the requirements
+          placed on the cron system.
+        </p>
+        <p>
+          In addition to the logs and snapshots stored on the local disk and snapshot backups on
+          the distributed filesystem, a freshly started replica can fetch the state snapshot and
+          all logs from an already running replica over the network. This ability makes replica
+          startup independent of any state on the local machine. Therefore, rescheduling a replica
+          to a different machine upon restart (or machine death) is essentially a nonissue for the
+          reliability of the service.
+        </p>
+        <h2 class="subheaders">
+          Running Large Cron
+        </h2>
+        <p>
+          There are other smaller but equally interesting implications of running a large cron
+          deployment. A traditional cron is small: at most, it probably contains on the order of
+          tens of cron jobs. However, if you run a cron service for thousands of machines in a
+          datacenter, your usage will grow, and you may run into problems.
+        </p>
+        <p>
+          Beware the large and well-known problem of distributed systems: the thundering herd.
+          Based on user configuration, the cron service can cause substantial spikes in datacenter
+          usage. When people think of a "daily cron job," they commonly configure this job to run
+          at midnight. This setup works just fine if the cron job launches on the same machine, but
+          what if your cron job can spawn a MapReduce with thousands of workers? And what if 30
+          different teams decide to run a daily cron job like this, in the same datacenter? To
+          solve this problem, we introduced an extension to the crontab format.
+        </p>
+        <p>
+          In the ordinary crontab, users specify the minute, hour, day of the month (or week), and
+          month when the cron job should launch, or asterisk to specify any value. Running at
+          midnight, daily, would then have crontab specification of <code>"0 0 * * *"</code> (i.e.,
+          zero-th minute, zero-th hour, every day of the week, every month, and every day of the
+          week). We also introduced the use of the question mark, which means that any value is
+          acceptable, and the cron system is given the freedom to choose the value. Users choose
+          this value by hashing the cron job configuration over the given time range (e.g.,
+          <code>0..23</code> for hour), therefore distributing those launches more evenly.
+        </p>
+        <p>
+          Despite this change, the load caused by the cron jobs is still very spiky. The graph in
+          <a href="#fig_reliable_cron_job_launches">Figure 24-3</a> illustrates the aggregate
+          global number of launches of cron jobs at Google. This graph highlights the frequent
+          spikes in cron job launches, which is often caused by cron jobs that need to be launched
+          at a specific time—for example, due to temporal dependency on external events.
+        </p>
+        <figure class="horizontal vertical" id="fig_reliable_cron_job_launches">
+          <img alt="The number of cron jobs launched globally." src="../images/srle-2403.jpg">
+          <figcaption>
+            <span>Figure 24-3.</span> The number of cron jobs launched globally
+          </figcaption>
+        </figure>
+        <h1 class="heading">
+          Summary
+        </h1>
+        <p>
+          A cron service has been a fundamental feature in UNIX systems for many decades. The
+          industry move toward large distributed systems, in which a datacenter may be the smallest
+          effective unit of hardware, requires changes in large portions of the stack. Cron is no
+          exception to this trend. A careful look at the required properties of a cron service and
+          the requirements of cron jobs drives Google's new design.
+        </p>
+        <p>
+          We have discussed the new constraints demanded by a distributed-system environment, and a
+          possible design of the cron service based on Google's solution. This solution requires
+          strong consistency guarantees in the distributed environment. The core of the distributed
+          cron implementation is therefore Paxos, a commonplace algorithm to reach consensus in an
+          unreliable environment. The use of Paxos and correct analysis of new failure modes of
+          cron jobs in a large-scale, distributed environment allowed us to build a robust cron
+          service that is heavily used in Google.
+        </p>
+        <div class="sub-wrapper footnotes">
+          <p id="id-WakuESLFd">
+            <sup><a href="#id-WakuESLFd-marker">114</a></sup>This chapter was previously published
+            in part in <em>ACM Queue</em> (March 2015, vol. 13, issue 3).
+          </p>
+          <p id="id-z0AIxSrSnSWIVtOTJ">
+            <sup><a href="#id-z0AIxSrSnSWIVtOTJ-marker">115</a></sup>Failure of individual jobs is
+            beyond the scope of this analysis.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="maia-aux">
+        <div class="previous">
+          <a href="/sre/book/chapters/managing-critical-state.html">
+          <p class="footer-caption">
+            previous
+          </p>
+          <p class="chapter-link">
+            Chapter 23- Managing Critical State: Distributed Consensus for Reliability
+          </p></a>
+        </div>
+        <div class="next">
+          <a href="/sre/book/chapters/data-processing-pipelines.html">
+          <p class="footer-caption">
+            next
+          </p>
+          <p class="chapter-link">
+            Chapter 25- Data Processing Pipelines
+          </p></a>
+        </div>
+        <p class="footer-link">
+          Copyright © 2017 Google, Inc. Published by O'Reilly Media, Inc. Licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a>
+        </p>
+      </div>
+    </div>
+    <script src="../../../sre/book/js/main.min.js">
+    </script>
+    <script src="//www.google.com/js/maia.js">
+    </script>
+
+</body><div></div></html>
