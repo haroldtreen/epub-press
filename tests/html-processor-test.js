@@ -290,12 +290,11 @@ describe('HTML Processor', () => {
             fs.emptyDir(outputFolder, () => {});
         });
 
-        it('downloads images', (done) => {
-            HtmlProcessor.extractImages(mockSection.url, mockSection.html).then((output) => {
+        it('downloads images', () => {
+            return HtmlProcessor.extractImages(mockSection.url, mockSection.html).then((output) => {
                 assert.lengthOf(output.html.match(/\.\.\/images\/.*\.png/g), 4);
                 scope.isDone();
-                done();
-            }).catch(done);
+            });
         });
 
         it('saves images in the specified folder', (done) => {

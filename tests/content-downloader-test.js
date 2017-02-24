@@ -156,6 +156,18 @@ describe('Content Downloader', () => {
             });
         });
 
+        it('resolves with metadata in the result', () => {
+            const options = { metadata: { src: '/file.jpg' } };
+            const content = new ContentDownloader(URL, options);
+
+            const scope = nock(URL).get('/').reply(200);
+
+            return content.download().then((result) => {
+                assert.equal(result.src, options.metadata.src);
+                scope.done();
+            });
+        });
+
         it('resolves with a path to the file in the results', () => {
             const options = { path: Config.IMAGES_TMP };
             const content = new ContentDownloader(URL, options);
