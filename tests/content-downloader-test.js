@@ -13,6 +13,38 @@ const FIXTURES_PATH = './tests/fixtures';
 const fsStub = sinon.stub().callsArg(3);
 
 describe('Content Downloader', () => {
+    afterEach(() => {
+        nock.cleanAll();
+    });
+
+    describe('.all', () => {
+        it('downloads multiple downloaders', () => {
+            const scope = nock(URL).get('/').times(2).reply(200, 'Hello');
+            const content1 = new ContentDownloader(URL);
+            const content2 = new ContentDownloader(URL);
+
+            return ContentDownloader.all([content1, content2]).then((results) => {
+                results.forEach((result) => {
+                    assert.isUndefined(result.error);
+                });
+                scope.done();
+            });
+        });
+
+        it('handles failed downloaders', () => {
+            const scope = nock(URL).get('/').reply(200, 'Hello');
+            const content1 = new ContentDownloader(URL);
+            const content2 = new ContentDownloader();
+
+            return ContentDownloader.all([content1, content2])
+                .then(([r1, r2]) => {
+                    assert.isUndefined(r1.error);
+                    assert.isDefined(r2.error);
+                    scope.done();
+                });
+        });
+    });
+
     describe('constructor', () => {
         it('wraps a url', () => {
             const content = new ContentDownloader(URL);
@@ -33,6 +65,24 @@ describe('Content Downloader', () => {
         });
     });
 
+    describe('#getFiletype', () => {
+        it('can figure out a filetype', () => {
+            const types = {
+                '.png': ['http://g.co/image.png', ''],
+                '.jpg': ['', 'image/jpg'],
+                '.JPEG': ['/image.JPEG', ''],
+                '.gif': ['', 'image/gif'],
+                '': ['', ''], // error case
+            };
+
+            Object.keys(types).forEach((output) => {
+                const input = types[output];
+                const content = new ContentDownloader(input[0]);
+                assert.equal(content.getFiletype(input[1]), output);
+            });
+        });
+    });
+
     describe('#getFilename', () => {
         it('recognizes all the filetypes', () => {
             const content = new ContentDownloader(URL);
@@ -41,6 +91,12 @@ describe('Content Downloader', () => {
                 const filename = content.getFilename(contentType);
                 assert.include(filename, typesMap[contentType]);
             });
+        });
+
+        it('pulls filetypes from the url', () => {
+            const content = new ContentDownloader('http://g.co/img.png');
+
+            assert.include(content.getFilename('image/fake'), '.png');
         });
     });
 
@@ -71,6 +127,19 @@ describe('Content Downloader', () => {
                 assert.isTrue(stub.called);
                 stub.restore();
             });
+        });
+    });
+
+    describe('#onRequestComplete', () => {
+        it('creates a function that rejects if called with an error', (done) => {
+            const content = new ContentDownloader(URL);
+
+            const reject = () => { done(); };
+            const resolve = () => { done(new Error('On request resolved.')); };
+
+            const callback = content.onRequestComplete(resolve, reject);
+
+            callback(new Error('Boom!'));
         });
     });
 
