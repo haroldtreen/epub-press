@@ -35,7 +35,7 @@ If you find a page that isn't being extracted properly, don't hesitate to email 
 - Books are limited to containing **50 articles**.
 - Books must be **10 Mb or less** for email delivery to work.
 - Images in an article must be **1 Mb or less**. Images that exceed this limit will be removed.
-- No more then **10 images** will be downloaded.
+- No more than **30 images** will be downloaded.
 
 ### Q: Is EpubPress available for other platforms?
 
@@ -45,10 +45,10 @@ EpubPress client are planned for a variety of platforms. To see the development 
 
 Currently EpubPress is a free tool I've developed in my spare time. Hosting this service is paid for entirely out of my own pocket.
 
-You can help keep EpubPress alive with your donations.  
+You can help keep EpubPress alive with your donations.
 [Similar services](#other-services) operate off premium pricing between **[3](https://www.instapaper.com/premium)- [6](http://sendtoreader.com/pricing/) $/month**, but all contributions are appreciated! ❤
 
-### Credit Card/Paypal  
+### Credit Card/Paypal
 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 <input type="hidden" name="cmd" value="_s-xclick">
 <input type="hidden" name="hosted_button_id" value="WPPGUUWZSFASU">
@@ -56,14 +56,14 @@ You can help keep EpubPress alive with your donations.
 <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
 </form>
 
-### Bitcoin  
+### Bitcoin
 <script src="https://gateway.gear.mycelium.com/gear-widget-host.js"></script>
 <iframe id="gear-widget" scrolling="no" src="https://gateway.gear.mycelium.com/widgets/c0a5bcfdcc07f8722c763d64cfeaadf65904cbd03152f12e0687fab6a21b29ab" style="border: none; display: inline-block; height: 130px; min-width: 250px; max-width: 350px;"></iframe>
 
 # Privacy Policy
 EpubPress has no way of tracking who is creating ebooks.
 
-When a book is created, the html from your selected tabs will be sent to a server for publishing into an ebook.  
+When a book is created, the html from your selected tabs will be sent to a server for publishing into an ebook.
 When an ebook is requested, your email will be sent to the server if provided. This is necessary for email delivery and will not be used for any other purposes.
 
 If no email is provided, the ebook will be returned as a file and no information about who requested the book will be saved.
