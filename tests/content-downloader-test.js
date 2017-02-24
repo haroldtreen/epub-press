@@ -20,13 +20,38 @@ describe('Content Downloader', () => {
     describe('.all', () => {
         it('downloads multiple downloaders', () => {
             const scope = nock(URL).get('/').times(2).reply(200, 'Hello');
-            const content1 = new ContentDownloader(URL);
-            const content2 = new ContentDownloader(URL);
+            const c1 = new ContentDownloader(URL);
+            const c2 = new ContentDownloader(URL);
 
-            return ContentDownloader.all([content1, content2]).then((results) => {
+            return ContentDownloader.all([c1, c2]).then((results) => {
                 results.forEach((result) => {
                     assert.isUndefined(result.error);
                 });
+                scope.done();
+            });
+        });
+
+        it('can limit download size for all passed downloaders', () => {
+            const scope = nock(URL).get('/').times(3).replyWithFile(
+                200,
+                `${FIXTURES_PATH}/placeholder.png` // 4.3 kB image
+            );
+            const maxSize = 5300;
+            const c1 = new ContentDownloader(URL);
+            const c2 = new ContentDownloader(URL);
+            const c3 = new ContentDownloader(URL);
+
+            return ContentDownloader.all([c1, c2, c3], { maxSize }).then((results) => {
+                const totalContent = results.reduce(
+                    (t, res) => t + (res.contentLength || 0),
+                    0
+                );
+                const numSuccess = results.reduce((num, r) => {
+                    const value = r.error ? 0 : 1;
+                    return num + value;
+                }, 0);
+                assert.isBelow(totalContent, maxSize);
+                assert.equal(numSuccess, 1);
                 scope.done();
             });
         });
@@ -150,7 +175,6 @@ describe('Content Downloader', () => {
             const scope = nock(URL).get('/').reply(200, HTML);
 
             return content.download().then((result) => {
-                assert.isTrue(result.success);
                 assert.equal(result.content, HTML);
                 scope.done();
             });
