@@ -1,0 +1,22 @@
+config:
+  target: 'http://localhost:3000'
+  phases:
+    - duration: 60
+      arrivalRate: 20
+
+scenarios:
+  - flow:
+    - get:
+        url: '/'
+    - post:
+        url: "/api/v1/books"
+        json:
+            title: 'This is a book'
+            urls:
+                - 'http://www.cbc.ca/news/world/rafael-mccloud-fugitive-dead-1.3486581?cmp=rss'
+                - 'http://js-kongress.de/'
+                - 'http://www.schibsted.pl/2016/03/20-schibsted-women-why-we-love-working-in-tech/'
+                - 'http://www.cbc.ca/news/world/fukushima-nuclear-disaster-tsunami-five-years-later-1.3480925?cmp=rss'
+                - 'http://www.cbc.ca/news/health/organic-eggs-nutrition-1.3485640?cmp=rss'
+                - 'http://www.cbc.ca/news/business/february-jobs-advancer-1.3485603?cmp=rss'
+                - 'http://www.cbc.ca/news/politics/hall-trudeau-obama-bromance-1.3486409?cmp=rss'
