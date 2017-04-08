@@ -4,7 +4,7 @@
         "indent": [2, 4],
         "strict": 0,
         "no-underscore-dangle": 0,
-        "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/tests/*.js"]}],
+        "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/tests/*.js", "Gulpfile.js"]}],
         "comma-dangle": ["error", {
             "arrays": "always-multiline",
             "objects": "always-multiline",
