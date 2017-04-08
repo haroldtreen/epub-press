@@ -1,4 +1,5 @@
 'use strict';
+
 const assert = require('chai').assert;
 const Sinon = require('sinon');
 
@@ -106,6 +107,7 @@ describe('Book', () => {
             title: 'A book',
             description: 'A description',
             urls: ['url1', 'url2'],
+            author: 'Tom Riddle',
         };
 
         it('builds books from request objects', () => {
@@ -121,6 +123,17 @@ describe('Book', () => {
             jsonBook.getSections().forEach((section) => {
                 assert.isObject(section);
                 assert.isNull(section.html);
+            });
+        });
+
+        it('accepts valid metadata', () => {
+            const validMetadataKeys = ['title', 'author', 'description'];
+
+            const jsonBook = Book.fromJSON(reqBody);
+            const metadata = jsonBook.getMetadata();
+
+            validMetadataKeys.forEach((key) => {
+                assert.equal(metadata[key], reqBody[key]);
             });
         });
     });
