@@ -67,6 +67,22 @@ describe('Book', () => {
         });
     });
 
+    describe('#getReferences', () => {
+        it('returns a reference page containing all sections', () => {
+            book = new Book(bookMetadata, [
+                { title: 'Titled', url: 'http://google.com' },
+                { url: 'http://yahoo.com' },
+            ]);
+
+            const referencesHtml = book.getReferences();
+
+            book.getSections().forEach((section) => {
+                assert.include(referencesHtml, section.title);
+                assert.include(referencesHtml, section.url);
+            });
+        });
+    });
+
     describe('#writeEpub', () => {
         it('saves an epub file', (done) => {
             const sectionStub = Sinon.stub(book._ebook, 'addSection');
@@ -81,7 +97,7 @@ describe('Book', () => {
             });
 
             book.writeEpub().then(() => {
-                assert.equal(sectionStub.callCount, book.getSections().length);
+                assert.equal(sectionStub.callCount, book.getSections().length + 1);
                 assert.equal(writeStub.callCount, 1);
 
                 sectionStub.restore();
