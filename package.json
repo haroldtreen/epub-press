@@ -7,6 +7,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon --harmony ./bin/www",
+    "test": "gulp test-ci",
     "debug": "node --inspect ./bin/www"
   },
   "dependencies": {
@@ -47,6 +48,7 @@
     "gulp": "^3.9.1",
     "gulp-istanbul": "^1.1.1",
     "gulp-mocha": "^3.0.1",
+    "gulp-sequence": "^0.4.6",
     "loadtest": "^2.3.0",
     "mocha": "^3.4.2",
     "nock": "^9.0.13",
