@@ -2,7 +2,8 @@
 capybara-*.html
 .rspec
 /log
-/tmp
+tmp/**
+!tmp/.gitkeep
 /db/*.sqlite3
 /db/*.sqlite3-journal
 /public/system
@@ -36,6 +37,7 @@ bower.json
 
 node_modules
 
-ebooks
+ebooks/**
+!ebooks/.gitkeep
 *.log
 hidden
