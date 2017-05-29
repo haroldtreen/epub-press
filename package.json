@@ -51,7 +51,7 @@
     "flow-bin": "^0.38.0",
     "gulp": "^3.9.1",
     "gulp-istanbul": "^1.1.1",
-    "gulp-mocha": "^3.0.1",
+    "gulp-mocha": "^4.3.1",
     "gulp-sequence": "^0.4.6",
     "loadtest": "^2.3.0",
     "mocha": "^3.4.2",
@@ -59,7 +59,6 @@
     "prettier-eslint-cli": "^3.6.1",
     "sequelize-cli": "^2.7.0",
     "sinon": "^2.3.2",
-    "sinon-as-promised": "^4.0.3",
     "supertest": "^2.0.1",
     "yargs": "^6.5.0"
   }

@@ -1,5 +1,4 @@
 const sinon = require('sinon');
-require('sinon-as-promised');
 const request = require('supertest');
 const { assert } = require('chai');
 

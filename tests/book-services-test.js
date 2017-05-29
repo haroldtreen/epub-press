@@ -9,8 +9,6 @@ const nock = require('nock');
 const fs = require('fs');
 const { isError } = require('./helpers');
 
-require('sinon-as-promised');
-
 const urls = ['http://www.a.com', 'http://www.b.com'];
 const html = fs.readFileSync(`${__dirname}/fixtures/article.html`).toString();
 let book;
