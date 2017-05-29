@@ -38,6 +38,9 @@ describe('Logger', () => {
                     calls++;
                     if (calls === 2) {
                         fs.readFile(Logger.outputFile(), (err, data) => {
+                            if (err) {
+                                done(err);
+                            }
                             const output = data.toString();
 
                             assert.include(output, '"meta":true');
@@ -69,17 +72,15 @@ describe('Logger', () => {
                     const output = data.toString();
 
                     ['a promise', 'some horrible error', 'logger-test'].forEach(msg =>
-            assert.include(output, msg)
-          );
+                        assert.include(output, msg)
+                    );
                     done();
                 });
             });
 
             new Promise((resolve, reject) => {
                 reject(new Error('some horrible error!'));
-            })
-        .then(() => {})
-        .catch(fileLogger.exception('a promise'));
+            }).catch(fileLogger.exception('a promise'));
         });
     });
 
