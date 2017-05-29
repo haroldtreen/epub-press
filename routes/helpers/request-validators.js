@@ -28,5 +28,4 @@ class RequestValidators {
 
 RequestValidators.MAX_NUM_SECTIONS = 50;
 
-
 module.exports = RequestValidators;

@@ -1,3 +1,3 @@
-[].forEach.call(document.querySelectorAll('td.title > a'), function(elem) {
+[].forEach.call(document.querySelectorAll('td.title > a'), (elem) => {
     window.open(elem.href);
 });

@@ -13,6 +13,7 @@ const BookServices = require('../../../../lib/book-services');
 const StatusTracker = require('../../../../lib/status-tracker');
 const Mailer = require('../../../../lib/mailer');
 
+// eslint-disable-next-line prefer-spread
 const urls = Array.apply(null, { length: 1000 }).map((a, i) => `http://google.com/${i}`);
 const session = request(app);
 
@@ -56,7 +57,9 @@ function runTestCase(endpoint, testCase) {
 
     it(description, (done) => {
         sandbox.restore();
-        if (testCase.before) { testCase.before(); }
+        if (testCase.before) {
+            testCase.before();
+        }
 
         const method = testCase.post ? 'post' : 'get';
         const reqData = testCase[method];
@@ -64,7 +67,9 @@ function runTestCase(endpoint, testCase) {
         req = testCase.get ? req.query(reqData) : req.send(reqData);
 
         req.expect(testCase.status, testCase.response).end((err) => {
-            if (testCase.after) { testCase.after(); }
+            if (testCase.after) {
+                testCase.after();
+            }
             sandbox.restore();
             done(err);
         });
@@ -99,9 +104,21 @@ const BETA_ENDPOINTS = {
                 sandbox.stub(BookServices, 'publish').rejects(new Error());
             },
         },
-        { post: { h: 'W' }, status: 400, response: AppErrors.getApiError('NO_SECTIONS_SPECIFIED').message },
-        { post: { urls }, status: 500, response: AppErrors.getApiError('TOO_MANY_ITEMS').message },
-        { post: { sections: urls }, status: 500, response: AppErrors.getApiError('TOO_MANY_ITEMS').message },
+        {
+            post: { h: 'W' },
+            status: 400,
+            response: AppErrors.getApiError('NO_SECTIONS_SPECIFIED').message,
+        },
+        {
+            post: { urls },
+            status: 500,
+            response: AppErrors.getApiError('TOO_MANY_ITEMS').message,
+        },
+        {
+            post: { sections: urls },
+            status: 500,
+            response: AppErrors.getApiError('TOO_MANY_ITEMS').message,
+        },
     ],
     '/api/books/download': [
         {
@@ -112,7 +129,11 @@ const BETA_ENDPOINTS = {
                 sandbox.stub(BookModel, 'findOne').resolves({ uid: '123' });
             },
         },
-        { get: {}, status: 400, response: AppErrors.getApiError('NO_ID_SPECIFIED').message },
+        {
+            get: {},
+            status: 400,
+            response: AppErrors.getApiError('NO_ID_SPECIFIED').message,
+        },
         {
             get: { id: 'BAD-ID' },
             status: 404,
@@ -335,9 +356,9 @@ const V1_ENDPOINTS = {
             before: () => {
                 sandbox
                     .stub(BookServices, 'getStatus')
-                    .resolves(StatusTracker.buildStatus('FAILED'))
+                    .resolves(StatusTracker.buildStatus('FAILED'));
             },
-        }
+        },
     ],
 };
 

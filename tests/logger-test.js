@@ -16,7 +16,6 @@ describe('Logger', () => {
             log = new Logger({ options: [Logger.Console], overrideMock: true });
         });
 
-
         it('defines all the basic log levels', () => {
             ['error', 'warn', 'info', 'verbose', 'debug', 'silly'].forEach((level) => {
                 assert.isFunction(log[level]);
@@ -50,35 +49,46 @@ describe('Logger', () => {
                 }, 1);
             };
 
-            const fileLogger = new Logger({ outputs: [Logger.File], overrideMock: true });
+            const fileLogger = new Logger({
+                outputs: [Logger.File],
+                overrideMock: true,
+            });
 
             fileLogger.error(errorMsg, metadata, msgLogged);
             fileLogger.info(infoMsg, metadata, msgLogged);
         });
 
         it('creates exception loggers', (done) => {
-            const fileLogger = new Logger({ outputs: [Logger.File], overrideMock: true });
+            const fileLogger = new Logger({
+                outputs: [Logger.File],
+                overrideMock: true,
+            });
 
             fileLogger.on('logging', () => {
                 fs.readFile(Logger.outputFile(), (err, data) => {
                     const output = data.toString();
 
-                    ['a promise', 'some horrible error', 'logger-test'].forEach(
-                        (msg) => assert.include(output, msg)
-                    );
+                    ['a promise', 'some horrible error', 'logger-test'].forEach(msg =>
+            assert.include(output, msg)
+          );
                     done();
                 });
             });
 
             new Promise((resolve, reject) => {
                 reject(new Error('some horrible error!'));
-            }).then(() => {}).catch(fileLogger.exception('a promise'));
+            })
+        .then(() => {})
+        .catch(fileLogger.exception('a promise'));
         });
     });
 
     describe('querying', () => {
         it('can query the log file', (done) => {
-            const fileLogger = new Logger({ outputs: [Logger.File], overrideMock: true });
+            const fileLogger = new Logger({
+                outputs: [Logger.File],
+                overrideMock: true,
+            });
             const numLogs = 40;
             let calls = 0;
 
@@ -87,7 +97,7 @@ describe('Logger', () => {
                 if (calls === numLogs) {
                     fileLogger.query({ limit: 10 }, (err, results) => {
                         assert.lengthOf(results.file, 10);
-                        results.file.forEach((result) => assert.isDefined(result, 'field'));
+                        results.file.forEach(result => assert.isDefined(result, 'field'));
                         done();
                     });
                 }

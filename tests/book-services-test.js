@@ -34,13 +34,12 @@ describe('Book Services', () => {
 
     describe('.getStatus', () => {
         it('gets the status for a given book', () =>
-            BookServices.setStatus(book, 'DEFAULT').then(trackedBook =>
-                BookServices.getStatus(trackedBook)
-            ).then((status) => {
-                assert.isString(status.message);
-                assert.isNumber(status.progress);
-            })
-        );
+            BookServices.setStatus(book, 'DEFAULT')
+                .then(trackedBook => BookServices.getStatus(trackedBook))
+                .then((status) => {
+                    assert.isString(status.message);
+                    assert.isNumber(status.progress);
+                }));
 
         it('rejects when no status is set', () =>
             BookServices.getStatus(book)
@@ -48,8 +47,7 @@ describe('Book Services', () => {
                 .catch(isError)
                 .then((e) => {
                     assert.include(e.message, 'found');
-                })
-        );
+                }));
     });
 
     describe('.publish', () => {
@@ -68,22 +66,32 @@ describe('Book Services', () => {
                 sandbox.stub(BookServices, service).returns(Promise.resolve(book));
             });
 
-            return BookServices.publish(book).then((publishedBook) => {
-                assert.equal(book, publishedBook);
-                publishServices.forEach((service) => {
-                    assert.isTrue(BookServices[service].calledWith(book), `${service} not called`);
+            return BookServices.publish(book)
+                .then((publishedBook) => {
+                    assert.equal(book, publishedBook);
+                    publishServices.forEach((service) => {
+                        assert.isTrue(
+                            BookServices[service].calledWith(book),
+                            `${service} not called`
+                        );
+                    });
+                    sandbox.restore();
+                })
+                .catch((err) => {
+                    sandbox.restore();
+                    return Promise.reject(err);
                 });
-                sandbox.restore();
-            }).catch((err) => {
-                sandbox.restore();
-                return Promise.reject(err);
-            });
         });
     });
 
     describe('.writeEpub', () => {
         it('calls writeEpub on the book', () => {
-            const fakeBook = { getId: () => 1, writeEpub() { return Promise.resolve(); } };
+            const fakeBook = {
+                getId: () => 1,
+                writeEpub() {
+                    return Promise.resolve();
+                },
+            };
             const bookSpy = Sinon.spy(fakeBook, 'writeEpub');
 
             return BookServices.writeEpub(fakeBook).then((writtenBook) => {
@@ -98,16 +106,18 @@ describe('Book Services', () => {
             const stub = Sinon.stub(BookServices, 'updateSectionHtml');
             stub.resolves({});
 
-            BookServices.updateSectionsHtml(book).then(() => {
-                stub.getCalls().forEach((call) => assert.include(urls, call.args[0].url));
-                assert.equal(stub.callCount, 2);
+            BookServices.updateSectionsHtml(book)
+                .then(() => {
+                    stub.getCalls().forEach(call => assert.include(urls, call.args[0].url));
+                    assert.equal(stub.callCount, 2);
 
-                stub.restore();
-                done();
-            }).catch((err) => {
-                stub.restore();
-                done(err);
-            });
+                    stub.restore();
+                    done();
+                })
+                .catch((err) => {
+                    stub.restore();
+                    done(err);
+                });
         });
     });
 
@@ -116,11 +126,13 @@ describe('Book Services', () => {
             const section = { url: urls[0] };
             nock(urls[0]).get('/').reply(200, html);
 
-            BookServices.updateSectionHtml(section).then((updatedSection) => {
-                assert.equal(updatedSection.html, section.html);
+            BookServices.updateSectionHtml(section)
+                .then((updatedSection) => {
+                    assert.equal(updatedSection.html, section.html);
 
-                done();
-            }).catch(done);
+                    done();
+                })
+                .catch(done);
         });
     });
 
@@ -128,14 +140,10 @@ describe('Book Services', () => {
         it('downloads images referenced in html', (done) => {
             const scope = nock('http://test.fake');
 
-            [
-                '/image?size=30', '/picture.png', '/article/image.png', '/image.png',
-            ].forEach((path) => {
-                scope.get(path).replyWithFile(
-                    200,
-                    `${fixturesPath}/placeholder.png`,
-                    { 'Content-type': 'image/png' }
-                );
+            ['/image?size=30', '/picture.png', '/article/image.png', '/image.png'].forEach((path) => {
+                scope.get(path).replyWithFile(200, `${fixturesPath}/placeholder.png`, {
+                    'Content-type': 'image/png',
+                });
             });
             scope.get('/bad-source').reply('404', 'Not Found');
             const section = {
@@ -143,13 +151,15 @@ describe('Book Services', () => {
                 url: 'http://test.fake/article',
             };
 
-            BookServices.localizeSectionImages(section).then((updatedSection) => {
-                assert.lengthOf(updatedSection.content.match(/\.\.\/images\/.*\.png/g), 4);
-                updatedSection.images.forEach((image) => {
-                    assert.match(image, /\/images\/.*\.png/);
-                });
-                done();
-            }).catch(done);
+            BookServices.localizeSectionImages(section)
+                .then((updatedSection) => {
+                    assert.lengthOf(updatedSection.content.match(/\.\.\/images\/.*\.png/g), 4);
+                    updatedSection.images.forEach((image) => {
+                        assert.match(image, /\/images\/.*\.png/);
+                    });
+                    done();
+                })
+                .catch(done);
         });
     });
 
@@ -159,15 +169,17 @@ describe('Book Services', () => {
             const mockSection = { content: '<p>Content</p>', title: 'HTML' };
             stub.resolves(mockSection);
 
-            BookServices.extractSectionsContent(book).then(() => {
-                assert.equal(stub.callCount, book.getSections().length);
+            BookServices.extractSectionsContent(book)
+                .then(() => {
+                    assert.equal(stub.callCount, book.getSections().length);
 
-                stub.restore();
-                done();
-            }).catch((err) => {
-                stub.restore();
-                done(err);
-            });
+                    stub.restore();
+                    done();
+                })
+                .catch((err) => {
+                    stub.restore();
+                    done(err);
+                });
         });
     });
 
@@ -175,22 +187,26 @@ describe('Book Services', () => {
         it('can extract html content', (done) => {
             const section = { html, url: 'http://test.com' };
 
-            BookServices.extractSectionContent(section).then((extractedSection) => {
-                assert.equal(extractedSection.title, 'Article');
-                assert.include(extractedSection.content, `<h1>${extractedSection.title}</h1>`);
+            BookServices.extractSectionContent(section)
+                .then((extractedSection) => {
+                    assert.equal(extractedSection.title, 'Article');
+                    assert.include(extractedSection.content, `<h1>${extractedSection.title}</h1>`);
 
-                done();
-            }).catch(done);
+                    done();
+                })
+                .catch(done);
         });
 
         it('can gracefully handle no content found', (done) => {
             const section = { html: '<html></html>', url: 'http://test.com' };
 
-            BookServices.extractSectionContent(section).then((extractedSection) => {
-                assert.match(extractedSection.content, /support@epub\.press/);
-                assert.match(extractedSection.content, /<h1>/);
-                done();
-            }).catch(done);
+            BookServices.extractSectionContent(section)
+                .then((extractedSection) => {
+                    assert.match(extractedSection.content, /support@epub\.press/);
+                    assert.match(extractedSection.content, /<h1>/);
+                    done();
+                })
+                .catch(done);
         });
     });
 
@@ -199,15 +215,17 @@ describe('Book Services', () => {
             const stub = Sinon.stub(BookServices, 'convertSectionContent');
             stub.resolves({});
 
-            BookServices.convertSectionsContent(book).then(() => {
-                assert.equal(stub.callCount, book.getSections().length);
+            BookServices.convertSectionsContent(book)
+                .then(() => {
+                    assert.equal(stub.callCount, book.getSections().length);
 
-                stub.restore();
-                done();
-            }).catch((err) => {
-                stub.restore();
-                done(err);
-            });
+                    stub.restore();
+                    done();
+                })
+                .catch((err) => {
+                    stub.restore();
+                    done(err);
+                });
         });
     });
 
@@ -215,12 +233,14 @@ describe('Book Services', () => {
         it('can convert a section HTML to XHTML', (done) => {
             const content = '<p>Hello<br>World</p>';
             const mockSection = { content };
-            BookServices.convertSectionContent(mockSection).then((xhtmlSection) => {
-                assert.include(xhtmlSection.xhtml, '<br />');
-                assert.notInclude(xhtmlSection.xhtml, '<br>');
+            BookServices.convertSectionContent(mockSection)
+                .then((xhtmlSection) => {
+                    assert.include(xhtmlSection.xhtml, '<br />');
+                    assert.notInclude(xhtmlSection.xhtml, '<br>');
 
-                done();
-            }).catch(done);
+                    done();
+                })
+                .catch(done);
         });
     });
 });

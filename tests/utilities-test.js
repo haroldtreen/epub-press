@@ -13,13 +13,15 @@ describe('Utilities', () => {
             files.push(file);
         });
 
-        Utilities.removeFiles(files).then(() => {
-            fs.readdir(`${Config.TMP}`, (err, dirFiles) => {
-                dirFiles.forEach((file) => {
-                    assert.notMatch(file, /\.txt/);
-                });
-                done();
-            });
-        }).catch(done);
+        Utilities.removeFiles(files)
+      .then(() => {
+          fs.readdir(`${Config.TMP}`, (err, dirFiles) => {
+              dirFiles.forEach((file) => {
+                  assert.notMatch(file, /\.txt/);
+              });
+              done();
+          });
+      })
+      .catch(done);
     });
 });

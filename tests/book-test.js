@@ -51,7 +51,11 @@ describe('Book', () => {
 
     describe('#getTitle', () => {
         it('returns titles passed to the book', () => {
-            assert.equal(book.getTitle(), bookMetadata.title, 'Title not passed to book');
+            assert.equal(
+        book.getTitle(),
+        bookMetadata.title,
+        'Title not passed to book'
+      );
         });
     });
 
@@ -70,8 +74,8 @@ describe('Book', () => {
     describe('#getReferences', () => {
         it('returns a reference page containing all sections', () => {
             book = new Book(bookMetadata, [
-                { title: 'Titled', url: 'http://google.com' },
-                { url: 'http://yahoo.com' },
+        { title: 'Titled', url: 'http://google.com' },
+        { url: 'http://yahoo.com' },
             ]);
 
             const referencesHtml = book.getReferences();
@@ -86,9 +90,13 @@ describe('Book', () => {
     describe('#writeEpub', () => {
         it('saves an epub file', (done) => {
             const sectionStub = Sinon.stub(book._ebook, 'addSection');
-            const writeStub = Sinon.stub(book._ebook, 'writeEPUB', (onErr, p, f, onSuccess) => {
-                onSuccess();
-            });
+            const writeStub = Sinon.stub(
+        book._ebook,
+        'writeEPUB',
+        (onErr, p, f, onSuccess) => {
+            onSuccess();
+        }
+      );
 
             book.getSections().forEach((section) => {
                 const updatedSection = section;
@@ -96,27 +104,32 @@ describe('Book', () => {
                 updatedSection.xhtml = '<div></div>';
             });
 
-            book.writeEpub().then(() => {
-                assert.equal(sectionStub.callCount, book.getSections().length + 1);
-                assert.equal(writeStub.callCount, 1);
+            book
+        .writeEpub()
+        .then(() => {
+            assert.equal(sectionStub.callCount, book.getSections().length + 1);
+            assert.equal(writeStub.callCount, 1);
 
-                sectionStub.restore();
-                writeStub.restore();
-                done();
-            }).catch(done);
+            sectionStub.restore();
+            writeStub.restore();
+            done();
+        })
+        .catch(done);
         });
     });
 
     describe('.isValidSection', () => {
         it('can validate sections', () => {
-            assert.isTrue(Book.isValidSection({ title, content }), 'Title and content is valid');
+            assert.isTrue(
+        Book.isValidSection({ title, content }),
+        'Title and content is valid'
+      );
             assert.isTrue(Book.isValidSection({ url }), 'Url only is valid');
 
             assert.isFalse(Book.isValidSection({ title }), 'Content must be present');
             assert.isFalse(Book.isValidSection({ content }), 'Title must be present');
         });
     });
-
 
     describe('.fromJSON', () => {
         const reqBody = {

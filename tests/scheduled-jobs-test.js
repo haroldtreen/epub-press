@@ -19,12 +19,13 @@ describe('ScheduledJobs', () => {
     describe('.cleanEbooks', () => {
         it('should remove all old ebooks', () => {
             const fakeBook = `${Config.DEFAULT_EBOOK_FOLDER}/fakebook.epub`;
-            const threeDaysAgo = (Date.now() / 1000) - (60 * 60 * 24 * 3);
+            const threeDays = 60 * 60 * 24 * 3;
+            const today = Date.now() / 1000;
+            const threeDaysAgo = today - threeDays;
             fs.writeFileSync(fakeBook, 'Im a book');
             fs.utimesSync(fakeBook, threeDaysAgo, threeDaysAgo);
 
-            return ScheduledJobs.cleanEbooks()
-                    .then(() => assertNoFile(fakeBook));
+            return ScheduledJobs.cleanEbooks().then(() => assertNoFile(fakeBook));
         });
     });
 });

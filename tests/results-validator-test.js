@@ -6,13 +6,21 @@ const ResultsValidator = require('../lib/results-validator.js');
 function makeHtml(numLines) {
     return [
         '<html><body>',
-        (new Array(numLines)).join('<p>Hello World</p>'),
+        new Array(numLines).join('<p>Hello World</p>'),
         '</body></html>',
     ].join('\n');
 }
 
-const goodSection = { url: 'http://good.com/', html: makeHtml(100), content: makeHtml(70) };
-const badSection = { url: 'http://bad.com/', html: makeHtml(100), content: makeHtml(1) };
+const goodSection = {
+    url: 'http://good.com/',
+    html: makeHtml(100),
+    content: makeHtml(70),
+};
+const badSection = {
+    url: 'http://bad.com/',
+    html: makeHtml(100),
+    content: makeHtml(1),
+};
 
 const goodValidator = new ResultsValidator(goodSection);
 const badValidator = new ResultsValidator(badSection);
@@ -43,8 +51,13 @@ describe('Results validator', () => {
 
     it('has an array of validators', () => {
         const IGNORE = [
-            'name', 'length', 'prototype', 'validate',
-            'VALIDATORS', 'LENGTH_THRESHOLD', 'PARAGRAPH_THRESHOLD',
+            'name',
+            'length',
+            'prototype',
+            'validate',
+            'VALIDATORS',
+            'LENGTH_THRESHOLD',
+            'PARAGRAPH_THRESHOLD',
         ];
         Object.getOwnPropertyNames(ResultsValidator).forEach((property) => {
             assert.include(ResultsValidator.VALIDATORS.concat(IGNORE), property);

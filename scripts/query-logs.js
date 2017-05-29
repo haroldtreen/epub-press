@@ -37,8 +37,12 @@ log.query(options, (err, result) => {
         console.log(err);
     } else {
         let entries = result.file;
-        if (LEVEL) { entries = entries.filter((entry) => entry.level === LEVEL); }
-        if (REGEXP) { entries = entries.filter((entry) => REGEXP.test(entry.message)); }
+        if (LEVEL) {
+            entries = entries.filter(entry => entry.level === LEVEL);
+        }
+        if (REGEXP) {
+            entries = entries.filter(entry => REGEXP.test(entry.message));
+        }
 
         console.log(entries);
     }

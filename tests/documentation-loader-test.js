@@ -15,15 +15,18 @@ describe('Documentation Loader', () => {
         const loader = new DocumentationLoader(Config.DOCS_PATH);
 
         fs.readdir(Config.DOCS_PATH, (err, files) => {
-            loader.readDocs().then((docs) => {
-                assert.lengthOf(docs, files.length - 2);
-                docs.forEach((doc) => {
-                    assert.property(doc, 'title');
-                    assert.property(doc, 'html');
-                    assert.property(doc, 'markdown');
-                });
-                done();
-            }).catch(done);
+            loader
+        .readDocs()
+        .then((docs) => {
+            assert.lengthOf(docs, files.length - 2);
+            docs.forEach((doc) => {
+                assert.property(doc, 'title');
+                assert.property(doc, 'html');
+                assert.property(doc, 'markdown');
+            });
+            done();
+        })
+        .catch(done);
         });
     });
 });

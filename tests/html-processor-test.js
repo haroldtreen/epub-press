@@ -22,7 +22,9 @@ describe('HTML Processor', () => {
 
     describe('Filter methods', () => {
         it('can remove elements from an HTML string', () => {
-            let html = fs.readFileSync(`${__dirname}/fixtures/scripts.html`).toString();
+            let html = fs
+        .readFileSync(`${__dirname}/fixtures/scripts.html`)
+        .toString();
 
             ['script', 'p', 'div'].forEach((tag) => {
                 assert.match(html, new RegExp(`<${tag}>`));
@@ -32,7 +34,9 @@ describe('HTML Processor', () => {
         });
 
         it('can bubble up tag content', () => {
-            let html = fs.readFileSync(`${__dirname}/fixtures/article.html`).toString();
+            let html = fs
+        .readFileSync(`${__dirname}/fixtures/article.html`)
+        .toString();
 
             assert.match(html, /article/);
             const articleContents = html.match(/<article>((.|\s)*)<\/article>/m)[1];
@@ -42,7 +46,9 @@ describe('HTML Processor', () => {
         });
 
         it('can maximize element size', () => {
-            let html = fs.readFileSync(`${__dirname}/fixtures/images.html`).toString();
+            let html = fs
+        .readFileSync(`${__dirname}/fixtures/images.html`)
+        .toString();
 
             assert.notMatch(html, /100%/);
             html = HtmlProcessor.maximizeSize('img', html);
@@ -52,21 +58,25 @@ describe('HTML Processor', () => {
         });
 
         it('can remmove non ebook friendly attributes', () => {
-            let html = fs.readFileSync(`${__dirname}/fixtures/invalid-attributes.html`).toString();
+            let html = fs
+        .readFileSync(`${__dirname}/fixtures/invalid-attributes.html`)
+        .toString();
 
-            ['srcset', 'property', 'itemprop'].forEach((attr) =>
-                assert.match(html, new RegExp(attr))
-            );
+            ['srcset', 'property', 'itemprop'].forEach(attr =>
+        assert.match(html, new RegExp(attr))
+      );
 
             html = HtmlProcessor.removeInvalidAttributes('div', html);
 
             ['srcset', 'property', 'itemprop'].forEach(attr =>
-                assert.notMatch(html, new RegExp(attr))
-            );
+        assert.notMatch(html, new RegExp(attr))
+      );
         });
 
         it('can remove divs with certain classes and ids', () => {
-            let html = fs.readFileSync(`${__dirname}/fixtures/popups.html`).toString();
+            let html = fs
+        .readFileSync(`${__dirname}/fixtures/popups.html`)
+        .toString();
 
             html = HtmlProcessor.filterDivs('popup', html);
             assert.notMatch(html, /popup/);
@@ -79,7 +89,9 @@ describe('HTML Processor', () => {
         });
 
         it('can replace divs with children', () => {
-            let html = fs.readFileSync(`${__dirname}/fixtures/wrappers.html`).toString();
+            let html = fs
+        .readFileSync(`${__dirname}/fixtures/wrappers.html`)
+        .toString();
 
             html = HtmlProcessor.replaceDivsWithChildren(['wrapper'], html);
             assert.notMatch(html, /wrapper/);
@@ -87,19 +99,41 @@ describe('HTML Processor', () => {
         });
 
         it('can convert elements into div', () => {
-            const html = HtmlProcessor.convertToDiv('section', '<section>Hello World</section>');
+            const html = HtmlProcessor.convertToDiv(
+        'section',
+        '<section>Hello World</section>'
+      );
             assert.equal(html, '<div>Hello World</div>');
         });
 
         it('can remove hidden elements', () => {
             [
-                { selector: 'span', html: '<span style="display:none;"></span>', remove: true },
-                { selector: 'div', html: '<div style="display:block;"></div>', remove: false },
-                { selector: 'div', html: '<div style="display: none;"></div>', remove: true },
-                { selector: 'div', html: '<div style="visibility: hidden;"></div>', remove: true },
+                {
+                    selector: 'span',
+                    html: '<span style="display:none;"></span>',
+                    remove: true,
+                },
+                {
+                    selector: 'div',
+                    html: '<div style="display:block;"></div>',
+                    remove: false,
+                },
+                {
+                    selector: 'div',
+                    html: '<div style="display: none;"></div>',
+                    remove: true,
+                },
+                {
+                    selector: 'div',
+                    html: '<div style="visibility: hidden;"></div>',
+                    remove: true,
+                },
             ].forEach((test) => {
                 const method = test.remove ? 'notInclude' : 'include';
-                assert[method](HtmlProcessor.removeHidden(test.selector, test.html), test.selector);
+                assert[method](
+          HtmlProcessor.removeHidden(test.selector, test.html),
+          test.selector
+        );
             });
         });
 
@@ -166,17 +200,25 @@ describe('HTML Processor', () => {
                 '<p>Hello</p>',
                 '</article>',
             ].join('\n');
-            const fixedHtml = HtmlProcessor.filterParagraphless('article', paragraphlessHtml);
+            const fixedHtml = HtmlProcessor.filterParagraphless(
+        'article',
+        paragraphlessHtml
+      );
             assert.equal(fixedHtml, '');
         });
 
         it('can ignore elements with enough paragraphs', () => {
             const paragraphHtml = [
                 '<article>',
-                '<p>Hello</p>', '<p>Hello</p>', '<p>Hello</p>',
+                '<p>Hello</p>',
+                '<p>Hello</p>',
+                '<p>Hello</p>',
                 '</article>',
             ].join('\n');
-            const fixedHtml = HtmlProcessor.filterParagraphless('article', paragraphHtml);
+            const fixedHtml = HtmlProcessor.filterParagraphless(
+        'article',
+        paragraphHtml
+      );
             assert.equal(fixedHtml, paragraphHtml);
         });
     });
@@ -186,15 +228,22 @@ describe('HTML Processor', () => {
             const badHtml = '<div>This text should not be here</div>';
             const expectedHtml = '<div><p>This text should not be here</p></div>';
 
-            const fixedHtml = HtmlProcessor.insertMissingParagraphTags('div', badHtml);
+            const fixedHtml = HtmlProcessor.insertMissingParagraphTags(
+        'div',
+        badHtml
+      );
             assert.equal(fixedHtml, expectedHtml);
         });
 
         it('can fix isolated text blocks', () => {
             const badHtml = '<div>A block of text.<p>Next to a paragraph.</p></div>';
-            const expectedHtml = '<div><p>A block of text.</p><p>Next to a paragraph.</p></div>';
+            const expectedHtml =
+        '<div><p>A block of text.</p><p>Next to a paragraph.</p></div>';
 
-            const fixedHtml = HtmlProcessor.insertMissingParagraphTags('div', badHtml);
+            const fixedHtml = HtmlProcessor.insertMissingParagraphTags(
+        'div',
+        badHtml
+      );
             assert.equal(fixedHtml, expectedHtml);
         });
 
@@ -202,7 +251,10 @@ describe('HTML Processor', () => {
             const badHtml = '<div>div<div>div</div></div>';
             const expectedHtml = badHtml;
 
-            const fixedHtml = HtmlProcessor.insertMissingParagraphTags('div', badHtml);
+            const fixedHtml = HtmlProcessor.insertMissingParagraphTags(
+        'div',
+        badHtml
+      );
             assert.equal(fixedHtml, expectedHtml);
         });
 
@@ -210,12 +262,16 @@ describe('HTML Processor', () => {
             const badHtml = '<div>又到了又到了一年一度</div>';
             const expectedHtml = '<div><p>又到了又到了一年一度</p></div>';
 
-            const fixedHtml = HtmlProcessor.insertMissingParagraphTags('div', badHtml);
+            const fixedHtml = HtmlProcessor.insertMissingParagraphTags(
+        'div',
+        badHtml
+      );
             assert.equal(fixedHtml, expectedHtml);
         });
 
         it('can convert misused inline nodes to paragraphs', () => {
-            const badHtml = '<span>This is a lot of text! This should actually a p tag</span>';
+            const badHtml =
+        '<span>This is a lot of text! This should actually a p tag</span>';
             const expectedHtml = badHtml.replace(/span/g, 'p');
 
             const fixedHtml = HtmlProcessor.convertToParagraph('span', badHtml);
@@ -223,7 +279,8 @@ describe('HTML Processor', () => {
         });
 
         it('can ignored well used inline nodes', () => {
-            const badHtml = '<span>This is a lot of text! <div>But also children</div></span>';
+            const badHtml =
+        '<span>This is a lot of text! <div>But also children</div></span>';
             const expectedHtml = badHtml;
 
             const fixedHtml = HtmlProcessor.convertToParagraph('span', badHtml);
@@ -239,7 +296,8 @@ describe('HTML Processor', () => {
         });
 
         it('only removes duplicates from the top level', () => {
-            const badHtml = '<html><div><div>Hello</div></div><div>World</div></html>';
+            const badHtml =
+        '<html><div><div>Hello</div></div><div>World</div></html>';
             const expectedHtml = '<html><div><div>Hello</div></div></html>';
 
             const fixedHtml = HtmlProcessor.removeDuplicates('div', badHtml);
@@ -274,13 +332,14 @@ describe('HTML Processor', () => {
             scope = nock('http://test.fake');
 
             [
-                '/image?size=30', '/picture.png', '/article/image.png', '/image.png',
+                '/image?size=30',
+                '/picture.png',
+                '/article/image.png',
+                '/image.png',
             ].forEach((path) => {
-                scope.get(path).replyWithFile(
-                    200,
-                    `${fixturesPath}/placeholder.png`,
-                    { 'Content-type': 'image/png' }
-                );
+                scope.get(path).replyWithFile(200, `${fixturesPath}/placeholder.png`, {
+                    'Content-type': 'image/png',
+                });
             });
             scope.get('/bad-source').reply('404', 'Not Found');
             fs.emptyDir(outputFolder, () => {});
@@ -290,43 +349,57 @@ describe('HTML Processor', () => {
             fs.emptyDir(outputFolder, () => {});
         });
 
-        it('downloads images', () => {
-            return HtmlProcessor.extractImages(mockSection.url, mockSection.html).then((output) => {
-                assert.lengthOf(output.html.match(/\.\.\/images\/.*\.png/g), 4);
-                scope.isDone();
-            });
-        });
+        it('downloads images', () =>
+      HtmlProcessor.extractImages(
+        mockSection.url,
+        mockSection.html
+      ).then((output) => {
+          assert.lengthOf(output.html.match(/\.\.\/images\/.*\.png/g), 4);
+          scope.isDone();
+      }));
 
         it('saves images in the specified folder', (done) => {
-            HtmlProcessor.extractImages(mockSection.url, mockSection.html).then(() => {
-                fs.readdir(outputFolder, (err, files) => {
-                    assert.lengthOf((files || []), 3);
-                    done();
-                });
-            }).catch(done);
+            HtmlProcessor.extractImages(mockSection.url, mockSection.html)
+        .then(() => {
+            fs.readdir(outputFolder, (err, files) => {
+                assert.lengthOf(files || [], 3);
+                done();
+            });
+        })
+        .catch(done);
         });
 
-        it('doesn\'t resize small images', (done) => {
+        it("doesn't resize small images", (done) => {
             scope = nock('http://test.fake');
-            scope.get('/small-image.png').replyWithFile(
-                200,
-                `${fixturesPath}/small-placeholder.png`,
-                { 'Content-Type': 'image/png', 'Content-Length': 3000 }
-            );
+            scope
+        .get('/small-image.png')
+        .replyWithFile(200, `${fixturesPath}/small-placeholder.png`, {
+            'Content-Type': 'image/png',
+            'Content-Length': 3000,
+        });
 
             HtmlProcessor.extractImages(
-                mockSection.url,
-                '<img src="./small-image.png" style="width: 100%;">'
-            ).then((output) => {
-                assert.notInclude(output.html, '100%');
-                done();
-            }).catch(done);
+        mockSection.url,
+        '<img src="./small-image.png" style="width: 100%;">'
+      )
+        .then((output) => {
+            assert.notInclude(output.html, '100%');
+            done();
+        })
+        .catch(done);
         });
 
         describe('helpers', () => {
             it('can convert urls', () => {
                 const root = 'http://test.fake/hello/stuff.html';
-                const tests = ['http://a.c/b.jpg', '../img.png', './img.jpg', 'assets/img.jpg', '//cdn.com/path/image.png', 'image.png'];
+                const tests = [
+                    'http://a.c/b.jpg',
+                    '../img.png',
+                    './img.jpg',
+                    'assets/img.jpg',
+                    '//cdn.com/path/image.png',
+                    'image.png',
+                ];
                 const expected = [
                     'http://a.c/b.jpg',
                     'http://test.fake/img.png',
@@ -344,9 +417,7 @@ describe('HTML Processor', () => {
             it('can resolve urls with a path', () => {
                 const root = 'http://test.fake/hello/';
                 const tests = ['image.png'];
-                const expected = [
-                    'http://test.fake/hello/image.png',
-                ];
+                const expected = ['http://test.fake/hello/image.png'];
 
                 tests.forEach((test, idx) => {
                     assert.equal(HtmlProcessor.absolutifyUrl(root, test), expected[idx]);

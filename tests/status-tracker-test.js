@@ -3,9 +3,9 @@ const StatusTracker = require('../lib/status-tracker');
 
 const id = 'id-123';
 const status = StatusTracker.buildStatus();
-const statuses = Array.apply(null, {
-    length: StatusTracker.MAX_STATUSES,
-}).map((a, i) => i);
+
+// eslint-disable-next-line prefer-spread
+const statuses = Array.apply(null, { length: StatusTracker.MAX_STATUSES }).map((a, i) => i);
 
 let tracker;
 
