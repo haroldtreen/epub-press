@@ -6,7 +6,7 @@
   "version": "0.5.0",
   "private": true,
   "engines" : {
-      "node" : ">=6.0.0"
+      "node" : ">=6.9.0"
   },
   "scripts": {
     "start": "nodemon --harmony ./bin/www",
