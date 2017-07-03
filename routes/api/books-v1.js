@@ -11,11 +11,6 @@ const Logger = require('../../lib/logger');
 const router = new express.Router();
 const log = new Logger();
 
-function respondWithError(res, error) {
-    const response = AppErrors.buildApiResponse(error);
-    res.status(response.status).json({ errors: [response] });
-}
-
 /*
 * Book Publish
 */
@@ -35,7 +30,7 @@ router.post('/', (req, res) => {
         );
     })
     .catch((e) => {
-        respondWithError(res, e);
+        AppErrors.respondWithError(res, e);
     });
 });
 
@@ -50,7 +45,7 @@ router.get('/:id/status', (req, res) => {
         res.status(status.httpStatus || 200).json(status);
     })
     .catch((e) => {
-        respondWithError(res, e);
+        AppErrors.respondWithError(res, e);
     });
 });
 
@@ -67,7 +62,7 @@ router.get('/:id/download', (req, res) => {
         res.download(filepath);
     })
     .catch((e) => {
-        respondWithError(res, e);
+        AppErrors.respondWithError(res, e);
     });
 });
 
@@ -87,7 +82,7 @@ router.get('/:id/email', (req, res) => {
         res.status(200).send('Email sent!');
     })
     .catch((e) => {
-        respondWithError(res, e);
+        AppErrors.respondWithError(res, e);
     });
 });
 
