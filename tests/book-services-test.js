@@ -32,20 +32,20 @@ describe('Book Services', () => {
 
     describe('.getStatus', () => {
         it('gets the status for a given book', () =>
-            BookServices.setStatus(book, 'DEFAULT')
-                .then(trackedBook => BookServices.getStatus(trackedBook))
-                .then((status) => {
-                    assert.isString(status.message);
-                    assert.isNumber(status.progress);
-                }));
+      BookServices.setStatus(book, 'DEFAULT')
+        .then(trackedBook => BookServices.getStatus(trackedBook))
+        .then((status) => {
+            assert.isString(status.message);
+            assert.isNumber(status.progress);
+        }));
 
         it('rejects when no status is set', () =>
-            BookServices.getStatus(book)
-                .then(() => Promise.reject('.getStatus should reject.'))
-                .catch(isError)
-                .then((e) => {
-                    assert.include(e.message, 'found');
-                }));
+      BookServices.getStatus(book)
+        .then(() => Promise.reject('.getStatus should reject.'))
+        .catch(isError)
+        .then((e) => {
+            assert.include(e.message, 'found');
+        }));
     });
 
     describe('.publish', () => {
@@ -65,20 +65,20 @@ describe('Book Services', () => {
             });
 
             return BookServices.publish(book)
-                .then((publishedBook) => {
-                    assert.equal(book, publishedBook);
-                    publishServices.forEach((service) => {
-                        assert.isTrue(
-                            BookServices[service].calledWith(book),
-                            `${service} not called`
-                        );
-                    });
-                    sandbox.restore();
-                })
-                .catch((err) => {
-                    sandbox.restore();
-                    return Promise.reject(err);
-                });
+        .then((publishedBook) => {
+            assert.equal(book, publishedBook);
+            publishServices.forEach((service) => {
+                assert.isTrue(
+              BookServices[service].calledWith(book),
+              `${service} not called`
+            );
+            });
+            sandbox.restore();
+        })
+        .catch((err) => {
+            sandbox.restore();
+            return Promise.reject(err);
+        });
         });
     });
 
@@ -105,17 +105,19 @@ describe('Book Services', () => {
             stub.resolves({});
 
             BookServices.updateSectionsHtml(book)
-                .then(() => {
-                    stub.getCalls().forEach(call => assert.include(urls, call.args[0].url));
-                    assert.equal(stub.callCount, 2);
+        .then(() => {
+            stub
+            .getCalls()
+            .forEach(call => assert.include(urls, call.args[0].url));
+            assert.equal(stub.callCount, 2);
 
-                    stub.restore();
-                    done();
-                })
-                .catch((err) => {
-                    stub.restore();
-                    done(err);
-                });
+            stub.restore();
+            done();
+        })
+        .catch((err) => {
+            stub.restore();
+            done(err);
+        });
         });
     });
 
@@ -125,12 +127,12 @@ describe('Book Services', () => {
             nock(urls[0]).get('/').reply(200, html);
 
             BookServices.updateSectionHtml(section)
-                .then((updatedSection) => {
-                    assert.equal(updatedSection.html, section.html);
+        .then((updatedSection) => {
+            assert.equal(updatedSection.html, section.html);
 
-                    done();
-                })
-                .catch(done);
+            done();
+        })
+        .catch(done);
         });
     });
 
@@ -138,7 +140,12 @@ describe('Book Services', () => {
         it('downloads images referenced in html', (done) => {
             const scope = nock('http://test.fake');
 
-            ['/image?size=30', '/picture.png', '/article/image.png', '/image.png'].forEach((path) => {
+            [
+                '/image?size=30',
+                '/picture.png',
+                '/article/image.png',
+                '/image.png',
+            ].forEach((path) => {
                 scope.get(path).replyWithFile(200, `${fixturesPath}/placeholder.png`, {
                     'Content-type': 'image/png',
                 });
@@ -150,14 +157,17 @@ describe('Book Services', () => {
             };
 
             BookServices.localizeSectionImages(section)
-                .then((updatedSection) => {
-                    assert.lengthOf(updatedSection.content.match(/\.\.\/images\/.*\.png/g), 4);
-                    updatedSection.images.forEach((image) => {
-                        assert.match(image, /\/images\/.*\.png/);
-                    });
-                    done();
-                })
-                .catch(done);
+        .then((updatedSection) => {
+            assert.lengthOf(
+            updatedSection.content.match(/\.\.\/images\/.*\.png/g),
+            4
+          );
+            updatedSection.images.forEach((image) => {
+                assert.match(image, /\/images\/.*\.png/);
+            });
+            done();
+        })
+        .catch(done);
         });
     });
 
@@ -168,16 +178,16 @@ describe('Book Services', () => {
             stub.resolves(mockSection);
 
             BookServices.extractSectionsContent(book)
-                .then(() => {
-                    assert.equal(stub.callCount, book.getSections().length);
+        .then(() => {
+            assert.equal(stub.callCount, book.getSections().length);
 
-                    stub.restore();
-                    done();
-                })
-                .catch((err) => {
-                    stub.restore();
-                    done(err);
-                });
+            stub.restore();
+            done();
+        })
+        .catch((err) => {
+            stub.restore();
+            done(err);
+        });
         });
     });
 
@@ -186,25 +196,28 @@ describe('Book Services', () => {
             const section = { html, url: 'http://test.com' };
 
             BookServices.extractSectionContent(section)
-                .then((extractedSection) => {
-                    assert.equal(extractedSection.title, 'Article');
-                    assert.include(extractedSection.content, `<h1>${extractedSection.title}</h1>`);
+        .then((extractedSection) => {
+            assert.equal(extractedSection.title, 'Article');
+            assert.include(
+            extractedSection.content,
+            `<h1>${extractedSection.title}</h1>`
+          );
 
-                    done();
-                })
-                .catch(done);
+            done();
+        })
+        .catch(done);
         });
 
         it('can gracefully handle no content found', (done) => {
             const section = { html: '<html></html>', url: 'http://test.com' };
 
             BookServices.extractSectionContent(section)
-                .then((extractedSection) => {
-                    assert.match(extractedSection.content, /support@epub\.press/);
-                    assert.match(extractedSection.content, /<h1>/);
-                    done();
-                })
-                .catch(done);
+        .then((extractedSection) => {
+            assert.match(extractedSection.content, /support@epub\.press/);
+            assert.match(extractedSection.content, /<h1>/);
+            done();
+        })
+        .catch(done);
         });
     });
 
@@ -214,16 +227,16 @@ describe('Book Services', () => {
             stub.resolves({});
 
             BookServices.convertSectionsContent(book)
-                .then(() => {
-                    assert.equal(stub.callCount, book.getSections().length);
+        .then(() => {
+            assert.equal(stub.callCount, book.getSections().length);
 
-                    stub.restore();
-                    done();
-                })
-                .catch((err) => {
-                    stub.restore();
-                    done(err);
-                });
+            stub.restore();
+            done();
+        })
+        .catch((err) => {
+            stub.restore();
+            done(err);
+        });
         });
     });
 
@@ -232,13 +245,13 @@ describe('Book Services', () => {
             const content = '<p>Hello<br>World</p>';
             const mockSection = { content };
             BookServices.convertSectionContent(mockSection)
-                .then((xhtmlSection) => {
-                    assert.include(xhtmlSection.xhtml, '<br />');
-                    assert.notInclude(xhtmlSection.xhtml, '<br>');
+        .then((xhtmlSection) => {
+            assert.include(xhtmlSection.xhtml, '<br />');
+            assert.notInclude(xhtmlSection.xhtml, '<br>');
 
-                    done();
-                })
-                .catch(done);
+            done();
+        })
+        .catch(done);
         });
     });
 });

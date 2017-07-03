@@ -1,7 +1,7 @@
 {
     "extends": "airbnb",
     "rules": {
-        "indent": [2, 4],
+        "indent": ["error", 4, "space"],
         "strict": 0,
         "no-underscore-dangle": 0,
         "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/tests/**/*.js", "Gulpfile.js"]}],
@@ -15,8 +15,5 @@
     },
     "env": {
         "mocha": true
-    },
-    "ecmaFeatures": {
-        "jsx": false
     }
 }

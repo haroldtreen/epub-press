@@ -11,7 +11,8 @@
   "scripts": {
     "start": "nodemon --harmony ./bin/www",
     "test": "gulp test-ci",
-    "format": "prettier-eslint \"**/*.js\" --single-quote",
+    "test:watch": "NODE_ENV='test' $(npm bin)/mocha --watch tests/*-test.js --check-leaks",
+    "format": "prettier-eslint \"**/*.js\" --single-quote --write",
     "debug": "node --inspect ./bin/www"
   },
   "dependencies": {
@@ -25,6 +26,7 @@
     "fs-extra": "^1.0.0",
     "htmltidy2": "^0.1.4",
     "jade": "~1.11.0",
+    "jimp": "^0.2.28",
     "marked": "^0.3.5",
     "morgan": "^1.8.2",
     "newrelic": "^1.39.1",
@@ -33,6 +35,7 @@
     "nodepub": "github:haroldtreen/nodepub",
     "pg": "^6.2.3",
     "pg-hstore": "^2.3.2",
+    "prettier-eslint": "^6.2.3",
     "request": "^2.81.0",
     "request-promise": "^4.2.1",
     "sanitize-html": "^1.11.4",
@@ -43,11 +46,12 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "eslint": "^3.19.0",
+    "check-dependencies": "^1.0.1",
     "eslint-config-airbnb": "^15.0.1",
     "eslint-plugin-import": "^2.3.0",
     "eslint-plugin-jsx-a11y": "^5.0.3",
     "eslint-plugin-react": "^7.0.1",
+    "espree": "^3.4.3",
     "flow-bin": "^0.38.0",
     "gulp": "^3.9.1",
     "gulp-istanbul": "^1.1.1",
@@ -56,6 +60,7 @@
     "loadtest": "^2.3.0",
     "mocha": "^3.4.2",
     "nock": "^9.0.13",
+    "prettier": "^1.4.2",
     "prettier-eslint-cli": "^3.6.1",
     "sequelize-cli": "^2.7.0",
     "sinon": "^2.3.2",

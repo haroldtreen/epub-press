@@ -26,7 +26,7 @@ describe('Content Extractor', () => {
         const realOperations = ContentExtractor.URL_SPECIFIC_OPERATIONS;
         before(() => {
             ContentExtractor.URL_SPECIFIC_OPERATIONS = {
-                'quora\.com': {
+                'quora.com': {
                     removeElement: ['.quora-junk'],
                 },
             };

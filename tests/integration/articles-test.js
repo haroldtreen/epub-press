@@ -67,7 +67,8 @@ describe('Article Extraction', () => {
         },
         {
             fixture: 'telegraph-uk',
-      title: "Biologist who snatched eggs from nests of world's rarest bird wins the 'Nobel prize' of conservation", //eslint-disable-line
+            title:
+        "Biologist who snatched eggs from nests of world's rarest bird wins the 'Nobel prize' of conservation", //eslint-disable-line
             include: [
                 'Welsh biologist once criticised for stealing eggs from',
                 'When the 61-year-old first travelled to the east African',
@@ -94,7 +95,8 @@ describe('Article Extraction', () => {
         },
         {
             fixture: 'elektrek',
-      title: 'Spectacular Tesla Model S crash after flying 82+ft in the air shows importance of a large crumple zone [Gallery]', //eslint-disable-line
+            title:
+        'Spectacular Tesla Model S crash after flying 82+ft in the air shows importance of a large crumple zone [Gallery]', //eslint-disable-line
             include: [
                 'Earlier this week, a 18-year old took her father',
                 '<a href="http://electrek.co/2016/05/06/tesla-model-s-crash-large-crumple-zone-gallery',
@@ -105,7 +107,8 @@ describe('Article Extraction', () => {
         },
         {
             fixture: 'threatpost',
-            title: 'Academics Make Theoretical Breakthrough in Random Number Generation',
+            title:
+        'Academics Make Theoretical Breakthrough in Random Number Generation',
             include: [
                 'Two University of Texas academics have made what some experts believe is',
                 'thrilled to have solved it',
@@ -190,7 +193,8 @@ describe('Article Extraction', () => {
         },
         {
             fixture: 'wedemain',
-      title: 'Pour prévenir des inondations et préserver sa baie, San Francisco taxera ses habitants', // eslint-disable-line
+            title:
+        'Pour prévenir des inondations et préserver sa baie, San Francisco taxera ses habitants', // eslint-disable-line
             include: [
                 'Au niveau mondial',
                 'Relayée fin mai par',
@@ -206,7 +210,8 @@ describe('Article Extraction', () => {
         },
         {
             fixture: 'business-insider',
-      title: "A top psychologist says there's only one way to become the best in your field", // eslint-disable-line
+            title:
+        "A top psychologist says there's only one way to become the best in your field", // eslint-disable-line
             include: [
                 'As a teenager in Sweden,\n  Anders Ericsson used to play chess against one of his',
                 "In the last few years,\n  however, Ericsson's findings on deliberate practice have",
@@ -236,7 +241,8 @@ describe('Article Extraction', () => {
         },
         {
             fixture: 'npr',
-            title: "Scientists Say They've Unearthed A Completely New Kind Of Meteorite",
+            title:
+        "Scientists Say They've Unearthed A Completely New Kind Of Meteorite",
             include: [
                 'Scientists say that in a Swedish quarry',
                 'Schmitz says that there are indications',
@@ -314,7 +320,8 @@ describe('Article Extraction', () => {
                 'Question Stats',
                 'k Views',
             ],
-            url: 'https://www.quora.com/Can-a-tortoise-walk-around-the-Earth-in-its-life-time',
+            url:
+        'https://www.quora.com/Can-a-tortoise-walk-around-the-Earth-in-its-life-time',
         },
         {
             fixture: 'quora-2',
@@ -360,7 +367,8 @@ describe('Article Extraction', () => {
         },
         {
             fixture: 'good-is',
-      title: 'When A Racist Imagined ‘A World Without Muslims,’ He Got Owned In The Most Brilliant Way', //eslint-disable-line
+            title:
+        'When A Racist Imagined ‘A World Without Muslims,’ He Got Owned In The Most Brilliant Way', //eslint-disable-line
             include: [
                 'Recent terrorist attacks in France',
                 'achievements throughout history.',
@@ -482,7 +490,8 @@ describe('Article Extraction', () => {
         },
         {
             fixture: 'novinky',
-            title: 'Parašutistovi se zamotal padák, k zemi se řítil rychlostí 85 km/h',
+            title:
+        'Parašutistovi se zamotal padák, k zemi se řítil rychlostí 85 km/h',
             include: ['Čtyřiadvacetiletého mladíka', 'prvním okamžiku si myslel'],
             notInclude: [
                 'Slavnosti na jihu Čech nabídly zmrzlinu z ovčího mléka',
@@ -592,7 +601,8 @@ describe('Article Extraction', () => {
         },
         {
             fixture: 'the-verge',
-            title: "Mark Zuckerberg defends Peter Thiel's Trump ties in internal memo",
+            title:
+        "Mark Zuckerberg defends Peter Thiel's Trump ties in internal memo",
             include: [
                 "Peter Thiel's donation of $1.25 million to Donald",
                 'Tech CEOs "are being insensitive to is the fact that for many people',

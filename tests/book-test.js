@@ -92,11 +92,10 @@ describe('Book', () => {
             const sectionStub = Sinon.stub(book._ebook, 'addSection');
             const writeStub = Sinon.stub(
         book._ebook,
-        'writeEPUB',
-        (onErr, p, f, onSuccess) => {
-            onSuccess();
-        }
-      );
+        'writeEPUB'
+      ).callsFake((onErr, p, f, onSuccess) => {
+          onSuccess();
+      });
 
             book.getSections().forEach((section) => {
                 const updatedSection = section;

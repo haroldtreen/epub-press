@@ -72,8 +72,8 @@ describe('Logger', () => {
                     const output = data.toString();
 
                     ['a promise', 'some horrible error', 'logger-test'].forEach(msg =>
-                        assert.include(output, msg)
-                    );
+            assert.include(output, msg)
+          );
                     done();
                 });
             });

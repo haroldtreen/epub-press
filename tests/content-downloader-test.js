@@ -143,7 +143,7 @@ describe('Content Downloader', () => {
             const content = new ContentDownloader(URL, options);
 
             const mockResult = { content: 'hello', contentType: 'image/jpg' };
-            const stub = sinon.stub(fs, 'outputFile', fsStub);
+            const stub = sinon.stub(fs, 'outputFile').callsFake(fsStub);
 
             return content.saveResult(mockResult).then((savedResult) => {
                 assert.include(savedResult.path, options.path);
@@ -204,7 +204,7 @@ describe('Content Downloader', () => {
         .replyWithFile(200, `${FIXTURES_PATH}/placeholder.png`, {
             'Content-type': 'image/png',
         });
-            const stub = sinon.stub(fs, 'outputFile', fsStub);
+            const stub = sinon.stub(fs, 'outputFile').callsFake(fsStub);
 
             return content.download().then((result) => {
                 assert.include(result.path, options.path);
