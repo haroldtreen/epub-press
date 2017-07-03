@@ -9,6 +9,7 @@ const ScheduledJobs = require('./lib/scheduled-jobs');
 
 Scheduler.runEvery('2 days', ScheduledJobs.cleanEbooks);
 
+const AppErrors = require('./lib/app-errors');
 const index = require('./routes/index');
 const users = require('./routes/users');
 const booksBeta = require('./routes/api/books-beta');
@@ -33,6 +34,14 @@ app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(function (err, req, res, next) {
+    if (err) {
+        const responseError = AppErrors.buildApiResponse(err);
+        AppErrors.respondWithError(res, err);
+    } else {
+        next();
+    }
+});
 const allowCrossDomain = (req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
