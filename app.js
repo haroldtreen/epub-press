@@ -34,7 +34,7 @@ app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(function (err, req, res, next) {
+app.use((err, req, res, next) => {
     if (err) {
         const apiError = AppErrors.getApiError(err);
         AppErrors.respondWithError(res, apiError);

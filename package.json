@@ -11,7 +11,7 @@
   "scripts": {
     "start": "nodemon --harmony ./bin/www",
     "test": "gulp test-ci",
-    "format": "prettier-eslint \"**/*.js\" --single-quote",
+    "format": "prettier-eslint \"**/*.js\" --single-quote --write",
     "debug": "node --inspect ./bin/www"
   },
   "dependencies": {

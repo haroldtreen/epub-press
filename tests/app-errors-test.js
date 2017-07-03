@@ -39,7 +39,7 @@ describe('AppErrors', () => {
             it('returns actual errors', () => {
                 assert.instanceOf(AppErrors.getApiError('DEFAULT'), Error);
             });
-            
+
             it('infers system level errors', () => {
                 const systemError = new Error('request entity too large');
                 const apiError = AppErrors.getApiError(systemError);
