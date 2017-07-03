@@ -36,8 +36,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(function (err, req, res, next) {
     if (err) {
-        const responseError = AppErrors.buildApiResponse(err);
-        AppErrors.respondWithError(res, err);
+        const apiError = AppErrors.getApiError(err);
+        AppErrors.respondWithError(res, apiError);
     } else {
         next();
     }
