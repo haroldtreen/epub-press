@@ -33,19 +33,16 @@ describe('Content Downloader', () => {
 
         it('can limit download size for all passed downloaders', () => {
             const scope = nock(URL).get('/').times(3).replyWithFile(
-        200,
-        `${FIXTURES_PATH}/placeholder.png` // 4.3 kB image
-      );
+                200,
+                `${FIXTURES_PATH}/placeholder.png` // 4.3 kB image
+            );
             const maxSize = 5300;
             const c1 = new ContentDownloader(URL);
             const c2 = new ContentDownloader(URL);
             const c3 = new ContentDownloader(URL);
 
             return ContentDownloader.all([c1, c2, c3], { maxSize }).then((results) => {
-                const totalContent = results.reduce(
-          (t, res) => t + (res.contentLength || 0),
-          0
-        );
+                const totalContent = results.reduce((t, res) => t + (res.contentLength || 0), 0);
                 const numSuccess = results.reduce((num, r) => {
                     const value = r.error ? 0 : 1;
                     return num + value;
@@ -200,10 +197,10 @@ describe('Content Downloader', () => {
             const content = new ContentDownloader(URL, options);
 
             const scope = nock(URL)
-        .get('/')
-        .replyWithFile(200, `${FIXTURES_PATH}/placeholder.png`, {
-            'Content-type': 'image/png',
-        });
+                .get('/')
+                .replyWithFile(200, `${FIXTURES_PATH}/placeholder.png`, {
+                    'Content-type': 'image/png',
+                });
             const stub = sinon.stub(fs, 'outputFile', fsStub);
 
             return content.download().then((result) => {

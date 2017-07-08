@@ -6,13 +6,13 @@ const log = new Logger();
 const program = require('commander');
 
 program
-  .version('0.0.1')
-  .option('-f, --fields [fields]', 'Fields to show')
-  .option('-n, --number [number]', 'Number of logs to search')
-  .option('-r, --regex [regex]', 'Filter by regex')
-  .option('-l, --level [level]', 'Filter by log level')
-  .option('-s, --start [start]', 'Filter by log level')
-  .parse(process.argv);
+    .version('0.0.1')
+    .option('-f, --fields [fields]', 'Fields to show')
+    .option('-n, --number [number]', 'Number of logs to search')
+    .option('-r, --regex [regex]', 'Filter by regex')
+    .option('-l, --level [level]', 'Filter by log level')
+    .option('-s, --start [start]', 'Filter by log level')
+    .parse(process.argv);
 
 const LEVEL = program.level || false;
 const NUMBER = program.number || 10000;
