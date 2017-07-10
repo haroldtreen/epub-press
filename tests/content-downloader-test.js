@@ -4,6 +4,7 @@ const sinon = require('sinon');
 const fs = require('fs-extra');
 
 const Config = require('../lib/config');
+const MockContentDownloader = require('./mocks/content-downloader');
 const ContentDownloader = require('../lib/content-downloader');
 
 const URL = 'http://google.com';
@@ -62,6 +63,33 @@ describe('Content Downloader', () => {
                 assert.isUndefined(r1.error);
                 assert.isDefined(r2.error);
                 scope.done();
+            });
+        });
+
+        it('throttles the downloads happening concurrently', () => {
+            let runningDownloaders = 0;
+            const mockContentDownloader = MockContentDownloader({
+                download: () =>
+                    new Promise((resolve, reject) => {
+                        runningDownloaders += 1;
+                        const currentRunningDownloadersCount = runningDownloaders;
+                        setTimeout(() => {
+                            if (currentRunningDownloadersCount === runningDownloaders) {
+                                resolve({ contentlength: 10 });
+                            } else {
+                                reject(new Error('Multiple downloaders running.'));
+                            }
+                        }, 50);
+                    }),
+            });
+
+            return ContentDownloader.all([
+                mockContentDownloader,
+                mockContentDownloader,
+            ]).then((results) => {
+                results.forEach((result) => {
+                    assert.isUndefined(result.error);
+                });
             });
         });
     });
