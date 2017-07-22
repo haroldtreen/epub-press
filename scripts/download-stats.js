@@ -27,9 +27,7 @@ log.query(options, (err, result) => {
             const entryDate = new Date(entry.timestamp);
             const entryKey = `${entryDate.getMonth()}/${entryDate.getDate()}`;
 
-            dateCounts[entryKey] = dateCounts[entryKey]
-        ? dateCounts[entryKey] + 1
-        : 1;
+            dateCounts[entryKey] = dateCounts[entryKey] ? dateCounts[entryKey] + 1 : 1;
         });
 
         console.log(dateCounts);

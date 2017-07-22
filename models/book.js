@@ -2,7 +2,7 @@
 
 module.exports = (sequelize, DataTypes) => {
     const Book = sequelize.define(
-    'Book',
+        'Book',
         {
             id: { type: DataTypes.INTEGER, primaryKey: true },
             title: DataTypes.STRING,
@@ -14,6 +14,6 @@ module.exports = (sequelize, DataTypes) => {
                 associate: () => {},
             },
         }
-  );
+    );
     return Book;
 };

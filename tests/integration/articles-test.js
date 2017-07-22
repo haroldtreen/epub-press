@@ -68,7 +68,11 @@ describe('Article Extraction', () => {
         {
             fixture: 'telegraph-uk',
             title:
+<<<<<<< HEAD
         "Biologist who snatched eggs from nests of world's rarest bird wins the 'Nobel prize' of conservation", //eslint-disable-line
+=======
+                "Biologist who snatched eggs from nests of world's rarest bird wins the 'Nobel prize' of conservation", //eslint-disable-line
+>>>>>>> master
             include: [
                 'Welsh biologist once criticised for stealing eggs from',
                 'When the 61-year-old first travelled to the east African',
@@ -96,7 +100,7 @@ describe('Article Extraction', () => {
         {
             fixture: 'elektrek',
             title:
-        'Spectacular Tesla Model S crash after flying 82+ft in the air shows importance of a large crumple zone [Gallery]', //eslint-disable-line
+                'Spectacular Tesla Model S crash after flying 82+ft in the air shows importance of a large crumple zone [Gallery]', //eslint-disable-line
             include: [
                 'Earlier this week, a 18-year old took her father',
                 '<a href="http://electrek.co/2016/05/06/tesla-model-s-crash-large-crumple-zone-gallery',
@@ -173,10 +177,7 @@ describe('Article Extraction', () => {
                 'Big Data models and practices aren',
                 'Data-driven journalism in larger contexts',
             ],
-            notInclude: [
-                'Self-Publishing Your Book: Where’s the Money',
-                'About EducationShift',
-            ],
+            notInclude: ['Self-Publishing Your Book: Where’s the Money', 'About EducationShift'],
         },
         {
             fixture: 'bloomberg',
@@ -194,12 +195,17 @@ describe('Article Extraction', () => {
         {
             fixture: 'wedemain',
             title:
+<<<<<<< HEAD
         'Pour prévenir des inondations et préserver sa baie, San Francisco taxera ses habitants', // eslint-disable-line
             include: [
                 'Au niveau mondial',
                 'Relayée fin mai par',
                 'San Francisco sera donc la',
             ],
+=======
+                'Pour prévenir des inondations et préserver sa baie, San Francisco taxera ses habitants', // eslint-disable-line
+            include: ['Au niveau mondial', 'Relayée fin mai par', 'San Francisco sera donc la'],
+>>>>>>> master
             notInclude: ['Française et éco-construite'],
         },
         {
@@ -210,8 +216,7 @@ describe('Article Extraction', () => {
         },
         {
             fixture: 'business-insider',
-            title:
-        "A top psychologist says there's only one way to become the best in your field", // eslint-disable-line
+            title: "A top psychologist says there's only one way to become the best in your field", // eslint-disable-line
             include: [
                 'As a teenager in Sweden,\n  Anders Ericsson used to play chess against one of his',
                 "In the last few years,\n  however, Ericsson's findings on deliberate practice have",
@@ -289,18 +294,12 @@ describe('Article Extraction', () => {
                 'Editor’s Note: Wabasha',
                 'over again in a different manner.',
             ],
-            notInclude: [
-                'Related Articles',
-                'The Complete Guide to Giving a Great Handshake',
-            ],
+            notInclude: ['Related Articles', 'The Complete Guide to Giving a Great Handshake'],
         },
         {
             fixture: 'nationalgeographic',
             title: 'Inside the Daring Mission That Thwarted a Nazi Atomic Bomb',
-            include: [
-                'On February 27, 1942, nine saboteurs',
-                'who did equally patriotic work.',
-            ],
+            include: ['On February 27, 1942, nine saboteurs', 'who did equally patriotic work.'],
             notInclude: ['Comment on This Story'],
         },
         {
@@ -368,7 +367,7 @@ describe('Article Extraction', () => {
         {
             fixture: 'good-is',
             title:
-        'When A Racist Imagined ‘A World Without Muslims,’ He Got Owned In The Most Brilliant Way', //eslint-disable-line
+                'When A Racist Imagined ‘A World Without Muslims,’ He Got Owned In The Most Brilliant Way', //eslint-disable-line
             include: [
                 'Recent terrorist attacks in France',
                 'achievements throughout history.',
@@ -404,20 +403,12 @@ describe('Article Extraction', () => {
                 'dictates that presenting yourself in the best',
                 'The key to successful online dating, then',
             ],
-            notInclude: [
-                'Most Recent Posts from Romantically Attached',
-                'You Might Also Like',
-            ],
+            notInclude: ['Most Recent Posts from Romantically Attached', 'You Might Also Like'],
         },
         {
             fixture: 'ux-milk',
             title: 'より良いCSSを書くための様々なCSS設計まとめ',
-            include: [
-                'CSSは誰でも簡単に自由に',
-                'SMACSSでは、スタイル',
-                'Scoped CSS自体は、CSS設',
-                'どのCSS設',
-            ],
+            include: ['CSSは誰でも簡単に自由に', 'SMACSSでは、スタイル', 'Scoped CSS自体は、CSS設', 'どのCSS設'],
             notInclude: ['Web制作の作業効率を格段にア', 'ライフハック', '個人情報の取り扱いについて'],
         },
         {
@@ -428,11 +419,7 @@ describe('Article Extraction', () => {
                 'Looking for information within specific',
                 'yet to be fully understood.',
             ],
-            notInclude: [
-                'Jobs board',
-                'Tips for freelance',
-                'Manage vacancy postings',
-            ],
+            notInclude: ['Jobs board', 'Tips for freelance', 'Manage vacancy postings'],
         },
         {
             fixture: 'airbnb',
@@ -559,10 +546,7 @@ describe('Article Extraction', () => {
                 'Henri Barkey is one of the leaders',
                 'The operational work of the Turkish secret services identified these CIA members',
             ],
-            notInclude: [
-                "NATO's fingerprints in Turkish coup",
-                'You can also include a comment.',
-            ],
+            notInclude: ["NATO's fingerprints in Turkish coup", 'You can also include a comment.'],
         },
         {
             fixture: 'value-picks',
@@ -613,30 +597,28 @@ describe('Article Extraction', () => {
             title: 'Google - Site Reliability Engineering', // TODO: Change to Distributed Periodic Scheduling with Cron
             include: ["This chapter describes Google's implementation"],
         },
-    // {
-    //     fixture: 'douban',
-    //     title: '翻包记 之 随身行李和长途飞行小贴士',
-    //     include: ['这次年假回国我也打算继续', '行李箱里，而且我的两样', '丝袜的确是'],
-    //     notInclude: ['有什么作用啊'],
-    // },
+        // {
+        //     fixture: 'douban',
+        //     title: '翻包记 之 随身行李和长途飞行小贴士',
+        //     include: ['这次年假回国我也打算继续', '行李箱里，而且我的两样', '丝袜的确是'],
+        //     notInclude: ['有什么作用啊'],
+        // },
     ].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
-            const html = fs
-        .readFileSync(`${articleFixtures}/${testCase.fixture}.html`)
-        .toString();
+            const html = fs.readFileSync(`${articleFixtures}/${testCase.fixture}.html`).toString();
             ContentExtractor.runUrlSpecificOperations(html, testCase.url)
-        .then(newHtml => ContentExtractor.extract(newHtml))
-        .then((article) => {
-            assert.equal(Book.sanitizeTitle(article.title), testCase.title);
-            (testCase.include || []).forEach((content) => {
-                assert.include(article.content, content);
-            });
-            (testCase.notInclude || []).forEach((content) => {
-                assert.notInclude(article.content, content);
-            });
-            done();
-        })
-        .catch(done);
+                .then(newHtml => ContentExtractor.extract(newHtml))
+                .then((article) => {
+                    assert.equal(Book.sanitizeTitle(article.title), testCase.title);
+                    (testCase.include || []).forEach((content) => {
+                        assert.include(article.content, content);
+                    });
+                    (testCase.notInclude || []).forEach((content) => {
+                        assert.notInclude(article.content, content);
+                    });
+                    done();
+                })
+                .catch(done);
         }).timeout(4500);
     });
 });

@@ -4,6 +4,7 @@ const sinon = require('sinon');
 const fs = require('fs-extra');
 
 const Config = require('../lib/config');
+const MockContentDownloader = require('./mocks/content-downloader');
 const ContentDownloader = require('../lib/content-downloader');
 
 const URL = 'http://google.com';
@@ -33,19 +34,16 @@ describe('Content Downloader', () => {
 
         it('can limit download size for all passed downloaders', () => {
             const scope = nock(URL).get('/').times(3).replyWithFile(
-        200,
-        `${FIXTURES_PATH}/placeholder.png` // 4.3 kB image
-      );
+                200,
+                `${FIXTURES_PATH}/placeholder.png` // 4.3 kB image
+            );
             const maxSize = 5300;
             const c1 = new ContentDownloader(URL);
             const c2 = new ContentDownloader(URL);
             const c3 = new ContentDownloader(URL);
 
             return ContentDownloader.all([c1, c2, c3], { maxSize }).then((results) => {
-                const totalContent = results.reduce(
-          (t, res) => t + (res.contentLength || 0),
-          0
-        );
+                const totalContent = results.reduce((t, res) => t + (res.contentLength || 0), 0);
                 const numSuccess = results.reduce((num, r) => {
                     const value = r.error ? 0 : 1;
                     return num + value;
@@ -65,6 +63,33 @@ describe('Content Downloader', () => {
                 assert.isUndefined(r1.error);
                 assert.isDefined(r2.error);
                 scope.done();
+            });
+        });
+
+        it('throttles the downloads happening concurrently', () => {
+            let runningDownloaders = 0;
+            const mockContentDownloader = MockContentDownloader({
+                download: () =>
+                    new Promise((resolve, reject) => {
+                        runningDownloaders += 1;
+                        const currentRunningDownloadersCount = runningDownloaders;
+                        setTimeout(() => {
+                            if (currentRunningDownloadersCount === runningDownloaders) {
+                                resolve({ contentlength: 10 });
+                            } else {
+                                reject(new Error('Multiple downloaders running.'));
+                            }
+                        }, 50);
+                    }),
+            });
+
+            return ContentDownloader.all([
+                mockContentDownloader,
+                mockContentDownloader,
+            ]).then((results) => {
+                results.forEach((result) => {
+                    assert.isUndefined(result.error);
+                });
             });
         });
     });
@@ -200,11 +225,11 @@ describe('Content Downloader', () => {
             const content = new ContentDownloader(URL, options);
 
             const scope = nock(URL)
-        .get('/')
-        .replyWithFile(200, `${FIXTURES_PATH}/placeholder.png`, {
-            'Content-type': 'image/png',
-        });
-            const stub = sinon.stub(fs, 'outputFile').callsFake(fsStub);
+                .get('/')
+                .replyWithFile(200, `${FIXTURES_PATH}/placeholder.png`, {
+                    'Content-type': 'image/png',
+                });
+            const stub = sinon.stub(fs, 'outputFile', fsStub);
 
             return content.download().then((result) => {
                 assert.include(result.path, options.path);

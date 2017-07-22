@@ -9,14 +9,14 @@ describe('Book Model', () => {
             sections: [{ title: 'Section 1', url: 'https://epub.press' }],
         };
         BookModel.create(attrs)
-      .then(() => BookModel.findOne({ title: attrs.title }))
-      .then((book) => {
-          Object.keys(attrs).forEach((key) => {
-              assert.deepEqual(attrs[key], book[key]);
-              assert.isNumber(book.id);
-          });
-          done();
-      })
-      .catch(done);
+            .then(() => BookModel.findOne({ title: attrs.title }))
+            .then((book) => {
+                Object.keys(attrs).forEach((key) => {
+                    assert.deepEqual(attrs[key], book[key]);
+                    assert.isNumber(book.id);
+                });
+                done();
+            })
+            .catch(done);
     });
 });

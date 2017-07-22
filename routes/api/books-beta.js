@@ -60,10 +60,7 @@ function bookFromBody(body) {
             });
         }
 
-        const book = new Book(
-      { title: body.title, description: body.description },
-      sections
-    );
+        const book = new Book({ title: body.title, description: body.description }, sections);
 
         log.verbose('Book Metadata', {
             title: body.title,
@@ -77,21 +74,19 @@ function bookFromBody(body) {
 
 router.post('/', (req, res) => {
     validatePublishRequest(req)
-    .then(validReq => bookFromBody(validReq.body))
-    .then((book) => {
-        BookServices.publish(book)
-        .then(publishedBook =>
-          res.status(201).json({ id: publishedBook.getId() })
-        )
+        .then(validReq => bookFromBody(validReq.body))
+        .then((book) => {
+            BookServices.publish(book)
+                .then(publishedBook => res.status(201).json({ id: publishedBook.getId() }))
+                .catch((e) => {
+                    log.exception('Book Create')(e);
+                    respondWithError(res, e);
+                });
+        })
         .catch((e) => {
-            log.exception('Book Create')(e);
+            log.exception('Book create')(e);
             respondWithError(res, e);
         });
-    })
-    .catch((e) => {
-        log.exception('Book create')(e);
-        respondWithError(res, e);
-    });
 });
 
 /*
@@ -116,34 +111,34 @@ router.get('/download', (req, res) => {
     const isMobi = req.query.filetype === 'mobi';
 
     validateDownloadRequest(req)
-    .then((validReq) => {
-        const { id, filetype } = validReq.query;
-        return Book.find(id, filetype)
-        .then((book) => {
-            if (isEmail) {
-                const mailerFn = isMobi ? Mailer.sendMobi : Mailer.sendEpub;
-                return mailerFn(req.query.email, book).catch((error) => {
-                    log.warn('Book delivery failed', req.query, error);
-                    res.status(500).send('Email failed');
+        .then((validReq) => {
+            const { id, filetype } = validReq.query;
+            return Book.find(id, filetype)
+                .then((book) => {
+                    if (isEmail) {
+                        const mailerFn = isMobi ? Mailer.sendMobi : Mailer.sendEpub;
+                        return mailerFn(req.query.email, book).catch((error) => {
+                            log.warn('Book delivery failed', req.query, error);
+                            res.status(500).send('Email failed');
+                        });
+                    }
+                    const bookPath = isMobi ? book.getMobiPath() : book.getEpubPath();
+                    return Promise.resolve(bookPath);
+                })
+                .then((bookPath) => {
+                    if (isEmail) {
+                        res.status(200).send('Email sent!');
+                    } else {
+                        res.download(bookPath);
+                    }
+                })
+                .catch((e) => {
+                    respondWithError(res, e);
                 });
-            }
-            const bookPath = isMobi ? book.getMobiPath() : book.getEpubPath();
-            return Promise.resolve(bookPath);
-        })
-        .then((bookPath) => {
-            if (isEmail) {
-                res.status(200).send('Email sent!');
-            } else {
-                res.download(bookPath);
-            }
         })
         .catch((e) => {
             respondWithError(res, e);
         });
-    })
-    .catch((e) => {
-        respondWithError(res, e);
-    });
 });
 
 function validateEmailRequest(req) {
@@ -168,22 +163,22 @@ router.get('/email-delivery', (req, res) => {
     const isMobi = req.query.filetype === 'mobi';
 
     validateEmailRequest(req)
-    .then(() =>
-      Book.find(req.query.id, req.query.filetype)
-        .then((book) => {
-            const mailerFn = isMobi ? Mailer.sendMobi : Mailer.sendEpub;
-            return mailerFn(req.query.email, book).catch((error) => {
-                log.warn('Book delivery failed', req.query, error);
-                res.status(500).send('Email failed');
-            });
-        })
-        .then(() => {
-            res.status(200).send('Email sent!');
-        })
-    )
-    .catch((e) => {
-        respondWithError(res, e);
-    });
+        .then(() =>
+            Book.find(req.query.id, req.query.filetype)
+                .then((book) => {
+                    const mailerFn = isMobi ? Mailer.sendMobi : Mailer.sendEpub;
+                    return mailerFn(req.query.email, book).catch((error) => {
+                        log.warn('Book delivery failed', req.query, error);
+                        res.status(500).send('Email failed');
+                    });
+                })
+                .then(() => {
+                    res.status(200).send('Email sent!');
+                })
+        )
+        .catch((e) => {
+            respondWithError(res, e);
+        });
 });
 
 module.exports = router;
