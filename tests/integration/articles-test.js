@@ -68,11 +68,7 @@ describe('Article Extraction', () => {
         {
             fixture: 'telegraph-uk',
             title:
-<<<<<<< HEAD
-        "Biologist who snatched eggs from nests of world's rarest bird wins the 'Nobel prize' of conservation", //eslint-disable-line
-=======
                 "Biologist who snatched eggs from nests of world's rarest bird wins the 'Nobel prize' of conservation", //eslint-disable-line
->>>>>>> master
             include: [
                 'Welsh biologist once criticised for stealing eggs from',
                 'When the 61-year-old first travelled to the east African',
@@ -111,8 +107,7 @@ describe('Article Extraction', () => {
         },
         {
             fixture: 'threatpost',
-            title:
-        'Academics Make Theoretical Breakthrough in Random Number Generation',
+            title: 'Academics Make Theoretical Breakthrough in Random Number Generation',
             include: [
                 'Two University of Texas academics have made what some experts believe is',
                 'thrilled to have solved it',
@@ -195,17 +190,8 @@ describe('Article Extraction', () => {
         {
             fixture: 'wedemain',
             title:
-<<<<<<< HEAD
-        'Pour prévenir des inondations et préserver sa baie, San Francisco taxera ses habitants', // eslint-disable-line
-            include: [
-                'Au niveau mondial',
-                'Relayée fin mai par',
-                'San Francisco sera donc la',
-            ],
-=======
                 'Pour prévenir des inondations et préserver sa baie, San Francisco taxera ses habitants', // eslint-disable-line
             include: ['Au niveau mondial', 'Relayée fin mai par', 'San Francisco sera donc la'],
->>>>>>> master
             notInclude: ['Française et éco-construite'],
         },
         {
@@ -246,8 +232,7 @@ describe('Article Extraction', () => {
         },
         {
             fixture: 'npr',
-            title:
-        "Scientists Say They've Unearthed A Completely New Kind Of Meteorite",
+            title: "Scientists Say They've Unearthed A Completely New Kind Of Meteorite",
             include: [
                 'Scientists say that in a Swedish quarry',
                 'Schmitz says that there are indications',
@@ -319,8 +304,7 @@ describe('Article Extraction', () => {
                 'Question Stats',
                 'k Views',
             ],
-            url:
-        'https://www.quora.com/Can-a-tortoise-walk-around-the-Earth-in-its-life-time',
+            url: 'https://www.quora.com/Can-a-tortoise-walk-around-the-Earth-in-its-life-time',
         },
         {
             fixture: 'quora-2',
@@ -477,8 +461,7 @@ describe('Article Extraction', () => {
         },
         {
             fixture: 'novinky',
-            title:
-        'Parašutistovi se zamotal padák, k zemi se řítil rychlostí 85 km/h',
+            title: 'Parašutistovi se zamotal padák, k zemi se řítil rychlostí 85 km/h',
             include: ['Čtyřiadvacetiletého mladíka', 'prvním okamžiku si myslel'],
             notInclude: [
                 'Slavnosti na jihu Čech nabídly zmrzlinu z ovčího mléka',
@@ -585,8 +568,7 @@ describe('Article Extraction', () => {
         },
         {
             fixture: 'the-verge',
-            title:
-        "Mark Zuckerberg defends Peter Thiel's Trump ties in internal memo",
+            title: "Mark Zuckerberg defends Peter Thiel's Trump ties in internal memo",
             include: [
                 "Peter Thiel's donation of $1.25 million to Donald",
                 'Tech CEOs "are being insensitive to is the fact that for many people',
