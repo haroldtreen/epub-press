@@ -87,7 +87,10 @@ describe('#getReferences', () => {
 describe('#writeEpub', () => {
     it('saves an epub file', (done) => {
         const sectionStub = Sinon.stub(book._ebook, 'addSection');
-        const writeStub = Sinon.stub(book._ebook, 'writeEPUB', (onErr, p, f, onSuccess) => {
+        const writeStub = Sinon.stub(
+            book._ebook,
+            'writeEPUB'
+        ).callsFake((onErr, p, f, onSuccess) => {
             onSuccess();
         });
 
