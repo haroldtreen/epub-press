@@ -1,4 +1,4 @@
-const assert = require('chai').assert;
+const { assert } = require('chai');
 const fs = require('fs-extra');
 
 const Utilities = require('../lib/utilities');

@@ -9,7 +9,7 @@ describe('Book Model', () => {
             sections: [{ title: 'Section 1', url: 'https://epub.press' }],
         };
         BookModel.create(attrs)
-            .then(() => BookModel.findOne({ title: attrs.title }))
+            .then(() => BookModel.findOne({ where: { title: attrs.title } }))
             .then((book) => {
                 Object.keys(attrs).forEach((key) => {
                     assert.deepEqual(attrs[key], book[key]);
