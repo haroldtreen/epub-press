@@ -4,14 +4,21 @@
         "indent": ["error", 4],
         "strict": 0,
         "no-underscore-dangle": 0,
-        "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/tests/**/*.js", "Gulpfile.js"]}],
-        "comma-dangle": ["error", {
-            "arrays": "always-multiline",
-            "objects": "always-multiline",
-            "imports": "always-multiline",
-            "exports": "always-multiline",
-            "functions": "never",
-        }],
+        "no-mixed-operators": 0,
+        "import/no-extraneous-dependencies": [
+            "error",
+            { "devDependencies": ["**/tests/**/*.js", "Gulpfile.js"] }
+        ],
+        "comma-dangle": [
+            "error",
+            {
+                "arrays": "always-multiline",
+                "objects": "always-multiline",
+                "imports": "always-multiline",
+                "exports": "always-multiline",
+                "functions": "never"
+            }
+        ]
     },
     "env": {
         "mocha": true
