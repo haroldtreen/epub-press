@@ -33,7 +33,13 @@ gulp.task('test-unit', () => {
     return gulp
         .src('./tests/*-test.js', { read: false })
         .pipe(mocha(options))
-        .on('error', () => {});
+        .once('error', (e) => {
+            console.log(e);
+            process.exit(1);
+        })
+        .once('end', () => {
+            process.exit();
+        });
 });
 
 gulp.task('watch-test-unit', () => {
