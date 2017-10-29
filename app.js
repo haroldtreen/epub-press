@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const Scheduler = require('./lib/scheduler');
 const ScheduledJobs = require('./lib/scheduled-jobs');
 
-Scheduler.runEvery('2 days', ScheduledJobs.cleanEbooks);
+Scheduler.runEvery('0.5 days', ScheduledJobs.cleanEbooks);
 
 const AppErrors = require('./lib/app-errors');
 const index = require('./routes/index');
