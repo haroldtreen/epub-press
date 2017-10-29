@@ -4,9 +4,7 @@ const sinon = require('sinon');
 const ResultsValidator = require('../lib/results-validator.js');
 
 function makeHtml(numLines) {
-    return ['<html><body>', new Array(numLines).join('<p>Hello World</p>'), '</body></html>'].join(
-        '\n'
-    );
+    return ['<html><body>', new Array(numLines).join('<p>Hello World</p>'), '</body></html>'].join('\n');
 }
 
 const goodSection = {

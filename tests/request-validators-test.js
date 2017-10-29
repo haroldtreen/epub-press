@@ -8,9 +8,7 @@ function mockRequest(data) {
 }
 
 // eslint-disable-next-line prefer-spread
-const urls = Array.apply(null, { length: 100 }).map(
-  (a, i) => `http://google.com/${i}`
-);
+const urls = Array.apply(null, { length: 100 }).map((a, i) => `http://google.com/${i}`);
 
 describe('RequestValidators', () => {
     describe('#validatePublishRequest', () => {
@@ -31,11 +29,11 @@ describe('RequestValidators', () => {
         it('requires sections/urls to be in the body', () => {
             const req = mockRequest({});
             return RequestValidators.validatePublishRequest(req)
-        .then(() => Promise.reject(`Expected ${req} not to be valid`))
-        .catch(isError)
-        .then((err) => {
-            assert.equal(err.status, 400);
-        });
+                .then(() => Promise.reject(`Expected ${req} not to be valid`))
+                .catch(isError)
+                .then((err) => {
+                    assert.equal(err.status, 400);
+                });
         });
 
         it('requires a valid number of urls', () => {
@@ -43,11 +41,11 @@ describe('RequestValidators', () => {
                 urls,
             });
             return RequestValidators.validatePublishRequest(req)
-        .then(() => Promise.reject('Expected too many urls not to be valid.'))
-        .catch(isError)
-        .then((err) => {
-            assert.equal(err.status, 422);
-        });
+                .then(() => Promise.reject('Expected too many urls not to be valid.'))
+                .catch(isError)
+                .then((err) => {
+                    assert.equal(err.status, 422);
+                });
         });
 
         it('requires a valid number of sections', () => {
@@ -55,11 +53,11 @@ describe('RequestValidators', () => {
                 sections: urls,
             });
             return RequestValidators.validatePublishRequest(req)
-        .then(() => Promise.reject('Expected too many urls not to be valid'))
-        .catch(isError)
-        .then((err) => {
-            assert.equal(err.status, 422);
-        });
+                .then(() => Promise.reject('Expected too many urls not to be valid'))
+                .catch(isError)
+                .then((err) => {
+                    assert.equal(err.status, 422);
+                });
         });
     });
 });
