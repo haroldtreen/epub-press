@@ -1,13 +1,11 @@
-const assert = require('chai').assert;
+const { assert } = require('chai');
 const StatusTracker = require('../lib/status-tracker');
 
 const id = 'id-123';
 const status = StatusTracker.buildStatus();
 
 // eslint-disable-next-line prefer-spread
-const statuses = Array.apply(null, { length: StatusTracker.MAX_STATUSES }).map(
-  (a, i) => i
-);
+const statuses = Array.apply(null, { length: StatusTracker.MAX_STATUSES }).map((a, i) => i);
 
 let tracker;
 
@@ -82,6 +80,12 @@ describe('StatusTracker', () => {
     describe('constants', () => {
         it('has a .MAX_STATUSES', () => {
             assert.isNumber(StatusTracker.MAX_STATUSES);
+        });
+
+        it('has STATUS_TYPES', () => {
+            Object.keys(StatusTracker.STATUSES).forEach((statusType) => {
+                assert.equal(StatusTracker.STATUS_TYPES[statusType], statusType);
+            });
         });
     });
 });
