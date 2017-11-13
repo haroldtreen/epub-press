@@ -1,5 +1,7 @@
 tmp/**
-!tmp/**/.gitkeep
+!tmp/logs/.gitkeep
+!tmp/images/.gitkeep
+!tmp/covers/.gitkeep
 /public/system
 /coverage/
 
