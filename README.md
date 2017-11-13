@@ -36,7 +36,7 @@ gulp test               # Test all of the above
 Changes should be accompanied by tests. 
 All tests located in `/tests`.
 
-## Endpoints
+### API
 
 |Description                                | Endpoint                          |
 |-------------------------------------------|-----------------------------------|
