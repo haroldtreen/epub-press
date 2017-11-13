@@ -1,8 +1,10 @@
 {
     "name": "epub-press",
     "title": "EpubPress - Read the web offline",
-    "description": "A browser extension for creating ebooks from your favorite webpages. Build books that are totally custom, offline and compatible with all your devices.",
+    "description":
+        "A browser extension for creating ebooks from your favorite webpages. Build books that are totally custom, offline and compatible with all your devices.",
     "image": "https://epub.press/images/logo-full.jpg",
+    "license": "GPL-3.0+",
     "version": "0.5.0",
     "private": true,
     "engines": {
