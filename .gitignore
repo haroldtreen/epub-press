@@ -4,6 +4,7 @@ tmp/**
 !tmp/covers/.gitkeep
 /public/system
 /coverage/
+.nyc_output/
 
 node_modules
 
