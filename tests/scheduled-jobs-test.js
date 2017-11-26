@@ -2,18 +2,7 @@ const fs = require('fs');
 
 const ScheduledJobs = require('../lib/scheduled-jobs');
 const Config = require('../lib/config');
-
-function assertNoFile(filename) {
-    return new Promise((resolve, reject) => {
-        fs.stat(filename, (err) => {
-            if (err) {
-                resolve();
-            } else {
-                reject(new Error(`${filename} found`));
-            }
-        });
-    });
-}
+const TestHelpers = require('./helpers');
 
 describe('ScheduledJobs', () => {
     describe('.cleanEbooks', () => {
@@ -25,7 +14,7 @@ describe('ScheduledJobs', () => {
             fs.writeFileSync(fakeBook, 'Im a book');
             fs.utimesSync(fakeBook, threeDaysAgo, threeDaysAgo);
 
-            return ScheduledJobs.cleanEbooks().then(() => assertNoFile(fakeBook));
+            return ScheduledJobs.cleanEbooks().then(() => TestHelpers.assertNoFile(fakeBook));
         });
     });
 });

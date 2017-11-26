@@ -2,6 +2,7 @@
 
 const { assert } = require('chai');
 const Sinon = require('sinon');
+const TestHelpers = require('./helpers');
 
 const Book = require('../lib/book');
 const Utilities = require('../lib/utilities');
@@ -99,6 +100,17 @@ describe('Book', () => {
         });
     });
 
+    describe('#deleteFiles', () => {
+        it('deletes ebook files', () =>
+            book
+                .writeEpub()
+                .then(() => book.deleteFiles())
+                .then(() => {
+                    TestHelpers.assertNoFile(book.getEpubPath());
+                    TestHelpers.assertNoFile(book.getMobiPath());
+                }));
+    });
+
     describe('#writeEpub', () => {
         it('saves an epub file', () => {
             const EpubWriter = {
@@ -124,8 +136,6 @@ describe('Book', () => {
                 getEPUBWriterStub.restore();
             });
         });
-
-        it('creates a custom cover', () => {});
     });
 
     describe('.isValidSection', () => {

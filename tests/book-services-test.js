@@ -62,6 +62,7 @@ describe('Book Services', () => {
                 'writeEpub',
                 'convertToMobi',
                 'commit',
+                'scheduleClean',
             ];
             publishServices.forEach((service) => {
                 sandbox.stub(BookServices, service).returns(Promise.resolve(book));
@@ -257,6 +258,19 @@ describe('Book Services', () => {
                     done();
                 })
                 .catch(done);
+        });
+    });
+
+    describe('.scheduleClean', () => {
+        it('sets a timeout for calling book.deleteFiles()', () => {
+            const clock = Sinon.useFakeTimers();
+            Sinon.stub(book, 'deleteFiles');
+            BookServices.scheduleClean(book);
+            clock.tick(BookServices.CLEAN_DELAY);
+            clock.restore();
+
+            assert.isTrue(book.deleteFiles.called);
+            book.deleteFiles.restore();
         });
     });
 });
