@@ -174,8 +174,7 @@ router.get('/email-delivery', (req, res) => {
                 })
                 .then(() => {
                     res.status(200).send('Email sent!');
-                })
-        )
+                }))
         .catch((e) => {
             respondWithError(res, e);
         });

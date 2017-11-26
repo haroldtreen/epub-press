@@ -1,6 +1,7 @@
 'use strict';
 
 const Logger = require('../lib/logger');
+
 const log = new Logger();
 
 const REGEXP = /Book Published/i;

@@ -13,9 +13,7 @@ const StatusTracker = require('../../../../lib/status-tracker');
 const Mailer = require('../../../../lib/mailer');
 
 // eslint-disable-next-line prefer-spread
-const urls = Array.apply(null, { length: 1000 }).map(
-  (a, i) => `http://google.com/${i}`
-);
+const urls = Array.apply(null, { length: 1000 }).map((a, i) => `http://google.com/${i}`);
 const session = request(app);
 
 const sandbox = sinon.sandbox.create();
@@ -279,9 +277,7 @@ const V1_ENDPOINTS = {
             status: 404,
             response: buildErrorsResponse('BOOK_NOT_FOUND'),
             before: () => {
-                sandbox
-          .stub(Book, 'find')
-          .rejects(AppErrors.getApiError('BOOK_NOT_FOUND'));
+                sandbox.stub(Book, 'find').rejects(AppErrors.getApiError('BOOK_NOT_FOUND'));
             },
         },
         {
@@ -348,8 +344,8 @@ const V1_ENDPOINTS = {
             response: StatusTracker.buildStatus('DEFAULT'),
             before: () => {
                 sandbox
-          .stub(BookServices, 'getStatus')
-          .resolves(StatusTracker.buildStatus('DEFAULT'));
+                    .stub(BookServices, 'getStatus')
+                    .resolves(StatusTracker.buildStatus('DEFAULT'));
             },
         },
         {
@@ -358,8 +354,8 @@ const V1_ENDPOINTS = {
             response: StatusTracker.buildStatus('FAILED'),
             before: () => {
                 sandbox
-          .stub(BookServices, 'getStatus')
-          .resolves(StatusTracker.buildStatus('FAILED'));
+                    .stub(BookServices, 'getStatus')
+                    .resolves(StatusTracker.buildStatus('FAILED'));
             },
         },
     ],

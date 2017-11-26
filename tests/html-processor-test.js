@@ -7,6 +7,7 @@ const nock = require('nock');
 const Config = require('../lib/config');
 
 const HtmlProcessor = require('../lib/html-processor.js');
+
 const fixturesPath = './tests/fixtures';
 const outputFolder = Config.IMAGES_TMP;
 
@@ -55,14 +56,12 @@ describe('HTML Processor', () => {
             let html = fs.readFileSync(`${__dirname}/fixtures/invalid-attributes.html`).toString();
 
             ['srcset', 'property', 'itemprop'].forEach(attr =>
-                assert.match(html, new RegExp(attr))
-            );
+                assert.match(html, new RegExp(attr)));
 
             html = HtmlProcessor.removeInvalidAttributes('div', html);
 
             ['srcset', 'property', 'itemprop'].forEach(attr =>
-                assert.notMatch(html, new RegExp(attr))
-            );
+                assert.notMatch(html, new RegExp(attr)));
         });
 
         it('can remove divs with certain classes and ids', () => {
@@ -128,12 +127,8 @@ describe('HTML Processor', () => {
         });
 
         it('can remove indents', () => {
-            const html = ['<code>', '   if (true) {', '      hello();', '   }', '</code>'].join(
-                '\n'
-            );
-            const expectedHtml = ['<code>', 'if (true) {', '   hello();', '}', '</code>'].join(
-                '\n'
-            );
+            const html = ['<code>', '   if (true) {', '      hello();', '   }', '</code>'].join('\n');
+            const expectedHtml = ['<code>', 'if (true) {', '   hello();', '}', '</code>'].join('\n');
 
             assert.equal(HtmlProcessor.removeIndent('code', html), expectedHtml);
         });

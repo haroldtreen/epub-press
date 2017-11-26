@@ -5,6 +5,7 @@ const fs = require('fs');
 const assert = require('chai').assert;
 
 const Logger = require('../lib/logger');
+
 let log;
 
 describe('Logger', () => {
@@ -72,8 +73,7 @@ describe('Logger', () => {
                     const output = data.toString();
 
                     ['a promise', 'some horrible error', 'logger-test'].forEach(msg =>
-            assert.include(output, msg)
-          );
+                        assert.include(output, msg));
                     done();
                 });
             });

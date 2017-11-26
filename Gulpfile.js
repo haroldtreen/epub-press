@@ -34,7 +34,7 @@ gulp.task('test-unit', () => {
         .src('./tests/*-test.js', { read: false })
         .pipe(mocha(options))
         .once('error', (e) => {
-            console.log(e);
+            console.error(e);
             process.exit(1);
         })
         .once('end', () => {

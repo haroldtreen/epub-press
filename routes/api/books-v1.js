@@ -24,8 +24,7 @@ router.post('/', (req, res) => {
                 .then((publishedBook) => {
                     log.verbose('Book Published', { id: publishedBook.getId() });
                 })
-                .catch(
-                    e => e
+                .catch(e => e
                     // Error handling
                 );
         })
