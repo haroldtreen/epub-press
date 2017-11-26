@@ -27,10 +27,10 @@ open http://localhost:3000
 ### Tests
 
 ```bash
-gulp test-integration   # Test API + full article extraction
-gulp test-db            # Test models
-gulp test-unit          # Test regular JS
-gulp test               # Test all of the above
+npm run test:integration   # Test API + full article extraction
+npm run test:models        # Test models
+npm run test:unit          # Test regular JS
+npm run test               # Test all of the above
 ```
 
 Changes should be accompanied by tests. 
