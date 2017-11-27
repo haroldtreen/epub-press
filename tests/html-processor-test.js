@@ -1,10 +1,12 @@
 'use strict';
 
-const assert = require('chai').assert;
+const { assert } = require('chai');
+const glob = require('glob');
 const fs = require('fs-extra');
 const nock = require('nock');
 
 const Config = require('../lib/config');
+const Utilities = require('../lib/utilities');
 
 const HtmlProcessor = require('../lib/html-processor.js');
 
@@ -276,11 +278,15 @@ describe('HTML Processor', () => {
                 });
             });
             scope.get('/bad-source').reply('404', 'Not Found');
-            fs.emptyDir(outputFolder, () => {});
+            glob(`${outputFolder}/*.png`, (err, files) => {
+                Utilities.removeFiles(files);
+            });
         });
 
         afterEach(() => {
-            fs.emptyDir(outputFolder, () => {});
+            glob(`${outputFolder}/*.png`, (err, files) => {
+                Utilities.removeFiles(files);
+            });
         });
 
         it('downloads images', () =>
@@ -293,7 +299,7 @@ describe('HTML Processor', () => {
             HtmlProcessor.extractImages(mockSection.url, mockSection.html)
                 .then(() => {
                     fs.readdir(outputFolder, (err, files) => {
-                        assert.lengthOf(files || [], 3);
+                        assert.lengthOf(files || [], 4);
                         done();
                     });
                 })

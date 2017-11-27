@@ -1,9 +1,11 @@
 const { assert } = require('chai');
 
 const fs = require('fs-extra');
+const glob = require('glob');
 
 const Book = require('../lib/book');
 const StylingService = require('../lib/styling-service');
+const Utilities = require('../lib/utilities');
 
 function assertDifferentFile(path1, path2) {
     assert.notEqual(path1, path2);
@@ -12,7 +14,11 @@ function assertDifferentFile(path1, path2) {
 }
 
 describe('StylingService', () => {
-    // after(() => fs.emptyDir(StylingService.COVERS_TMP));
+    after(() => {
+        glob(`${StylingService.COVERS_TMP}/*.jpg`, (err, files) => {
+            Utilities.removeFiles(files);
+        });
+    });
 
     describe('.writeOnCover', () => {
         it('can add text to a book cover', () => {
