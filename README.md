@@ -15,14 +15,22 @@ cd epub-press
 npm install
 ```
 
-
-
 ### Usage
 
-```bash
-npm start
-open http://localhost:3000
-```
+**Docker Setup**
+
+1. [Install Docker](https://docs.docker.com/engine/installation/)
+1. `docker-compose up`
+
+EpubPress will be running at `http://localhost:3000`.
+
+**Development Setup**
+
+1. [Install Docker](https://docs.docker.com/engine/installation/)
+1. `docker-compose up postgres`
+1. `npm start`
+
+EpubPress will be running at `http://localhost:3000` and reload upon file changes.
 
 ### Tests
 

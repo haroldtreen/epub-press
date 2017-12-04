@@ -3,8 +3,9 @@
 /**
  * Module dependencies.
  */
-
-require('newrelic');
+if (process.env.DISABLE_NEWRELIC !== 'true') {
+    require('newrelic');
+}
 const app = require('../app');
 const debug = require('debug')('epub-press:server');
 const http = require('http');
