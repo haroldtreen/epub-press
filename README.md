@@ -32,6 +32,8 @@ EpubPress will be running at `http://localhost:3000`.
 
 EpubPress will be running at `http://localhost:3000` and reload upon file changes.
 
+To build a version of EpubPress that talks to a local server, see [epub-press-chrome](https://github.com/haroldtreen/epub-press-clients/tree/master/packages/epub-press-chrome#usage-with-local-server).
+
 ### Tests
 
 ```bash
