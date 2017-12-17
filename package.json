@@ -1,7 +1,8 @@
 {
     "name": "epub-press",
     "title": "EpubPress - Read the web offline",
-    "description": "A browser extension for creating ebooks from your favorite webpages. Build books that are totally custom, offline and compatible with all your devices.",
+    "description":
+        "A browser extension for creating ebooks from your favorite webpages. Build books that are totally custom, offline and compatible with all your devices.",
     "image": "https://epub.press/images/logo-full.jpg",
     "license": "GPL-3.0+",
     "version": "1.0.0",
@@ -19,6 +20,7 @@
         "test:unit": "NODE_ENV=test mocha tests/*-test.js --exit",
         "test:models": "NODE_ENV=test mocha tests/models/*-test.js --exit",
         "test:integration": "NODE_ENV=test mocha tests/integration/**/*-test.js --exit",
+        "lint": "eslint .",
         "wait:db": "node scripts/wait-for-postgres.js",
         "format": "prettier-eslint \"**/*.js\" --single-quote --write --tab-width 4"
     },
@@ -70,5 +72,6 @@
         "sinon": "^4.1.3",
         "supertest": "^3.0.0",
         "yargs": "^6.5.0"
-    }
+    },
+    "eslintIgnore": ["coverage"]
 }
