@@ -23,10 +23,7 @@ describe('Scheduler', () => {
 
     describe('.unitToMultiplier', () => {
         it('has a milliseconds multiplier', () => {
-            [
-                Scheduler.unitToMultiplier('milliseconds'),
-                Scheduler.unitToMultiplier('ms'),
-            ].forEach(mult => assert.equal(mult, 1));
+            [Scheduler.unitToMultiplier('milliseconds'), Scheduler.unitToMultiplier('ms')].forEach(mult => assert.equal(mult, 1));
         });
 
         it('has a days multiplier', () => {

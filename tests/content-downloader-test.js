@@ -91,10 +91,7 @@ describe('Content Downloader', () => {
                     }),
             });
 
-            return ContentDownloader.all([
-                mockContentDownloader,
-                mockContentDownloader,
-            ]).then((results) => {
+            return ContentDownloader.all([mockContentDownloader, mockContentDownloader]).then((results) => {
                 results.forEach((result) => {
                     assert.isUndefined(result.error);
                 });

@@ -338,7 +338,8 @@ describe('Article Extraction', () => {
         },
         {
             fixture: 'lifehacker-jp',
-            title: '「PCが重い...」と感じているなら要チェック。ChromeがRAMを大量に使用する理由とその対応策',
+            title:
+                '「PCが重い...」と感じているなら要チェック。ChromeがRAMを大量に使用する理由とその対応策',
             include: ['ズバリ、答え', 'また、自', 'もちろん、R', 'れませんね。'],
             notInclude: ['NISSAN GT-R 2017'],
         },
@@ -392,8 +393,17 @@ describe('Article Extraction', () => {
         {
             fixture: 'ux-milk',
             title: 'より良いCSSを書くための様々なCSS設計まとめ',
-            include: ['CSSは誰でも簡単に自由に', 'SMACSSでは、スタイル', 'Scoped CSS自体は、CSS設', 'どのCSS設'],
-            notInclude: ['Web制作の作業効率を格段にア', 'ライフハック', '個人情報の取り扱いについて'],
+            include: [
+                'CSSは誰でも簡単に自由に',
+                'SMACSSでは、スタイル',
+                'Scoped CSS自体は、CSS設',
+                'どのCSS設',
+            ],
+            notInclude: [
+                'Web制作の作業効率を格段にア',
+                'ライフハック',
+                '個人情報の取り扱いについて',
+            ],
         },
         {
             fixture: 'journalism-uk',
