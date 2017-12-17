@@ -3,6 +3,8 @@
 
 # epub-press
 
+<a href="https://codeclimate.com/github/haroldtreen/epub-press/maintainability"><img src="https://api.codeclimate.com/v1/badges/444d1c975273b32ee0f1/maintainability" /></a>
+
 > Backend server for [EpubPress](https://epub.press).
 
 For clients, see [epub-press-clients](https://github.com/haroldtreen/epub-press-clients).
@@ -32,7 +34,8 @@ EpubPress will be running at `http://localhost:3000`.
 
 EpubPress will be running at `http://localhost:3000` and reload upon file changes.
 
-To build a version of EpubPress that talks to a local server, see [epub-press-chrome](https://github.com/haroldtreen/epub-press-clients/tree/master/packages/epub-press-chrome#usage-with-local-server).
+To build a version of EpubPress that talks to a local server, see
+[epub-press-chrome](https://github.com/haroldtreen/epub-press-clients/tree/master/packages/epub-press-chrome#usage-with-local-server).
 
 ### Tests
 
@@ -43,15 +46,14 @@ npm run test:unit          # Test regular JS
 npm run test               # Test all of the above
 ```
 
-Changes should be accompanied by tests. 
-All tests located in `/tests`.
+Changes should be accompanied by tests. All tests located in `/tests`.
 
 ### API
 
-|Description                                | Endpoint                          |
-|-------------------------------------------|-----------------------------------|
-|Create a book                              |`POST /api/v1/books`               |
-|Check the status of an in progress book    |`GET /api/v1/books/:id/status`     |
-|Download an ebook as a file                |`GET /api/v1/books/:id/download`   |
-|Send the ebook to an email                 |`GET /api/v1/books/:id/email`      |
-|Check versions compatible with the server  |`GET /api/v1/version`              |
+| Description                               | Endpoint                         |
+| ----------------------------------------- | -------------------------------- |
+| Create a book                             | `POST /api/v1/books`             |
+| Check the status of an in progress book   | `GET /api/v1/books/:id/status`   |
+| Download an ebook as a file               | `GET /api/v1/books/:id/download` |
+| Send the ebook to an email                | `GET /api/v1/books/:id/email`    |
+| Check versions compatible with the server | `GET /api/v1/version`            |
