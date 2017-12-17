@@ -1,5 +1,5 @@
-const assert = require('chai').assert;
 const fs = require('fs');
+const { assert } = require('chai');
 const ContentExtractor = require('../../lib/content-extractor');
 const Book = require('../../lib/book');
 

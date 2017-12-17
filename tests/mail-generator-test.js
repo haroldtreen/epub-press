@@ -1,4 +1,4 @@
-const assert = require('chai').assert;
+const { assert } = require('chai');
 
 const Book = require('../lib/book');
 const MailGenerator = require('../lib/mail-generator');

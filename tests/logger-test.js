@@ -1,8 +1,5 @@
-'use strict';
-
 const fs = require('fs');
-
-const assert = require('chai').assert;
+const { assert } = require('chai');
 
 const Logger = require('../lib/logger');
 

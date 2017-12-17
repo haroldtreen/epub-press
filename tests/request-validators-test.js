@@ -29,7 +29,7 @@ describe('RequestValidators', () => {
         it('requires sections/urls to be in the body', () => {
             const req = mockRequest({});
             return RequestValidators.validatePublishRequest(req)
-                .then(() => Promise.reject(`Expected ${req} not to be valid`))
+                .then(() => Promise.reject(new Error(`Expected ${req} not to be valid`)))
                 .catch(isError)
                 .then((err) => {
                     assert.equal(err.status, 400);
@@ -41,7 +41,7 @@ describe('RequestValidators', () => {
                 urls,
             });
             return RequestValidators.validatePublishRequest(req)
-                .then(() => Promise.reject('Expected too many urls not to be valid.'))
+                .then(() => Promise.reject(new Error('Expected too many urls not to be valid.')))
                 .catch(isError)
                 .then((err) => {
                     assert.equal(err.status, 422);
@@ -53,7 +53,7 @@ describe('RequestValidators', () => {
                 sections: urls,
             });
             return RequestValidators.validatePublishRequest(req)
-                .then(() => Promise.reject('Expected too many urls not to be valid'))
+                .then(() => Promise.reject(new Error('Expected too many urls not to be valid')))
                 .catch(isError)
                 .then((err) => {
                     assert.equal(err.status, 422);

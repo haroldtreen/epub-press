@@ -1,5 +1,5 @@
 const nock = require('nock');
-const assert = require('chai').assert;
+const { assert } = require('chai');
 const sinon = require('sinon');
 const fs = require('fs-extra');
 
