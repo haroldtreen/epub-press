@@ -68,4 +68,5 @@ When an ebook is requested, your email will be sent to the server if provided. T
 
 If no email is provided, the ebook will be returned as a file and no information about who requested the book will be saved.
 
-All extension code is [open source](https://github.com/haroldtreen/epub-press-chrome)
+All extension code is [available here](https://github.com/haroldtreen/epub-press-chrome).
+All backend code is [available here](https://github.com/haroldtreen/epub-press).

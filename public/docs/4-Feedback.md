@@ -6,10 +6,11 @@ Please send all feature requests/ideas/suggestions to [feedback@epub.press](mail
 
 You can also follow us on [Twitter](https://twitter.com/Epub_Press) to get the latest updates on what's being developed.
 
-To follow the development of new features or get involved, visit the [Github Repo](https://github.com/haroldtreen/epub-press-chrome)
+To follow the development of new features or get involved, visit the [Extension Github Repo](https://github.com/haroldtreen/epub-press-chrome).  
+To see updates to the backend service, visit the [Server Github Repo](https://github.com/haroldtreen/epub-press).
 
 ## Planned Features
-- Firefox and Safari extensions.
+- Safari extension.
 - Detection of sites with lists of articles (eg. Feedly).
 - Open source javascript library + npm package for using EpubPress in your applications.
 - Embeddable site widget.
