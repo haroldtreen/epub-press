@@ -11,6 +11,9 @@ It's available through [npm](https://www.npmjs.com/package/epub-press-js) and [G
 npm install --save epub-press-js
 ```
 
+## EpubPress Server  
+To learn about running the backend service locally, visit the [haroldtreen/epub-press](https://github.com/haroldtreen/epub-press) github repo.
+
 ## Safari
 An extension for **Safari** will be available in the future!
 Watch the [Github repo](https://github.com/haroldtreen/epub-press-clients) for updates.
