@@ -65,11 +65,10 @@ router.get('/:id/download', (req, res) => {
 });
 
 router.get('/:id/email', (req, res) => {
-    const isMobi = req.query.filetype === 'mobi';
-
-    return RequestValidators.validateEmailRequest(req)
+    RequestValidators.validateEmailRequest(req)
         .then(() => Book.find(req.params.id, req.query.filetype))
         .then((book) => {
+            const isMobi = req.query.filetype === 'mobi';
             const mailerFn = isMobi ? Mailer.sendMobi : Mailer.sendEpub;
             return mailerFn(req.query.email, book).catch((error) => {
                 log.warn('Book delivery failed', req.query, error);

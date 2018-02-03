@@ -1,5 +1,12 @@
 const AppErrors = require('../../lib/app-errors');
 
+function normalizeRequest(req) {
+    // Kindle's can only receive .mobi files
+    const isKindleEmail = /kindle/.test(req.query.email);
+    req.query.filetype = isKindleEmail ? 'mobi' : req.query.filetype;
+    return req;
+}
+
 class RequestValidators {
     static validatePublishRequest(req) {
         return new Promise((resolve, reject) => {
@@ -20,7 +27,8 @@ class RequestValidators {
             if (!req.query.email) {
                 reject(AppErrors.getApiError('NO_EMAIL_SPECIFIED'));
             } else {
-                resolve(req);
+                const normalizedRequest = normalizeRequest(req);
+                resolve(normalizedRequest);
             }
         });
     }

@@ -331,6 +331,21 @@ const V1_ENDPOINTS = {
                 assert.deepEqual(Book.find.args, [['some-id', 'mobi']]);
             },
         },
+        {
+            get: { email: 'example@kindle.com', filetype: 'epub' },
+            status: 200,
+            response: 'Email sent!',
+            before: () => {
+                sandbox.stub(Book, 'find').resolves({ getMobiPath: () => {} });
+                sandbox.stub(Mailer, 'sendMobi').resolves({});
+                sandbox.stub(Mailer, 'sendEpub').resolves({});
+            },
+            after: () => {
+                assert.deepEqual(Book.find.args, [['some-id', 'mobi']]);
+                assert.isTrue(Mailer.sendMobi.called);
+                assert.isFalse(Mailer.sendEpub.called);
+            },
+        },
     ],
     '/api/v1/books/some-id/status': [
         {
