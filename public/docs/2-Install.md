@@ -1,7 +1,7 @@
 # Installing
 
-## Chrome Extension
-It can easily be installed from the [Chrome Store](https://chrome.google.com/webstore/detail/epubpress/pnhdnpnnffpijjbnhnipkehhibchdeok).
+## Browser Extension
+It can easily be installed from the [Chrome Store](https://chrome.google.com/webstore/detail/epubpress/pnhdnpnnffpijjbnhnipkehhibchdeok) and [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/epub-read-the-web-offline/).
 
 ## EpubPress JS
 Javascript library for building books with EpubPress.
