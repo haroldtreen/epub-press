@@ -22,16 +22,24 @@ npm install
 
 **Docker Setup**
 
-1. [Install Docker](https://docs.docker.com/engine/installation/)
-1. `docker-compose up`
+1.  [Install Docker](https://docs.docker.com/engine/installation/)
+1.  `docker-compose up`
+
+You'll also want to run database migrations if it's your first time running the service:
+
+`npx sequelize-cli db:migrate`
 
 EpubPress will be running at `http://localhost:3000`.
 
 **Development Setup**
 
-1. [Install Docker](https://docs.docker.com/engine/installation/)
-1. `docker-compose up postgres`
-1. `npm start`
+1.  [Install Docker](https://docs.docker.com/engine/installation/)
+1.  `docker-compose up postgres`
+1.  `npm start`
+
+You'll also want to run database migrations if it's your first time running the service:
+
+`npx sequelize-cli db:migrate`
 
 EpubPress will be running at `http://localhost:3000` and reload upon file changes.
 
