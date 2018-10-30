@@ -1,10 +1,9 @@
 'use strict';
 
+const program = require('commander');
 const Logger = require('../lib/logger');
 
 const log = new Logger();
-
-const program = require('commander');
 
 program
     .version('0.0.1')

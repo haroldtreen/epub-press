@@ -97,9 +97,8 @@ describe('StylingService', () => {
     describe('.wordToLine', () => {
         it('leaves short words intact', () => {
             const line = StylingService.wordToLine('Hello');
-            const margin =
-                StylingService.MARGIN +
-                (StylingService.LINE_WIDTH - StylingService.stringSize('Hello')) / 2;
+            const margin = StylingService.MARGIN
+                + (StylingService.LINE_WIDTH - StylingService.stringSize('Hello')) / 2;
 
             assert.equal(line.content, 'Hello');
             assert.equal(line.extra, '');

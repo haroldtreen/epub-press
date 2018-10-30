@@ -1,10 +1,13 @@
 {
+    "root": true,
     "extends": "airbnb",
     "rules": {
         "indent": ["error", 4],
         "strict": 0,
         "no-underscore-dangle": 0,
         "no-mixed-operators": 0,
+        "no-plusplus": 0,
+        "implicit-arrow-linebreak": 0,
         "import/no-extraneous-dependencies": [
             "error",
             { "devDependencies": ["**/tests/**/*.js", "Gulpfile.js"] }
