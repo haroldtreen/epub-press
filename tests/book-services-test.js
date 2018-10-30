@@ -52,7 +52,7 @@ describe('Book Services', () => {
 
     describe('.publish', () => {
         it('calls all necessary services', () => {
-            const sandbox = Sinon.sandbox.create();
+            const sandbox = Sinon.createSandbox();
             const publishServices = [
                 'updateSectionsHtml',
                 'extractSectionsContent',

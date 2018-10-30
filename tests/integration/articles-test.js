@@ -589,6 +589,11 @@ describe('Article Extraction', () => {
             title: 'Google - Site Reliability Engineering', // TODO: Change to Distributed Periodic Scheduling with Cron
             include: ["This chapter describes Google's implementation"],
         },
+        {
+            fixture: 'bbc-persian',
+            title: "ترامپ از توافق تجاری 'تاریخی' با کانادا استقبال کرد",
+            include: ['dir="rtl"', 'تجارت آزاد آمریکای شمالی (نفتا) استقبال کرده است.'],
+        },
         // {
         //     fixture: 'douban',
         //     title: '翻包记 之 随身行李和长途飞行小贴士',

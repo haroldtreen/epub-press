@@ -265,6 +265,23 @@ describe('HTML Processor', () => {
 
             assert.equal(fixedHtml, expectedHtml);
         });
+
+        it('can propogate dir attributes', () => {
+            const directionalHtml = [
+                '<div class="direction" dir="rtl">',
+                '<div><span><p></p></span></div>',
+                '</div>',
+            ].join('\n');
+            const expectedHtml = [
+                '<div class="direction" dir="rtl">',
+                '<div><span><p dir="rtl"></p></span></div>',
+                '</div>',
+            ].join('\n');
+
+            const fixedHtml = HtmlProcessor.propagateDirProperty('.direction', directionalHtml);
+
+            assert.equal(fixedHtml, expectedHtml);
+        });
     });
 
     describe('Image Extraction', () => {
