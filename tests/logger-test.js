@@ -47,7 +47,7 @@ describe('Logger', () => {
                             done();
                         });
                     }
-                }, 1);
+                }, 5);
             };
 
             const fileLogger = new Logger({
