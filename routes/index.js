@@ -1,9 +1,8 @@
 'use strict';
 
+const express = require('express');
 const DocumentationLoader = require('../lib/documentation-loader');
 const metadata = require('../package.json');
-
-const express = require('express');
 
 const router = express.Router();
 

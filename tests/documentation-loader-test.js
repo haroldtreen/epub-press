@@ -1,8 +1,8 @@
+const fs = require('fs');
+const { assert } = require('chai');
+
 const DocumentationLoader = require('../lib/documentation-loader');
 const Config = require('../lib/config');
-const fs = require('fs');
-
-const assert = require('chai').assert;
 
 describe('Documentation Loader', () => {
     it('is constructed with a path', () => {

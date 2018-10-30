@@ -24,7 +24,8 @@ router.post('/', (req, res) => {
                 .then((publishedBook) => {
                     log.verbose('Book Published', { id: publishedBook.getId() });
                 })
-                .catch(e => e
+                .catch(
+                    e => e
                     // Error handling
                 );
         })
@@ -55,8 +56,7 @@ router.get('/:id/status', (req, res) => {
 router.get('/:id/download', (req, res) => {
     Book.find(req.params.id, req.query.filetype)
         .then((book) => {
-            const filepath =
-                req.query.filetype === 'mobi' ? book.getMobiPath() : book.getEpubPath();
+            const filepath = req.query.filetype === 'mobi' ? book.getMobiPath() : book.getEpubPath();
             res.download(filepath);
         })
         .catch((e) => {
