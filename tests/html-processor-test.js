@@ -270,19 +270,11 @@ describe('HTML Processor', () => {
             assert.equal(fixedHtml, expectedHtml);
         });
 
-        it('can propogate dir attributes', () => {
-            const directionalHtml = [
-                '<div dir="rtl">',
-                '<div><span><p></p></span></div>',
-                '</div>',
-            ].join('\n');
-            const expectedHtml = [
-                '<div dir="rtl">',
-                '<div><span><p dir="rtl"></p></span></div>',
-                '</div>',
-            ].join('\n');
+        it('can assign the text direction', () => {
+            const inputHtml = '<div>Hello World</div><div>ונתפ</div>';
+            const expectedHtml = '<div>Hello World</div><div dir="rtl">ונתפ</div>';
 
-            const fixedHtml = HtmlProcessor.propagateDirProperty('div[dir="rtl"]', directionalHtml);
+            const fixedHtml = HtmlProcessor.assignDirProperty('div', inputHtml);
 
             assert.equal(fixedHtml, expectedHtml);
         });
