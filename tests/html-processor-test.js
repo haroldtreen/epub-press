@@ -269,6 +269,15 @@ describe('HTML Processor', () => {
 
             assert.equal(fixedHtml, expectedHtml);
         });
+
+        it('can assign the text direction', () => {
+            const inputHtml = '<div>Hello World</div><div>ונתפ</div>';
+            const expectedHtml = '<div>Hello World</div><div dir="rtl">ונתפ</div>';
+
+            const fixedHtml = HtmlProcessor.assignDirProperty('div', inputHtml);
+
+            assert.equal(fixedHtml, expectedHtml);
+        });
     });
 
     describe('Image Extraction', () => {

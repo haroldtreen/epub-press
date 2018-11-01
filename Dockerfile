@@ -1,8 +1,8 @@
 FROM node:carbon
 
+EXPOSE 3000
 WORKDIR /usr/src/epub-press
+RUN npm install
 
 COPY . .
-RUN npm install
-EXPOSE 3000
 CMD ["npm", "run", "start:docker"]

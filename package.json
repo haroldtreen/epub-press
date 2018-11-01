@@ -50,6 +50,7 @@
         "sequelize": "^4.41.0",
         "serve-favicon": "^2.5.0",
         "shortid": "^2.2.13",
+        "string-direction": "^0.1.2",
         "winston": "^2.4.4"
     },
     "devDependencies": {
