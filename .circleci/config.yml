@@ -17,7 +17,7 @@ jobs:
                       - ./node_modules
             - run:
                   name: test
-                  command: npm test
+                  command: npm run test:ci
 workflows:
     version: 2
     test:
