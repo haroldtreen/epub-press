@@ -1,0 +1,25 @@
+version: 2
+jobs:
+    test:
+        docker:
+            - image: circleci/node:carbon
+        steps:
+            - checkout
+            - run:
+                  name: update-npm
+                  command: 'sudo npm install -g npm@latest'
+            - run:
+                  name: install
+                  command: npm install
+            - save_cache:
+                  key: dependency-cache-{{ checksum "package.json" }}
+                  paths:
+                      - ./node_modules
+            - run:
+                  name: test
+                  command: npm run test:ci
+workflows:
+    version: 2
+    test:
+        jobs:
+            - test

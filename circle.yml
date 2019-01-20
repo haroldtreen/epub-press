@@ -1,6 +1,0 @@
-machine:
-  node:
-    version: 6.10
-test:
-    override:
-        - npm run test:ci
