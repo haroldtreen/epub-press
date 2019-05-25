@@ -8,6 +8,11 @@ const articleFixtures = `${__dirname}/../fixtures/articles`;
 describe('Article Extraction', () => {
     [
         {
+            fixture: 'reddit-post-2019',
+            title: 'r/podcasting',
+            include: ["Here's where you can promote"],
+        },
+        {
             fixture: 'new-york-times',
             title: 'In Cramped and Costly Bay Area, Cries to Build, Baby, Build',
             include: ['The organization also inflamed Sierra Club'],
