@@ -10,7 +10,6 @@ services:
         - DB_HOST=postgres
         - DB_USERNAME=postgres
         - DB_PASSWORD=password
-        - DISABLE_NEWRELIC=true
   postgres:
     image: library/postgres
     ports:

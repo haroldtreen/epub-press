@@ -38,7 +38,6 @@
         "jimp": "^0.5.6",
         "marked": "^0.6.2",
         "morgan": "^1.9.1",
-        "newrelic": "^4.13.0",
         "node-readability": "github:haroldtreen/readability",
         "nodemailer": "^2.7.0",
         "nodepub": "github:haroldtreen/nodepub",
