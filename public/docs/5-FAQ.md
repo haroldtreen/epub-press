@@ -20,7 +20,7 @@ It usually means one of two things:
 - The page you sent didn't have a large body body text that EpubPress thought would be good for a book. (eg. Sending a YouTube video or page of images)
 - The content you were hoping to extract was in a part of the page that EpubPress considered irrelevant and was removed (eg. Sending a comment thread)
 
-If you are a publisher and want to make your page easier to extract content from, follow the [Readability Publishing Guidelines](https://www.readability.com/developers/guidelines#publisher).
+If you are a publisher and want to make your page easier to extract content from, follow the [Readability Publishing Guidelines](https://web.archive.org/web/20161001/https://readability.com/developers/guidelines#publisher).
 If you find a page that isn't being extracted properly, don't hesitate to email [support@epub.press](mailto:support@epub.press)
 
 ### Q: I tried email delivery, but my book never arrived. What's going on?
