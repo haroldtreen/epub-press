@@ -66,3 +66,13 @@ Changes should be accompanied by tests. All tests located in `/tests`.
 | Download an ebook as a file               | `GET /api/v1/books/:id/download` |
 | Send the ebook to an email                | `GET /api/v1/books/:id/email`    |
 | Check versions compatible with the server | `GET /api/v1/version`            |
+
+### Environment variables
+
+ | Name                   | Default            | Description                       |
+ |------------------------|--------------------|-----------------------------------|
+ | `MAIL_SERVER_HOST`     |                    | Hostname of SMTP mail server      |
+ | `MAIL_SERVER_PORT`     |                    | Port of SMTP mail server          |
+ | `MAIL_SERVER_USERNAME` |                    | Username for SMTP authentication  |
+ | `MAIL_SERVER_PASSWORD` |                    | Password for SMTP authentication  |
+ | `MAIL_SENDER_ADDRESS`  | noreply@epub.press | Sender email address              |
