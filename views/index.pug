@@ -5,11 +5,11 @@ block content
         img(id='logo', src="images/logo-full.jpg")
         h1(id='title') EpubPress
         nav(id='nav-bar')
-            - each doc in docs
-                a(href='##{doc.id}') #{doc.title}
+            each doc in docs
+                a(href=`#${doc.id}`) #{doc.title}
         div(id='content')
-            - each doc in docs
-                div(id='#{doc.id}')
+            each doc in docs
+                div(id=`${doc.id}`)
                 != doc.html
                 
     footer(align='center')
