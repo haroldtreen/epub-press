@@ -46,7 +46,7 @@
         "request": "^2.88.0",
         "request-promise": "^4.2.4",
         "sanitize-html": "^1.20.1",
-        "sequelize": "^5.12.3",
+        "sequelize": "^5.15.1",
         "serve-favicon": "^2.5.0",
         "shortid": "^2.2.14",
         "string-direction": "^0.1.2",
