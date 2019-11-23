@@ -1,9 +1,0 @@
-[ignore]
-
-[include]
-lib/**
-
-[libs]
-lib/**
-
-[options]
