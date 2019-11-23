@@ -28,7 +28,7 @@ describe('StylingService', () => {
                 const postStyledCover = updatedBook.getCoverPath();
                 assertDifferentFile(preStyledCover, postStyledCover);
             });
-        }, 6000);
+        }, 10000);
     });
 
     describe('.stringToLines', () => {

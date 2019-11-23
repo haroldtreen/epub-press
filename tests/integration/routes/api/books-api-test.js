@@ -15,7 +15,7 @@ const Mailer = require('../../../../lib/mailer');
 const urls = Array.apply(null, { length: 1000 }).map((a, i) => `http://google.com/${i}`);
 const session = request(app);
 
-const sandbox = sinon.sandbox.create();
+const sandbox = sinon.createSandbox();
 
 function buildErrorsResponse(...args) {
     const errors = args.map((errorName) => {

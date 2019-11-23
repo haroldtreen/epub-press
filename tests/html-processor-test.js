@@ -292,7 +292,7 @@ describe('HTML Processor', () => {
                     'Content-type': 'image/png',
                 });
             });
-            scope.get('/bad-source').reply('404', 'Not Found');
+            scope.get('/bad-source').reply(404, 'Not Found');
             glob(`${outputFolder}/*.png`, (err, files) => {
                 Utilities.removeFiles(files);
             });
