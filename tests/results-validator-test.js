@@ -1,4 +1,3 @@
-const { assert } = require('chai');
 const sinon = require('sinon');
 
 const ResultsValidator = require('../lib/results-validator.js');
@@ -25,13 +24,13 @@ const badValidator = new ResultsValidator(badSection);
 
 describe('Results validator', () => {
     it('checks length variations', () => {
-        assert.isFalse(badValidator.lengthValidation());
-        assert.isTrue(goodValidator.lengthValidation());
+        expect(badValidator.lengthValidation()).toBe(false);
+        expect(goodValidator.lengthValidation()).toBe(true);
     });
 
     it('checks paragraph variations', () => {
-        assert.isFalse(badValidator.paragraphCountValidation());
-        assert.isTrue(goodValidator.paragraphCountValidation());
+        expect(badValidator.paragraphCountValidation()).toBe(false);
+        expect(goodValidator.paragraphCountValidation()).toBe(true);
     });
 
     it('can validate using all validators', () => {
@@ -39,10 +38,10 @@ describe('Results validator', () => {
             sinon.spy(goodValidator, validator);
         });
 
-        assert.isTrue(goodValidator.validate());
+        expect(goodValidator.validate()).toBe(true);
 
         ResultsValidator.VALIDATORS.forEach((validator) => {
-            assert.isTrue(goodValidator[validator].calledOnce);
+            expect(goodValidator[validator].calledOnce).toBe(true);
             goodValidator[validator].restore();
         });
     });
@@ -58,7 +57,7 @@ describe('Results validator', () => {
             'PARAGRAPH_THRESHOLD',
         ];
         Object.getOwnPropertyNames(ResultsValidator).forEach((property) => {
-            assert.include(ResultsValidator.VALIDATORS.concat(IGNORE), property);
+            expect(ResultsValidator.VALIDATORS.concat(IGNORE)).toContain(property);
         });
     });
 });

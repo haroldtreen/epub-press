@@ -1,6 +1,5 @@
 'use strict';
 
-const { assert } = require('chai');
 const Sinon = require('sinon');
 const TestHelpers = require('./helpers');
 
@@ -18,19 +17,19 @@ const content = '<p>Some Content</p>';
 const url = 'http://www.a.com/';
 
 describe('Book', () => {
-    before(() => {
+    beforeAll(() => {
         book = new Book(bookMetadata);
     });
 
     describe('constructor', () => {
         it('sanitizes the title', () => {
             const specialBook = new Book({ title: "Book with ' in the title" });
-            assert.include(specialBook.getTitle(), '&#39;');
+            expect(specialBook.getTitle()).toContain('&#39;');
         });
 
         it('uses the current date in the title', () => {
             const untitledBook = new Book();
-            assert.include(untitledBook.getTitle(), Date().slice(0, 9));
+            expect(untitledBook.getTitle()).toContain(Date().slice(0, 9));
         });
 
         it('can be constructed with sections', () => {
@@ -39,21 +38,21 @@ describe('Book', () => {
 
             const sections = sectionBook.getSections();
 
-            assert.lengthOf(sections, 1);
-            assert.equal(sections[0].url, 'http://google.com');
-            assert.equal(sections[0].html, '<html></html>');
+            expect(sections.length).toBe(1);
+            expect(sections[0].url).toEqual('http://google.com');
+            expect(sections[0].html).toEqual('<html></html>');
         });
     });
 
     describe('#getId', () => {
         it('returns an id', () => {
-            assert.isString(book.getId());
+            expect(typeof book.getId()).toBe('string');
         });
     });
 
     describe('#getTitle', () => {
         it('returns titles passed to the book', () => {
-            assert.equal(book.getTitle(), bookMetadata.title, 'Title not passed to book');
+            expect(book.getTitle()).toEqual(bookMetadata.title);
         });
     });
 
@@ -64,8 +63,8 @@ describe('Book', () => {
 
             const sections = book.getSections();
 
-            assert.equal(sections[sections.length - 1].title, 'Section 2');
-            assert.equal(sections[sections.length - 1].content, content);
+            expect(sections[sections.length - 1].title).toEqual('Section 2');
+            expect(sections[sections.length - 1].content).toEqual(content);
         });
     });
 
@@ -79,8 +78,8 @@ describe('Book', () => {
             const referencesHtml = book.getReferences();
 
             book.getSections().forEach((section) => {
-                assert.include(referencesHtml, section.title);
-                assert.include(referencesHtml, section.url);
+                expect(referencesHtml).toContain(section.title);
+                expect(referencesHtml).toContain(section.url);
             });
         });
     });
@@ -93,9 +92,9 @@ describe('Book', () => {
             return book.deleteAssets().then((b) => {
                 const removeFilesCall = Utilities.removeFiles.getCall(0);
                 Utilities.removeFiles.restore();
-                assert.deepEqual(removeFilesCall.args[0], assets);
-                assert.lengthOf(b.getMetadata().images, 0);
-                assert.equal(b.getCoverPath(), Book.DEFAULT_COVER_PATH);
+                expect(removeFilesCall.args[0]).toEqual(assets);
+                expect(b.getMetadata().images.length).toBe(0);
+                expect(b.getCoverPath()).toEqual(Book.DEFAULT_COVER_PATH);
             });
         });
     });
@@ -129,9 +128,9 @@ describe('Book', () => {
             });
 
             return book.writeEpub().then(() => {
-                assert.equal(EpubWriter.addSection.callCount, book.getSections().length + 1);
-                assert.equal(EpubWriter.writeEPUB.callCount, 1);
-                assert.equal(EpubWriter.addCSS.callCount, 1);
+                expect(EpubWriter.addSection.callCount).toEqual(book.getSections().length + 1);
+                expect(EpubWriter.writeEPUB.callCount).toEqual(1);
+                expect(EpubWriter.addCSS.callCount).toEqual(1);
 
                 getEPUBWriterStub.restore();
             });
@@ -140,11 +139,11 @@ describe('Book', () => {
 
     describe('.isValidSection', () => {
         it('can validate sections', () => {
-            assert.isTrue(Book.isValidSection({ title, content }), 'Title and content is valid');
-            assert.isTrue(Book.isValidSection({ url }), 'Url only is valid');
+            expect(Book.isValidSection({ title, content })).toBe(true);
+            expect(Book.isValidSection({ url })).toBe(true);
 
-            assert.isFalse(Book.isValidSection({ title }), 'Content must be present');
-            assert.isFalse(Book.isValidSection({ content }), 'Title must be present');
+            expect(Book.isValidSection({ title })).toBe(false);
+            expect(Book.isValidSection({ content })).toBe(false);
         });
     });
 
@@ -158,17 +157,17 @@ describe('Book', () => {
 
         it('builds books from request objects', () => {
             const objBook = Book.fromJSON(reqBody);
-            assert.lengthOf(objBook.getSections(), 2);
+            expect(objBook.getSections().length).toBe(2);
             const jsonBook = Book.fromJSON(JSON.stringify(reqBody));
-            assert.lengthOf(jsonBook.getSections(), 2);
+            expect(jsonBook.getSections().length).toBe(2);
         });
 
         it('converts urls to sections', () => {
             const jsonBook = Book.fromJSON(reqBody);
 
             jsonBook.getSections().forEach((section) => {
-                assert.isObject(section);
-                assert.isNull(section.html);
+                expect(typeof section).toBe('object');
+                expect(section.html).toBeNull();
             });
         });
 
@@ -179,7 +178,7 @@ describe('Book', () => {
             const metadata = jsonBook.getMetadata();
 
             validMetadataKeys.forEach((key) => {
-                assert.equal(metadata[key], reqBody[key]);
+                expect(metadata[key]).toEqual(reqBody[key]);
             });
         });
     });
@@ -187,7 +186,7 @@ describe('Book', () => {
     describe('.sanitizeTitle', () => {
         it('cleans potential titles', () => {
             const generatedTitle = Book.sanitizeTitle('  Title \n');
-            assert.equal(generatedTitle, 'Title');
+            expect(generatedTitle).toEqual('Title');
         });
     });
 });

@@ -1,5 +1,3 @@
-const { assert } = require('chai');
-
 const BookModel = require('../../models/').Book;
 
 describe('Book Model', () => {
@@ -12,8 +10,8 @@ describe('Book Model', () => {
             .then(() => BookModel.findOne({ where: { title: attrs.title } }))
             .then((book) => {
                 Object.keys(attrs).forEach((key) => {
-                    assert.deepEqual(attrs[key], book[key]);
-                    assert.isNumber(book.id);
+                    expect(attrs[key]).toEqual(book[key]);
+                    expect(typeof book.id).toBe('number');
                 });
                 done();
             })

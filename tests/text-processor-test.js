@@ -1,6 +1,5 @@
 'use strict';
 
-const { assert } = require('chai');
 const TextProcessor = require('../lib/text-processor');
 
 describe('Text Processor', () => {
@@ -8,6 +7,6 @@ describe('Text Processor', () => {
         const text = ['  hello', '    world'].join('\n');
         const expected = ['hello', '  world'].join('\n');
 
-        assert.equal(TextProcessor.removeIndent(text), expected);
+        expect(TextProcessor.removeIndent(text)).toEqual(expected);
     });
 });

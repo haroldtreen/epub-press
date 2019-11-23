@@ -1,5 +1,3 @@
-const { assert } = require('chai');
-
 const Book = require('../lib/book');
 const MailGenerator = require('../lib/mail-generator');
 
@@ -12,7 +10,7 @@ let book;
 let generator;
 
 describe('MailGenerator', () => {
-    before(() => {
+    beforeAll(() => {
         book = new Book(bookMetadata);
         generator = new MailGenerator(book);
     });
@@ -20,17 +18,17 @@ describe('MailGenerator', () => {
     it('uses book title in email body', () => {
         const body = generator.generateBody();
 
-        assert.include(body, book.getTitle());
+        expect(body).toContain(book.getTitle());
     });
 
     it('has different versions', () => {
         const body1 = generator.generateBody(0);
         const body2 = generator.generateBody(1);
 
-        assert.include(body1, book.getTitle());
-        assert.include(body2, book.getTitle());
+        expect(body1).toContain(book.getTitle());
+        expect(body2).toContain(book.getTitle());
 
-        assert.notEqual(body1, body2);
+        expect(body1).not.toEqual(body2);
     });
 
     it('each version is unique', () => {
@@ -42,7 +40,7 @@ describe('MailGenerator', () => {
         versions.forEach((versionI, i) => {
             versions.forEach((versionJ, j) => {
                 if (i !== j) {
-                    assert.notEqual(versionI, versionJ);
+                    expect(versionI).not.toEqual(versionJ);
                 }
             });
         });
@@ -50,7 +48,7 @@ describe('MailGenerator', () => {
 
     it('contains a donate link in each body', () => {
         for (let i = 0; i < MailGenerator.VERSIONS_COUNT; i++) {
-            assert.include(generator.generateBody(i), 'https://epub.press/#donate');
+            expect(generator.generateBody(i)).toContain('https://epub.press/#donate');
         }
     });
 
@@ -58,7 +56,7 @@ describe('MailGenerator', () => {
         const booklessGenerator = new MailGenerator();
 
         const body = booklessGenerator.generateBody();
-        assert.include(body, 'EpubPress');
-        assert.notInclude(body, 'undefined');
+        expect(body).toContain('EpubPress');
+        expect(body).not.toContain('undefined');
     });
 });

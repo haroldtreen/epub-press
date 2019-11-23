@@ -1,5 +1,4 @@
 const fs = require('fs');
-const { assert } = require('chai');
 
 const DocumentationLoader = require('../lib/documentation-loader');
 const Config = require('../lib/config');
@@ -8,7 +7,7 @@ describe('Documentation Loader', () => {
     it('is constructed with a path', () => {
         const loader = new DocumentationLoader(Config.DOCS_PATH);
 
-        assert.equal(loader._path, Config.DOCS_PATH);
+        expect(loader._path).toEqual(Config.DOCS_PATH);
     });
 
     it('loads all markdown files', (done) => {
@@ -18,11 +17,11 @@ describe('Documentation Loader', () => {
             loader
                 .readDocs()
                 .then((docs) => {
-                    assert.lengthOf(docs, files.length - 2);
+                    expect(docs.length).toBe(files.length - 2);
                     docs.forEach((doc) => {
-                        assert.property(doc, 'title');
-                        assert.property(doc, 'html');
-                        assert.property(doc, 'markdown');
+                        expect('title' in doc).toBeTruthy();
+                        expect('html' in doc).toBeTruthy();
+                        expect('markdown' in doc).toBeTruthy();
                     });
                     done();
                 })

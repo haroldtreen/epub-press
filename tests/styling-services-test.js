@@ -1,5 +1,3 @@
-const { assert } = require('chai');
-
 const fs = require('fs-extra');
 const glob = require('glob');
 
@@ -8,13 +6,13 @@ const StylingService = require('../lib/styling-service');
 const Utilities = require('../lib/utilities');
 
 function assertDifferentFile(path1, path2) {
-    assert.notEqual(path1, path2);
-    assert.isTrue(fs.pathExistsSync(path1));
-    assert.isTrue(fs.pathExistsSync(path2));
+    expect(path1).not.toEqual(path2);
+    expect(fs.pathExistsSync(path1)).toBe(true);
+    expect(fs.pathExistsSync(path2)).toBe(true);
 }
 
 describe('StylingService', () => {
-    after(() => {
+    afterAll(() => {
         glob(`${StylingService.COVERS_TMP}/*.jpg`, (err, files) => {
             Utilities.removeFiles(files);
         });
@@ -30,26 +28,26 @@ describe('StylingService', () => {
                 const postStyledCover = updatedBook.getCoverPath();
                 assertDifferentFile(preStyledCover, postStyledCover);
             });
-        });
+        }, 6000);
     });
 
     describe('.stringToLines', () => {
         it('returns no lines for an empty string', () => {
             const lines = StylingService.stringToLines('');
-            assert.lengthOf(lines, 0);
+            expect(lines.length).toBe(0);
         });
 
         it('aligns single characters to the middle of the page', () => {
             const line = StylingService.stringToLines('a')[0];
 
-            assert.equal(line.x, StylingService.MAX_X / 2 - StylingService.CHAR_WIDTH / 2);
-            assert.equal(line.y, StylingService.MIN_Y);
-            assert.equal(line.content, 'a');
+            expect(line.x).toEqual(StylingService.MAX_X / 2 - StylingService.CHAR_WIDTH / 2);
+            expect(line.y).toEqual(StylingService.MIN_Y);
+            expect(line.content).toEqual('a');
         });
 
         it('aligns long words to the left margin', () => {
             const line = StylingService.stringToLines('a'.repeat(1000))[0];
-            assert.isAtMost(line.x, StylingService.MARGIN + StylingService.CHAR_WIDTH);
+            expect(line.x).toBeLessThanOrEqual(StylingService.MARGIN + StylingService.CHAR_WIDTH);
         });
 
         it('shortens lines to fit the width', () => {
@@ -57,22 +55,22 @@ describe('StylingService', () => {
             const lineLength = line.content.length * StylingService.CHAR_WIDTH;
             const rightMargin = StylingService.MAX_X - StylingService.MARGIN;
 
-            assert.isAtMost(line.x + lineLength, rightMargin);
+            expect(line.x + lineLength).toBeLessThanOrEqual(rightMargin);
         });
 
         it('wraps long text to the next line', () => {
             const lines = StylingService.stringToLines(`Hello ${'world'.repeat(30)}`);
-            assert.equal(lines[0].content, 'Hello');
-            assert.isAbove(lines[0].x, StylingService.MARGIN);
-            assert.equal(lines[1].y - lines[0].y, StylingService.LINE_HEIGHT);
+            expect(lines[0].content).toEqual('Hello');
+            expect(lines[0].x).toBeGreaterThan(StylingService.MARGIN);
+            expect(lines[1].y - lines[0].y).toEqual(StylingService.LINE_HEIGHT);
         });
 
         it('accepts a maxLines option', () => {
             const maxLines = 2;
             const lines = StylingService.stringToLines('Hello '.repeat(40), { maxLines });
 
-            assert.lengthOf(lines, maxLines);
-            assert.equal(lines[1].content.slice(-3), '...');
+            expect(lines.length).toBe(maxLines);
+            expect(lines[1].content.slice(-3)).toEqual('...');
         });
     });
 
@@ -80,8 +78,8 @@ describe('StylingService', () => {
         it('returns the line and no extra for short lines', () => {
             const line = StylingService.stringToLine('Hello');
 
-            assert.equal(line.content, 'Hello');
-            assert.equal(line.extra, '');
+            expect(line.content).toEqual('Hello');
+            expect(line.extra).toEqual('');
         });
 
         it('returns the line and the extra string for long lines', () => {
@@ -89,8 +87,8 @@ describe('StylingService', () => {
             const line = StylingService.stringToLine(str);
             const maxCharCount = StylingService.LINE_WIDTH / StylingService.CHAR_WIDTH;
 
-            assert.isAtMost(line.content.length, maxCharCount);
-            assert.equal(`${line.content} ${line.extra}`, str);
+            expect(line.content.length).toBeLessThanOrEqual(maxCharCount);
+            expect(`${line.content} ${line.extra}`).toEqual(str);
         });
     });
 
@@ -100,17 +98,17 @@ describe('StylingService', () => {
             const margin = StylingService.MARGIN
                 + (StylingService.LINE_WIDTH - StylingService.stringSize('Hello')) / 2;
 
-            assert.equal(line.content, 'Hello');
-            assert.equal(line.extra, '');
-            assert.equal(line.x, margin);
+            expect(line.content).toEqual('Hello');
+            expect(line.extra).toEqual('');
+            expect(line.x).toEqual(margin);
         });
 
         it('splits long words in half', () => {
             const word = 'Ha'.repeat(50);
             const line = StylingService.wordToLine(word);
 
-            assert.equal(line.content + line.extra, word);
-            assert.isAtLeast(line.x, StylingService.MARGIN);
+            expect(line.content + line.extra).toEqual(word);
+            expect(line.x).toBeGreaterThanOrEqual(StylingService.MARGIN);
         });
     });
 });

@@ -1,4 +1,3 @@
-const { assert } = require('chai');
 const StatusTracker = require('../lib/status-tracker');
 
 const id = 'id-123';
@@ -16,7 +15,7 @@ describe('StatusTracker', () => {
 
     describe('#setStatus', () => {
         it('can set a status', () => {
-            assert.isUndefined(tracker.setStatus(id, status));
+            expect(tracker.setStatus(id, status)).not.toBeDefined();
         });
 
         it('clears excessive statuses', () => {
@@ -24,25 +23,25 @@ describe('StatusTracker', () => {
                 tracker.setStatus(el, status);
             });
 
-            assert.isUndefined(tracker.getStatus(0));
+            expect(tracker.getStatus(0)).not.toBeDefined();
 
             statuses.forEach((el) => {
-                if (el) assert.isDefined(tracker.getStatus(el));
+                if (el) expect(tracker.getStatus(el)).toBeDefined();
             });
         });
 
         it('only tracks unique keys', () => {
-            assert.lengthOf(tracker.keys, 0);
+            expect(tracker.keys.length).toBe(0);
             tracker.setStatus(id, status);
             tracker.setStatus(id, status);
-            assert.lengthOf(tracker.keys, 1);
+            expect(tracker.keys.length).toBe(1);
         });
     });
 
     describe('#getStatus', () => {
         it('can get a status', () => {
             tracker.setStatus(id, status);
-            assert.equal(tracker.getStatus(id), status);
+            expect(tracker.getStatus(id)).toEqual(status);
         });
     });
 
@@ -51,40 +50,40 @@ describe('StatusTracker', () => {
             tracker.setStatus(id, status);
             tracker.clearStatus(id);
 
-            assert.isUndefined(tracker.getStatus(id));
+            expect(tracker.getStatus(id)).not.toBeDefined();
         });
     });
 
     describe('.buildStatus', () => {
         it('has a default', () => {
             const builtStatus = StatusTracker.buildStatus('DOES_NOT_EXIST');
-            assert.include(builtStatus.message.toLowerCase(), 'unknown');
-            assert.equal(builtStatus.progress, 0);
+            expect(builtStatus.message.toLowerCase()).toContain('unknown');
+            expect(builtStatus.progress).toEqual(0);
         });
 
         it('returns the correct status', () => {
             Object.keys(StatusTracker.STATUSES).forEach((statusType) => {
                 const storedMessage = StatusTracker.STATUSES[statusType].message;
                 const builtMessage = StatusTracker.buildStatus(statusType).message;
-                assert.equal(storedMessage, builtMessage);
+                expect(storedMessage).toEqual(builtMessage);
             });
         });
 
         it('has failures', () => {
             const builtStatus = StatusTracker.buildStatus('FAILED');
-            assert.include(builtStatus.message.toLowerCase(), 'fail');
-            assert.isDefined(builtStatus.httpStatus);
+            expect(builtStatus.message.toLowerCase()).toContain('fail');
+            expect(builtStatus.httpStatus).toBeDefined();
         });
     });
 
     describe('constants', () => {
         it('has a .MAX_STATUSES', () => {
-            assert.isNumber(StatusTracker.MAX_STATUSES);
+            expect(typeof StatusTracker.MAX_STATUSES).toBe('number');
         });
 
         it('has STATUS_TYPES', () => {
             Object.keys(StatusTracker.STATUSES).forEach((statusType) => {
-                assert.equal(StatusTracker.STATUS_TYPES[statusType], statusType);
+                expect(StatusTracker.STATUS_TYPES[statusType]).toEqual(statusType);
             });
         });
     });

@@ -1,6 +1,5 @@
 const sinon = require('sinon');
 const request = require('supertest');
-const { assert } = require('chai');
 
 const fs = require('fs');
 
@@ -157,7 +156,7 @@ const BETA_ENDPOINTS = {
                 sandbox.stub(Book, 'find').resolves({ getMobiPath: () => __filename });
             },
             after: () => {
-                assert.deepEqual(Book.find.args, [['GOOD-ID', 'mobi']]);
+                expect(Book.find.args).toEqual([['GOOD-ID', 'mobi']]);
             },
         },
         {
@@ -169,8 +168,8 @@ const BETA_ENDPOINTS = {
                 sandbox.stub(Mailer, 'sendEpub').resolves();
             },
             after: () => {
-                assert.isTrue(Book.find.called);
-                assert.isTrue(Mailer.sendEpub.called);
+                expect(Book.find.called).toBe(true);
+                expect(Mailer.sendEpub.called).toBe(true);
             },
         },
         {
@@ -182,8 +181,8 @@ const BETA_ENDPOINTS = {
                 sandbox.stub(Mailer, 'sendMobi').resolves();
             },
             after: () => {
-                assert.isTrue(Book.find.called);
-                assert.isTrue(Mailer.sendMobi.called);
+                expect(Book.find.called).toBe(true);
+                expect(Mailer.sendMobi.called).toBe(true);
             },
         },
     ],
@@ -207,8 +206,8 @@ const BETA_ENDPOINTS = {
                 sandbox.stub(Mailer, 'sendEpub').resolves({});
             },
             after: () => {
-                assert.isTrue(Book.find.called);
-                assert.isTrue(Mailer.sendEpub.called);
+                expect(Book.find.called).toBe(true);
+                expect(Mailer.sendEpub.called).toBe(true);
             },
         },
         {
@@ -220,9 +219,9 @@ const BETA_ENDPOINTS = {
                 sandbox.stub(Mailer, 'sendMobi').resolves({});
             },
             after: () => {
-                assert.isTrue(Book.find.called);
-                assert.isTrue(Mailer.sendMobi.called);
-                assert.deepEqual(Book.find.args, [['GOOD-ID', 'mobi']]);
+                expect(Book.find.called).toBe(true);
+                expect(Mailer.sendMobi.called).toBe(true);
+                expect(Book.find.args).toEqual([['GOOD-ID', 'mobi']]);
             },
         },
     ],
@@ -296,7 +295,7 @@ const V1_ENDPOINTS = {
                 sandbox.stub(Book, 'find').resolves({ getMobiPath: () => __filename });
             },
             after: () => {
-                assert.deepEqual(Book.find.args, [['some-id', 'mobi']]);
+                expect(Book.find.args).toEqual([['some-id', 'mobi']]);
             },
         },
     ],
@@ -315,8 +314,8 @@ const V1_ENDPOINTS = {
                 sandbox.stub(Mailer, 'sendEpub').resolves({});
             },
             after: () => {
-                assert.isTrue(Book.find.called);
-                assert.isTrue(Mailer.sendEpub.called);
+                expect(Book.find.called).toBe(true);
+                expect(Mailer.sendEpub.called).toBe(true);
             },
         },
         {
@@ -328,7 +327,7 @@ const V1_ENDPOINTS = {
                 sandbox.stub(Mailer, 'sendMobi').resolves({});
             },
             after: () => {
-                assert.deepEqual(Book.find.args, [['some-id', 'mobi']]);
+                expect(Book.find.args).toEqual([['some-id', 'mobi']]);
             },
         },
         {
@@ -341,9 +340,9 @@ const V1_ENDPOINTS = {
                 sandbox.stub(Mailer, 'sendEpub').resolves({});
             },
             after: () => {
-                assert.deepEqual(Book.find.args, [['some-id', 'mobi']]);
-                assert.isTrue(Mailer.sendMobi.called);
-                assert.isFalse(Mailer.sendEpub.called);
+                expect(Book.find.args).toEqual([['some-id', 'mobi']]);
+                expect(Mailer.sendMobi.called).toBe(true);
+                expect(Mailer.sendEpub.called).toBe(false);
             },
         },
     ],

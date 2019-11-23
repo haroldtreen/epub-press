@@ -1,5 +1,4 @@
 const nock = require('nock');
-const { assert } = require('chai');
 const sinon = require('sinon');
 const fs = require('fs-extra');
 
@@ -29,7 +28,7 @@ describe('Content Downloader', () => {
 
             return ContentDownloader.all([c1, c2]).then((results) => {
                 results.forEach((result) => {
-                    assert.isUndefined(result.error);
+                    expect(result.error).not.toBeDefined();
                 });
                 scope.done();
             });
@@ -54,8 +53,8 @@ describe('Content Downloader', () => {
                     const value = r.error ? 0 : 1;
                     return num + value;
                 }, 0);
-                assert.isBelow(totalContent, maxSize);
-                assert.equal(numSuccess, 1);
+                expect(totalContent).toBeLessThan(maxSize);
+                expect(numSuccess).toEqual(1);
                 scope.done();
             });
         });
@@ -68,8 +67,8 @@ describe('Content Downloader', () => {
             const content2 = new ContentDownloader();
 
             return ContentDownloader.all([content1, content2]).then(([r1, r2]) => {
-                assert.isUndefined(r1.error);
-                assert.isDefined(r2.error);
+                expect(r1.error).not.toBeDefined();
+                expect(r2.error).toBeDefined();
                 scope.done();
             });
         });
@@ -94,7 +93,7 @@ describe('Content Downloader', () => {
             return ContentDownloader.all([mockContentDownloader, mockContentDownloader]).then(
                 (results) => {
                     results.forEach((result) => {
-                        assert.isUndefined(result.error);
+                        expect(result.error).not.toBeDefined();
                     });
                 }
             );
@@ -104,20 +103,20 @@ describe('Content Downloader', () => {
     describe('constructor', () => {
         it('wraps a url', () => {
             const content = new ContentDownloader(URL);
-            assert.equal(content.getUrl(), URL);
+            expect(content.getUrl()).toEqual(URL);
         });
 
         it('accepts a path option', () => {
             const content = new ContentDownloader(URL, { path: __dirname });
 
-            assert.equal(content.getPath(), __dirname);
+            expect(content.getPath()).toEqual(__dirname);
         });
     });
 
     describe('#getUrl', () => {
         it('returns the url', () => {
             const content = new ContentDownloader(URL);
-            assert.equal(content.getUrl(), URL);
+            expect(content.getUrl()).toEqual(URL);
         });
     });
 
@@ -134,7 +133,7 @@ describe('Content Downloader', () => {
             Object.keys(types).forEach((output) => {
                 const input = types[output];
                 const content = new ContentDownloader(input[0]);
-                assert.equal(content.getFiletype(input[1]), output);
+                expect(content.getFiletype(input[1])).toEqual(output);
             });
         });
     });
@@ -145,14 +144,14 @@ describe('Content Downloader', () => {
             const typesMap = ContentDownloader.FILE_TYPES;
             Object.keys(typesMap).forEach((contentType) => {
                 const filename = content.getFilename(contentType);
-                assert.include(filename, typesMap[contentType]);
+                expect(filename).toContain(typesMap[contentType]);
             });
         });
 
         it('pulls filetypes from the url', () => {
             const content = new ContentDownloader('http://g.co/img.png');
 
-            assert.include(content.getFilename('image/fake'), '.png');
+            expect(content.getFilename('image/fake')).toContain('.png');
         });
     });
 
@@ -166,7 +165,7 @@ describe('Content Downloader', () => {
                 content: 'Hello',
             };
             return content.saveResult(mockResult).then((savedResult) => {
-                assert.deepEqual(savedResult, mockResult);
+                expect(savedResult).toEqual(mockResult);
             });
         });
 
@@ -178,9 +177,9 @@ describe('Content Downloader', () => {
             const stub = sinon.stub(fs, 'outputFile').callsFake(fsStub);
 
             return content.saveResult(mockResult).then((savedResult) => {
-                assert.include(savedResult.path, options.path);
-                assert.isUndefined(savedResult.content);
-                assert.isTrue(stub.called);
+                expect(savedResult.path).toContain(options.path);
+                expect(savedResult.content).not.toBeDefined();
+                expect(stub.called).toBe(true);
                 stub.restore();
             });
         });
@@ -212,7 +211,7 @@ describe('Content Downloader', () => {
                 .reply(200, HTML);
 
             return content.download().then((result) => {
-                assert.equal(result.content, HTML);
+                expect(result.content.toString()).toEqual(HTML);
                 scope.done();
             });
         });
@@ -226,7 +225,7 @@ describe('Content Downloader', () => {
                 .reply(200);
 
             return content.download().then((result) => {
-                assert.equal(result.src, options.metadata.src);
+                expect(result.src).toEqual(options.metadata.src);
                 scope.done();
             });
         });
@@ -243,9 +242,9 @@ describe('Content Downloader', () => {
             const stub = sinon.stub(fs, 'outputFile').callsFake(fsStub);
 
             return content.download().then((result) => {
-                assert.include(result.path, options.path);
-                assert.include(result.path, '.png');
-                assert.isTrue(stub.called);
+                expect(result.path).toContain(options.path);
+                expect(result.path).toContain('.png');
+                expect(stub.called).toBe(true);
                 stub.restore();
                 scope.done();
             });
@@ -255,7 +254,7 @@ describe('Content Downloader', () => {
             const content = new ContentDownloader();
 
             return content.download().catch((err) => {
-                assert.match(err.toString(), /url/i);
+                expect(err.toString()).toMatch(/url/i);
             });
         });
 
@@ -267,7 +266,7 @@ describe('Content Downloader', () => {
                 .reply(404);
 
             return content.download().catch((err) => {
-                assert.match(err.toString(), /status/i);
+                expect(err.toString()).toMatch(/status/i);
                 scope.done();
             });
         });
@@ -280,7 +279,7 @@ describe('Content Downloader', () => {
                 .reply(200, HTML);
 
             return content.download().catch((error) => {
-                assert.match(error.toString(), /abort/i);
+                expect(error.toString()).toMatch(/abort/i);
                 scope.done();
             });
         });
