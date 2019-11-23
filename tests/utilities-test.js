@@ -1,4 +1,3 @@
-const { assert } = require('chai');
 const fs = require('fs-extra');
 
 const Utilities = require('../lib/utilities');
@@ -17,7 +16,7 @@ describe('Utilities', () => {
             .then(() => {
                 fs.readdir(`${Config.TMP}`, (err, dirFiles) => {
                     dirFiles.forEach((file) => {
-                        assert.notMatch(file, /\.txt/);
+                        expect(file).not.toMatch(/\.txt/);
                     });
                     done();
                 });

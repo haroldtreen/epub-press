@@ -1,4 +1,3 @@
-const { assert } = require('chai');
 const { isError } = require('./helpers');
 
 const RequestValidators = require('../routes/helpers/request-validators');
@@ -15,14 +14,14 @@ describe('RequestValidators', () => {
         it('accepts a urls in the body', () => {
             const req = mockRequest({ urls: urls.slice(0, 10) });
             return RequestValidators.validatePublishRequest(req).then((validReq) => {
-                assert.equal(validReq, req);
+                expect(validReq).toEqual(req);
             });
         });
 
         it('accepts a sections in the body', () => {
             const req = mockRequest({ sections: urls.slice(0, 10) });
             return RequestValidators.validatePublishRequest(req).then((validReq) => {
-                assert.equal(validReq, req);
+                expect(validReq).toEqual(req);
             });
         });
 
@@ -32,7 +31,7 @@ describe('RequestValidators', () => {
                 .then(() => Promise.reject(new Error(`Expected ${req} not to be valid`)))
                 .catch(isError)
                 .then((err) => {
-                    assert.equal(err.status, 400);
+                    expect(err.status).toEqual('400');
                 });
         });
 
@@ -44,7 +43,7 @@ describe('RequestValidators', () => {
                 .then(() => Promise.reject(new Error('Expected too many urls not to be valid.')))
                 .catch(isError)
                 .then((err) => {
-                    assert.equal(err.status, 422);
+                    expect(err.status).toEqual('422');
                 });
         });
 
@@ -56,7 +55,7 @@ describe('RequestValidators', () => {
                 .then(() => Promise.reject(new Error('Expected too many urls not to be valid')))
                 .catch(isError)
                 .then((err) => {
-                    assert.equal(err.status, 422);
+                    expect(err.status).toEqual('422');
                 });
         });
     });

@@ -1,28 +1,27 @@
 const fs = require('fs');
-const { assert } = require('chai');
 
 const Logger = require('../lib/logger');
 
 let log;
 
 describe('Logger', () => {
-    after(() => {
+    afterAll(() => {
         fs.unlinkSync(Logger.outputFile());
     });
     describe('basic usage', () => {
-        before(() => {
+        beforeAll(() => {
             log = new Logger({ options: [Logger.Console], overrideMock: true });
         });
 
         it('defines all the basic log levels', () => {
             ['error', 'warn', 'info', 'verbose', 'debug', 'silly'].forEach((level) => {
-                assert.isFunction(log[level]);
+                expect(typeof log[level]).toBe('function');
             });
         });
 
         it('has default option', () => {
             const defaultOptions = log.getOptions();
-            assert.deepEqual(defaultOptions.outputs, [Logger.Console, Logger.File]);
+            expect(defaultOptions.outputs).toEqual([Logger.Console, Logger.File]);
         });
 
         it('logs to a file', (done) => {
@@ -41,9 +40,9 @@ describe('Logger', () => {
                             }
                             const output = data.toString();
 
-                            assert.include(output, '"meta":true');
-                            assert.include(output, errorMsg);
-                            assert.include(output, infoMsg);
+                            expect(output).toContain('"meta":true');
+                            expect(output).toContain(errorMsg);
+                            expect(output).toContain(infoMsg);
                             done();
                         });
                     }
@@ -70,7 +69,7 @@ describe('Logger', () => {
                     const output = data.toString();
 
                     ['a promise', 'some horrible error', 'logger-test'].forEach(msg =>
-                        assert.include(output, msg));
+                        expect(output).toContain(msg));
                     done();
                 });
             });
@@ -94,8 +93,8 @@ describe('Logger', () => {
                 calls++;
                 if (calls === numLogs) {
                     fileLogger.query({ limit: 10 }, (err, results) => {
-                        assert.lengthOf(results.file, 10);
-                        results.file.forEach(result => assert.isDefined(result, 'field'));
+                        expect(results.file.length).toBe(10);
+                        results.file.forEach(result => expect(result).toBeDefined());
                         done();
                     });
                 }
@@ -112,7 +111,7 @@ describe('Logger', () => {
             const outputs = [Logger.Console, Logger.File];
             log = new Logger({ outputs });
 
-            assert.deepEqual(log.getOptions().outputs, outputs);
+            expect(log.getOptions().outputs).toEqual(outputs);
         });
     });
 });

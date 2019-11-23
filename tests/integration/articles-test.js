@@ -1,5 +1,4 @@
 const fs = require('fs');
-const { assert } = require('chai');
 const ContentExtractor = require('../../lib/content-extractor');
 const Book = require('../../lib/book');
 
@@ -611,16 +610,16 @@ describe('Article Extraction', () => {
             ContentExtractor.runUrlSpecificOperations(html, testCase.url)
                 .then(newHtml => ContentExtractor.extract(newHtml))
                 .then((article) => {
-                    assert.equal(Book.sanitizeTitle(article.title), testCase.title);
+                    expect(Book.sanitizeTitle(article.title)).toEqual(testCase.title);
                     (testCase.include || []).forEach((content) => {
-                        assert.include(article.content, content);
+                        expect(article.content).toContain(content);
                     });
                     (testCase.notInclude || []).forEach((content) => {
-                        assert.notInclude(article.content, content);
+                        expect(article.content).not.toContain(content);
                     });
                     done();
                 })
                 .catch(done);
-        }).timeout(4500);
+        })
     });
 });

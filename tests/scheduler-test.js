@@ -1,5 +1,3 @@
-const { assert } = require('chai');
-
 const Scheduler = require('../lib/scheduler');
 
 describe('Scheduler', () => {
@@ -10,12 +8,12 @@ describe('Scheduler', () => {
 
         it('runs things at the described interval', (done) => {
             let timesRun = 0;
-            Scheduler.runEvery('3 milliseconds', () => {
+            Scheduler.runEvery('5 milliseconds', () => {
                 timesRun += 1;
             });
 
             setTimeout(() => {
-                assert.closeTo(5, timesRun, 2);
+                expect(timesRun).toBeLessThanOrEqual(3);
                 done();
             }, 15);
         });
@@ -24,7 +22,7 @@ describe('Scheduler', () => {
     describe('.unitToMultiplier', () => {
         it('has a milliseconds multiplier', () => {
             [Scheduler.unitToMultiplier('milliseconds'), Scheduler.unitToMultiplier('ms')].forEach(
-                mult => assert.equal(mult, 1)
+                mult => expect(mult).toEqual(1)
             );
         });
 
@@ -33,7 +31,7 @@ describe('Scheduler', () => {
                 Scheduler.unitToMultiplier('day'),
                 Scheduler.unitToMultiplier('days'),
                 Scheduler.unitToMultiplier('Day'),
-            ].forEach(mult => assert.equal(mult, 1000 * 60 * 60 * 24));
+            ].forEach(mult => expect(mult).toEqual(1000 * 60 * 60 * 24));
         });
     });
 });

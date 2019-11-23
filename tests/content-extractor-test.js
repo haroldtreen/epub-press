@@ -1,7 +1,5 @@
 const fs = require('fs');
 
-const { assert } = require('chai');
-
 const ContentExtractor = require('../lib/content-extractor');
 
 describe('Content Extractor', () => {
@@ -12,7 +10,7 @@ describe('Content Extractor', () => {
             ContentExtractor.preprocess(html)
                 .then((preHtml) => {
                     ContentExtractor.preprocess.REMOVE_ELEMENTS.forEach((element) => {
-                        assert.notMatch(preHtml, new RegExp(element));
+                        expect(preHtml).not.toMatch(new RegExp(element));
                     });
                     done();
                 })
@@ -22,7 +20,7 @@ describe('Content Extractor', () => {
 
     describe('site specific operations', () => {
         const realOperations = ContentExtractor.URL_SPECIFIC_OPERATIONS;
-        before(() => {
+        beforeAll(() => {
             ContentExtractor.URL_SPECIFIC_OPERATIONS = {
                 'quora.com': {
                     removeElement: ['.quora-junk'],
@@ -30,7 +28,7 @@ describe('Content Extractor', () => {
             };
         });
 
-        after(() => {
+        afterAll(() => {
             ContentExtractor.URL_SPECIFIC_OPERATIONS = realOperations;
         });
 
@@ -39,8 +37,8 @@ describe('Content Extractor', () => {
             const html = '<html><div class="quora-junk"></div></html>';
             ContentExtractor.runUrlSpecificOperations(html, url)
                 .then((newHtml) => {
-                    assert.notInclude(newHtml, 'quora-junk');
-                    assert.notInclude(newHtml, '</div>');
+                    expect(newHtml).not.toContain('quora-junk');
+                    expect(newHtml).not.toContain('</div>');
                     done();
                 })
                 .catch(done);
@@ -51,7 +49,7 @@ describe('Content Extractor', () => {
             const html = '<html></html>';
             ContentExtractor.runUrlSpecificOperations(html, url)
                 .then((newHtml) => {
-                    assert.equal(newHtml, html);
+                    expect(newHtml).toEqual(html);
                     done();
                 })
                 .catch(done);

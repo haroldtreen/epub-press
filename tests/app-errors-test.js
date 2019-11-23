@@ -1,18 +1,17 @@
-const { assert } = require('chai');
 const AppErrors = require('../lib/app-errors.js');
 
 describe('AppErrors', () => {
     describe('#api', () => {
         it('is an object', () => {
-            assert.isObject(AppErrors.api);
+            expect(typeof AppErrors.api).toBe('object');
         });
 
         it('has objects with messages and statuses', () => {
             const keys = Object.keys(AppErrors.api);
-            assert.isTrue(keys.length > 0);
+            expect(keys.length > 0).toBe(true);
             keys.forEach((key) => {
-                assert.isString(AppErrors.api[key].status);
-                assert.isString(AppErrors.api[key].message);
+                expect(typeof AppErrors.api[key].status).toBe('string');
+                expect(typeof AppErrors.api[key].message).toBe('string');
             });
         });
     });
@@ -23,8 +22,8 @@ describe('AppErrors', () => {
                 const apiErrors = Object.keys(AppErrors.api);
                 apiErrors.forEach((name) => {
                     const error = AppErrors.getApiError(name);
-                    assert.instanceOf(AppErrors.getApiError(name), Error);
-                    assert.equal(error.message, AppErrors.api[name].message);
+                    expect(AppErrors.getApiError(name)).toBeInstanceOf(Error);
+                    expect(error.message).toEqual(AppErrors.api[name].message);
                 });
             });
 
@@ -32,18 +31,18 @@ describe('AppErrors', () => {
                 const notAnError = AppErrors.getApiError('NOT_AN_ERROR');
                 const defaultError = AppErrors.api.DEFAULT;
 
-                assert.equal(notAnError.message, defaultError.message);
-                assert.equal(notAnError.status, defaultError.status);
+                expect(notAnError.message).toEqual(defaultError.message);
+                expect(notAnError.status).toEqual(defaultError.status);
             });
 
             it('returns actual errors', () => {
-                assert.instanceOf(AppErrors.getApiError('DEFAULT'), Error);
+                expect(AppErrors.getApiError('DEFAULT')).toBeInstanceOf(Error);
             });
 
             it('infers system level errors', () => {
                 const systemError = new Error('request entity too large');
                 const apiError = AppErrors.getApiError(systemError);
-                assert.equal(apiError.message, AppErrors.api.TOO_LARGE_REQUEST.message);
+                expect(apiError.message).toEqual(AppErrors.api.TOO_LARGE_REQUEST.message);
             });
         });
 
@@ -52,16 +51,16 @@ describe('AppErrors', () => {
                 const status = 'A status';
                 const error = AppErrors.buildApiResponse({ status });
 
-                assert.equal(error.status, status);
-                assert.equal(error.detail, AppErrors.api.DEFAULT.message);
+                expect(error.status).toEqual(status);
+                expect(error.detail).toEqual(AppErrors.api.DEFAULT.message);
             });
 
             it('uses the supplied message', () => {
                 const message = 'A message';
                 const error = AppErrors.buildApiResponse({ message });
 
-                assert.equal(error.detail, message);
-                assert.equal(error.status, AppErrors.api.DEFAULT.status);
+                expect(error.detail).toEqual(message);
+                expect(error.status).toEqual(AppErrors.api.DEFAULT.status);
             });
         });
     });

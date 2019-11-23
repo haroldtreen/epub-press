@@ -1,6 +1,5 @@
 'use strict';
 
-const { assert } = require('chai');
 const Sinon = require('sinon');
 const nock = require('nock');
 const fs = require('fs');
@@ -26,8 +25,8 @@ describe('Book Services', () => {
         it('sets a status for a given book', () => {
             const spy = Sinon.spy(StatusTracker.prototype, 'setStatus');
             return BookServices.setStatus(book, 'PUBLISHING').then((trackedBook) => {
-                assert.equal(trackedBook, book);
-                assert.isTrue(spy.called);
+                expect(trackedBook).toEqual(book);
+                expect(spy.called).toBe(true);
             });
         });
     });
@@ -37,8 +36,8 @@ describe('Book Services', () => {
             BookServices.setStatus(book, 'DEFAULT')
                 .then(trackedBook => BookServices.getStatus(trackedBook))
                 .then((status) => {
-                    assert.isString(status.message);
-                    assert.isNumber(status.progress);
+                    expect(typeof status.message).toBe('string');
+                    expect(typeof status.progress).toBe('number');
                 }));
 
         it('rejects when no status is set', () =>
@@ -46,7 +45,7 @@ describe('Book Services', () => {
                 .then(() => Promise.reject(Error('.getStatus should reject.')))
                 .catch(isError)
                 .then((e) => {
-                    assert.include(e.message, 'found');
+                    expect(e.message).toContain('found');
                 }));
     });
 
@@ -70,12 +69,9 @@ describe('Book Services', () => {
 
             return BookServices.publish(book)
                 .then((publishedBook) => {
-                    assert.equal(book, publishedBook);
+                    expect(book).toEqual(publishedBook);
                     publishServices.forEach((service) => {
-                        assert.isTrue(
-                            BookServices[service].calledWith(book),
-                            `${service} not called`
-                        );
+                        expect(BookServices[service].calledWith(book)).toBe(true);
                     });
                     sandbox.restore();
                 })
@@ -94,8 +90,8 @@ describe('Book Services', () => {
             BookServices.createCustomCover(book);
             writeOnCoverStub.restore();
             const callArgs = writeOnCoverStub.firstCall.args;
-            assert.equal(callArgs[0], book);
-            assert.equal(callArgs[1], book.getTitle());
+            expect(callArgs[0]).toEqual(book);
+            expect(callArgs[1]).toEqual(book.getTitle());
         });
     });
 
@@ -110,8 +106,8 @@ describe('Book Services', () => {
             const bookSpy = Sinon.spy(fakeBook, 'writeEpub');
 
             return BookServices.writeEpub(fakeBook).then((writtenBook) => {
-                assert.equal(writtenBook, fakeBook);
-                assert.isTrue(bookSpy.calledOnce);
+                expect(writtenBook).toEqual(fakeBook);
+                expect(bookSpy.calledOnce).toBe(true);
             });
         });
     });
@@ -123,8 +119,8 @@ describe('Book Services', () => {
 
             BookServices.updateSectionsHtml(book)
                 .then(() => {
-                    stub.getCalls().forEach(call => assert.include(urls, call.args[0].url));
-                    assert.equal(stub.callCount, 2);
+                    stub.getCalls().forEach(call => expect(urls).toContain(call.args[0].url));
+                    expect(stub.callCount).toEqual(2);
 
                     stub.restore();
                     done();
@@ -145,7 +141,7 @@ describe('Book Services', () => {
 
             BookServices.updateSectionHtml(section)
                 .then((updatedSection) => {
-                    assert.equal(updatedSection.html, section.html);
+                    expect(updatedSection.html).toEqual(section.html);
 
                     done();
                 })
@@ -170,9 +166,9 @@ describe('Book Services', () => {
 
             BookServices.localizeSectionImages(section)
                 .then((updatedSection) => {
-                    assert.lengthOf(updatedSection.content.match(/\.\.\/images\/.*\.png/g), 4);
+                    expect(updatedSection.content.match(/\.\.\/images\/.*\.png/g).length).toBe(4);
                     updatedSection.images.forEach((image) => {
-                        assert.match(image, /\/images\/.*\.png/);
+                        expect(image).toMatch(/\/images\/.*\.png/);
                     });
                     done();
                 })
@@ -188,7 +184,7 @@ describe('Book Services', () => {
 
             BookServices.extractSectionsContent(book)
                 .then(() => {
-                    assert.equal(stub.callCount, book.getSections().length);
+                    expect(stub.callCount).toEqual(book.getSections().length);
 
                     stub.restore();
                     done();
@@ -206,8 +202,8 @@ describe('Book Services', () => {
 
             BookServices.extractSectionContent(section)
                 .then((extractedSection) => {
-                    assert.equal(extractedSection.title, 'Article');
-                    assert.include(extractedSection.content, `<h1>${extractedSection.title}</h1>`);
+                    expect(extractedSection.title).toEqual('Article');
+                    expect(extractedSection.content).toContain(`<h1>${extractedSection.title}</h1>`);
 
                     done();
                 })
@@ -219,8 +215,8 @@ describe('Book Services', () => {
 
             BookServices.extractSectionContent(section)
                 .then((extractedSection) => {
-                    assert.match(extractedSection.content, /support@epub\.press/);
-                    assert.match(extractedSection.content, /<h1>/);
+                    expect(extractedSection.content).toMatch(/support@epub\.press/);
+                    expect(extractedSection.content).toMatch(/<h1>/);
                     done();
                 })
                 .catch(done);
@@ -234,7 +230,7 @@ describe('Book Services', () => {
 
             BookServices.convertSectionsContent(book)
                 .then(() => {
-                    assert.equal(stub.callCount, book.getSections().length);
+                    expect(stub.callCount).toEqual(book.getSections().length);
 
                     stub.restore();
                     done();
@@ -252,8 +248,8 @@ describe('Book Services', () => {
             const mockSection = { content };
             BookServices.convertSectionContent(mockSection)
                 .then((xhtmlSection) => {
-                    assert.include(xhtmlSection.xhtml, '<br />');
-                    assert.notInclude(xhtmlSection.xhtml, '<br>');
+                    expect(xhtmlSection.xhtml).toContain('<br />');
+                    expect(xhtmlSection.xhtml).not.toContain('<br>');
 
                     done();
                 })
@@ -269,7 +265,7 @@ describe('Book Services', () => {
             clock.tick(BookServices.CLEAN_DELAY);
             clock.restore();
 
-            assert.isTrue(book.deleteFiles.called);
+            expect(book.deleteFiles.called).toBe(true);
             book.deleteFiles.restore();
         });
     });
