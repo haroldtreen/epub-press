@@ -1,25 +1,27 @@
+const Config = require('../lib/config');
+
 module.exports = {
     development: {
-        username: process.env.DB_USERNAME,
-        password: process.env.DB_PASSWORD,
+        username: Config.DB_USERNAME,
+        password: Config.DB_PASSWORD,
         database: 'epubpress_development',
-        host: process.env.DB_HOST || '127.0.0.1',
+        host: Config.DB_HOST,
         dialect: 'postgres',
         omitNull: true,
     },
     test: {
-        username: process.env.DB_USERNAME,
-        password: process.env.DB_PASSWORD,
+        username: Config.DB_USERNAME,
+        password: Config.DB_PASSWORD,
         database: 'epubpress_test',
-        host: process.env.DB_HOST || '127.0.0.1',
+        host: Config.DB_HOST,
         dialect: 'postgres',
         omitNull: true,
     },
     production: {
-        username: process.env.DB_USERNAME,
-        password: process.env.DB_PASSWORD,
+        username: Config.DB_USERNAME,
+        password: Config.DB_PASSWORD,
         database: 'epubpress_production',
-        host: process.env.DB_HOST,
+        host: Config.DB_HOST,
         dialect: 'postgres',
         omitNull: true,
     },
