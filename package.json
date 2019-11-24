@@ -50,6 +50,7 @@
         "serve-favicon": "^2.5.0",
         "shortid": "^2.2.15",
         "string-direction": "^0.1.2",
+        "umzug": "^2.2.0",
         "winston": "^2.4.4"
     },
     "devDependencies": {
