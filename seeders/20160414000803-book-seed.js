@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-    up: queryInterface =>
+    up: (queryInterface) =>
         queryInterface.bulkInsert(
             'books',
             [
@@ -26,5 +26,5 @@ module.exports = {
             ],
             {}
         ),
-    down: queryInterface => queryInterface.bulkDelete('books', [], {}),
+    down: (queryInterface) => queryInterface.bulkDelete('books', [], {}),
 };

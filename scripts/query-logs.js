@@ -38,10 +38,10 @@ log.query(options, (err, result) => {
     } else {
         let entries = result.file;
         if (LEVEL) {
-            entries = entries.filter(entry => entry.level === LEVEL);
+            entries = entries.filter((entry) => entry.level === LEVEL);
         }
         if (REGEXP) {
-            entries = entries.filter(entry => REGEXP.test(entry.message));
+            entries = entries.filter((entry) => REGEXP.test(entry.message));
         }
 
         console.log(entries);

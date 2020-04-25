@@ -608,7 +608,7 @@ describe('Article Extraction', () => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             const html = fs.readFileSync(`${articleFixtures}/${testCase.fixture}.html`).toString();
             ContentExtractor.runUrlSpecificOperations(html, testCase.url)
-                .then(newHtml => ContentExtractor.extract(newHtml))
+                .then((newHtml) => ContentExtractor.extract(newHtml))
                 .then((article) => {
                     expect(Book.sanitizeTitle(article.title)).toEqual(testCase.title);
                     (testCase.include || []).forEach((content) => {
@@ -620,6 +620,6 @@ describe('Article Extraction', () => {
                     done();
                 })
                 .catch(done);
-        })
+        });
     });
 });

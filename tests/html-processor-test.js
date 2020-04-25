@@ -56,12 +56,12 @@ describe('HTML Processor', () => {
         it('can remmove non ebook friendly attributes', () => {
             let html = fs.readFileSync(`${__dirname}/fixtures/invalid-attributes.html`).toString();
 
-            ['srcset', 'property', 'itemprop'].forEach(attr =>
+            ['srcset', 'property', 'itemprop'].forEach((attr) =>
                 expect(html).toMatch(new RegExp(attr)));
 
             html = HtmlProcessor.removeInvalidAttributes('div', html);
 
-            ['srcset', 'property', 'itemprop'].forEach(attr =>
+            ['srcset', 'property', 'itemprop'].forEach((attr) =>
                 expect(html).not.toMatch(new RegExp(attr)));
         });
 
@@ -115,9 +115,13 @@ describe('HTML Processor', () => {
                 },
             ].forEach((test) => {
                 if (test.remove) {
-                    expect(HtmlProcessor.removeHidden(test.selector, test.html)).not.toContain(test.selector);
+                    expect(HtmlProcessor.removeHidden(test.selector, test.html)).not.toContain(
+                        test.selector
+                    );
                 } else {
-                    expect(HtmlProcessor.removeHidden(test.selector, test.html)).toContain(test.selector);
+                    expect(HtmlProcessor.removeHidden(test.selector, test.html)).toContain(
+                        test.selector
+                    );
                 }
             });
         });
@@ -287,11 +291,13 @@ describe('HTML Processor', () => {
         beforeEach(() => {
             scope = nock('http://test.fake');
 
-            ['/image?size=30', '/picture.png', '/article/image.png', '/image.png'].forEach((path) => {
-                scope.get(path).replyWithFile(200, `${fixturesPath}/placeholder.png`, {
-                    'Content-type': 'image/png',
-                });
-            });
+            ['/image?size=30', '/picture.png', '/article/image.png', '/image.png'].forEach(
+                (path) => {
+                    scope.get(path).replyWithFile(200, `${fixturesPath}/placeholder.png`, {
+                        'Content-type': 'image/png',
+                    });
+                }
+            );
             scope.get('/bad-source').reply(404, 'Not Found');
             glob(`${outputFolder}/*.png`, (err, files) => {
                 Utilities.removeFiles(files);

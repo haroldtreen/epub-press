@@ -3,7 +3,7 @@ const db = require('../../models');
 const BookModel = db.Book;
 
 if (process.env.__SKIP_DB_TESTS__) {
-    describe.only('DB Is Unavailable', () => { });
+    describe.only('DB Is Unavailable', () => {});
 }
 
 describe('Book Model', () => {

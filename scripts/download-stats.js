@@ -19,7 +19,7 @@ log.query(options, (err, result) => {
     } else {
         let entries = result.file;
         if (REGEXP) {
-            entries = entries.filter(entry => REGEXP.test(entry.message));
+            entries = entries.filter((entry) => REGEXP.test(entry.message));
         }
 
         const dateCounts = {};

@@ -21,9 +21,10 @@ describe('Scheduler', () => {
 
     describe('.unitToMultiplier', () => {
         it('has a milliseconds multiplier', () => {
-            [Scheduler.unitToMultiplier('milliseconds'), Scheduler.unitToMultiplier('ms')].forEach(
-                mult => expect(mult).toEqual(1)
-            );
+            [
+                Scheduler.unitToMultiplier('milliseconds'),
+                Scheduler.unitToMultiplier('ms'),
+            ].forEach((mult) => expect(mult).toEqual(1));
         });
 
         it('has a days multiplier', () => {
@@ -31,7 +32,7 @@ describe('Scheduler', () => {
                 Scheduler.unitToMultiplier('day'),
                 Scheduler.unitToMultiplier('days'),
                 Scheduler.unitToMultiplier('Day'),
-            ].forEach(mult => expect(mult).toEqual(1000 * 60 * 60 * 24));
+            ].forEach((mult) => expect(mult).toEqual(1000 * 60 * 60 * 24));
         });
     });
 });

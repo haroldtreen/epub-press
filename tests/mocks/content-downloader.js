@@ -4,7 +4,7 @@ function MockContentDownloader(overrides) {
         download: () => Promise.resolve(),
     };
 
-    return Object.assign({}, defaults, overrides);
+    return { ...defaults, ...overrides };
 }
 
 module.exports = MockContentDownloader;

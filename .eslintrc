@@ -2,7 +2,10 @@
     "root": true,
     "extends": "airbnb",
     "rules": {
-        "indent": ["error", 4],
+        "indent": [
+            "error",
+            4
+        ],
         "strict": 0,
         "no-underscore-dangle": 0,
         "no-mixed-operators": 0,
@@ -10,7 +13,12 @@
         "implicit-arrow-linebreak": 0,
         "import/no-extraneous-dependencies": [
             "error",
-            { "devDependencies": ["**/tests/**/*.js", "Gulpfile.js"] }
+            {
+                "devDependencies": [
+                    "**/tests/**/*.js",
+                    "Gulpfile.js"
+                ]
+            }
         ],
         "comma-dangle": [
             "error",
@@ -25,6 +33,7 @@
     },
     "env": {
         "mocha": true,
-        "browser": true
+        "browser": true,
+        "jest": true,
     }
 }

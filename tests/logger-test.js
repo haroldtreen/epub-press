@@ -68,7 +68,7 @@ describe('Logger', () => {
                 fs.readFile(Logger.outputFile(), (err, data) => {
                     const output = data.toString();
 
-                    ['a promise', 'some horrible error', 'logger-test'].forEach(msg =>
+                    ['a promise', 'some horrible error', 'logger-test'].forEach((msg) =>
                         expect(output).toContain(msg));
                     done();
                 });
@@ -94,7 +94,7 @@ describe('Logger', () => {
                 if (calls === numLogs) {
                     fileLogger.query({ limit: 10 }, (err, results) => {
                         expect(results.file.length).toBe(10);
-                        results.file.forEach(result => expect(result).toBeDefined());
+                        results.file.forEach((result) => expect(result).toBeDefined());
                         done();
                     });
                 }

@@ -19,10 +19,7 @@ describe('Content Downloader', () => {
 
     describe('.all', () => {
         it('downloads multiple downloaders', () => {
-            const scope = nock(URL)
-                .get('/')
-                .times(2)
-                .reply(200, 'Hello');
+            const scope = nock(URL).get('/').times(2).reply(200, 'Hello');
             const c1 = new ContentDownloader(URL);
             const c2 = new ContentDownloader(URL);
 
@@ -35,13 +32,10 @@ describe('Content Downloader', () => {
         });
 
         it('can limit download size for all passed downloaders', () => {
-            const scope = nock(URL)
-                .get('/')
-                .times(3)
-                .replyWithFile(
-                    200,
-                    `${FIXTURES_PATH}/placeholder.png` // 4.3 kB image
-                );
+            const scope = nock(URL).get('/').times(3).replyWithFile(
+                200,
+                `${FIXTURES_PATH}/placeholder.png` // 4.3 kB image
+            );
             const maxSize = 5300;
             const c1 = new ContentDownloader(URL);
             const c2 = new ContentDownloader(URL);
@@ -60,9 +54,7 @@ describe('Content Downloader', () => {
         });
 
         it('handles failed downloaders', () => {
-            const scope = nock(URL)
-                .get('/')
-                .reply(200, 'Hello');
+            const scope = nock(URL).get('/').reply(200, 'Hello');
             const content1 = new ContentDownloader(URL);
             const content2 = new ContentDownloader();
 
@@ -206,9 +198,7 @@ describe('Content Downloader', () => {
         it('resolves with the content in the result', () => {
             const content = new ContentDownloader(URL);
 
-            const scope = nock(URL)
-                .get('/')
-                .reply(200, HTML);
+            const scope = nock(URL).get('/').reply(200, HTML);
 
             return content.download().then((result) => {
                 expect(result.content.toString()).toEqual(HTML);
@@ -220,9 +210,7 @@ describe('Content Downloader', () => {
             const options = { metadata: { src: '/file.jpg' } };
             const content = new ContentDownloader(URL, options);
 
-            const scope = nock(URL)
-                .get('/')
-                .reply(200);
+            const scope = nock(URL).get('/').reply(200);
 
             return content.download().then((result) => {
                 expect(result.src).toEqual(options.metadata.src);
@@ -261,9 +249,7 @@ describe('Content Downloader', () => {
         it('rejects when url returns bad status codes', () => {
             const content = new ContentDownloader(URL);
 
-            const scope = nock(URL)
-                .get('/')
-                .reply(404);
+            const scope = nock(URL).get('/').reply(404);
 
             return content.download().catch((err) => {
                 expect(err.toString()).toMatch(/status/i);
@@ -274,9 +260,7 @@ describe('Content Downloader', () => {
         it('rejects when the download is too large', () => {
             const content = new ContentDownloader(URL, { maxSize: 1 });
 
-            const scope = nock(URL)
-                .get('/')
-                .reply(200, HTML);
+            const scope = nock(URL).get('/').reply(200, HTML);
 
             return content.download().catch((error) => {
                 expect(error.toString()).toMatch(/abort/i);

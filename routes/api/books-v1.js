@@ -12,8 +12,8 @@ const router = new express.Router();
 const log = new Logger();
 
 /*
-* Book Publish
-*/
+ * Book Publish
+ */
 
 router.post('/', (req, res) => {
     RequestValidators.validatePublishRequest(req)
@@ -25,7 +25,7 @@ router.post('/', (req, res) => {
                     log.verbose('Book Published', { id: publishedBook.getId() });
                 })
                 .catch(
-                    e => e
+                    (e) => e
                     // Error handling
                 );
         })
@@ -35,8 +35,8 @@ router.post('/', (req, res) => {
 });
 
 /*
-* Book Status
-*/
+ * Book Status
+ */
 
 router.get('/:id/status', (req, res) => {
     const book = new Book({ id: req.params.id });
@@ -50,8 +50,8 @@ router.get('/:id/status', (req, res) => {
 });
 
 /*
-*  Book Download
-*/
+ *  Book Download
+ */
 
 router.get('/:id/download', (req, res) => {
     Book.find(req.params.id, req.query.filetype)

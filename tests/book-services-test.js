@@ -34,7 +34,7 @@ describe('Book Services', () => {
     describe('.getStatus', () => {
         it('gets the status for a given book', () =>
             BookServices.setStatus(book, 'DEFAULT')
-                .then(trackedBook => BookServices.getStatus(trackedBook))
+                .then((trackedBook) => BookServices.getStatus(trackedBook))
                 .then((status) => {
                     expect(typeof status.message).toBe('string');
                     expect(typeof status.progress).toBe('number');
@@ -119,7 +119,7 @@ describe('Book Services', () => {
 
             BookServices.updateSectionsHtml(book)
                 .then(() => {
-                    stub.getCalls().forEach(call => expect(urls).toContain(call.args[0].url));
+                    stub.getCalls().forEach((call) => expect(urls).toContain(call.args[0].url));
                     expect(stub.callCount).toEqual(2);
 
                     stub.restore();
@@ -135,9 +135,7 @@ describe('Book Services', () => {
     describe('.updateSectionHtml', () => {
         it('download the html for every section', (done) => {
             const section = { url: urls[0] };
-            nock(urls[0])
-                .get('/')
-                .reply(200, html);
+            nock(urls[0]).get('/').reply(200, html);
 
             BookServices.updateSectionHtml(section)
                 .then((updatedSection) => {
@@ -153,11 +151,13 @@ describe('Book Services', () => {
         it('downloads images referenced in html', (done) => {
             const scope = nock('http://test.fake');
 
-            ['/image?size=30', '/picture.png', '/article/image.png', '/image.png'].forEach((path) => {
-                scope.get(path).replyWithFile(200, `${fixturesPath}/placeholder.png`, {
-                    'Content-type': 'image/png',
-                });
-            });
+            ['/image?size=30', '/picture.png', '/article/image.png', '/image.png'].forEach(
+                (path) => {
+                    scope.get(path).replyWithFile(200, `${fixturesPath}/placeholder.png`, {
+                        'Content-type': 'image/png',
+                    });
+                }
+            );
             scope.get('/bad-source').reply(404, 'Not Found');
             const section = {
                 content: fs.readFileSync(`${fixturesPath}/images.html`).toString(),
@@ -203,7 +203,9 @@ describe('Book Services', () => {
             BookServices.extractSectionContent(section)
                 .then((extractedSection) => {
                     expect(extractedSection.title).toEqual('Article');
-                    expect(extractedSection.content).toContain(`<h1>${extractedSection.title}</h1>`);
+                    expect(extractedSection.content).toContain(
+                        `<h1>${extractedSection.title}</h1>`
+                    );
 
                     done();
                 })

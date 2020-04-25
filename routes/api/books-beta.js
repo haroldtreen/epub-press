@@ -74,10 +74,10 @@ function bookFromBody(body) {
 
 router.post('/', (req, res) => {
     validatePublishRequest(req)
-        .then(validReq => bookFromBody(validReq.body))
+        .then((validReq) => bookFromBody(validReq.body))
         .then((book) => {
             BookServices.publish(book)
-                .then(publishedBook => res.status(201).json({ id: publishedBook.getId() }))
+                .then((publishedBook) => res.status(201).json({ id: publishedBook.getId() }))
                 .catch((e) => {
                     log.exception('Book Create')(e);
                     respondWithError(res, e);
