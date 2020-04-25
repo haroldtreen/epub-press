@@ -10,5 +10,6 @@ module.exports = {
         '!**/scripts/*.js',
         '!**/migrations/*.js',
         '!**/seeders/*.js',
+        '!**/tests/*.js',
     ],
 };

@@ -10,14 +10,19 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
-
+  eslint:
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: hallee/eslint-action@master
+        with:
+          repo-token: ${{secrets.GITHUB_TOKEN}}
 
+  jest:
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [10.x, 12.x]
-
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
