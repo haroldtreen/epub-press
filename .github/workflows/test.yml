@@ -10,28 +10,19 @@ on:
     branches: [ master ]
 
 jobs:
-  runs-on: ubuntu-latest
-  strategy:
-      matrix:
-        node-version: [10.x, 12.x]
-  install:
+  test_and_lint:
+    runs-on: ubuntu-latest
+    strategy:
+        matrix:
+          node-version: [10.x, 12.x]
     steps:
-      - uses: actions/checkout@v2
-      - run: npm ci
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-  lint:
-    needs: [install]
-    steps:
+      - uses: actions/checkout@v2
+      - run: npm ci
+      - run: npm test
       - run: npm lint
-  test:
-    needs: [install]
-    steps:
-    - uses: actions/checkout@v2
-    
-    - run: npm ci
-    - run: npm test
 env:
   CI: true
