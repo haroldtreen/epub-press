@@ -23,6 +23,6 @@ jobs:
       - uses: actions/checkout@v2
       - run: npm ci
       - run: npm test
-      - run: npm lint
+      - run: npm run lint
 env:
   CI: true
