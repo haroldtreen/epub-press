@@ -12,7 +12,7 @@
     "scripts": {
         "start": "nodemon --harmony ./bin/www",
         "start:debug": "node --inspect ./bin/www",
-        "start:docker": "npm run wait:db && sequelize db:migrate && npm start",
+        "start:docker": "npm run wait:db && sequelize db:migrate && node ./bin/www",
         "test": "jest",
         "test:ci": "npm run test:unit && npm run test:integration",
         "test:coverage": "npm test -- --coverage",
@@ -51,7 +51,8 @@
         "shortid": "^2.2.15",
         "string-direction": "^0.1.2",
         "umzug": "^2.3.0",
-        "winston": "^2.4.4"
+        "winston": "^2.4.4",
+        "sequelize-cli": "^5.5.1"
     },
     "devDependencies": {
         "ajv": "^6.12.2",
@@ -66,7 +67,6 @@
         "nodemon": "^1.19.4",
         "prettier": "^2.0.5",
         "prettier-eslint-cli": "^5.0.0",
-        "sequelize-cli": "^5.5.1",
         "sinon": "^7.5.0",
         "supertest": "^4.0.2"
     },

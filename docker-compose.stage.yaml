@@ -1,0 +1,15 @@
+version: '3'
+services:
+  server:
+    image: docker.pkg.github.com/haroldtreen/epub-press/server:publish-docker-image
+    ports:
+        - "80:3000"
+    depends_on:
+        - postgres
+    env_file: envs/stage.env
+  postgres:
+    image: library/postgres
+    ports:
+        - "5432:5432"
+    env_file: envs/stage.env
+    
