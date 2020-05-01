@@ -12,6 +12,5 @@ ebooks/**
 !ebooks/.gitkeep
 *.log
 hidden
-secrets/**
-!secrets/*.gpg
+secrets/*.env
 envs/*.env
