@@ -34,10 +34,11 @@ jobs:
           registry: docker.pkg.github.com
   deploy:
     runs-on: ubuntu-latest
+    needs: [publish]
     steps:
       - uses: actions/checkout@v2
       - name: Decrypt Envs
-        run: ./scripts/decrypt-secrets.sh
+        run: scripts/decrypt-secrets.sh
         env:
           PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
       - name: Copy files
@@ -59,7 +60,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             docker-compose pull
-            docker-compose -f /usr/local/epub-press/docker-compose.prod.yaml -up -d
+            docker-compose -f /usr/local/epub-press/docker-compose.stage.yaml up -d
 env:
   CI: true
   HOST: 165.227.186.65
