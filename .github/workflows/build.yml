@@ -45,7 +45,7 @@ jobs:
         uses: appleboy/scp-action@master
         env:
           HOST: ${{ env.HOST }}
-          USERNAME: ${{ secrets.USERNAME }}
+          USERNAME: ${{ secrets.SSH_USERNAME }}
           KEY: ${{ secrets.SSH_KEY }}
         with:
           source: "./docker-compose.stage.yaml,envs/stage.env"
@@ -55,7 +55,7 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ${{ env.HOST }}
-          username: ${{ secrets.USERNAME }}
+          username: ${{ secrets.SSH_USERNAME }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           key: ${{ secrets.SSH_KEY }}
           script: |
