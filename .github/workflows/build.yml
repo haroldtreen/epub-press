@@ -32,5 +32,34 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           registry: docker.pkg.github.com
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Decrypt Envs
+        run: ./scripts/decrypt-secrets.sh
+        env:
+          PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+      - name: Copy files
+        uses: appleboy/scp-action@master
+        env:
+          HOST: ${{ env.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+          KEY: ${{ secrets.SSH_KEY }}
+        with:
+          source: "./docker-compose.stage.yaml,envs/stage.env"
+          target: "/usr/local/epub-press"
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+      - name: Restart Docker
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ env.HOST }}
+          username: ${{ secrets.USERNAME }}
+          passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            docker-compose pull
+            docker-compose -f /usr/local/epub-press/docker-compose.prod.yaml -up -d
 env:
   CI: true
+  HOST: 165.227.186.65
