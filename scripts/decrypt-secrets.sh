@@ -1,1 +1,2 @@
 gpg --quiet --batch --yes --decrypt --passphrase="$PASSPHRASE" --output envs/stage.env secrets/stage.env.gpg
+gpg --quiet --batch --yes --decrypt --passphrase="$PASSPHRASE" --output envs/prod.env secrets/prod.env.gpg

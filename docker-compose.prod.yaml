@@ -1,0 +1,7 @@
+version: '3'
+services:
+  server:
+    image: docker.pkg.github.com/haroldtreen/epub-press/server:prod
+    ports:
+        - "80:3000"
+    env_file: envs/prod.env
