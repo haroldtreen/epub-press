@@ -12,7 +12,7 @@ jobs:
       - name: Use Node.js 14
         uses: actions/setup-node@v1
         with:
-          node-version: 14
+          node-version: 13
       - uses: actions/checkout@v2
       - run: npm ci
       - run: npm test
