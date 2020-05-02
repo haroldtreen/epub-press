@@ -1,1 +1,2 @@
 gpg --quiet --symmetric --batch --yes --passphrase="$PASSPHRASE" --cipher-algo AES256 secrets/stage.env
+gpg --quiet --symmetric --batch --yes --passphrase="$PASSPHRASE" --cipher-algo AES256 secrets/prod.env
