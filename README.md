@@ -3,7 +3,7 @@
 
 # epub-press
 
-[![CircleCI](https://circleci.com/gh/haroldtreen/epub-press.svg?style=svg)](https://circleci.com/gh/haroldtreen/epub-press)
+![Build](https://github.com/haroldtreen/epub-press/workflows/Build/badge.svg?branch=master)
 <a href="https://codeclimate.com/github/haroldtreen/epub-press/maintainability"><img src="https://api.codeclimate.com/v1/badges/444d1c975273b32ee0f1/maintainability" /></a>
 
 > Backend server for [EpubPress](https://epub.press).

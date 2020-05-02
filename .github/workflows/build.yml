@@ -4,10 +4,7 @@
 name: Build
 on:
   push:
-    branches: [master,publish-docker-image]
-  pull_request:
-    branches: [ master ]
-
+    branches: [master,stage]
 jobs:
   test_and_lint:
     runs-on: ubuntu-latest
