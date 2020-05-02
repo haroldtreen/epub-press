@@ -15,8 +15,13 @@ jobs:
           node-version: 13
       - uses: actions/checkout@v2
       - run: npm ci
-      - run: npm test
       - run: npm run lint
+      - uses: paambaati/codeclimate-action@v2.6.0
+        env:
+          CC_TEST_REPORTER_ID: 96ffb20ecb0b933c764cff83a89880079aa11a32874c611fc02bfbfc0d021611
+        with:
+          coverageCommand: npm run test:coverage
+          coverageLocations: ${{ github.workspace }}/coverage/lcov.info:lcov
   publish:
     runs-on: ubuntu-latest
     needs: [test_and_lint]
