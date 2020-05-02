@@ -23,7 +23,7 @@ jobs:
           coverageCommand: npm run test:coverage
           coverageLocations: ${{ github.workspace }}/coverage/lcov.info:lcov
   publish:
-    if: ${{ github.ref == 'master' || github.ref == 'stage' }}
+    if: ${{ contains(github.ref, 'master') || contains(github.ref, 'stage') }}
     runs-on: ubuntu-latest
     needs: [test_and_lint]
     steps:
