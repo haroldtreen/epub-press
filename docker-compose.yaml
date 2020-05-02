@@ -4,7 +4,7 @@ services:
     build: .
     ports:
         - "3000:3000"
-    links:
+    depends_on:
         - postgres
     environment:
         - DB_HOST=postgres
