@@ -63,7 +63,7 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            docker-compose pull 
+            docker-compose -f /usr/local/epub-press/docker-compose.stage.yaml pull 
             docker-compose -f /usr/local/epub-press/docker-compose.stage.yaml up -d
             docker system prune -a -f
 env:
