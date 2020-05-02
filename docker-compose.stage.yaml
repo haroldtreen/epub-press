@@ -1,7 +1,7 @@
 version: '3'
 services:
   server:
-    image: docker.pkg.github.com/haroldtreen/epub-press/server:publish-docker-image
+    image: docker.pkg.github.com/haroldtreen/epub-press/server:stage
     ports:
         - "80:3000"
     depends_on:
