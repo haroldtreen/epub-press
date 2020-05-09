@@ -9,7 +9,6 @@ services:
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.websecure.address=:443"
       - "--certificatesresolvers.server.acme.tlschallenge=true"
-      - "--certificatesresolvers.server.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
       - "--certificatesresolvers.server.acme.email=epubpress@gmail.com"
       - "--certificatesresolvers.server.acme.storage=/letsencrypt/acme.json"
     ports:
