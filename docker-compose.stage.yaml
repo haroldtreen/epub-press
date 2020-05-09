@@ -26,7 +26,7 @@ services:
     restart: unless-stopped
     labels:
       - traefik.enable=true
-      - traefik.http.routers.epub-press.rule=Host(`server.docker.localhost`)
+      - traefik.http.routers.epub-press.rule=Host(`stage.epub.press`)
       - traefik.http.routers.epub-press.entrypoints=websecure
       - traefik.http.routers.epub-press.tls.certresolver=server
   postgres:
