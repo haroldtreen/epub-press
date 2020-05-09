@@ -1,17 +1,35 @@
 version: '3'
 services:
+  reverse-proxy:
+    image: traefik:v2.2
+    command: 
+      - "--api.insecure=false"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.server.acme.tlschallenge=true"
+      - "--certificatesresolvers.server.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+      - "--certificatesresolvers.server.acme.email=epubpress@gmail.com"
+      - "--certificatesresolvers.server.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./letsencrypt:/letsencrypt
+      - /var/run/docker.sock:/var/run/docker.sock
   server:
     image: docker.pkg.github.com/haroldtreen/epub-press/server:stage
-    ports:
-        - "80:3000"
     depends_on:
-        - postgres
+       - postgres
     env_file: envs/stage.env
     restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.epub-press.rule=Host(`server.docker.localhost`)
+      - traefik.http.routers.epub-press.entrypoints=websecure
+      - traefik.http.routers.epub-press.tls.certresolver=server
   postgres:
     image: library/postgres
-    ports:
-        - "5432:5432"
     env_file: envs/stage.env
     restart: unless-stopped
     
