@@ -1,8 +1,28 @@
 version: '3'
 services:
+  reverse-proxy:
+    image: traefik:v2.2
+    restart: unless-stopped
+    command: 
+      - "--api.insecure=false"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.server.acme.tlschallenge=true"
+      - "--certificatesresolvers.server.acme.email=epubpress@gmail.com"
+      - "--certificatesresolvers.server.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./letsencrypt:/letsencrypt
+      - /var/run/docker.sock:/var/run/docker.sock
   server:
     image: docker.pkg.github.com/haroldtreen/epub-press/server:master
-    ports:
-        - "80:3000"
     env_file: envs/prod.env
     restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.epub-press.rule=Host(`epub.press`)
+      - traefik.http.routers.epub-press.entrypoints=websecure
+      - traefik.http.routers.epub-press.tls.certresolver=server
