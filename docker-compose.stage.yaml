@@ -2,6 +2,7 @@ version: '3'
 services:
   reverse-proxy:
     image: traefik:v2.2
+    restart: unless-stopped
     command: 
       - "--api.insecure=false"
       - "--providers.docker=true"
