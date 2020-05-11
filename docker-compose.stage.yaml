@@ -8,6 +8,9 @@ services:
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure" 
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
       - "--certificatesresolvers.server.acme.tlschallenge=true"
       - "--certificatesresolvers.server.acme.email=epubpress@gmail.com"
       - "--certificatesresolvers.server.acme.storage=/letsencrypt/acme.json"
@@ -26,7 +29,7 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.epub-press.rule=Host(`stage.epub.press`)
-      - traefik.http.routers.epub-press.entrypoints=websecure
+      - traefik.http.routers.epub-press.entrypoints=web,websecure
       - traefik.http.routers.epub-press.tls.certresolver=server
   postgres:
     image: library/postgres
