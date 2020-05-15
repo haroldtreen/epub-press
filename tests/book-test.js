@@ -171,7 +171,7 @@ describe('Book', () => {
             });
         });
 
-        it('accepts valid metadata', () => {
+        it('accepts valid named metadata', () => {
             const validMetadataKeys = ['title', 'author', 'description'];
 
             const jsonBook = Book.fromJSON(reqBody);
@@ -180,6 +180,22 @@ describe('Book', () => {
             validMetadataKeys.forEach((key) => {
                 expect(metadata[key]).toEqual(reqBody[key]);
             });
+        });
+
+        it('accepts valid unnamed metadata', () => {
+            const coverPath = 'https://via.placeholder.com/816x1056.jpg?text=CoverPage';
+            const extendedReqBody = {
+                metadata: {
+                    coverPath,
+                },
+                ...reqBody,
+            };
+
+            const jsonBook = Book.fromJSON(extendedReqBody);
+            const metadata = jsonBook.getMetadata();
+
+            expect(metadata.coverPath).toEqual(coverPath);
+            expect(jsonBook.getCoverPath()).toEqual(coverPath);
         });
     });
 
