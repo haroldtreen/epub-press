@@ -1,4 +1,4 @@
-FROM node:carbon
+FROM node:lts
 
 EXPOSE 3000
 WORKDIR /usr/src/epub-press
