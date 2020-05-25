@@ -5,6 +5,7 @@ const TestHelpers = require('./helpers');
 
 const Book = require('../lib/book');
 const Utilities = require('../lib/utilities');
+const { VALID_BOOK_METADATA_KEYS } = require('../lib/constants');
 
 const bookMetadata = {
     title: 'Test Book',
@@ -171,31 +172,30 @@ describe('Book', () => {
             });
         });
 
-        it('accepts valid named metadata', () => {
-            const validMetadataKeys = ['title', 'author', 'description'];
-
-            const jsonBook = Book.fromJSON(reqBody);
+        it('accepts valid metadata', () => {
+            const coverPath = 'https://via.placeholder.com/816x1056.jpg?text=Cover';
+            const tags = 'One, Two, Three';
+            const reqBodyClone = { coverPath, tags, ...reqBody };
+            const jsonBook = Book.fromJSON(reqBodyClone);
             const metadata = jsonBook.getMetadata();
 
-            validMetadataKeys.forEach((key) => {
-                expect(metadata[key]).toEqual(reqBody[key]);
+            VALID_BOOK_METADATA_KEYS.forEach((key) => {
+                if (reqBodyClone[key]) {
+                    expect(metadata[key]).toEqual(reqBodyClone[key]);
+                }
             });
+
+            expect(jsonBook.getCoverPath()).toEqual(coverPath);
+            expect(jsonBook.getTags()).toEqual(tags);
         });
 
-        it('accepts valid unnamed metadata', () => {
-            const coverPath = 'https://via.placeholder.com/816x1056.jpg?text=CoverPage';
-            const extendedReqBody = {
-                metadata: {
-                    coverPath,
-                },
-                ...reqBody,
+        it('throws invalid property error', () => {
+            const reqBodyWithInvalidProperty = { 'bad-property': 'bad-value', ...reqBody };
+            const act = () => {
+                Book.fromJSON(reqBodyWithInvalidProperty);
             };
 
-            const jsonBook = Book.fromJSON(extendedReqBody);
-            const metadata = jsonBook.getMetadata();
-
-            expect(metadata.coverPath).toEqual(coverPath);
-            expect(jsonBook.getCoverPath()).toEqual(coverPath);
+            expect(act).toThrow('invalid property \'bad-property\'');
         });
     });
 
