@@ -43,6 +43,27 @@ describe('Book', () => {
             expect(sections[0].url).toEqual('http://google.com');
             expect(sections[0].html).toEqual('<html></html>');
         });
+
+        it('accepts cover path with http', () => {
+            const metadata = { coverPath: 'http://localhost', ...bookMetadata };
+            const bookWithCover = new Book(metadata);
+            expect(bookWithCover.getCoverPath()).toEqual('http://localhost');
+        });
+
+        it('accepts cover path with https', () => {
+            const metadata = { coverPath: 'https://localhost', ...bookMetadata };
+            const bookWithCover = new Book(metadata);
+            expect(bookWithCover.getCoverPath()).toEqual('https://localhost');
+        });
+
+        it('rejects cover path that is not http(s)', () => {
+            const metadata = { coverPath: '/etc/passwd', ...bookMetadata };
+            const act = () => {
+                // eslint-disable-next-line
+                new Book(metadata);
+            };
+            expect(act).toThrow('coverPath must be http or https');
+        });
     });
 
     describe('#getId', () => {
