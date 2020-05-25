@@ -31,7 +31,7 @@ services:
     restart: unless-stopped
     labels:
       - traefik.enable=true
-      - traefik.http.routers.epub-press.rule=Host(`${SERVICE_HOST}`) || Host(`${SERVICE_IP}`)
+      - traefik.http.routers.epub-press.rule=Host(`${SERVICE_HOST}`)
       - traefik.http.routers.epub-press.entrypoints=web,websecure
       - traefik.http.routers.epub-press.tls.certresolver=server
       - traefik.http.routers.epub-press.tls=true
@@ -44,11 +44,11 @@ services:
     volumes:
     - ./prometheus.yml:/etc/prometheus/prometheus.yml
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.metrics.entrypoints=metrics"
-      - "traefik.http.routers.metrics.middlewares=auth"
-      - "traefik.http.routers.metrics.rule=Host(`${SERVICE_HOST}`) || Host(`${SERVICE_IP}`)"
-      - "traefik.http.middlewares.auth.basicauth.users=${BASIC_AUTH_USERS}"
+      - traefik.enable=true
+      - traefik.http.routers.metrics.entrypoints=metrics
+      - traefik.http.routers.metrics.middlewares=auth
+      - traefik.http.routers.metrics.rule=Host(`${SERVICE_HOST}`)
+      - traefik.http.middlewares.auth.basicauth.users=${BASIC_AUTH_USERS}
   postgres:
     image: library/postgres
     env_file: envs/stage.env
