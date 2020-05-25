@@ -14,3 +14,4 @@ ebooks/**
 hidden
 secrets/*.env
 envs/*.env
+.vscode/
