@@ -1,15 +1,49 @@
 version: '3'
 services:
+  reverse-proxy:
+    image: traefik:v2.2
+    restart: unless-stopped
+    command:
+      - "--api.dashboard=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.metrics.address=:8081"
+      - "--providers.docker.exposedbydefault=false"
+    ports:
+      - 80:80
+      - 443:443
+      - 8081:8081
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
   server:
     build: .
     ports:
         - "3000:3000"
+        - "3001:3001"
     depends_on:
         - postgres
     environment:
         - DB_HOST=postgres
         - DB_USERNAME=postgres
         - DB_PASSWORD=password
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.server.entrypoints=web,websecure"
+      - "traefik.http.routers.server.rule=Host(`localhost`)"
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    depends_on:
+    - server
+    volumes:
+    - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.metrics.entrypoints=metrics"
+      - "traefik.http.routers.metrics.middlewares=auth"
+      - "traefik.http.routers.metrics.rule=Host(`localhost`)"
+      - "traefik.http.middlewares.auth.basicauth.users=${BASIC_AUTH_USERS}"
   postgres:
     image: library/postgres
     ports:
@@ -18,4 +52,3 @@ services:
         - POSTGRES_DB=epubpress_development
         - POSTGRES_USER=postgres
         - POSTGRES_PASSWORD=password
-    
