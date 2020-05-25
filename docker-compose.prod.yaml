@@ -32,6 +32,7 @@ services:
       - traefik.http.routers.epub-press.rule=Host(`${SERVICE_HOST}`, `${SERVICE_IP}`)
       - traefik.http.routers.epub-press.entrypoints=web,websecure
       - traefik.http.routers.epub-press.tls.certresolver=server
+      - traefik.http.routers.epub-press.tls=true
   prometheus:
     image: prom/prometheus
     restart: unless-stopped
