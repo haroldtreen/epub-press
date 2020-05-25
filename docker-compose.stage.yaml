@@ -10,6 +10,7 @@ services:
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.websecure.address=:443"
       - "--entrypoints.web.address=:80"
+      - "--entrypoints.metrics.address=:8081"
       - "--entrypoints.web.http.redirections.entryPoint.to=websecure" 
       - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
       - "--certificatesresolvers.server.acme.tlschallenge=true"
