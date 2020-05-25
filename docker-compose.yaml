@@ -29,7 +29,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.server.entrypoints=web,websecure"
-      - "traefik.http.routers.server.rule=Host(`localhost`)"
+      - "traefik.http.routers.server.rule=Host(`localhost`, `127.0.0.1`)"
   prometheus:
     image: prom/prometheus
     ports:
@@ -42,7 +42,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.metrics.entrypoints=metrics"
       - "traefik.http.routers.metrics.middlewares=auth"
-      - "traefik.http.routers.metrics.rule=Host(`localhost`)"
+      - "traefik.http.routers.metrics.rule=Host(`localhost`, `127.0.0.1`)"
       - "traefik.http.middlewares.auth.basicauth.users=${BASIC_AUTH_USERS}"
   postgres:
     image: library/postgres
