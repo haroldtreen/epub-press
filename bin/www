@@ -4,6 +4,8 @@
  * Module dependencies.
  */
 const app = require('../app');
+const metrics = require('../metrics');
+
 const debug = require('debug')('epub-press:server');
 const http = require('http');
 
@@ -14,11 +16,15 @@ const http = require('http');
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
+const metricsPort = normalizePort(process.env.METRICS_PORT || '3001');
+metrics.set('port', metricsPort);
+
 /**
  * Create HTTP server.
  */
 
 const server = http.createServer(app);
+const metricsServer = http.createServer(metrics);
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -27,6 +33,10 @@ const server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+
+metricsServer.listen(metricsPort);
+metricsServer.on('error', onError);
+metricsServer.on('listening', onListening);
 
 /**
  * Normalize a port into a number, string, or false.

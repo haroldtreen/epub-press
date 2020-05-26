@@ -55,7 +55,7 @@ jobs:
           USERNAME: ${{ secrets.SSH_USERNAME }}
           KEY: ${{ secrets.SSH_KEY }}
         with:
-          source: "./docker-compose.stage.yaml,envs/stage.env"
+          source: "docker-compose.stage.yaml,envs/stage.env,prometheus.yml"
           target: "/usr/local/epub-press"
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
       - name: Restart Docker
@@ -66,8 +66,10 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            docker-compose -f /usr/local/epub-press/docker-compose.stage.yaml pull 
-            docker-compose -f /usr/local/epub-press/docker-compose.stage.yaml up -d
+            cd /usr/local/epub-press/
+            cp envs/stage.env .env
+            docker-compose -f docker-compose.stage.yaml pull 
+            docker-compose -f docker-compose.stage.yaml up -d
             docker system prune -a -f
   deploy_prod:
     if: ${{ contains(github.ref, 'master') }}
@@ -86,7 +88,7 @@ jobs:
           USERNAME: ${{ secrets.SSH_USERNAME }}
           KEY: ${{ secrets.SSH_KEY }}
         with:
-          source: "./docker-compose.prod.yaml,envs/prod.env"
+          source: "docker-compose.prod.yaml,envs/prod.env,prometheus.yml"
           target: "/usr/local/epub-press"
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
       - name: Restart Docker
@@ -97,8 +99,10 @@ jobs:
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            docker-compose -f /usr/local/epub-press/docker-compose.prod.yaml pull 
-            docker-compose -f /usr/local/epub-press/docker-compose.prod.yaml up -d
+            cd /usr/local/epub-press/
+            cp envs/prod.env .env
+            docker-compose -f docker-compose.prod.yaml pull 
+            docker-compose -f docker-compose.prod.yaml up -d
             docker system prune -a -f
 env:
   CI: true

@@ -1,0 +1,7 @@
+scrape_configs:
+- job_name: epub-press-metrics
+  scrape_interval: 15s
+  static_configs:
+  - targets:
+    - server:3001
+
