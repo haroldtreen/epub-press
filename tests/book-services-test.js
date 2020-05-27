@@ -93,6 +93,14 @@ describe('Book Services', () => {
             expect(callArgs[0]).toEqual(book);
             expect(callArgs[1]).toEqual(book.getTitle());
         });
+
+        it('skips if the book has a custom cover', async () => {
+            book = new Book({ coverPath: 'https://images.com/an_image.jpg' });
+
+            const customizedBook = await BookServices.createCustomCover(book);
+
+            expect(customizedBook.getCoverPath()).toEqual('https://images.com/an_image.jpg');
+        });
     });
 
     describe('.writeEpub', () => {

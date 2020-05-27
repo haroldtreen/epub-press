@@ -106,6 +106,20 @@ describe('Book', () => {
         });
     });
 
+    describe('#hasCustomCover', () => {
+        it('returns true if a non-default cover is present', () => {
+            book = new Book({ coverPath: 'https://custome.img' });
+
+            expect(book.hasCustomCover()).toBe(true);
+        });
+
+        it('returns false if the book is using the default cover', () => {
+            book = new Book();
+
+            expect(book.hasCustomCover()).toBe(false);
+        });
+    });
+
     describe('#deleteAssets', () => {
         it('deletes files returned by #getAssets', () => {
             Sinon.stub(Utilities, 'removeFiles').resolves([]);
