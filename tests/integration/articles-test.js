@@ -598,12 +598,13 @@ describe('Article Extraction', () => {
             title: "ترامپ از توافق تجاری 'تاریخی' با کانادا استقبال کرد",
             include: ['dir="rtl"', 'تجارت آزاد آمریکای شمالی (نفتا) استقبال کرده است.'],
         },
-        // {
-        //     fixture: 'douban',
-        //     title: '翻包记 之 随身行李和长途飞行小贴士',
-        //     include: ['这次年假回国我也打算继续', '行李箱里，而且我的两样', '丝袜的确是'],
-        //     notInclude: ['有什么作用啊'],
-        // },
+        {
+            fixture: 'medium-images',
+            url: 'https://medium.com/wardleymaps/on-being-lost-2ef5f05eb1ec',
+            title: 'On being lost',
+            include: ['<img', 'https://miro.medium.com/max/1380/1*RSH2vh_xgQtjB68Zb7oBaA.jpeg'],
+            notInclude: ['https://miro.medium.com/max/30/1*RSH2vh_xgQtjB68Zb7oBaA.jpeg?q=20'],
+        },
     ].forEach((testCase) => {
         it(`can extract ${testCase.fixture} articles`, (done) => {
             const html = fs.readFileSync(`${articleFixtures}/${testCase.fixture}.html`).toString();
