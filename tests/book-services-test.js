@@ -57,7 +57,7 @@ describe('Book Services', () => {
                 'extractSectionsContent',
                 'localizeSectionsImages',
                 'convertSectionsContent',
-                'createCustomCover',
+                'createCover',
                 'writeEpub',
                 'convertToMobi',
                 'commit',
@@ -82,24 +82,26 @@ describe('Book Services', () => {
         });
     });
 
-    describe('.createCustomCover', () => {
-        it('calls writeOnCover with the book title', () => {
+    describe('.createCover', () => {
+        it('calls writeOnCover with the book title with default cover path', () => {
             book = new Book();
             const writeOnCoverStub = Sinon.stub(StylingService, 'writeOnCover');
 
-            BookServices.createCustomCover(book);
+            BookServices.createCover(book);
             writeOnCoverStub.restore();
+            expect(writeOnCoverStub.callCount).toBe(1);
             const callArgs = writeOnCoverStub.firstCall.args;
             expect(callArgs[0]).toEqual(book);
             expect(callArgs[1]).toEqual(book.getTitle());
         });
 
-        it('skips if the book has a custom cover', async () => {
+        it('does not call writeOnCover if the book has a custom cover', async () => {
             book = new Book({ coverPath: 'https://images.com/an_image.jpg' });
+            const writeOnCoverStub = Sinon.stub(StylingService, 'writeOnCover');
 
-            const customizedBook = await BookServices.createCustomCover(book);
-
-            expect(customizedBook.getCoverPath()).toEqual('https://images.com/an_image.jpg');
+            await BookServices.createCover(book);
+            writeOnCoverStub.restore();
+            expect(writeOnCoverStub.callCount).toBe(0);
         });
     });
 
