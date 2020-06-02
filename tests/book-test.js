@@ -106,17 +106,17 @@ describe('Book', () => {
         });
     });
 
-    describe('#hasCustomCover', () => {
-        it('returns true if a non-default cover is present', () => {
+    describe('#hasDefaultCover', () => {
+        it('returns false if a non-default cover is present', () => {
             book = new Book({ coverPath: 'https://custome.img' });
 
-            expect(book.hasCustomCover()).toBe(true);
+            expect(book.hasDefaultCover()).toBe(false);
         });
 
-        it('returns false if the book is using the default cover', () => {
+        it('returns true if the book is using the default cover', () => {
             book = new Book();
 
-            expect(book.hasCustomCover()).toBe(false);
+            expect(book.hasDefaultCover()).toBe(true);
         });
     });
 
