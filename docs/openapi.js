@@ -13,6 +13,12 @@ module.exports = {
             url: 'http://localhost:3000/api/v1',
             description: 'local development server'
         }
+    ],
+    tags: [
+        {
+            name: 'diagnostics',
+            description: 'helper endpoints'
+        }
     ]
 };
 

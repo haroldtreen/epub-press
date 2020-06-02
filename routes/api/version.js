@@ -22,6 +22,8 @@ const packageJSON = require('../../package.json');
  * 
  * /version:
  *   get:      
+ *     tags: 
+ *       - diagnostics
  *     responses:
  *       '200':
  *          description: version info

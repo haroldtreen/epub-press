@@ -8,9 +8,14 @@ info:
 servers:
   - url: 'http://localhost:3000/api/v1'
     description: local development server
+tags:
+  - name: diagnostics
+    description: helper endpoints
 paths:
   /version:
     get:
+      tags:
+        - diagnostics
       responses:
         '200':
           description: version info
@@ -37,4 +42,3 @@ components:
           type: string
         message:
           type: string
-tags: []
