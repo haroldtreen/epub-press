@@ -21,7 +21,8 @@
         "test:integration": "jest --testMatch **/tests/integration/**/*-test.js",
         "lint": "eslint .",
         "wait:db": "node scripts/wait-for-postgres.js",
-        "format": "prettier-eslint $PWD/\"**/*.js\" --single-quote --write --tab-width 4"
+        "format": "prettier-eslint $PWD/\"**/*.js\" --single-quote --write --tab-width 4",
+        "docs:swagger": "swagger-jsdoc -d docs/openapi.js -o ./docs/openapi-v3.yaml"
     },
     "dependencies": {
         "bluebird": "^3.7.2",
@@ -52,6 +53,7 @@
         "serve-favicon": "^2.5.0",
         "shortid": "^2.2.15",
         "string-direction": "^0.1.2",
+        "swagger-jsdoc": "^4.0.0",
         "umzug": "^2.3.0",
         "winston": "^2.4.4"
     },
