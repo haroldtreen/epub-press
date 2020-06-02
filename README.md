@@ -67,6 +67,30 @@ Changes should be accompanied by tests. All tests located in `/tests`.
 | Send the ebook to an email                | `GET /api/v1/books/:id/email`    |
 | Check versions compatible with the server | `GET /api/v1/version`            |
 
+#### Simple workflow
+```sh
+$ # create a book
+$ curl http://localhost:3000/api/v1/books \
+ -H "Content-Type: application/json" \
+ -X POST \
+ -d '{
+    "title": "A title",
+    "description": "A description",
+    "author": "An author",
+    "genre": "ebooks",
+    "coverPath": "https://via.placeholder.com/600x800.jpg?text=A%20Cover",
+    "urls": [
+        "https://epub.press"
+    ]
+}'
+
+{"id":"RXyGKmTq7"}
+$ # download the book
+$ curl -o book.ebub http://localhost:3000/api/v1/books/RXyGKmTq7/download
+$ ls
+book.ebub
+```
+
 ### Environment variables
 
  | Name                   | Default            | Description                       |
