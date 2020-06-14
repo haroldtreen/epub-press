@@ -57,15 +57,9 @@ npm run test               # Test all of the above
 
 Changes should be accompanied by tests. All tests located in `/tests`.
 
-### API
+### API Documentation
 
-| Description                               | Endpoint                         |
-| ----------------------------------------- | -------------------------------- |
-| Create a book                             | `POST /api/v1/books`             |
-| Check the status of an in progress book   | `GET /api/v1/books/:id/status`   |
-| Download an ebook as a file               | `GET /api/v1/books/:id/download` |
-| Send the ebook to an email                | `GET /api/v1/books/:id/email`    |
-| Check versions compatible with the server | `GET /api/v1/version`            |
+API Documentation is [here](./API.md).
 
 ### Environment variables
 
