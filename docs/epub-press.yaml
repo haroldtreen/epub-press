@@ -1,0 +1,214 @@
+openapi: 3.0.3
+info:
+  title: EpubPress - Read the web offline
+  description: >-
+    A browser extension for creating ebooks from your favorite webpages. Build
+    books that are totally custom, offline and compatible with all your devices.
+  version: 1.0.0
+servers:
+  - url: 'http://localhost:3000/api/v1'
+    description: local development server
+tags:
+  - name: diagnostics
+    description: helper endpoints
+paths:
+  /version:
+    get:
+      tags:
+        - diagnostics
+      responses:
+        '200':
+          description: Version information. 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  version:
+                    type: string
+                  minCompatible:
+                    type: string
+                  message:
+                    type: string
+                  clients:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ClientVersion'
+  /books:
+    post:
+      summary: Create and publish an ebook.
+      description: Create and publish an ebook.
+      tags:
+        - books
+      requestBody:
+        description: Ebook request body.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Book'
+      responses:
+        '200':
+          description: Create book response.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id: 
+                    description: Book Id.
+                    type: string
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
+  /books/:id/status:
+    get:
+      summary: Get the book publishing status.
+      description: Get the book publishing status.
+      tags: 
+        - books
+      parameters:
+        - name: id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The status of the publishing process.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  progress:
+                    type: number
+                    
+  /books/:id/download:
+    get:
+      summary: Download the book.
+      description: Download the book.
+      tags: 
+        - books
+      parameters:
+        - name: id
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The book binary file. 
+          content:
+            application/epub+zip:
+              schema:
+                type: string
+                format: binary
+                
+  /books/:id/email:
+    get:
+      summary: Email the book.
+      description: Email the book.
+      tags:
+        - books
+      parameters:
+        - name: id
+          in: query
+          schema:
+            type: string
+        - name: email
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: TODO
+          content:
+             text/html:
+              schema:
+                type: string
+    
+    
+components:
+  schemas:
+    ClientVersion:
+      properties:
+        minCompatible:
+          type: string
+        message:
+          type: string
+    Section:
+      properties:
+        content:
+          description: HTML content of the section.
+          type: string
+        title: 
+          description: Plain text title.
+          type: string
+    Error:
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              status: 
+                type: string
+                description: HTTP Status Code. 
+              detail:
+                type: string
+                description: Error description.
+    Book:
+      properties:
+        author:
+          description: Set the author of the book.
+          default: EpubPres
+          type: string
+        coverPath:
+          description: URL link to an imave for the cover of the book. Prefer `800x1280 (width x height)` or a 1:1.6 width:height ratio. Maximum file size is 1MB.
+          type: string
+        description:
+          description: The description of the book.
+          type: string
+          default: Built using https://epub.press
+        genre:
+          description: The genre of the book.
+          type: string
+          default: Unknown
+        language:
+          description: The _short ISO_ language of the book.
+          type: string
+          maxLength: 3
+          minLength: 1
+          default: en
+        published:
+          description: The publish date of the book in YYYY-MM-DD format.
+          default: YYYY (ie- 2020)
+          type: string
+        publisher:
+          description: The publisher of the book.
+          default: https://epub.press
+          type: string
+        sections:
+          description: Collection of sections in the book. Mutually exclusive with urls.
+          type: array
+          items:
+              $ref:   '#/components/schemas/Section'
+          maxItems: 50
+        series:
+          description: The series of the book. This only works for Calibre. It adds `calibre:series` to the metadata of the book.
+          type: string
+        sequence:
+          description: The sequence of of the book series. This only works for Calibre. It adds `calibre:sequence` to the metadata of the book.
+          type: number
+        tags:
+          description: CSV list of tags for the book. Synonymous with subject.
+        urls:
+          description: Collection of urls to transform and add as sections to the book. Mutually exclusive with sections.
+          type: array
+          items:
+            type: string
+            maxItems: 50
