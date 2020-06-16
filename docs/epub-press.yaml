@@ -18,7 +18,7 @@ paths:
         - diagnostics
       responses:
         '200':
-          description: version info
+          description: Version information. 
           content:
             application/json:
               schema:
@@ -41,24 +41,24 @@ paths:
       tags:
         - books
       requestBody:
-        description: ebook request body
+        description: Ebook request body.
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Book'
       responses:
         '200':
-          description: create book response
+          description: Create book response.
           content:
             application/json:
               schema:
                 type: object
                 properties:
                   id: 
-                    description: book id
+                    description: Book Id.
                     type: string
         '400':
-          description: bad request
+          description: Bad request.
           content:
             application/json:
               schema:
@@ -67,7 +67,7 @@ paths:
   /books/:id/status:
     get:
       summary: Get the book publishing status.
-      description: Get the book publishing status
+      description: Get the book publishing status.
       tags: 
         - books
       parameters:
@@ -77,7 +77,7 @@ paths:
             type: string
       responses:
         '200':
-          description: book publishing status
+          description: The status of the publishing process.
           content:
             application/json:
               schema:
@@ -101,7 +101,7 @@ paths:
             type: string
       responses:
         '200':
-          description: the book bits
+          description: The book binary file. 
           content:
             application/epub+zip:
               schema:
@@ -143,10 +143,10 @@ components:
     Section:
       properties:
         content:
-          description: HTML content of the section
+          description: HTML content of the section.
           type: string
         title: 
-          description: Plain text title
+          description: Plain text title.
           type: string
     Error:
       properties:
@@ -157,10 +157,10 @@ components:
             properties:
               status: 
                 type: string
-                description: http status code
+                description: HTTP Status Code. 
               detail:
                 type: string
-                description: description of error
+                description: Error description.
     Book:
       properties:
         author:
@@ -205,7 +205,7 @@ components:
           description: The sequence of of the book series. This only works for Calibre. It adds `calibre:sequence` to the metadata of the book.
           type: number
         tags:
-          description: CSV list of tags for the book. Synonymous with subject
+          description: CSV list of tags for the book. Synonymous with subject.
         urls:
           description: Collection of urls to transform and add as sections to the book. Mutually exclusive with sections.
           type: array

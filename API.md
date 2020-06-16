@@ -10,4 +10,4 @@
 
 View the OAS 3.0 specification [here](./docs/epub-press.yaml)
 
-View OAS 3.0 specification with Swagger UI [here](http://generator3.swagger.io/index.html?url=https://raw.githubusercontent.com/wrobbins/epub-press/add-oas3/docs/epub-press.yaml)
+View OAS 3.0 specification with Swagger UI [here](http://generator3.swagger.io/index.html?url=https://raw.githubusercontent.com/haroldtreen/epub-press/master/docs/epub-press.yaml)
