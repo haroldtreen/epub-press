@@ -1,7 +1,11 @@
 'use strict';
+const sequelize = require("sequelize");
 
 module.exports = {
     up(queryInterface, Sequelize) {
+        if (!Sequelize) {
+            Sequelize = sequelize;
+        }
         return queryInterface.createTable('Books', {
             id: {
                 autoIncrement: true,

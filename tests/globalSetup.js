@@ -8,7 +8,6 @@ module.exports = async () => {
         await database.createDatabase(database.config.database);
         await database.migrate();
         await database.disconnect();
-        process.env.__SKIP_DB_TESTS__ = false;
     } else {
         process.env.__SKIP_DB_TESTS__ = true;
     }
