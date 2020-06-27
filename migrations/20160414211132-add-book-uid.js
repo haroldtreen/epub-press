@@ -1,5 +1,6 @@
 'use strict';
-const sequelize = require("sequelize");
+
+const sequelize = require('sequelize');
 
 module.exports = {
     up: (queryInterface, Sequelize) => {
@@ -10,7 +11,7 @@ module.exports = {
             type: Sequelize.STRING,
             allowNull: false,
             defaultValue: '123456',
-        })
+        });
     },
     down: (queryInterface) => queryInterface.removeColumn('Books', 'uid'),
 };

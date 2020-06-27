@@ -8,7 +8,7 @@ module.exports = {
         host: Config.DB_HOST,
         dialect: Config.DB_DIALECT,
         omitNull: true,
-        storage: './tmp/db_dev.sqlite'
+        storage: './tmp/db_dev.sqlite',
     },
     test: {
         username: Config.DB_USERNAME,
@@ -18,7 +18,7 @@ module.exports = {
         dialect: Config.DB_DIALECT,
         omitNull: true,
         storage: './tmp/db_test.sqlite',
-        logging: false
+        logging: false,
     },
     production: {
         username: Config.DB_USERNAME,
@@ -27,5 +27,5 @@ module.exports = {
         host: Config.DB_HOST,
         dialect: Config.DB_DIALECT,
         omitNull: true,
-    }
+    },
 };

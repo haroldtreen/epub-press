@@ -17,7 +17,7 @@ describe('Book Model', () => {
             sections: [{ title: 'Section 1', url: 'https://epub.press' }],
         };
         return BookModel.create(attrs).then(() => attrs);
-    }
+    };
 
 
     it('can create books', async () => {
@@ -27,7 +27,7 @@ describe('Book Model', () => {
                 Object.keys(attrs).forEach((key) => {
                     expect(attrs[key]).to.eql(book[key]);
                 });
-                expect(typeof(book.id)).equal('number');
+                expect(typeof (book.id)).equal('number');
             });
     });
 
@@ -37,5 +37,5 @@ describe('Book Model', () => {
         const books = await BookModel.findAll();
         expect(books).to.not.be.undefined;
         expect(books).to.not.be.empty;
-    })
+    });
 });

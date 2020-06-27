@@ -1,5 +1,6 @@
 'use strict';
-const sequelize = require("sequelize");
+
+const sequelize = require('sequelize');
 
 module.exports = {
     up(queryInterface, Sequelize) {
