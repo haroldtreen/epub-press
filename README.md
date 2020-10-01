@@ -1,7 +1,7 @@
 <p align="center"><img src="https://cloud.githubusercontent.com/assets/1745854/14191006/397082b2-f75b-11e5-9f5b-6016d069556b.png"/>
 </p>
 
-# epub-press
+### epub-press
 
 ![Build](https://github.com/haroldtreen/epub-press/workflows/Build/badge.svg?branch=master)
 <a href="https://codeclimate.com/github/haroldtreen/epub-press/maintainability"><img src="https://api.codeclimate.com/v1/badges/444d1c975273b32ee0f1/maintainability" /></a>
@@ -61,7 +61,7 @@ Changes should be accompanied by tests. All tests located in `/tests`.
 
 API Documentation is [here](./API.md).
 
-#### Simple workflow
+### Simple workflow
 ```sh
 $ # create a book
 $ curl http://localhost:3000/api/v1/books \
