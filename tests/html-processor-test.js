@@ -3,6 +3,7 @@
 const glob = require('glob');
 const fs = require('fs-extra');
 const nock = require('nock');
+const debug = require('debug')('epub-press:tests');
 
 const Config = require('../lib/config');
 const Utilities = require('../lib/utilities');
@@ -11,6 +12,8 @@ const HtmlProcessor = require('../lib/html-processor.js');
 
 const fixturesPath = './tests/fixtures';
 const outputFolder = Config.IMAGES_TMP;
+
+debug(`outputFolder: ${outputFolder}`);
 
 describe('HTML Processor', () => {
     let mockSection;
@@ -320,7 +323,9 @@ describe('HTML Processor', () => {
             HtmlProcessor.extractImages(mockSection.url, mockSection.html)
                 .then(() => {
                     fs.readdir(outputFolder, (err, files) => {
-                        expect((files || []).length).toBe(4);
+                        const fileCount = (files || []).length;
+                        debug(`fileCount: ${fileCount}`);
+                        expect(fileCount).toBe(4);
                         done();
                     });
                 })

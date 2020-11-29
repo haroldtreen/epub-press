@@ -35,5 +35,15 @@
         "mocha": true,
         "browser": true,
         "jest": true,
-    }
+    },
+    "overrides": [
+        {
+            "files": ["scripts/**/*.js"],
+            "rules": {
+                "no-console": "off"
+            }
+        }
+    ]
+        
+    
 }
