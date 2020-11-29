@@ -1,4 +1,3 @@
-const { assert } = require('chai');
 const db = require('../../models');
 
 const BookModel = db.Book;
@@ -12,18 +11,19 @@ describe('Book Model', () => {
         db.sequelize.close();
     });
 
-    const createBook = () => {
+    const createBook = async () => {
         const attrs = {
             title: 'A Test Book',
             sections: [{ title: 'Section 1', url: 'https://epub.press' }],
         };
-        return BookModel.create(attrs).then(() => attrs);
+        await BookModel.create(attrs);
+        return attrs;
     };
 
 
     it('can create books', async () => {
         const attrs = await createBook();
-        const book = await BookModel.findOne({ where: { title: attrs.title } })
+        const book = await BookModel.findOne({ where: { title: attrs.title } });
         Object.keys(attrs).forEach((key) => {
             expect(attrs[key]).toEqual(book[key]);
         });

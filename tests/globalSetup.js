@@ -1,3 +1,4 @@
+const debug = require('debug')('epub-press:tests');
 const Database = require('../lib/database');
 
 module.exports = async () => {
@@ -10,5 +11,6 @@ module.exports = async () => {
         await database.disconnect();
     } else {
         process.env.__SKIP_DB_TESTS__ = true;
+        debug('skipping database tests -- db unavailable');
     }
 };
