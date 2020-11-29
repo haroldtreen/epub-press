@@ -1,3 +1,4 @@
+const { assert } = require('chai');
 const db = require('../../models');
 
 const BookModel = db.Book;
@@ -22,20 +23,17 @@ describe('Book Model', () => {
 
     it('can create books', async () => {
         const attrs = await createBook();
-        BookModel.findOne({ where: { title: attrs.title } })
-            .then((book) => {
-                Object.keys(attrs).forEach((key) => {
-                    expect(attrs[key]).to.eql(book[key]);
-                });
-                expect(typeof (book.id)).equal('number');
-            });
+        const book = await BookModel.findOne({ where: { title: attrs.title } })
+        Object.keys(attrs).forEach((key) => {
+            expect(attrs[key]).toEqual(book[key]);
+        });
+        expect(typeof (book.id)).toEqual('number');
     });
 
-    createBook();
-
     it('can read books', async () => {
+        await createBook();
         const books = await BookModel.findAll();
-        expect(books).to.not.be.undefined;
-        expect(books).to.not.be.empty;
+        expect(books).toBeDefined();
+        expect(books.length).toBeGreaterThan(0);
     });
 });
