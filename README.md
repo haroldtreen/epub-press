@@ -10,18 +10,11 @@
 
 For clients, see [epub-press-clients](https://github.com/haroldtreen/epub-press-clients).
 
-### Setup
+## Usage
 
-```bash
-git clone https://github.com/haroldtreen/epub-press
-cd epub-press
-npm install
-```
+You may use docker-compose to stand up both the epub-press server and the backing PostgreSQL database.
 
-### Usage
-
-**Docker Setup**
-
+1.  Follow the [Install Dependencies](#install-dependencies) step
 1.  [Install Docker](https://docs.docker.com/engine/installation/)
 1.  `docker-compose up`
 
@@ -31,13 +24,27 @@ You'll also want to run database migrations if it's your first time running the 
 
 EpubPress will be running at `http://localhost:3000`.
 
-**Development Setup**
+## Development Setup
+
+Clone this repository and install npm dependencies. Use the node version indicated 
+in `.nvmrc`.
+
+#### Install dependencies
+```bash
+$ git clone https://github.com/haroldtreen/epub-press
+$ cd epub-press
+$ # optional nvm use
+$ npm install
+```
+
+You may develop this project backed by a PostgreSQL or SQLite database. 
 
 1.  [Install Docker](https://docs.docker.com/engine/installation/)
-1.  `docker-compose up postgres`
+    1. With postgres `docker-compose up postgres`
+    1. With Sqlite `echo DB_DIALECT=sqlite > .env.local`
 1.  `npm start`
 
-You'll also want to run database migrations if it's your first time running the service:
+For either database type you'll want to run database migrations one time:
 
 `npx sequelize-cli db:migrate`
 
