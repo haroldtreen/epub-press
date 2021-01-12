@@ -230,7 +230,7 @@ describe('Book', () => {
                 Book.fromJSON(reqBodyWithInvalidProperty);
             };
 
-            expect(act).toThrow('invalid property \'bad-property\'');
+            expect(act).toThrow("invalid property 'bad-property'");
         });
     });
 
