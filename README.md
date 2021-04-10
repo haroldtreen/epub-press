@@ -72,7 +72,7 @@ $ curl http://localhost:3000/api/v1/books \
     "description": "A description",
     "author": "An author",
     "genre": "ebooks",
-    "coverPath": "https://via.placeholder.com/600x800.jpg?text=A%20Cover",
+    "coverPath": "",
     "urls": [
         "https://epub.press"
     ]
