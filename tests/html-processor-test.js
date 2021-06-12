@@ -308,7 +308,7 @@ describe('HTML Processor', () => {
         });
 
         afterEach(() => {
-            glob(`${outputFolder}/*.png`, (err, files) => {
+            glob(`${outputFolder}/*.@(png|html)`, (err, files) => {
                 Utilities.removeFiles(files);
             });
         });
@@ -328,6 +328,23 @@ describe('HTML Processor', () => {
                         expect(fileCount).toBe(4);
                         done();
                     });
+                })
+                .catch(done);
+        });
+
+        it('detects when non-image content is returned', (done) => {
+            scope = nock('http://test.fake');
+            scope
+                .get('/image.png')
+                .replyWithFile(200, `${fixturesPath}/placeholder.png`, {
+                    'Content-Type': 'text/html;',
+                });
+
+            HtmlProcessor.extractImages(mockSection.url, '<div><img src="/image.png /></div>')
+                .then((output) => {
+                    expect(output.html).toEqual('<div></div>');
+                    expect(output.images).toHaveLength(0);
+                    done();
                 })
                 .catch(done);
         });
