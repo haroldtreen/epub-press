@@ -45,7 +45,7 @@ services:
       - "traefik.http.routers.metrics.rule=Host(`localhost`, `127.0.0.1`)"
       - "traefik.http.middlewares.auth.basicauth.users=${BASIC_AUTH_USERS}"
   postgres:
-    image: library/postgres
+    image: library/postgres:12
     ports:
         - "5432:5432"
     environment: 
