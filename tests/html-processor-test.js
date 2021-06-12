@@ -332,18 +332,17 @@ describe('HTML Processor', () => {
                 .catch(done);
         });
 
-        it('detects when non-image content is returned', (done) => {
+        it('filters non-image content', (done) => {
             scope = nock('http://test.fake');
-            scope
-                .get('/image.png')
-                .replyWithFile(200, `${fixturesPath}/placeholder.png`, {
-                    'Content-Type': 'text/html;',
-                });
+            scope.get('/not-image.png').replyWithFile(200, `${fixturesPath}/article.html`, {
+                'Content-type': 'text/html',
+            });
 
-            HtmlProcessor.extractImages(mockSection.url, '<div><img src="/image.png /></div>')
+            HtmlProcessor.extractImages(mockSection.url, '<div><img src="/not-image.png" /></div>')
                 .then((output) => {
                     expect(output.html).toEqual('<div></div>');
                     expect(output.images).toHaveLength(0);
+                    scope.isDone();
                     done();
                 })
                 .catch(done);
