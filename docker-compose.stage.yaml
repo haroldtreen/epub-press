@@ -50,7 +50,7 @@ services:
       - traefik.http.routers.metrics.rule=Host(`${SERVICE_HOST}`)
       - traefik.http.middlewares.auth.basicauth.users=${BASIC_AUTH_USERS}
   postgres:
-    image: library/postgres
+    image: library/postgres:12
     env_file: envs/stage.env
     restart: unless-stopped
     

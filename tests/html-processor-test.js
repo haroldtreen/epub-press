@@ -308,7 +308,7 @@ describe('HTML Processor', () => {
         });
 
         afterEach(() => {
-            glob(`${outputFolder}/*.png`, (err, files) => {
+            glob(`${outputFolder}/*.@(png|html)`, (err, files) => {
                 Utilities.removeFiles(files);
             });
         });
@@ -328,6 +328,22 @@ describe('HTML Processor', () => {
                         expect(fileCount).toBe(4);
                         done();
                     });
+                })
+                .catch(done);
+        });
+
+        it('filters non-image content', (done) => {
+            scope = nock('http://test.fake');
+            scope.get('/not-image.png').replyWithFile(200, `${fixturesPath}/article.html`, {
+                'Content-type': 'text/html',
+            });
+
+            HtmlProcessor.extractImages(mockSection.url, '<div><img src="/not-image.png" /></div>')
+                .then((output) => {
+                    expect(output.html).toEqual('<div></div>');
+                    expect(output.images).toHaveLength(0);
+                    scope.isDone();
+                    done();
                 })
                 .catch(done);
         });
