@@ -26,6 +26,7 @@ services:
         - DB_HOST=postgres
         - DB_USERNAME=postgres
         - DB_PASSWORD=password
+        - MAX_NUM_SECTIONS=50
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.server.entrypoints=web,websecure"
