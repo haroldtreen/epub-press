@@ -34,6 +34,10 @@ class RequestValidators {
     }
 }
 
-RequestValidators.MAX_NUM_SECTIONS = process.env.MAX_NUM_SECTIONS ?? 50;
+if(process.env.MAX_NUM_SECTIONS){
+    RequestValidators.MAX_NUM_SECTIONS = process.env.MAX_NUM_SECTIONS;
+} else {
+    RequestValidators.MAX_NUM_SECTIONS =  50;
+}
 
 module.exports = RequestValidators;
