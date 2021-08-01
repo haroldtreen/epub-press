@@ -3,11 +3,6 @@ const { Client } = require('pg');
 const env = process.env.NODE_ENV || 'development';
 const config = require('../config/config')[env];
 
-if(config.dialect === 'sqlite'){
-    console.log(`dialect is ${config.dialect} no connection check needed`);
-    return;
-}
-
 let attempts = 0;
 const MAX_ATTEMPTS = 10;
 const WAIT_INTERVAL = 1000;
@@ -30,4 +25,8 @@ function attemptToConnect() {
     });
 }
 
-attemptToConnect();
+if (config.dialect === 'sqlite') {
+    console.log(`dialect is ${config.dialect} no connection check needed`);
+} else {
+    attemptToConnect();
+}
