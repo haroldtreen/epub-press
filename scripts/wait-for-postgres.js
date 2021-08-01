@@ -25,4 +25,8 @@ function attemptToConnect() {
     });
 }
 
-attemptToConnect();
+if (config.dialect === 'sqlite') {
+    console.log(`dialect is ${config.dialect} no connection check needed`);
+} else {
+    attemptToConnect();
+}

@@ -15,3 +15,7 @@ hidden
 secrets/*.env
 envs/*.env
 .vscode/
+
+# local .env* files
+.env.local
+.env.*.local

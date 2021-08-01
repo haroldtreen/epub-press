@@ -12,7 +12,7 @@
     "scripts": {
         "start": "nodemon --harmony ./bin/www",
         "start:debug": "node --inspect ./bin/www",
-        "start:docker": "npm run wait:db && sequelize db:migrate && node ./bin/www",
+        "start:docker": "npm run wait:db && npm run db:migrate && node ./bin/www",
         "test": "jest",
         "test:ci": "npm run test:unit && npm run test:integration",
         "test:coverage": "npm test -- --coverage",
@@ -21,7 +21,8 @@
         "test:integration": "jest --testMatch **/tests/integration/**/*-test.js",
         "lint": "eslint .",
         "wait:db": "node scripts/wait-for-postgres.js",
-        "format": "prettier-eslint $PWD/\"**/*.js\" --single-quote --write --tab-width 4"
+        "format": "prettier-eslint $PWD/\"**/*.js\" --single-quote --write --tab-width 4",
+        "db:migrate": "sequelize db:migrate"
     },
     "dependencies": {
         "bluebird": "^3.7.2",
@@ -30,6 +31,7 @@
         "commander": "^2.20.3",
         "cookie-parser": "^1.4.5",
         "debug": "^2.6.9",
+        "dotenv-flow": "^3.1.0",
         "express": "^4.17.1",
         "fs-extra": "^5.0.0",
         "glob": "^7.1.6",
@@ -52,6 +54,7 @@
         "serve-favicon": "^2.5.0",
         "shortid": "^2.2.15",
         "string-direction": "^0.1.2",
+        "sqlite3": "^4.2.0",
         "umzug": "^2.3.0",
         "winston": "^2.4.4"
     },
