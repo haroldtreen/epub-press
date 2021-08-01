@@ -20,13 +20,7 @@ services:
     ports:
         - "3000:3000"
         - "3001:3001"
-    depends_on:
-        - postgres
-    environment:
-        - DB_HOST=postgres
-        - DB_USERNAME=postgres
-        - DB_PASSWORD=password
-        - MAX_NUM_SECTIONS=50
+    env_file: .env
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.server.entrypoints=web,websecure"
