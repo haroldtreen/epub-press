@@ -89,19 +89,24 @@ $ curl http://localhost:3000/api/v1/books \
 
 {"id":"RXyGKmTq7"}
 $ # download the book as epub file 
-$ curl -o book.ebub http://localhost:3000/api/v1/books/RXyGKmTq7/download
+$ curl -o book.epub http://localhost:3000/api/v1/books/RXyGKmTq7/download
 $ # or download as mobi file
 $ curl -o book.mobi "http://localhost:3000/api/v1/books/RXyGKmTq7/download?filetype=mobi"
 $ ls
-book.ebub
+book.epub
 ```
 
 ### Environment variables
 
-| Name                   | Default            | Description                       |
-|------------------------|--------------------|-----------------------------------|
-| `MAIL_SERVER_HOST`     |                    | Hostname of SMTP mail server      |
-| `MAIL_SERVER_PORT`     |                    | Port of SMTP mail server          |
-| `MAIL_SERVER_USERNAME` |                    | Username for SMTP authentication  |
-| `MAIL_SERVER_PASSWORD` |                    | Password for SMTP authentication  |
-| `MAIL_SENDER_ADDRESS`  | noreply@epub.press | Sender email address              |
+| Name                   | Default            | Description                                                                               |
+|------------------------|--------------------|-------------------------------------------------------------------------------------------|
+| `MAIL_SERVER_HOST`     |                    | Hostname of SMTP mail server                                                              |
+| `MAIL_SERVER_PORT`     |                    | Port of SMTP mail server                                                                  |
+| `MAIL_SERVER_TLS`      |                    | Leave blank by default. If using SSL/TLS for the SMTP connection, set the value to "yes". |
+| `MAIL_SERVER_USERNAME` |                    | Username for SMTP authentication                                                          |
+| `MAIL_SERVER_PASSWORD` |                    | Password for SMTP authentication                                                          |
+| `MAIL_SENDER_ADDRESS`  | noreply@epub.press | Sender email address                                                                      |
+
+Build argument (in Dockerfile):
+
+`converter` - leave as "calibre" to download and use Calibre for MOBI conversion (the setup for which assumes by default that the host is Debian-like). If not, or if there are errors, change the value of this variable to "kindlegen" to use the binaries in `/bin/`.
