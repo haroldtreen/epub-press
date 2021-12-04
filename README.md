@@ -102,7 +102,7 @@ book.epub
 |------------------------|--------------------|-------------------------------------------------------------------------------------------|
 | `MAIL_SERVER_HOST`     |                    | Hostname of SMTP mail server                                                              |
 | `MAIL_SERVER_PORT`     |                    | Port of SMTP mail server                                                                  |
-| `MAIL_SERVER_TLS`      |                    | Leave blank by default. If using SSL/TLS for the SMTP connection, set the value to "yes". |
+| `MAIL_SERVER_TLS`      |                    | Leave blank by default. If using SSL/TLS for the SMTP connection, set the value to `true`.|
 | `MAIL_SERVER_USERNAME` |                    | Username for SMTP authentication                                                          |
 | `MAIL_SERVER_PASSWORD` |                    | Password for SMTP authentication                                                          |
 | `MAIL_SENDER_ADDRESS`  | noreply@epub.press | Sender email address                                                                      |
