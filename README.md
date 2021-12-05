@@ -106,6 +106,7 @@ book.epub
 | `MAIL_SERVER_USERNAME` |                    | Username for SMTP authentication                                                          |
 | `MAIL_SERVER_PASSWORD` |                    | Password for SMTP authentication                                                          |
 | `MAIL_SENDER_ADDRESS`  | noreply@epub.press | Sender email address                                                                      |
+| `MAX_NUM_SECTIONS`     | 50                 | Sets the maximum number of articles in one book.    
 
 Build argument (in Dockerfile):
 
