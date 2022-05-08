@@ -1,9 +1,9 @@
 const AppErrors = require('../../lib/app-errors');
 
 function normalizeRequest(req) {
-    // Kindle's can only receive .mobi files
+    // Kindle's can only receive .epub files
     const isKindleEmail = /kindle/.test(req.query.email);
-    req.query.filetype = isKindleEmail ? 'mobi' : req.query.filetype;
+    req.query.filetype = isKindleEmail ? 'epub' : req.query.filetype;
     return req;
 }
 

@@ -310,7 +310,7 @@ const V1_ENDPOINTS = {
             status: 200,
             response: 'Email sent!',
             before: () => {
-                sandbox.stub(Book, 'find').resolves({ getEpubPath: () => {} });
+                sandbox.stub(Book, 'find').resolves({ getEpubPath: () => { } });
                 sandbox.stub(Mailer, 'sendEpub').resolves({});
             },
             after: () => {
@@ -323,7 +323,7 @@ const V1_ENDPOINTS = {
             status: 200,
             response: 'Email sent!',
             before: () => {
-                sandbox.stub(Book, 'find').resolves({ getMobiPath: () => {} });
+                sandbox.stub(Book, 'find').resolves({ getMobiPath: () => { } });
                 sandbox.stub(Mailer, 'sendMobi').resolves({});
             },
             after: () => {
@@ -331,18 +331,18 @@ const V1_ENDPOINTS = {
             },
         },
         {
-            get: { email: 'example@kindle.com', filetype: 'epub' },
+            get: { email: 'example@kindle.com', filetype: 'mobi' },
             status: 200,
             response: 'Email sent!',
             before: () => {
-                sandbox.stub(Book, 'find').resolves({ getMobiPath: () => {} });
+                sandbox.stub(Book, 'find').resolves({ getMobiPath: () => { } });
                 sandbox.stub(Mailer, 'sendMobi').resolves({});
                 sandbox.stub(Mailer, 'sendEpub').resolves({});
             },
             after: () => {
-                expect(Book.find.args).toEqual([['some-id', 'mobi']]);
-                expect(Mailer.sendMobi.called).toBe(true);
-                expect(Mailer.sendEpub.called).toBe(false);
+                expect(Book.find.args).toEqual([['some-id', 'epub']]);
+                expect(Mailer.sendMobi.called).toBe(false);
+                expect(Mailer.sendEpub.called).toBe(true);
             },
         },
     ],
