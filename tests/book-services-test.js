@@ -95,11 +95,11 @@ describe('Book Services', () => {
             expect(callArgs[1]).toEqual(book.getTitle());
         });
 
-        it('does not call writeOnCover if the book has a custom cover', async () => {
+        it('does not call writeOnCover if the book has a custom cover', () => {
             book = new Book({ coverPath: 'https://images.com/an_image.jpg' });
             const writeOnCoverStub = Sinon.stub(StylingService, 'writeOnCover');
 
-            await BookServices.createCover(book);
+            BookServices.createCover(book);
             writeOnCoverStub.restore();
             expect(writeOnCoverStub.callCount).toBe(0);
         });
