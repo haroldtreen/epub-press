@@ -1,7 +1,9 @@
 const AppErrors = require('../../lib/app-errors');
 
 function normalizeRequest(req) {
-    // Previously used to force a filetype for kindle.
+    // Kindle's can only receive .epub files
+    const isKindleEmail = /kindle/.test(req.query.email);
+    req.query.filetype = isKindleEmail ? 'epub' : req.query.filetype;
     return req;
 }
 

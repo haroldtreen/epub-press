@@ -340,9 +340,9 @@ const V1_ENDPOINTS = {
                 sandbox.stub(Mailer, 'sendEpub').resolves({});
             },
             after: () => {
-                expect(Book.find.args).toEqual([['some-id', 'mobi']]);
-                expect(Mailer.sendMobi.called).toBe(true);
-                expect(Mailer.sendEpub.called).toBe(false);
+                expect(Book.find.args).toEqual([['some-id', 'epub']]);
+                expect(Mailer.sendMobi.called).toBe(false);
+                expect(Mailer.sendEpub.called).toBe(true);
             },
         },
     ],
