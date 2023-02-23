@@ -49,7 +49,7 @@
         "request": "^2.88.2",
         "request-promise": "^4.2.5",
         "sanitize-html": "^1.23.0",
-        "sequelize": "^5.21.7",
+        "sequelize": "^6.28.2",
         "sequelize-cli": "^5.5.1",
         "serve-favicon": "^2.5.0",
         "shortid": "^2.2.15",
