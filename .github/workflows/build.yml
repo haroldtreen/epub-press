@@ -5,7 +5,7 @@ name: Build
 on: [push, pull_request]
 jobs:
   test_and_lint:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
       - name: Use Node.js 14
         uses: actions/setup-node@v1
@@ -22,7 +22,7 @@ jobs:
           coverageLocations: ${{ github.workspace }}/coverage/lcov.info:lcov
   publish:
     if: ${{ contains(github.ref, 'master') || contains(github.ref, 'stage') }}
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     needs: [test_and_lint]
     steps:
       - uses: actions/checkout@v2
@@ -38,7 +38,7 @@ jobs:
           cache_froms: haroldtreen/epub-press/server:latest
   deploy_stage:
     if: ${{ contains(github.ref, 'stage') }}
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     needs: [publish]
     steps:
       - uses: actions/checkout@v2
@@ -71,7 +71,7 @@ jobs:
             docker system prune -a -f
   deploy_prod:
     if: ${{ contains(github.ref, 'master') }}
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     needs: [publish]
     steps:
       - uses: actions/checkout@v2
