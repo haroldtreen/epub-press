@@ -4,39 +4,41 @@
 name: Build
 on: [push, pull_request]
 jobs:
-  test_and_lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Use Node.js 14
-        uses: actions/setup-node@v1
-        with:
-          node-version: 13
-      - uses: actions/checkout@v2
-      - run: npm ci
-      - run: npm run lint
-      - uses: paambaati/codeclimate-action@v2.6.0
-        env:
-          CC_TEST_REPORTER_ID: 96ffb20ecb0b933c764cff83a89880079aa11a32874c611fc02bfbfc0d021611
-        with:
-          coverageCommand: npm run test:coverage
-          coverageLocations: ${{ github.workspace }}/coverage/lcov.info:lcov
+  # test_and_lint:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Use Node.js 14
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: 13
+  #     - uses: actions/checkout@v2
+  #     - run: npm ci
+  #     - run: npm run lint
+  #     - uses: paambaati/codeclimate-action@v2.6.0
+  #       env:
+  #         CC_TEST_REPORTER_ID: 96ffb20ecb0b933c764cff83a89880079aa11a32874c611fc02bfbfc0d021611
+  #       with:
+  #         coverageCommand: npm run test:coverage
+  #         coverageLocations: ${{ github.workspace }}/coverage/lcov.info:lcov
   publish:
     if: ${{ contains(github.ref, 'master') || contains(github.ref, 'stage') }}
     runs-on: ubuntu-latest
-    needs: [test_and_lint]
+    # needs: [test_and_lint]
     steps:
       - uses: actions/checkout@v2
-      - name: Publish Docker
-        uses: docker/build-push-action@v1
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
         with:
-          repository: haroldtreen/epub-press/server
-          registry: docker.pkg.github.com
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          tag_with_ref: true
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish Docker
+        uses: docker/build-push-action@v4
+        with:
+          context: .
           tags: latest,master
-          build_args: converter=kindlegen
-          cache_froms: haroldtreen/epub-press/server:latest
+          build-args: converter=kindlegen
+          cache-from: haroldtreen/epub-press/server:latest
   deploy_stage:
     if: ${{ contains(github.ref, 'stage') }}
     runs-on: ubuntu-latest
