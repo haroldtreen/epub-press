@@ -35,6 +35,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           tag_with_ref: true
           tags: latest,master
+          build_args: converter=kindlegen
           cache_froms: haroldtreen/epub-press/server:latest
   deploy_stage:
     if: ${{ contains(github.ref, 'stage') }}
