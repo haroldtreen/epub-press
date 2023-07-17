@@ -26,16 +26,19 @@ jobs:
     needs: [test_and_lint]
     steps:
       - uses: actions/checkout@v2
-      - name: Publish Docker
-        uses: docker/build-push-action@v1
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
         with:
-          repository: haroldtreen/epub-press/server
-          registry: docker.pkg.github.com
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          tag_with_ref: true
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish Docker
+        uses: docker/build-push-action@v4
+        with:
+          context: .
           tags: latest,master
-          cache_froms: haroldtreen/epub-press/server:latest
+          build-args: converter=kindlegen
+          cache-from: haroldtreen/epub-press/server:latest
   deploy_stage:
     if: ${{ contains(github.ref, 'stage') }}
     runs-on: ubuntu-latest
@@ -47,12 +50,11 @@ jobs:
         env:
           PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
       - name: Copy files
-        uses: appleboy/scp-action@master
-        env:
-          HOST: ${{ env.STAGE_HOST }}
-          USERNAME: ${{ secrets.SSH_USERNAME }}
-          KEY: ${{ secrets.SSH_KEY }}
+        uses: appleboy/scp-action@v0.1.3
         with:
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          host: ${{ env.STAGE_HOST }}
           source: "docker-compose.stage.yaml,envs/stage.env,prometheus.yml"
           target: "/usr/local/epub-press"
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
@@ -80,12 +82,11 @@ jobs:
         env:
           PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
       - name: Copy files
-        uses: appleboy/scp-action@master
-        env:
-          HOST: ${{ env.PROD_HOST }}
-          USERNAME: ${{ secrets.SSH_USERNAME }}
-          KEY: ${{ secrets.SSH_KEY }}
+        uses: appleboy/scp-action@v0.1.3
         with:
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          host: ${{ env.STAGE_HOST }}
           source: "docker-compose.prod.yaml,envs/prod.env,prometheus.yml"
           target: "/usr/local/epub-press"
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
