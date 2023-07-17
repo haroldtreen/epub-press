@@ -4,26 +4,26 @@
 name: Build
 on: [push, pull_request]
 jobs:
-  # test_and_lint:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Use Node.js 14
-  #       uses: actions/setup-node@v1
-  #       with:
-  #         node-version: 13
-  #     - uses: actions/checkout@v2
-  #     - run: npm ci
-  #     - run: npm run lint
-  #     - uses: paambaati/codeclimate-action@v2.6.0
-  #       env:
-  #         CC_TEST_REPORTER_ID: 96ffb20ecb0b933c764cff83a89880079aa11a32874c611fc02bfbfc0d021611
-  #       with:
-  #         coverageCommand: npm run test:coverage
-  #         coverageLocations: ${{ github.workspace }}/coverage/lcov.info:lcov
+  test_and_lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use Node.js 14
+        uses: actions/setup-node@v1
+        with:
+          node-version: 13
+      - uses: actions/checkout@v2
+      - run: npm ci
+      - run: npm run lint
+      - uses: paambaati/codeclimate-action@v2.6.0
+        env:
+          CC_TEST_REPORTER_ID: 96ffb20ecb0b933c764cff83a89880079aa11a32874c611fc02bfbfc0d021611
+        with:
+          coverageCommand: npm run test:coverage
+          coverageLocations: ${{ github.workspace }}/coverage/lcov.info:lcov
   publish:
     if: ${{ contains(github.ref, 'master') || contains(github.ref, 'stage') }}
     runs-on: ubuntu-latest
-    # needs: [test_and_lint]
+    needs: [test_and_lint]
     steps:
       - uses: actions/checkout@v2
       - name: Login to Docker Hub
@@ -82,12 +82,11 @@ jobs:
         env:
           PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
       - name: Copy files
-        uses: appleboy/scp-action@master
-        env:
-          HOST: ${{ env.PROD_HOST }}
-          USERNAME: ${{ secrets.SSH_USERNAME }}
-          KEY: ${{ secrets.SSH_KEY }}
+        uses: appleboy/scp-action@v0.1.3
         with:
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          host: ${{ env.STAGE_HOST }}
           source: "docker-compose.prod.yaml,envs/prod.env,prometheus.yml"
           target: "/usr/local/epub-press"
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
