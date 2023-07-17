@@ -57,6 +57,7 @@ jobs:
           host: ${{ env.STAGE_HOST }}
           source: "docker-compose.stage.yaml,envs/stage.env,prometheus.yml"
           target: "/usr/local/epub-press"
+          timeout: 90s
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
       - name: Restart Docker
         uses: appleboy/ssh-action@master
