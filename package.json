@@ -37,7 +37,7 @@
         "glob": "^7.1.6",
         "htmltidy2": "^0.3.0",
         "jimp": "^0.10.3",
-        "marked": "^0.7.0",
+        "marked": "^4.0.10",
         "morgan": "^1.10.0",
         "node-readability": "github:haroldtreen/readability",
         "nodemailer": "^2.7.0",
